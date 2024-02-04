@@ -44,7 +44,7 @@
 	</style>
 	<body>
 		<h2 id="title">HEX to koko-aio Color Converter</h2>
-		 <form name="color-convert" method="post" action="color.php" autocomplete="off">
+		 <form name="color-convert" method="post" onsubmit="return false;" autocomplete="off">
 			BEZEL_R = "<span id="bezel-r">0.000000</span>"<br>
 			BEZEL_G = "<span id="bezel-g">0.000000</span>"<br>
 			BEZEL_B = "<span id="bezel-b">0.000000</span>"<br>
@@ -52,7 +52,6 @@
 			<div class="hex">HEX: # <input type="text" name="hex" placeholder="808080"></div>
 			<div class="contrast">Contrast: <input type="text" name="contrast" placeholder="1.30"></div>
 			<div class="square"></div>
-			<span class="error"></span>
 			<br>
 			<br>
 			<input type="submit" name="submit" value="Convert" id="submit">
@@ -61,28 +60,35 @@
 	<script>
 		$(document).ready(function () {
 			$("form").submit(function (event) {
-				var hex = $(".hex input").val(),
+				var hex = $(".hex input").val();
 					contrast = $(".contrast input").val();
-
-				$.ajax({
-					type: 'POST',
-					url: 'color.php',
-					data: 'hex='+hex+'&contrast='+contrast,
-					dataType: "json",
-					encode: true
-				}).done(function (data) {					 
-					contrast = data[3];
+					
+				if($(".contrast input").val() == ""){
+					contrast = "1.30";
+				}
+				else{
+					contrast = $(".contrast input").val();
+				}
 				
-					$('#bezel-r').text(((data[0] - 128) * ((0.395 - (contrast - 1.30) *  (((3.75 - contrast) * .125) + .00125)) / 128)).toFixed(9));
-					$('#bezel-g').text(((data[1] - 128) * ((0.395 - (contrast - 1.30) *  (((3.75 - contrast) * .125) + .00125)) / 128)).toFixed(9));
-					$('#bezel-b').text(((data[2] - 128) * ((0.395 - (contrast - 1.30) *  (((3.75 - contrast) * .125) + .00125)) / 128)).toFixed(9));
+				function hexToRgb(color) {
+					var rgb = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(color);
+					return rgb ? {
+						r: parseInt(rgb[1], 16),
+						g: parseInt(rgb[2], 16),
+						b: parseInt(rgb[3], 16)
+					} : null;
+				}
+				
+					$('#bezel-r').text(((hexToRgb(hex).r - 128) * ((0.395 - (contrast - 1.30) *  (((3.75 - contrast) * .125) + .00125)) / 128)).toFixed(9));
+					$('#bezel-g').text(((hexToRgb(hex).g - 128) * ((0.395 - (contrast - 1.30) *  (((3.75 - contrast) * .125) + .00125)) / 128)).toFixed(9));
+					$('#bezel-b').text(((hexToRgb(hex).b - 128) * ((0.395 - (contrast - 1.30) *  (((3.75 - contrast) * .125) + .00125)) / 128)).toFixed(9));
 					
 					$(".square").css("background", "#"+hex);
 					$("#contrast").text(contrast+"0000");
-				});
 
 				event.preventDefault();
-			});
+				
+				});
 		});
 	</script>
 </html>
