@@ -52,6 +52,7 @@
 			<div class="hex">HEX: # <input type="text" name="hex" placeholder="808080"></div>
 			<div class="contrast">Contrast: <input type="text" name="contrast" placeholder="1.30"></div>
 			<div class="square"></div>
+			<span class="error"></span>
 			<br>
 			<br>
 			<input type="submit" name="submit" value="Convert" id="submit">
@@ -63,28 +64,50 @@
 				var hex = $(".hex input").val();
 					contrast = $(".contrast input").val();
 					
-				if($(".contrast input").val() == ""){
+				if(contrast == ""){
 					contrast = "1.30";
+					contrastError = "false";
+				}
+				else if(contrast < 0.01 || contrast > 3.75){
+					contrastError = "true";
 				}
 				else{
-					contrast = $(".contrast input").val();
+					contrast = parseFloat($(".contrast input").val()).toFixed(2);
+					contrastError = "false";
 				}
 				
-				function hexToRgb(color) {
-					var rgb = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(color);
-					return rgb ? {
-						r: parseInt(rgb[1], 16),
-						g: parseInt(rgb[2], 16),
-						b: parseInt(rgb[3], 16)
-					} : null;
+				if(/^[0-9A-F]{6}$/i.test(hex) == false){
+					hexError = "true";
 				}
-				
+				else if(contrastError == "false"){
+					function hexToRgb(color) {
+						var rgb = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(color);
+						
+						return rgb ? {
+							r: parseInt(rgb[1], 16),
+							g: parseInt(rgb[2], 16),
+							b: parseInt(rgb[3], 16)
+						} : null;
+					}
+					
+					hexError = "false";
+					
 					$('#bezel-r').text(((hexToRgb(hex).r - 128) * ((0.395 - (contrast - 1.30) *  (((3.75 - contrast) * .125) + .00125)) / 128)).toFixed(9));
 					$('#bezel-g').text(((hexToRgb(hex).g - 128) * ((0.395 - (contrast - 1.30) *  (((3.75 - contrast) * .125) + .00125)) / 128)).toFixed(9));
 					$('#bezel-b').text(((hexToRgb(hex).b - 128) * ((0.395 - (contrast - 1.30) *  (((3.75 - contrast) * .125) + .00125)) / 128)).toFixed(9));
 					
 					$(".square").css("background", "#"+hex);
-					$("#contrast").text(contrast+"0000");
+				}
+				
+				if(contrastError == "true"){
+					$(".error").text("Contrast must be between 0.01 and 3.75");
+				}
+				else if(hexError == "true"){
+					$(".error").text("Input needs to be a RRGGBB value");
+				}
+				else{
+					$(".error").empty();
+				}	
 
 				event.preventDefault();
 				
