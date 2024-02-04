@@ -1,0 +1,88 @@
+<html>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+	<style>
+		body{
+			font-family: monospace;
+			font-size: 16px;
+			margin: 16px;
+			width: 410px;
+			height: 410px;
+		}
+		
+		.hex, .contrast{
+			display: inline-block;
+			margin-top: 14px;
+		}
+		
+		.hex input{
+			text-transform:uppercase;
+		}
+		
+		.square{
+			border: 2px solid #000;
+			background: #'.$HEX.';
+			height: 72px;
+			width: 84px;
+			float: right;
+			margin-top: -40px;
+		}
+		
+		.error {
+			color: #FF0000;
+			display: inline-block;
+			margin-top: 4px;
+		}
+		
+		#submit{
+			margin-top: 24px;
+			width: 20%;
+		}
+		
+		#submit:hover{
+			cursor: pointer;
+		}
+	</style>
+	<body>
+		<h2 id="title">HEX to koko-aio Color Converter</h2>
+		 <form name="color-convert" method="post" action="color.php" autocomplete="off">
+			BEZEL_R = "<span id="bezel-r">0.000000</span>"<br>
+			BEZEL_G = "<span id="bezel-g">0.000000</span>"<br>
+			BEZEL_B = "<span id="bezel-b">0.000000</span>"<br>
+			BEZEL_CON = "<span id="contrast">1.300000</span>"<br><br>
+			<div class="hex">HEX: # <input type="text" name="hex" placeholder="080808"></div>
+			<div class="contrast">Contrast: <input type="text" name="contrast" placeholder="1.30"></div>
+			<div class="square"></div>
+			<span class="error"></span>
+			<br>
+			<br>
+			<input type="submit" name="submit" value="Convert" id="submit">
+		</form>
+	</body>
+	<script>
+		$(document).ready(function () {
+			$("form").submit(function (event) {
+				var hex = $(".hex input").val(),
+					contrast = $(".contrast input").val();
+
+				$.ajax({
+					type: 'POST',
+					url: 'color.php',
+					data: 'hex='+hex+'&contrast='+contrast,
+					dataType: "json",
+					encode: true
+				}).done(function (data) {					 
+					contrast = data[3];
+				
+					$('#bezel-r').text(((data[0] - 128) * ((0.395 - (contrast - 1.30) *  (((3.75 - contrast) * .125) + .00125)) / 128)).toFixed(9));
+					$('#bezel-g').text(((data[1] - 128) * ((0.395 - (contrast - 1.30) *  (((3.75 - contrast) * .125) + .00125)) / 128)).toFixed(9));
+					$('#bezel-b').text(((data[2] - 128) * ((0.395 - (contrast - 1.30) *  (((3.75 - contrast) * .125) + .00125)) / 128)).toFixed(9));
+					
+					$(".square").css("background", "#"+hex);
+					$("#contrast").text(contrast+"0000");
+				});
+
+				event.preventDefault();
+			});
+		});
+	</script>
+</html>
