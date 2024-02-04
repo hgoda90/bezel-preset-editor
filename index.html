@@ -97,6 +97,7 @@
 					$('#bezel-b').text(((hexToRgb(hex).b - 128) * ((0.395 - (contrast - 1.30) *  (((3.75 - contrast) * .125) + .00125)) / 128)).toFixed(9));
 					
 					$(".square").css("background", "#"+hex);
+					$("#contrast").text(contrast+"0000");
 				}
 				
 				if(contrastError == "true"){
