@@ -50,7 +50,27 @@
 			BEZEL_B = "<span id="bezel-b">0.000000</span>"<br>
 			BEZEL_CON = "<span id="contrast">1.300000</span>"<br><br>
 			<div class="hex">HEX: # <input type="text" name="hex" placeholder="808080"></div>
-			<div class="contrast">Contrast: <input type="text" name="contrast" placeholder="1.30"></div>
+			<div class="contrast">Contrast: <input list="contrasts" name="contrast">
+				<datalist id="contrasts">
+					<option value=".70"><option value=".71"><option value=".72"><option value=".73"><option value=".74"><option value=".75"><option value=".76"><option value=".77"><option value=".78"><option value=".79">
+					<option value=".80"><option value=".81"><option value=".82"><option value=".83"><option value=".84"><option value=".85"><option value=".86"><option value=".87"><option value=".88"><option value=".89">
+					<option value=".90"><option value=".91"><option value=".92"><option value=".93"><option value=".94"><option value=".95"><option value=".96"><option value=".97"><option value=".98"><option value=".99">
+					<option value="1.00"><option value="1.01"><option value="1.02"><option value="1.03"><option value="1.04"><option value="1.05"><option value="1.06"><option value="1.07"><option value="1.08"><option value="1.09">
+					<option value="1.10"><option value="1.11"><option value="1.12"><option value="1.13"><option value="1.14"><option value="1.15"><option value="1.16"><option value="1.17"><option value="1.18"><option value="1.19">
+					<option value="1.20"><option value="1.21"><option value="1.22"><option value="1.23"><option value="1.24"><option value="1.25"><option value="1.26"><option value="1.27"><option value="1.28"><option value="1.29">
+					<option value="1.30"><option value="1.31"><option value="1.32"><option value="1.33"><option value="1.34"><option value="1.35"><option value="1.36"><option value="1.37"><option value="1.38"><option value="1.39">
+					<option value="1.40"><option value="1.41"><option value="1.42"><option value="1.43"><option value="1.44"><option value="1.45"><option value="1.46"><option value="1.47"><option value="1.48"><option value="1.49">
+					<option value="1.50"><option value="1.51"><option value="1.52"><option value="1.53"><option value="1.54"><option value="1.55"><option value="1.56"><option value="1.57"><option value="1.58"><option value="1.59">
+					<option value="1.60"><option value="1.61"><option value="1.62"><option value="1.63"><option value="1.64"><option value="1.65"><option value="1.66"><option value="1.67"><option value="1.68"><option value="1.69">
+					<option value="1.70"><option value="1.71"><option value="1.72"><option value="1.73"><option value="1.74"><option value="1.75"><option value="1.76"><option value="1.77"><option value="1.78"><option value="1.79">
+					<option value="1.80"><option value="1.81"><option value="1.82"><option value="1.83"><option value="1.84"><option value="1.85"><option value="1.86"><option value="1.87"><option value="1.88"><option value="1.89">
+					<option value="1.90"><option value="1.91"><option value="1.92"><option value="1.93"><option value="1.94"><option value="1.95"><option value="1.96"><option value="1.97"><option value="1.98"><option value="1.99">
+					<option value="2.00"><option value="2.01"><option value="2.02"><option value="2.03"><option value="2.04"><option value="2.05"><option value="2.06"><option value="2.07"><option value="2.08"><option value="2.09">
+					<option value="2.10"><option value="2.11"><option value="2.12"><option value="2.13"><option value="2.14"><option value="2.15"><option value="2.16"><option value="2.17"><option value="2.18"><option value="2.19">
+					<option value="2.20"><option value="2.21"><option value="2.22"><option value="2.23"><option value="2.24"><option value="2.25"><option value="2.26"><option value="2.27"><option value="2.28"><option value="2.29">
+					<option value="2.30"><option value="2.31"><option value="2.32"><option value="2.33"><option value="2.34"><option value="2.35"><option value="2.36"><option value="2.37"><option value="2.38"><option value="2.39">
+				</datalist>
+			</div>
 			<div class="square"></div>
 			<span class="error"></span>
 			<br>
@@ -66,6 +86,7 @@
 					
 				if(contrast == ""){
 					contrast = "1.30";
+					$(".contrast input").val(contrast);
 					contrastError = "false";
 				}
 				else if(contrast < 0.01 || contrast > 3.75){
@@ -112,7 +133,7 @@
 					$(".error").text("Contrast must be between 0.01 and 3.75");
 				}
 				else if(hexError == "true"){
-					$(".error").text("Input needs to be a RRGGBB value");
+					$(".error").text("HEX needs to be RRGGBB value");
 				}
 				else{
 					$(".error").empty();
