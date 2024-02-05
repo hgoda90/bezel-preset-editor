@@ -92,9 +92,17 @@
 					
 					hexError = "false";
 					
-					$('#bezel-r').text(((hexToRgb(hex).r - 128) * ((0.395 - (contrast - 1.30) *  (((3.75 - contrast) * .125) + .00125)) / 128)).toFixed(9));
-					$('#bezel-g').text(((hexToRgb(hex).g - 128) * ((0.395 - (contrast - 1.30) *  (((3.75 - contrast) * .125) + .00125)) / 128)).toFixed(9));
-					$('#bezel-b').text(((hexToRgb(hex).b - 128) * ((0.395 - (contrast - 1.30) *  (((3.75 - contrast) * .125) + .00125)) / 128)).toFixed(9));
+					if(contrast < 1){
+						$('#bezel-r').text((((hexToRgb(hex).r - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .1 + .105) + (contrast * .01 + .0105))) / 128)).toFixed(10));
+						$('#bezel-g').text((((hexToRgb(hex).g - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .1 + .105) + (contrast * .01 + .0105))) / 128)).toFixed(10));
+						$('#bezel-b').text((((hexToRgb(hex).b - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .01 + .055) + (contrast * .001 + .0055))) / 128)).toFixed(10));
+					}
+					else{
+						$('#bezel-r').text((((hexToRgb(hex).r - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .01 + .105) + (contrast * .001 + .0105))) / 128)).toFixed(10));
+						$('#bezel-g').text((((hexToRgb(hex).g - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .01 + .105) + (contrast * .001 + .0105))) / 128)).toFixed(10));
+						$('#bezel-b').text((((hexToRgb(hex).b - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .001 + .055) + (contrast * .0001 + .0055))) / 128)).toFixed(10));
+					}
+					
 					
 					$(".square").css("background", "#"+hex);
 					$("#contrast").text(contrast+"0000");
