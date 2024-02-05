@@ -47,7 +47,7 @@
 			}
 			
 			.square{
-				border: 3px inset #D2D2D2;
+				border: 4px inset #D2D2D2;
 				background: #808080;
 				height: 96px;
 				width: 110px;
@@ -55,6 +55,8 @@
 				bottom: 172px;
 				position: absolute;
 				margin-top: -40px;
+				outline: 2px inset #BBB;
+				box-shadow: 0px 0px 14px 4px rgba(128, 128, 128, 0.25);
 			}
 			
 			.error {
@@ -202,7 +204,8 @@ BEZEL_CON = "<span id="contrast">1.300000</span>"<br><br>
 							$('#bezel-b').text((((hexToRgb(hex).b - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .001 + .055) + (contrast * .0001 + .0055))) / 128)).toFixed(10));
 						}
 						
-						$(".content form").css("box-shadow", "0px 0px 6px 4px rgba("+hexToRgb(hex).r+", "+hexToRgb(hex).g+", "+hexToRgb(hex).b+", 0.3)")
+						$(".content form").css("box-shadow", "0px 0px 6px 4px rgba("+hexToRgb(hex).r+", "+hexToRgb(hex).g+", "+hexToRgb(hex).b+", 0.3)");
+						$(".square").css("box-shadow", "0px 0px 14px 4px rgba("+hexToRgb(hex).r+", "+hexToRgb(hex).g+", "+hexToRgb(hex).b+", 0.25)");
 						
 						$(".square").css("background", "#"+hex);
 						$("#contrast").text(contrast+"0000");
