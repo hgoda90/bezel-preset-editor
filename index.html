@@ -2,7 +2,7 @@
 	<head>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 		<style>
-			body{
+			body {
 				font-family: monospace;
 				font-size: 16px;
 				background: #f2f2f2;
@@ -12,19 +12,15 @@
 			.content {
 				margin: 0 auto;
 				width: 512px;
-				padding-top: 12%;
-			}
-
-			.content form {
 				background: #FFF;
 				padding: 14px;
+				margin-top: 12%;
 				border-radius: 16px;
 				position: relative;
 				box-shadow: 0px 0px 6px 4px rgba(128, 128, 128, 0.3);
-				border: 2px solid #DDD;
 			}
 			
-			#title, footer{
+			#title, footer {
 				padding: 14px;
 				background: #EAEAEA;
 				margin: -14px;
@@ -32,23 +28,27 @@
 
 			#title {
 				padding: 14px;
-				border-bottom: 2px solid #DDD;
-				border-radius: 12px 12px 0px 0px;
+				border-bottom: 1px solid #DDD;
+				border-radius: 14px 14px 0px 0px;
 				margin-bottom: 20px;
 				text-align: center;
 				font-weight: 300;
 			}
 			
-			.hex, .contrast{
+			form {
+				margin: 0px;
+			}
+			
+			.hex, .contrast {
 				display: inline-block;
 				margin-top: 14px;
 			}
 			
-			.hex input{
+			.hex input {
 				text-transform:uppercase;
 			}
 			
-			.square{
+			.square {
 				border: 4px inset #D2D2D2;
 				background: #808080;
 				height: 96px;
@@ -80,7 +80,7 @@
 				cursor: pointer;
 			}
 			
-			#copy:hover:disabled{
+			#copy:hover:disabled {
 				cursor: not-allowed;
 			}
 			
@@ -90,8 +90,8 @@
 			}
 
 			footer {
-				border-top: 2px solid #DDD;
-				border-radius: 0px 0px 12px 12px;
+				border-top: 1px solid #DDD;
+				border-radius: 0px 0px 14px 14px;
 				margin-top: 20px;
 				text-align: right;
 			}
@@ -113,9 +113,9 @@
 			.watermark {
 				bottom: 24;
 				right: 24;
-				position: absolute;
-				width: 48px;
-				height: 48px;
+				position: fixed;
+				width: 36px;
+				height: 36px;
 				border-radius: 50%;
 				border: 1px solid #DDD;
 				padding: 4px;
@@ -226,7 +226,7 @@ BEZEL_CON = "<span id="contrast">1.300000</span>"<br><br>
 							$('#bezel-b').text((((hexToRgb(hex).b - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .001 + .055) + (contrast * .0001 + .0055))) / 128)).toFixed(10));
 						}
 						
-						$(".content form").css("box-shadow", "0px 0px 6px 4px rgba("+hexToRgb(hex).r+", "+hexToRgb(hex).g+", "+hexToRgb(hex).b+", 0.3)");
+						$(".content").css("box-shadow", "0px 0px 6px 4px rgba("+hexToRgb(hex).r+", "+hexToRgb(hex).g+", "+hexToRgb(hex).b+", 0.3)");
 						$(".square").css("box-shadow", "0px 0px 14px 4px rgba("+hexToRgb(hex).r+", "+hexToRgb(hex).g+", "+hexToRgb(hex).b+", 0.25)");
 						
 						$(".square").css("background", "#"+hex);
