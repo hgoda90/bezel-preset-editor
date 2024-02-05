@@ -63,17 +63,26 @@
 				margin-top: 4px;
 			}
 			
-			#submit {
-				margin: 36px auto 24px;
+			#submit, #copy {
 				width: 40%;
 				padding: 6px 12px;
 				border-radius: 6px;
-				display: block;
+				display: inline-block;
 				border: 2px solid #DDD;
+				margin: 0px 12px;
 			}
 			
-			#submit:hover{
+			#submit:hover, #copy:hover {
 				cursor: pointer;
+			}
+			
+			#copy:hover:disabled{
+				cursor: not-allowed;
+			}
+			
+			.input-group {
+				margin: 36px 0px 24px;
+				text-align: center;
 			}
 
 			footer {
@@ -102,10 +111,12 @@
 		<div class="content">
 			<form name="color-convert" method="post" onsubmit="return false;" autocomplete="off">
 				<h2 id="title">HEX to koko-aio Color Converter</h2>
-				BEZEL_R = "<span id="bezel-r">0.000000</span>"<br>
-				BEZEL_G = "<span id="bezel-g">0.000000</span>"<br>
-				BEZEL_B = "<span id="bezel-b">0.000000</span>"<br>
-				BEZEL_CON = "<span id="contrast">1.300000</span>"<br><br>
+				<div class="conversion">
+BEZEL_R = "<span id="bezel-r">0.000000</span>"<br>
+BEZEL_G = "<span id="bezel-g">0.000000</span>"<br>
+BEZEL_B = "<span id="bezel-b">0.000000</span>"<br>
+BEZEL_CON = "<span id="contrast">1.300000</span>"<br><br>
+				</div>
 				<div class="hex">HEX: # <input type="text" name="hex" placeholder="808080"></div>
 				<div class="contrast">Contrast: <input list="contrasts" name="contrast" placeholder="1.30">
 					<datalist id="contrasts">
@@ -132,13 +143,20 @@
 				<span class="error"></span>
 				<br>
 				<br>
-				<input type="submit" name="submit" value="Convert" id="submit">
+				<div class="input-group">
+					<input type="submit" name="submit" value="Convert" id="submit">
+					<input type="button" name="copy" value="Copy Settings" id="copy" onclick="presetCopy();" disabled>
+				</div>
 				<footer>
 					<a href="https://forums.libretro.com/t/koko-aio-shader-discussions-and-updates/38455">koko-aio Shader</a><em>by kokoko3k</em>
 				</footer>
 			</form>
 		</div>
 		<script>
+			function presetCopy() {
+				navigator.clipboard.writeText($(".conversion").text().trim());
+			}
+			
 			$(document).ready(function () {
 				$("form").submit(function (event) {
 					var hex = $(".hex input").val();
@@ -188,13 +206,17 @@
 						
 						$(".square").css("background", "#"+hex);
 						$("#contrast").text(contrast+"0000");
+						
+						$("#copy").prop("disabled", false);
 					}
 					
 					if(contrastError == "true"){
 						$(".error").text("Contrast must be between 0.01 and 3.75");
+						$("#copy").prop("disabled", true);
 					}
 					else if(hexError == "true"){
 						$(".error").text("HEX needs to be RRGGBB value");
+						$("#copy").prop("disabled", true);
 					}
 					else{
 						$(".error").empty();
