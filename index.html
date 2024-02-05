@@ -1,147 +1,208 @@
 <html>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-	<style>
-		body{
-			font-family: monospace;
-			font-size: 16px;
-			margin: 16px;
-			width: 410px;
-			height: 410px;
-		}
-		
-		.hex, .contrast{
-			display: inline-block;
-			margin-top: 14px;
-		}
-		
-		.hex input{
-			text-transform:uppercase;
-		}
-		
-		.square{
-			border: 2px solid #000;
-			background: #808080;
-			height: 72px;
-			width: 84px;
-			float: right;
-			margin-top: -40px;
-		}
-		
-		.error {
-			color: #FF0000;
-			display: inline-block;
-			margin-top: 4px;
-		}
-		
-		#submit{
-			margin-top: 24px;
-			width: 20%;
-		}
-		
-		#submit:hover{
-			cursor: pointer;
-		}
-	</style>
+	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+		<style>
+			body{
+				font-family: monospace;
+				font-size: 16px;
+				background: #f2f2f2;
+				color: #333;
+			}
+			
+			.content {
+				margin: 0 auto;
+				width: 512px;
+				padding-top: 192px;
+			}
+
+			.content form {
+				background: #FFF;
+				padding: 14px;
+				border-radius: 16px;
+				position: relative;
+				box-shadow: 0px 0px 20px 10px rgba(90, 90, 90, 0.05);
+				border: 2px solid #DDD;
+			}
+			
+			#title, footer{
+				padding: 14px;
+				background: #EAEAEA;
+				margin: -14px;
+			}
+
+			#title {
+				padding: 14px;
+				border-bottom: 2px solid #DDD;
+				border-radius: 12px 12px 0px 0px;
+				margin-bottom: 20px;
+			}
+			
+			.hex, .contrast{
+				display: inline-block;
+				margin-top: 14px;
+			}
+			
+			.hex input{
+				text-transform:uppercase;
+			}
+			
+			.square{
+				border: 2px solid #000;
+				background: #808080;
+				height: 96px;
+				width: 110px;
+				right: 48px;
+				bottom: 172px;
+				position: absolute;
+				margin-top: -40px;
+			}
+			
+			.error {
+				color: #FF0000;
+				display: inline-block;
+				margin-top: 4px;
+			}
+			
+			#submit {
+				margin: 36px auto 24px;
+				width: 40%;
+				padding: 6px 12px;
+				border-radius: 6px;
+				display: block;
+				border: 2px solid #DDD;
+			}
+			
+			#submit:hover{
+				cursor: pointer;
+			}
+
+			footer {
+				border-top: 2px solid #DDD;
+				border-radius: 0px 0px 12px 12px;
+				margin-top: 20px
+			}
+
+			footer em {
+				float: right;
+				opacity: 0.5;
+			}
+			
+			a {
+				text-decoration: none;
+				color: #666;
+				font-weight: bold;
+			}
+
+			a:hover {
+				color: #000;
+			}
+		</style>
+	</head>
 	<body>
-		<h2 id="title">HEX to koko-aio Color Converter</h2>
-		 <form name="color-convert" method="post" onsubmit="return false;" autocomplete="off">
-			BEZEL_R = "<span id="bezel-r">0.000000</span>"<br>
-			BEZEL_G = "<span id="bezel-g">0.000000</span>"<br>
-			BEZEL_B = "<span id="bezel-b">0.000000</span>"<br>
-			BEZEL_CON = "<span id="contrast">1.300000</span>"<br><br>
-			<div class="hex">HEX: # <input type="text" name="hex" placeholder="808080"></div>
-			<div class="contrast">Contrast: <input list="contrasts" name="contrast">
-				<datalist id="contrasts">
-					<option value=".70"><option value=".71"><option value=".72"><option value=".73"><option value=".74"><option value=".75"><option value=".76"><option value=".77"><option value=".78"><option value=".79">
-					<option value=".80"><option value=".81"><option value=".82"><option value=".83"><option value=".84"><option value=".85"><option value=".86"><option value=".87"><option value=".88"><option value=".89">
-					<option value=".90"><option value=".91"><option value=".92"><option value=".93"><option value=".94"><option value=".95"><option value=".96"><option value=".97"><option value=".98"><option value=".99">
-					<option value="1.00"><option value="1.01"><option value="1.02"><option value="1.03"><option value="1.04"><option value="1.05"><option value="1.06"><option value="1.07"><option value="1.08"><option value="1.09">
-					<option value="1.10"><option value="1.11"><option value="1.12"><option value="1.13"><option value="1.14"><option value="1.15"><option value="1.16"><option value="1.17"><option value="1.18"><option value="1.19">
-					<option value="1.20"><option value="1.21"><option value="1.22"><option value="1.23"><option value="1.24"><option value="1.25"><option value="1.26"><option value="1.27"><option value="1.28"><option value="1.29">
-					<option value="1.30"><option value="1.31"><option value="1.32"><option value="1.33"><option value="1.34"><option value="1.35"><option value="1.36"><option value="1.37"><option value="1.38"><option value="1.39">
-					<option value="1.40"><option value="1.41"><option value="1.42"><option value="1.43"><option value="1.44"><option value="1.45"><option value="1.46"><option value="1.47"><option value="1.48"><option value="1.49">
-					<option value="1.50"><option value="1.51"><option value="1.52"><option value="1.53"><option value="1.54"><option value="1.55"><option value="1.56"><option value="1.57"><option value="1.58"><option value="1.59">
-					<option value="1.60"><option value="1.61"><option value="1.62"><option value="1.63"><option value="1.64"><option value="1.65"><option value="1.66"><option value="1.67"><option value="1.68"><option value="1.69">
-					<option value="1.70"><option value="1.71"><option value="1.72"><option value="1.73"><option value="1.74"><option value="1.75"><option value="1.76"><option value="1.77"><option value="1.78"><option value="1.79">
-					<option value="1.80"><option value="1.81"><option value="1.82"><option value="1.83"><option value="1.84"><option value="1.85"><option value="1.86"><option value="1.87"><option value="1.88"><option value="1.89">
-					<option value="1.90"><option value="1.91"><option value="1.92"><option value="1.93"><option value="1.94"><option value="1.95"><option value="1.96"><option value="1.97"><option value="1.98"><option value="1.99">
-					<option value="2.00"><option value="2.01"><option value="2.02"><option value="2.03"><option value="2.04"><option value="2.05"><option value="2.06"><option value="2.07"><option value="2.08"><option value="2.09">
-					<option value="2.10"><option value="2.11"><option value="2.12"><option value="2.13"><option value="2.14"><option value="2.15"><option value="2.16"><option value="2.17"><option value="2.18"><option value="2.19">
-					<option value="2.20"><option value="2.21"><option value="2.22"><option value="2.23"><option value="2.24"><option value="2.25"><option value="2.26"><option value="2.27"><option value="2.28"><option value="2.29">
-					<option value="2.30"><option value="2.31"><option value="2.32"><option value="2.33"><option value="2.34"><option value="2.35"><option value="2.36"><option value="2.37"><option value="2.38"><option value="2.39">
-				</datalist>
-			</div>
-			<div class="square"></div>
-			<span class="error"></span>
-			<br>
-			<br>
-			<input type="submit" name="submit" value="Convert" id="submit">
-		</form>
-	</body>
-	<script>
-		$(document).ready(function () {
-			$("form").submit(function (event) {
-				var hex = $(".hex input").val();
-					contrast = $(".contrast input").val();
-					
-				if(contrast == ""){
-					contrast = "1.30";
-					$(".contrast input").val(contrast);
-					contrastError = "false";
-				}
-				else if(contrast < 0.01 || contrast > 3.75){
-					contrastError = "true";
-				}
-				else{
-					contrast = parseFloat($(".contrast input").val()).toFixed(2);
-					contrastError = "false";
-				}
-				
-				if(/^[0-9A-F]{6}$/i.test(hex) == false){
-					hexError = "true";
-				}
-				else if(contrastError == "false"){
-					function hexToRgb(color) {
-						var rgb = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(color);
+		<div class="content">
+			<form name="color-convert" method="post" onsubmit="return false;" autocomplete="off">
+				<h2 id="title">HEX to koko-aio Color Converter</h2>
+				BEZEL_R = "<span id="bezel-r">0.000000</span>"<br>
+				BEZEL_G = "<span id="bezel-g">0.000000</span>"<br>
+				BEZEL_B = "<span id="bezel-b">0.000000</span>"<br>
+				BEZEL_CON = "<span id="contrast">1.300000</span>"<br><br>
+				<div class="hex">HEX: # <input type="text" name="hex" placeholder="808080"></div>
+				<div class="contrast">Contrast: <input list="contrasts" name="contrast" placeholder="1.30">
+					<datalist id="contrasts">
+						<option value=".70"></option><option value=".71"></option><option value=".72"></option><option value=".73"></option><option value=".74"></option><option value=".75"></option><option value=".76"></option><option value=".77"></option><option value=".78"></option><option value=".79"></option>
+						<option value=".80"></option><option value=".81"></option><option value=".82"></option><option value=".83"></option><option value=".84"></option><option value=".85"></option><option value=".86"></option><option value=".87"></option><option value=".88"></option><option value=".89"></option>
+						<option value=".90"></option><option value=".91"></option><option value=".92"></option><option value=".93"></option><option value=".94"></option><option value=".95"></option><option value=".96"></option><option value=".97"></option><option value=".98"></option><option value=".99"></option>
+						<option value="1.00"></option><option value="1.01"></option><option value="1.02"></option><option value="1.03"></option><option value="1.04"></option><option value="1.05"></option><option value="1.06"></option><option value="1.07"></option><option value="1.08"></option><option value="1.09"></option>
+						<option value="1.10"></option><option value="1.11"></option><option value="1.12"></option><option value="1.13"></option><option value="1.14"></option><option value="1.15"></option><option value="1.16"></option><option value="1.17"></option><option value="1.18"></option><option value="1.19"></option>
+						<option value="1.20"></option><option value="1.21"></option><option value="1.22"></option><option value="1.23"></option><option value="1.24"></option><option value="1.25"></option><option value="1.26"></option><option value="1.27"></option><option value="1.28"></option><option value="1.29"></option>
+						<option value="1.30"></option><option value="1.31"></option><option value="1.32"></option><option value="1.33"></option><option value="1.34"></option><option value="1.35"></option><option value="1.36"></option><option value="1.37"></option><option value="1.38"></option><option value="1.39"></option>
+						<option value="1.40"></option><option value="1.41"></option><option value="1.42"></option><option value="1.43"></option><option value="1.44"></option><option value="1.45"></option><option value="1.46"></option><option value="1.47"></option><option value="1.48"></option><option value="1.49"></option>
+						<option value="1.50"></option><option value="1.51"></option><option value="1.52"></option><option value="1.53"></option><option value="1.54"></option><option value="1.55"></option><option value="1.56"></option><option value="1.57"></option><option value="1.58"></option><option value="1.59"></option>
+						<option value="1.60"></option><option value="1.61"></option><option value="1.62"></option><option value="1.63"></option><option value="1.64"></option><option value="1.65"></option><option value="1.66"></option><option value="1.67"></option><option value="1.68"></option><option value="1.69"></option>
+						<option value="1.70"></option><option value="1.71"></option><option value="1.72"></option><option value="1.73"></option><option value="1.74"></option><option value="1.75"></option><option value="1.76"></option><option value="1.77"></option><option value="1.78"></option><option value="1.79"></option>
+						<option value="1.80"></option><option value="1.81"></option><option value="1.82"></option><option value="1.83"></option><option value="1.84"></option><option value="1.85"></option><option value="1.86"></option><option value="1.87"></option><option value="1.88"></option><option value="1.89"></option>
+						<option value="1.90"></option><option value="1.91"></option><option value="1.92"></option><option value="1.93"></option><option value="1.94"></option><option value="1.95"></option><option value="1.96"></option><option value="1.97"></option><option value="1.98"></option><option value="1.99"></option>
+						<option value="2.00"></option><option value="2.01"></option><option value="2.02"></option><option value="2.03"></option><option value="2.04"></option><option value="2.05"></option><option value="2.06"></option><option value="2.07"></option><option value="2.08"></option><option value="2.09"></option>
+						<option value="2.10"></option><option value="2.11"></option><option value="2.12"></option><option value="2.13"></option><option value="2.14"></option><option value="2.15"></option><option value="2.16"></option><option value="2.17"></option><option value="2.18"></option><option value="2.19"></option>
+						<option value="2.20"></option><option value="2.21"></option><option value="2.22"></option><option value="2.23"></option><option value="2.24"></option><option value="2.25"></option><option value="2.26"></option><option value="2.27"></option><option value="2.28"></option><option value="2.29"></option>
+						<option value="2.30"></option><option value="2.31"></option><option value="2.32"></option><option value="2.33"></option><option value="2.34"></option><option value="2.35"></option><option value="2.36"></option><option value="2.37"></option><option value="2.38"></option><option value="2.39"></option>
+					</datalist>
+				</div>
+				<div class="square"></div>
+				<span class="error"></span>
+				<br>
+				<br>
+				<input type="submit" name="submit" value="Convert" id="submit">
+				<footer>
+					<a href="https://forums.libretro.com/t/koko-aio-shader-discussions-and-updates/38455">koko-aio Shader</a><em>by kokoko3k</em>
+				</footer>
+			</form>
+		</div>
+		<script>
+			$(document).ready(function () {
+				$("form").submit(function (event) {
+					var hex = $(".hex input").val();
+						contrast = $(".contrast input").val();
 						
-						return rgb ? {
-							r: parseInt(rgb[1], 16),
-							g: parseInt(rgb[2], 16),
-							b: parseInt(rgb[3], 16)
-						} : null;
+					if(contrast == ""){
+						contrast = "1.30";
+						$(".contrast input").val(contrast);
+						contrastError = "false";
 					}
-					
-					hexError = "false";
-					
-					if(contrast < 1){
-						$('#bezel-r').text((((hexToRgb(hex).r - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .1 + .105) + (contrast * .01 + .0105))) / 128)).toFixed(10));
-						$('#bezel-g').text((((hexToRgb(hex).g - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .1 + .105) + (contrast * .01 + .0105))) / 128)).toFixed(10));
-						$('#bezel-b').text((((hexToRgb(hex).b - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .01 + .055) + (contrast * .001 + .0055))) / 128)).toFixed(10));
+					else if(contrast < 0.01 || contrast > 3.75){
+						contrastError = "true";
 					}
 					else{
-						$('#bezel-r').text((((hexToRgb(hex).r - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .01 + .105) + (contrast * .001 + .0105))) / 128)).toFixed(10));
-						$('#bezel-g').text((((hexToRgb(hex).g - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .01 + .105) + (contrast * .001 + .0105))) / 128)).toFixed(10));
-						$('#bezel-b').text((((hexToRgb(hex).b - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .001 + .055) + (contrast * .0001 + .0055))) / 128)).toFixed(10));
+						contrast = parseFloat($(".contrast input").val()).toFixed(2);
+						contrastError = "false";
 					}
 					
+					if(/^[0-9A-F]{6}$/i.test(hex) == false){
+						hexError = "true";
+					}
+					else if(contrastError == "false"){
+						function hexToRgb(color) {
+							var rgb = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(color);
+							
+							return rgb ? {
+								r: parseInt(rgb[1], 16),
+								g: parseInt(rgb[2], 16),
+								b: parseInt(rgb[3], 16)
+							} : null;
+						}
+						
+						hexError = "false";
+						
+						if(contrast < 1){
+							$('#bezel-r').text((((hexToRgb(hex).r - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .1 + .105) + (contrast * .01 + .0105))) / 128)).toFixed(10));
+							$('#bezel-g').text((((hexToRgb(hex).g - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .1 + .105) + (contrast * .01 + .0105))) / 128)).toFixed(10));
+							$('#bezel-b').text((((hexToRgb(hex).b - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .01 + .055) + (contrast * .001 + .0055))) / 128)).toFixed(10));
+						}
+						else{
+							$('#bezel-r').text((((hexToRgb(hex).r - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .01 + .105) + (contrast * .001 + .0105))) / 128)).toFixed(10));
+							$('#bezel-g').text((((hexToRgb(hex).g - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .01 + .105) + (contrast * .001 + .0105))) / 128)).toFixed(10));
+							$('#bezel-b').text((((hexToRgb(hex).b - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .001 + .055) + (contrast * .0001 + .0055))) / 128)).toFixed(10));
+						}
+						
+						
+						$(".square").css("background", "#"+hex);
+						$("#contrast").text(contrast+"0000");
+					}
 					
-					$(".square").css("background", "#"+hex);
-					$("#contrast").text(contrast+"0000");
-				}
-				
-				if(contrastError == "true"){
-					$(".error").text("Contrast must be between 0.01 and 3.75");
-				}
-				else if(hexError == "true"){
-					$(".error").text("HEX needs to be RRGGBB value");
-				}
-				else{
-					$(".error").empty();
-				}	
+					if(contrastError == "true"){
+						$(".error").text("Contrast must be between 0.01 and 3.75");
+					}
+					else if(hexError == "true"){
+						$(".error").text("HEX needs to be RRGGBB value");
+					}
+					else{
+						$(".error").empty();
+					}	
 
-				event.preventDefault();
-				
+					event.preventDefault();
+					
 				});
-		});
-	</script>
+			});
+		</script>
+	</body>
 </html>
