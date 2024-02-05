@@ -12,7 +12,7 @@
 			.content {
 				margin: 0 auto;
 				width: 512px;
-				padding-top: 192px;
+				padding-top: 12%;
 			}
 
 			.content form {
@@ -109,6 +109,22 @@
 			a:hover {
 				color: #000;
 			}
+			
+			.watermark {
+				bottom: 24;
+				right: 24;
+				position: absolute;
+				width: 48px;
+				height: 48px;
+				border-radius: 50%;
+				border: 1px solid #DDD;
+				padding: 4px;
+				box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.05);
+			}
+			
+			.watermark:hover {
+				background: #FFF;
+			}
 		</style>
 	</head>
 	<body>
@@ -156,6 +172,9 @@ BEZEL_CON = "<span id="contrast">1.300000</span>"<br><br>
 				</footer>
 			</form>
 		</div>
+		<a href="https://forums.libretro.com/u/hgoda90">
+			<img class="watermark" src="watermark.png">
+		</a>
 		<script>
 			function presetCopy() {
 				navigator.clipboard.writeText($(".conversion").text().trim());
@@ -176,6 +195,7 @@ BEZEL_CON = "<span id="contrast">1.300000</span>"<br><br>
 					}
 					else{
 						contrast = parseFloat($(".contrast input").val()).toFixed(2);
+						$('input[name=contrast]').val(contrast);
 						contrastError = "false";
 					}
 					
@@ -213,6 +233,8 @@ BEZEL_CON = "<span id="contrast">1.300000</span>"<br><br>
 						$("#contrast").text(contrast+"0000");
 						
 						$("#copy").prop("disabled", false);
+						
+						$(".contrast input, .hex input").blur();
 					}
 					
 					if(contrastError == "true"){
