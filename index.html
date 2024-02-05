@@ -54,9 +54,8 @@
 				height: 96px;
 				width: 110px;
 				right: 48px;
-				bottom: 172px;
+				top: 132px;
 				position: absolute;
-				margin-top: -40px;
 				outline: 2px inset #BBB;
 				box-shadow: 0px 0px 14px 4px rgba(128, 128, 128, 0.25);
 			}
@@ -64,7 +63,9 @@
 			.error {
 				color: #FF0000;
 				display: inline-block;
-				margin-top: 4px;
+				margin-top: 14px;
+				height: 20px;
+				width: 50%;
 			}
 			
 			#submit, #copy {
@@ -85,7 +86,7 @@
 			}
 			
 			.input-group {
-				margin: 36px 0px 24px;
+				margin: 12px 24px;
 				text-align: center;
 			}
 
@@ -233,8 +234,6 @@ BEZEL_CON = "<span id="contrast">1.300000</span>"<br><br>
 						$("#contrast").text(contrast+"0000");
 						
 						$("#copy").prop("disabled", false);
-						
-						$(".contrast input, .hex input").blur();
 					}
 					
 					if(contrastError == "true"){
@@ -247,7 +246,9 @@ BEZEL_CON = "<span id="contrast">1.300000</span>"<br><br>
 					}
 					else{
 						$(".error").empty();
-					}	
+					}
+					
+					$(".contrast input, .hex input").blur();
 
 					event.preventDefault();
 					
