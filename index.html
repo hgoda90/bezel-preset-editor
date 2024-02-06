@@ -1,5 +1,7 @@
 <html>
 	<head>
+		<link rel="stylesheet" href="assets/OwlCarousel/owl.carousel.css">
+		<link rel="stylesheet" href="assets/OwlCarousel/owl.theme.default.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 		<style>
 			body {
@@ -14,7 +16,7 @@
 				width: 512px;
 				background: #FFF;
 				padding: 14px;
-				margin-top: 12%;
+				margin-top: 6%;
 				border-radius: 16px;
 				position: relative;
 				box-shadow: 0px 0px 6px 4px rgba(128, 128, 128, 0.3);
@@ -135,6 +137,81 @@
 				color: #000;
 			}
 			
+			.owl-wrapper {
+				width: 940px;
+				position: absolute;
+				bottom: 48px;
+				left: 50%;
+				margin-left: -542px;
+			}
+			
+			.owl-wrapper h3 {
+				margin-left: 72px;
+				font-size: 20px;
+				color: #666;
+			}
+			
+			.owl-carousel {
+				padding: 0px 72px;
+			}
+			
+			.owl-carousel .owl-nav .disabled {
+				opacity: 0.25;
+				cursor: default;
+			}
+			
+			.owl-carousel .owl-nav button.owl-prev, .owl-carousel .owl-nav button.owl-next {
+				background: #FFF;
+				border-radius: 50%;
+				font-size: 30px;
+				width: 36px;
+				height: 36px;
+				position: absolute;
+				bottom: 40%;
+			}
+			
+			.owl-prev {
+				left: 12px;
+			}
+			
+			.owl-next {
+				right: 12px;
+			}
+
+			.owl-prev span, .owl-next span {
+				margin-top: -4px;
+				display: block;
+			}
+			
+			.swatch {
+				background: #FFF;
+				padding: 4px;
+				border-radius: 4px 4px 0px 0px;
+				height: 180px;
+				text-align: right;
+				border: 1px solid #E2E2E2;
+				box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.05);
+			}
+			
+			.swatch:hover{
+				cursor: pointer;
+			}
+
+			.color {
+				height: 120px;
+				border: 1px solid #AAA;
+			}
+
+			.color-text {
+				padding: 8px 2px 4px;
+				margin: 0px;
+			}
+			
+			.color-hex {
+				color: rgba(0,0,0,0.5);
+				font-size: 12px;
+			}
+			
 			.watermark {
 				bottom: 24;
 				right: 24;
@@ -228,6 +305,41 @@ BEZEL_CON = "1.300000"
 				</footer>
 			</form>
 		</div>
+		<div class="owl-wrapper">
+			<h3>Console Color Swatches</h3>
+			<div class="owl-carousel">
+				<div class="swatch">
+					<div class="color" style="background: #242323;"></div>
+					<h4 class="color-text">Atari 2600</h4>
+					<span class="color-hex">(#242323)</span>
+				</div>
+				<div class="swatch">
+					<div class="color" style="background: #ED8332;"></div>
+					<h4 class="color-text">Dreamcast</h4>
+					<span class="color-hex">(#ED8332)</span>
+				</div>
+				<div class="swatch">
+					<div class="color" style="background: #4E4480;"></div>
+					<h4 class="color-text">GameCube</h4>
+					<span class="color-hex">(#4E4480)</span>
+				</div>
+				<div class="swatch">
+					<div class="color" style="background: #A8A5A6;"></div>
+					<h4 class="color-text">PlayStation</h4>
+					<span class="color-hex">(#A8A5A6)</span>
+				</div>
+				<div class="swatch">
+					<div class="color" style="background: #2A5FA3;"></div>
+					<h4 class="color-text">PlayStation 2</h4>
+					<span class="color-hex">(#2A5FA3)</span>
+				</div>
+				<div class="swatch">
+					<div class="color" style="background: #553A99;"></div>
+					<h4 class="color-text">Super Nintendo</h4>
+					<span class="color-hex">(#553A99)</span>
+				</div>
+			</div>
+		</div>
 		<a href="https://forums.libretro.com/u/hgoda90">
 			<img class="watermark" src="watermark.png">
 		</a>
@@ -281,12 +393,28 @@ BEZEL_CON = "1.300000"
 						$("#copy").prop("disabled", false);
 						
 						switch(hex){
-							case "553A99":
-								$(".message").text("Super Nintendo");
+							case "242323":
+								$(".message").text("Atari 2600");
 								$(".message").addClass("info");
 								break;
 							case "2A5FA3":
 								$(".message").text("PlayStation 2");
+								$(".message").addClass("info");
+								break;
+							case "4E4480":
+								$(".message").text("GameCube");
+								$(".message").addClass("info");
+								break;
+							case "553A99":
+								$(".message").text("Super Nintendo");
+								$(".message").addClass("info");
+								break;
+							case "A8A5A6":
+								$(".message").text("PlayStation");
+								$(".message").addClass("info");
+								break;
+							case "ED8332":
+								$(".message").text("Dreamcast");
 								$(".message").addClass("info");
 								break;
 							default:
@@ -309,6 +437,21 @@ BEZEL_CON = "1.300000"
 					event.preventDefault();
 					
 				});
+				
+				$(".swatch").on('click', function(){
+					$(".hex input").val($(this).children(".color-hex").text().replace("(", "").replace(")", "").replace("#", ""));
+					$("form").submit();
+					presetCopy();
+				});
+			});
+		</script>
+		<script src="assets/OwlCarousel/owl.carousel.js"></script>
+		<script>
+			$('.owl-carousel').owlCarousel({
+				loop:false,
+				margin:16,
+				nav:true,
+				items: 5
 			});
 		</script>
 	</body>
