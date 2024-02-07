@@ -4,99 +4,80 @@ body {
 	background: #f2f2f2;
 	color: #333;
 }
-
 .content {
 	margin: 0 auto;
-	width: 512px;
-	background: #FFF;
-	padding: 14px;
-	margin-top: 6%;
+	width: 948px;
+	padding: 24px;
+	margin-top: 4%;
 	border-radius: 16px;
 	position: relative;
-	box-shadow: 0px 0px 6px 4px rgba(128, 128, 128, 0.3);
 }
-
 #title, footer {
-	padding: 14px;
-	background: #EAEAEA;
+	padding: 24px 14px 0px;
 	margin: -14px;
 }
-
 #title {
 	padding: 14px;
-	border-bottom: 1px solid #DDD;
 	border-radius: 14px 14px 0px 0px;
-	margin-bottom: 20px;
-	text-align: center;
+	margin-bottom: 12%;
 	font-weight: 300;
 }
-
 form {
 	margin: 0px;
 }
-
 textarea {
 	font-size: 16px;
 	width: 256px;
 	margin-bottom: 12px;
 	resize: none;
 	border: none;
+	display: block;
+	background: transparent;
 }
-
 textarea:focus-visible {
 	outline: none;
 }
-
-.hex, .contrast {
-	width: 50%;
+.hex, .contrast, .rgb {
+	width: 30%;
 	margin-top: 14px;
+	display: inline-block;
 }
-
 .rgb {
-	margin-top: 14px;
 }
-
 .hex input {
 	text-transform:uppercase;
 }
-
 .rgb input {
 	width: 42px;
 	text-align: center;
 }
-
 #contrasts {
 	width: 25%;
 	font-size: 14px;
 }
-
 .square {
-	border: 4px inset #D2D2D2;
+	border: 1px solid #D2D2D2;
 	background: #808080;
+	border-radius: 6px;
 	height: 96px;
 	width: 110px;
-	right: 48px;
-	top: 132px;
+	right: 96px;
+	bottom: 148px;
 	position: absolute;
-	outline: 2px inset #BBB;
 	box-shadow: 0px 0px 14px 4px rgba(128, 128, 128, 0.25);
 }
-
 .message {
 	display: inline-block;
 	margin-top: 14px;
 	height: 20px;
 	width: 50%;
 }
-
 .error {
 	color: #FF0000;
 }
-
 .info {
 	font-weight: bold;
 }
-
 #submit, #copy {
 	width: 40%;
 	padding: 6px 12px;
@@ -104,193 +85,170 @@ textarea:focus-visible {
 	display: inline-block;
 	border: 2px solid #DDD;
 	margin: 0px 12px;
+	background: #EAEAEA;
 }
-
 #submit:hover, #copy:hover {
 	cursor: pointer;
 }
-
 #copy:hover:disabled {
 	cursor: not-allowed;
 }
-
 .input-group {
-	margin: 12px 24px;
+	margin: 24px 24px 0px;
 	text-align: center;
 }
-
 footer {
 	border-top: 1px solid #DDD;
 	border-radius: 0px 0px 14px 14px;
-	margin-top: 20px;
 	text-align: right;
+	position: absolute;
+	bottom: 24px;
+	width: 948px;
+	left: 50%;
+	margin: 32px -474px 0px;
 }
-
 footer em {
 	opacity: 0.5;
 }
-
 .switch-label {
 	display: inline-block;
 }
-
 .switch {
-  position: relative;
-  display: inline-block;
-  width: 28px;
-  height: 16px;
-  vertical-align: middle;
+	position: relative;
+	display: inline-block;
+	width: 28px;
+	height: 16px;
+	vertical-align: middle;
 }
-
 .switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
+	opacity: 0;
+	width: 0;
+	height: 0;
 }
-
 .slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #CCC;
-  -webkit-transition: .4s;
-  transition: .4s;
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #DDD;
+	-webkit-transition: .4s;
+	transition: .4s;
 }
-
 .slider:before {
-  position: absolute;
-  content: "";
-  height: 12px;
-  width: 12px;
-  left: 2px;
-  bottom: 2px;
-  background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
+	position: absolute;
+	content: "";
+	height: 12px;
+	width: 12px;
+	left: 2px;
+	bottom: 2px;
+	background-color: white;
+	-webkit-transition: .4s;
+	transition: .4s;
 }
-
 .switch input:checked + .slider {
-  background-color: #999;
+	background-color: #6668;
 }
-
 .switch input:focus + .slider {
-  box-shadow: 0 0 1px #999;
 }
-
 .switch input:checked + .slider:before {
-  -webkit-transform: translateX(12px);
-  -ms-transform: translateX(12px);
-  transform: translateX(12px);
+	-webkit-transform: translateX(12px);
+	-ms-transform: translateX(12px);
+	transform: translateX(12px);
 }
-
 .slider.round {
-  border-radius: 14px;
+	border-radius: 14px;
 }
-
 .slider.round:before {
-  border-radius: 50%;
+	border-radius: 50%;
 }
-
 .left-foot {
 	position: absolute;
 }
-
 .right-foot {
 	text-align: right;
 }
-
 a {
 	text-decoration: none;
 	color: #666;
 	font-weight: bold;
 }
-
 a:hover {
 	color: #000;
 }
-
 .owl-wrapper {
-	width: 940px;
+	width: 948px;
 	position: absolute;
-	bottom: 48px;
+	bottom: 120px;
 	left: 50%;
-	margin-left: -542px;
+	margin-left: -474px;
 }
-
 .owl-wrapper h3 {
-	margin-left: 72px;
 	font-size: 20px;
 	color: #666;
 }
-
 .owl-carousel {
 	padding: 0px 72px;
+	margin-left: -72px;
 }
-
 .owl-carousel .owl-nav .disabled {
 	opacity: 0.25;
 	cursor: default;
 }
-
 .owl-carousel .owl-nav button.owl-prev, .owl-carousel .owl-nav button.owl-next {
-	background: #FFF;
-	border-radius: 50%;
 	font-size: 30px;
 	width: 36px;
 	height: 36px;
 	position: absolute;
-	bottom: 40%;
+	bottom: 45%;
 }
-
 .owl-prev {
 	left: 12px;
 }
-
 .owl-next {
 	right: 12px;
 }
-
 .owl-prev span, .owl-next span {
 	margin-top: -4px;
 	display: block;
 }
-
 .swatch {
-	background: #FFF;
-	padding: 4px;
+	padding: 10px 10px 0px;
 	border-radius: 4px 4px 0px 0px;
-	height: 180px;
-	text-align: right;
-	border: 1px solid #E2E2E2;
-	box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.05);
+	height: 100px;
 }
-
-.swatch:hover{
+.colors {
+	display: inline-block;
+}
+.color {
+	width: 22px;
+	height: 22px;
+	display: inline-block;
+	border-radius: 50%;
+	margin: 4px;
+	border: 2px solid rgba(0, 0, 0, 0.1);
+}
+.color:hover {
 	cursor: pointer;
 }
-
-.color {
-	height: 120px;
-	border: 1px solid #AAA;
+.color-title, .color-code {
+	display: block;
 }
-
-.color-text {
+.color-title {
 	padding: 8px 2px 4px;
 	margin: 0px;
 }
-
-.color-hex {
+.color-code {
 	color: rgba(0,0,0,0.5);
 	font-size: 12px;
+	opacity: 0;
+	transition: all .2s ease-in-out;
+	text-align: center;
 }
-
-.color-text, .color-hex {
-	margin-right: 4px;
+.colors:hover ~ .color-code {
+	opacity: 1;
 }
-
 .watermark {
 	bottom: 24;
 	right: 24;
@@ -302,28 +260,22 @@ a:hover {
 	padding: 4px;
 	box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.05);
 }
-
 .watermark:hover {
 	background: #FFF;
 }
-
 ::-webkit-scrollbar {
 	width: 10px;
 }
- 
 ::-webkit-scrollbar-track {
 	box-shadow: inset 0px 0px 6px 0px #DDD;
 }
- 
 ::-webkit-scrollbar-thumb {
 	background: #DDD;
 }
-
 @media screen and (max-height: 912px){
 	.owl-wrapper {
 		position: relative;
 		margin: 60px auto 24px;
 		bottom: unset;
 		left: unset;
-	}
-}
+		

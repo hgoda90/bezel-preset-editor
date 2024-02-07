@@ -10,7 +10,7 @@
 	<body>
 		<div class="content">
 			<form name="color-convert" method="post" onsubmit="return false;" autocomplete="off">
-				<h2 id="title">koko-aio Color Converter</h2>
+				<h1 id="title">koko-aio Color Converter</h1>
 				<textarea class="conversion" rows="5" cols="36" readonly>
 BEZEL_R = "0.000000"
 BEZEL_G = "0.000000"
@@ -66,55 +66,55 @@ BEZEL_CON = "1.300000"
 					<input type="submit" name="submit" value="Convert" id="submit">
 					<input type="button" name="copy" value="Copy Settings" id="copy" onclick="presetCopy();" disabled>
 				</div>
-				<footer>
-					<div class="left-foot">
-						<span class="switch-label">HEX</span>
-						<label class="switch">
-							<input type="checkbox">
-							<span class="slider round"></span>
-						</label>
-						<span class="switch-label">RGB</span></div>
-					<div class="right-foot">
-						<a href="https://forums.libretro.com/t/koko-aio-shader-discussions-and-updates/38455">koko-aio Shader</a><em> by kokoko3k</em>
-					</div>
-				</footer>
 			</form>
 		</div>
 		<div class="owl-wrapper">
 			<h3>Console Color Swatches</h3>
 			<div class="owl-carousel">
 				<div class="swatch" id="a26">
-					<div class="color"></div>
-					<h4 class="color-text">Atari 2600</h4>
-					<span class="color-hex"></span>
+					<div class="colors"></div>
+					<h4 class="color-title">Atari 2600</h4>
+					<span class="color-code"></span>
 				</div>
 				<div class="swatch" id="dc">
-					<div class="color"></div>
-					<h4 class="color-text">Dreamcast</h4>
-					<span class="color-hex"></span>
+					<div class="colors"></div>
+					<h4 class="color-title">Dreamcast</h4>
+					<span class="color-code"></span>
 				</div>
 				<div class="swatch" id="gc">
-					<div class="color"></div>
-					<h4 class="color-text">GameCube</h4>
-					<span class="color-hex"></span>
+					<div class="colors"></div>
+					<h4 class="color-title">GameCube</h4>
+					<span class="color-code"></span>
 				</div>
 				<div class="swatch" id="ps">
-					<div class="color"></div>
-					<h4 class="color-text">PlayStation</h4>
-					<span class="color-hex"></span>
+					<div class="colors"></div>
+					<h4 class="color-title">PlayStation</h4>
+					<span class="color-code"></span>
 				</div>
 				<div class="swatch" id="ps2">
-					<div class="color"></div>
-					<h4 class="color-text">PlayStation 2</h4>
-					<span class="color-hex"></span>
+					<div class="colors"></div>
+					<h4 class="color-title">PlayStation 2</h4>
+					<span class="color-code"></span>
 				</div>
 				<div class="swatch" id="snes">
-					<div class="color"></div>
-					<h4 class="color-text">Super Nintendo</h4>
-					<span class="color-hex"></span>
+					<div class="colors"></div>
+					<h4 class="color-title">Super Nintendo</h4>
+					<span class="color-code"></span>
 				</div>
 			</div>
 		</div>
+		<footer>
+			<div class="left-foot">
+				<span class="switch-label">HEX</span>
+				<label class="switch">
+					<input type="checkbox">
+					<span class="slider round"></span>
+				</label>
+				<span class="switch-label">RGB</span></div>
+			<div class="right-foot">
+				<a href="https://forums.libretro.com/t/koko-aio-shader-discussions-and-updates/38455">koko-aio Shader</a><em> by kokoko3k</em>
+			</div>
+		</footer>
 		<a href="https://forums.libretro.com/u/hgoda90">
 			<img class="watermark" src="assets/images/watermark.png">
 		</a>
