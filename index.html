@@ -10,14 +10,8 @@
 	<body>
 		<div class="content">
 			<form name="color-convert" method="post" onsubmit="return false;" autocomplete="off">
-				<h1 id="title">koko-aio Color Converter</h1>
-				<textarea class="conversion" rows="5" cols="36" readonly>
-BEZEL_R = "0.000000"
-BEZEL_G = "0.000000"
-BEZEL_B = "0.000000"
-BEZEL_CON = "1.300000"
-				</textarea>
-				
+				<h1 id="title">Bezel Color Converter</h1>
+				<textarea class="conversion" rows="5" cols="36" readonly></textarea>
 				<div class="contrast">
 					<label for="contrasts">Contrast: </label>
 					<select id="contrasts" name="contrasts">
@@ -67,6 +61,24 @@ BEZEL_CON = "1.300000"
 					<input type="button" name="copy" value="Copy Settings" id="copy" onclick="presetCopy();" disabled>
 				</div>
 			</form>
+			<div class="switch-panel bezel">
+				<span class="panel-label">Bezel Style: </span>
+				<span class="switch-label">koko-aio</span>
+				<label class="switch">
+					<input type="checkbox">
+					<span class="slider round"></span>
+				</label>
+				<span class="switch-label">MBZ</span>
+			</div>
+			<div class="switch-panel format">
+				<span class="panel-label">Color Format: </span>
+				<span class="switch-label">HEX</span>
+				<label class="switch">
+					<input type="checkbox">
+					<span class="slider round"></span>
+				</label>
+				<span class="switch-label">RGB</span>
+			</div>
 		</div>
 		<div class="owl-wrapper">
 			<h3>Console Color Swatches</h3>
@@ -105,19 +117,22 @@ BEZEL_CON = "1.300000"
 		</div>
 		<footer>
 			<div class="left-foot">
-				<span class="switch-label">HEX</span>
-				<label class="switch">
-					<input type="checkbox">
-					<span class="slider round"></span>
-				</label>
-				<span class="switch-label">RGB</span></div>
+				<div class="credit">
+					<a href="https://forums.libretro.com/t/koko-aio-shader-discussions-and-updates/38455">koko-aio Shader</a><em> by kokoko3k</em>
+				</div>
+				<div class="credit">
+					<a href="https://forums.libretro.com/t/mega-bezel-reflection-shader-feedback-and-updates/25512">Mega Bezel</a><em> by HyperspaceMadness</em>
+				</div>
+			</div>
 			<div class="right-foot">
-				<a href="https://forums.libretro.com/t/koko-aio-shader-discussions-and-updates/38455">koko-aio Shader</a><em> by kokoko3k</em>
+				<div class="credit">
+					<em>Designed by hgoda90</em>
+					<a href="https://forums.libretro.com/u/hgoda90">
+						<img class="watermark" src="assets/images/watermark.png">
+					</a>
+				</div>
 			</div>
 		</footer>
-		<a href="https://forums.libretro.com/u/hgoda90">
-			<img class="watermark" src="assets/images/watermark.png">
-		</a>
 		<script src="assets/functions.js"></script>
 		<script src="assets/OwlCarousel/owl.carousel.js"></script>
 		<script>
@@ -125,7 +140,7 @@ BEZEL_CON = "1.300000"
 				loop:false,
 				margin:16,
 				nav:true,
-				items: 5
+				items: 6
 			});
 		</script>
 	</body>
