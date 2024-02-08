@@ -25,16 +25,17 @@ function getCookie(cname) {
 }
 
 function bezelToggle(){
-	$(".colors").empty();
-	
-	if($(".switch-panel.bezel input").is(":checked")){
+	if($(".switch-panel .bezel input").is(":checked")){
 		setCookie("bezelStyle", "mbz", 30);
 		bezelStyle = "mbz";
 		$(".contrast").css("opacity", 0);
+		$(".range-wrap, .imageType").css("opacity", 1);
+		$("#mb").css("display", "inline-block");
+		$("#koko").css("display", "none");
 		
 		$(".square").css("background", "#1A1A1A");
 		$(".square").css("box-shadow", "0px 0px 14px 4px rgba(26, 26, 26, 0.25)");
-		$(".conversion").text('HSM_BZL_COLOR_HUE = "0.000000"\nHSM_BZL_COLOR_SATURATION = "0.000000"\nHSM_BZL_COLOR_VALUE = "10.000000"');
+		settingReset();
 		
 		if($("div").hasClass("hex") == true){
 			$(".hex input").attr("placeholder", "1A1A1A");
@@ -51,6 +52,9 @@ function bezelToggle(){
 		$(".contrast").css("opacity", 1);
 		$(".contrast option").prop("selected", false);
 		$(".contrast option[value='1.30']").prop("selected", "selected");
+		$(".range-wrap, .imageType").css("opacity", 0);
+		$("#koko").css("display", "inline-block");
+		$("#mb").css("display", "none");
 		
 		$(".square").css("background", "#808080");
 		$(".square").css("box-shadow", "0px 0px 14px 4px rgba(128, 128, 128, 0.25)");
@@ -67,19 +71,18 @@ function bezelToggle(){
 	}
 	
 	$(".info").empty();
-	swatches();
 };
 
 function formatToggle(){
 	$(".colors").empty();
 	
-	if($(".switch-panel.format input").is(":checked")){
+	if($(".switch-panel .format input").is(":checked")){
 		setCookie("colorFormat", "RGB", 30);
 		colorFormat = "RGB";
 		$(".hex").remove();
 		
 		if(bezelStyle == "koko-aio"){
-			$("textarea").after('<div class="rgb">rgb(<input type="text" name="red" placeholder="128">, <input type="text" name="green" placeholder="128">, <input type="text" name="blue" placeholder="128">)</div>');
+			$(".text-box").after('<div class="rgb">rgb(<input type="text" name="red" placeholder="128">, <input type="text" name="green" placeholder="128">, <input type="text" name="blue" placeholder="128">)</div>');
 			$(".square").css("background", "#808080");
 			$(".square").css("box-shadow", "0px 0px 14px 4px rgba(128, 128, 128, 0.25)");
 			$(".conversion").text('BEZEL_R = "0.000000"\nBEZEL_G = "0.000000"\nBEZEL_B = "0.000000"\nBEZEL_CON = "1.300000"');
@@ -88,11 +91,11 @@ function formatToggle(){
 			$(".contrast option[value='1.30']").prop("selected", "selected");
 		}
 		else{
-			$("textarea").after('<div class="rgb">rgb(<input type="text" name="red" placeholder="26">, <input type="text" name="green" placeholder="26">, <input type="text" name="blue" placeholder="26">)</div>');
+			$(".text-box").after('<div class="rgb">rgb(<input type="text" name="red" placeholder="26">, <input type="text" name="green" placeholder="26">, <input type="text" name="blue" placeholder="26">)</div>');
 			$(".square").css("background", "#1A1A1A");
 			$(".square").css("box-shadow", "0px 0px 14px 4px rgba(26, 26, 26, 0.25)");
-			$(".conversion").text('HSM_BZL_COLOR_HUE = "0.000000"\nHSM_BZL_COLOR_SATURATION = "0.000000"\nHSM_BZL_COLOR_VALUE = "10.000000"');
 			$(".contrast").css("opacity", 0);
+			settingReset();
 		}
 	}
 	else{
@@ -101,7 +104,7 @@ function formatToggle(){
 		$(".rgb").remove();
 		
 		if(bezelStyle == "koko-aio"){
-			$("textarea").after('<div class="hex">HEX: # <input type="text" name="hex" placeholder="808080"></div>');
+			$(".text-box").after('<div class="hex">HEX: # <input type="text" name="hex" placeholder="808080"></div>');
 			$(".square").css("background", "#808080");
 			$(".square").css("box-shadow", "0px 0px 14px 4px rgba(128, 128, 128, 0.25)");
 			$(".conversion").text('BEZEL_R = "0.000000"\nBEZEL_G = "0.000000"\nBEZEL_B = "0.000000"\nBEZEL_CON = "1.300000"');
@@ -110,16 +113,56 @@ function formatToggle(){
 			$(".contrast option[value='1.30']").prop("selected", "selected");
 		}
 		else{
-			$("textarea").after('<div class="hex">HEX: # <input type="text" name="hex" placeholder="1A1A1A"></div>');
+			$(".text-box").after('<div class="hex">HEX: # <input type="text" name="hex" placeholder="1A1A1A"></div>');
 			$(".square").css("background", "#1A1A1A");
 			$(".square").css("box-shadow", "0px 0px 14px 4px rgba(26, 26, 26, 0.25)");
-			$(".conversion").text('HSM_BZL_COLOR_HUE = "0.000000"\nHSM_BZL_COLOR_SATURATION = "0.000000"\nHSM_BZL_COLOR_VALUE = "10.000000"');
 			$(".contrast").css("opacity", 0);
+			settingReset();
 		}
 	}
 	
 	$(".info").empty();
 	swatches();
+}
+
+function layerToggle(imageLayer){
+	setCookie("imageLayer", imageLayer, 30);
+	
+	if(getCookie("imageType") == ""){
+		imageType = "standard";
+	}
+	else{
+		imageType = getCookie("imageType");
+	}
+	
+	if($(".hex input, .rgb input").val() == ""){
+		$(".square").css("background", "#1A1A1A");
+		$(".square").css("box-shadow", "0px 0px 14px 4px rgba(26, 26, 26, 0.25)");
+		
+		settingReset();
+		$(".info").empty();
+	}
+	else{
+		$("form").submit();
+	}
+}
+
+function imageTypeToggle(){
+	if($(".switch-panel .imageType input").is(":checked")){
+		setCookie("imageType", "yellow", 30);
+		imageType = "yellow";
+	}
+	else{
+		setCookie("imageType", "standard", 30);
+		imageType = "standard";
+	}
+	
+	if($(".hex input, .rgb input").val() == ""){
+		settingReset();
+	}
+	else{
+		$("form").submit();
+	}
 }
 
 function rgbToHSB(r, g, b){
@@ -130,8 +173,81 @@ function rgbToHSB(r, g, b){
     return [60 * (h < 0 ? h + 6 : h), v && (n / v) * 100, v * 100];
 }
 
+function settingReset(){
+	if(getCookie("imageLayer") == ""){
+		imageLayer = "Bezel";
+	}
+	else{
+		imageLayer = getCookie("imageLayer");
+	}
+	
+	if(getCookie("imageType") == ""){
+		imageType = "standard";
+	}
+	else{
+		imageType = getCookie("imageType");
+	}
+		
+	if(imageType == "yellow"){
+		switch(imageLayer){
+			case "Bezel":
+				$(".conversion").text('HSM_BZL_COLOR_HUE = "0.000000"\nHSM_BZL_COLOR_SATURATION = "0.000000"\nHSM_BZL_COLOR_VALUE = "10.000000"');
+				break;
+			case "Background":
+				$(".conversion").text('HSM_BG_HUE = "0.000000"\nHSM_BG_SATURATION = "100.000000"\nHSM_BG_BRIGHTNESS = "100.000000"\nHSM_BG_GAMMA = "1.000000"');
+				break;
+			case "LED":
+				$(".conversion").text('HSM_LED_HUE = "0.000000"\nHSM_LED_SATURATION = "100.000000"\nHSM_LED_BRIGHTNESS = "100.000000"\nHSM_LED_GAMMA = "1.000000"');
+				break;
+			case "Device":
+				$(".conversion").text('HSM_DEVICE_HUE = "0.000000"\nHSM_DEVICE_SATURATION = "100.000000"\nHSM_DEVICE_BRIGHTNESS = "100.000000"\nHSM_DEVICE_GAMMA = "1.000000"');
+				break;
+			case "Device LED":
+				$(".conversion").text('HSM_DEVICELED_HUE = "0.000000"\nHSM_DEVICELED_SATURATION = "100.000000"\nHSM_DEVICELED_BRIGHTNESS = "100.000000"\nHSM_DEVICELED_GAMMA = "1.000000"');
+				break;
+			case "Decal":
+				$(".conversion").text('HSM_DECAL_HUE = "0.000000"\nHSM_DECAL_SATURATION = "100.000000"\nHSM_DECAL_BRIGHTNESS = "100.000000"\nHSM_DECAL_GAMMA = "1.000000"');
+				break;
+			case "Top":
+				$(".conversion").text('HSM_TOP_HUE = "0.000000"\nHSM_TOP_SATURATION = "100.000000"\nHSM_TOP_BRIGHTNESS = "100.000000"\nHSM_TOP_GAMMA = "1.000000"');
+				break;
+			case "Cab Glass":
+				$(".conversion").text('HSM_CAB_GLASS_HUE = "0.000000"\nHSM_CAB_GLASS_SATURATION = "100.000000"\nHSM_CAB_GLASS_BRIGHTNESS = "100.000000"\nHSM_CAB_GLASS_GAMMA = "1.000000"');
+				break;
+		}
+	}
+	else{
+		switch(imageLayer){
+			case "Bezel":
+				$(".conversion").text('HSM_BZL_COLOR_HUE = "0.000000"\nHSM_BZL_COLOR_SATURATION = "0.000000"\nHSM_BZL_COLOR_VALUE = "10.000000"');
+				break;
+			case "Background":
+				$(".conversion").text('HSM_BG_HUE = "0.000000"\nHSM_BG_SATURATION = "100.000000"\nHSM_BG_BRIGHTNESS = "100.000000"');
+				break;
+			case "LED":
+				$(".conversion").text('HSM_LED_HUE = "0.000000"\nHSM_LED_SATURATION = "100.000000"\nHSM_LED_BRIGHTNESS = "100.000000"');
+				break;
+			case "Device":
+				$(".conversion").text('HSM_DEVICE_HUE = "0.000000"\nHSM_DEVICE_SATURATION = "100.000000"\nHSM_DEVICE_BRIGHTNESS = "100.000000"');
+				break;
+			case "Device LED":
+				$(".conversion").text('HSM_DEVICELED_HUE = "0.000000"\nHSM_DEVICELED_SATURATION = "100.000000"\nHSM_DEVICELED_BRIGHTNESS = "100.000000"');
+				break;
+			case "Decal":
+				$(".conversion").text('HSM_DECAL_HUE = "0.000000"\nHSM_DECAL_SATURATION = "100.000000"\nHSM_DECAL_BRIGHTNESS = "100.000000"');
+				break;
+			case "Top":
+				$(".conversion").text('HSM_TOP_HUE = "0.000000"\nHSM_TOP_SATURATION = "100.000000"\nHSM_TOP_BRIGHTNESS = "100.000000"');
+				break;
+			case "Cab Glass":
+				$(".conversion").text('HSM_CAB_GLASS_HUE = "0.000000"\nHSM_CAB_GLASS_SATURATION = "100.000000"\nHSM_CAB_GLASS_BRIGHTNESS = "100.000000"');
+				break;
+		}
+	}
+}
+
 function swatches(){
-	if($(".switch-panel.format input").is(":checked")){
+	if($(".switch-panel .format input").is(":checked")){
 		$(".swatch").each(function(element){
 			switch($(this).attr("id")){
 				case "a26":
@@ -149,6 +265,12 @@ function swatches(){
 					$(this).find(".colors").append("<div class='color' data-code='rgb(38, 38, 38)' style='background: rgb(38, 38, 38);'></div>");
 					$(this).find(".colors").append("<div class='color' data-code='rgb(173, 173, 173)' style='background: rgb(173, 173, 173);'></div>");
 					$(this).find(".colors").append("<div class='color' data-code='rgb(255, 120, 31)' style='background: rgb(255, 120, 31);'></div>");
+					break;
+				case "nes":
+					$(this).find(".colors").append("<div class='color' data-code='rgb(229, 229, 229)' style='background: rgb(229, 229, 229);'></div>");
+					$(this).find(".colors").append("<div class='color' data-code='rgb(165, 162, 162)' style='background: rgb(165, 162, 162);'></div>");
+					$(this).find(".colors").append("<div class='color' data-code='rgb(13, 12, 12)' style='background: rgb(13, 12, 12);'></div>");
+					$(this).find(".colors").append("<div class='color' data-code='rgb(221, 32, 32)' style='background: rgb(221, 32, 32);'></div>");
 					break;
 				case "ps":
 					$(this).find(".colors").append("<div class='color' data-code='rgb(168, 165, 166)' style='background: rgb(168, 165, 166);'></div>");
@@ -190,6 +312,12 @@ function swatches(){
 					$(this).find(".colors").append("<div class='color' data-code='#ADADAD' style='background: #ADADAD;'></div>");
 					$(this).find(".colors").append("<div class='color' data-code='#FF781F' style='background: #FF781F;'></div>");
 					break;
+				case "nes":
+					$(this).find(".colors").append("<div class='color' data-code='#E5E5E5' style='background: #E5E5E5;'></div>");
+					$(this).find(".colors").append("<div class='color' data-code='#A5A2A2' style='background: #A5A2A2;'></div>");
+					$(this).find(".colors").append("<div class='color' data-code='#0D0C0C' style='background: #0D0C0C;'></div>");
+					$(this).find(".colors").append("<div class='color' data-code='#DD2020' style='background: #DD2020;'></div>");
+					break;
 				case "ps":
 					$(this).find(".colors").append("<div class='color' data-code='#A8A5A6' style='background: #A8A5A6;'></div>");
 					$(this).find(".colors").append("<div class='color' data-code='#D5DDED' style='background: #D5DDED;'></div>");
@@ -229,7 +357,6 @@ function swatches(){
 		}
 		
 		$("form").submit();
-		presetCopy();
 	});
 	
 	$(".swatch .color").on('mouseover', function(){
@@ -237,20 +364,9 @@ function swatches(){
 	});
 }
 
-if(getCookie("colorFormat") == "" || getCookie("colorFormat") == "HEX"){
-	colorFormat = "HEX";
-	$(".switch-panel.format input").attr("checked", false);
-	$("textarea").after('<div class="hex">HEX: # <input type="text" name="hex"></div>');
-}
-else{
-	colorFormat = "RGB";
-	$(".switch-panel.format input").attr("checked", true);
-	$("textarea").after('<div class="rgb">rgb(<input type="text" name="red">, <input type="text" name="green">, <input type="text" name="blue">)</div>');
-}
-
 if(getCookie("bezelStyle") == "" || getCookie("bezelStyle") == "koko-aio"){
 	bezelStyle = "koko-aio";
-	$(".switch-panel.bezel input").attr("checked", false);
+	$(".switch-panel .bezel input").attr("checked", false);
 	
 	if($("div").hasClass("hex") == true){
 		$(".hex input").attr("placeholder", "808080");
@@ -263,7 +379,8 @@ if(getCookie("bezelStyle") == "" || getCookie("bezelStyle") == "koko-aio"){
 }
 else{
 	bezelStyle = "mbz";
-	$(".switch-panel.bezel input").attr("checked", true);
+	settingReset();
+	$(".switch-panel .bezel input").attr("checked", true);
 	
 	if($("div").hasClass("hex") == true){
 		$(".hex input").attr("placeholder", "1A1A1A");
@@ -275,21 +392,59 @@ else{
 	}
 }
 
-$(".switch-panel.bezel input").on('click', function(){
+if(getCookie("imageLayer") == "" || getCookie("imageLayer") == "Bezel"){
+	layerToggle(getCookie("imageLayer"), 0, 0, 10);
+}
+else{
+	layerToggle(getCookie("imageLayer"), 0, 100, 100);
+}
+
+if(getCookie("imageType") == "" || getCookie("imageType") == "standard"){
+	imageType = "standard";
+	$(".switch-panel .imageType input").attr("checked", false);
+}
+else{
+	imageType = "yellow";
+	$(".switch-panel .imageType input").attr("checked", true);
+}
+
+$(".switch-panel .bezel input").on('click', function(){
 	bezelToggle();
+	
+	if(bezelStyle == "koko-aio"){
+		setTimeout(function () {
+			$(".switch-panel").addClass("koko-aio");
+		}, 400);
+	}
+	else{
+		$(".switch-panel").removeClass("koko-aio");
+	}
 });
 
-$(".switch-panel.format input").on('click', function(){
+$(".switch-panel .format input").on('click', function(){
 	formatToggle();
 });
 
+$(".switch-panel .imageType input").on('click', function(){
+	imageTypeToggle();
+});
+
+formatToggle();
 bezelToggle();
+
+if(bezelStyle == "koko-aio"){
+	$(".switch-panel").addClass("koko-aio");
+}
+else{
+	$(".switch-panel").removeClass("koko-aio");
+}
 
 $(document).ready(function () {
 	$("form").submit(function (event) {
 		$(".message").removeClass("info");
 		$(".message").removeClass("error");
 		$(".message").empty();
+		hexError = rgbError = "false";
 		
 		if(colorFormat == "HEX"){
 			var hex = $(".hex input").val().toUpperCase();
@@ -328,7 +483,6 @@ $(document).ready(function () {
 				}
 				else{
 					mbzHSB = rgbToHSB(hexToRgb(hex).r, hexToRgb(hex).g, hexToRgb(hex).b);
-					$(".conversion").text('HSM_BZL_COLOR_HUE = "'+Math.round(mbzHSB[0])+'.000000"\nHSM_BZL_COLOR_SATURATION = "'+Math.round(mbzHSB[1])+'.000000"\nHSM_BZL_COLOR_VALUE = "'+Math.round(mbzHSB[2])+'.000000"');
 				}
 				
 				$(".square").css("box-shadow", "0px 0px 14px 4px rgba("+hexToRgb(hex).r+", "+hexToRgb(hex).g+", "+hexToRgb(hex).b+", 0.25)");
@@ -341,13 +495,6 @@ $(document).ready(function () {
 					case "946E4A":
 					case "FF9233":
 						$(".message").text("Atari 2600");
-						$(".message").addClass("info");
-						break;
-					case "118FDB":
-					case "13017D":
-					case "212129":
-					case "2A5FA3":
-						$(".message").text("PlayStation 2");
 						$(".message").addClass("info");
 						break;
 					case "3A75C2":
@@ -363,17 +510,31 @@ $(document).ready(function () {
 						$(".message").text("GameCube");
 						$(".message").addClass("info");
 						break;
-					case "553A99":
-					case "908A99":
-					case "B5B6E4":
-					case "D1D1D1":
-						$(".message").text("Super Nintendo");
+					case "0D0C0C":
+					case "A5A2A2":
+					case "DD2020":
+					case "E5E5E5":
+						$(".message").text("Nintendo Entertainment System");
 						$(".message").addClass("info");
 						break;
 					case "1D315C":
 					case "A8A5A6":
 					case "D5DDED":
 						$(".message").text("PlayStation");
+						$(".message").addClass("info");
+						break;
+					case "118FDB":
+					case "13017D":
+					case "212129":
+					case "2A5FA3":
+						$(".message").text("PlayStation 2");
+						$(".message").addClass("info");
+						break;
+					case "553A99":
+					case "908A99":
+					case "B5B6E4":
+					case "D1D1D1":
+						$(".message").text("Super Nintendo");
 						$(".message").addClass("info");
 						break;
 					default:
@@ -426,7 +587,6 @@ $(document).ready(function () {
 				}
 				else{
 					mbzHSB = rgbToHSB(r, g, b);
-					$(".conversion").text('HSM_BZL_COLOR_HUE = "'+Math.round(mbzHSB[0])+'.000000"\nHSM_BZL_COLOR_SATURATION = "'+Math.round(mbzHSB[1])+'.000000"\nHSM_BZL_COLOR_VALUE = "'+Math.round(mbzHSB[2])+'.000000"');
 				}
 				
 				$(".square").css("box-shadow", "0px 0px 14px 4px rgba("+r+", "+g+", "+b+", 0.25)");
@@ -439,13 +599,6 @@ $(document).ready(function () {
 					case "rgb(148, 110, 74)":
 					case "rgb(255, 146, 51)":
 						$(".message").text("Atari 2600");
-						$(".message").addClass("info");
-						break;
-					case "rgb(17, 143, 219)":
-					case "rgb(19, 6, 128)":
-					case "rgb(33, 33, 41)":
-					case "rgb(42, 95, 163)":
-						$(".message").text("PlayStation 2");
 						$(".message").addClass("info");
 						break;
 					case "rgb(58, 117, 194)":
@@ -461,17 +614,31 @@ $(document).ready(function () {
 						$(".message").text("GameCube");
 						$(".message").addClass("info");
 						break;
-					case "rgb(85, 58, 153)":
-					case "rgb(144,138,153)":
-					case "rgb(181, 182, 228)":
-					case "rgb(209, 209, 209)":
-						$(".message").text("Super Nintendo");
+					case "rgb(13, 12, 12)":
+					case "rgb(165, 162, 162)":
+					case "rgb(221, 32, 32)":
+					case "rgb(229, 229, 229)":
+						$(".message").text("Nintendo Entertainment System");
 						$(".message").addClass("info");
 						break;
 					case "rgb(29, 49, 92)":
 					case "rgb(168, 165, 166)":
 					case "rgb(213, 221, 237)":
 						$(".message").text("PlayStation");
+						$(".message").addClass("info");
+						break;
+					case "rgb(17, 143, 219)":
+					case "rgb(19, 6, 128)":
+					case "rgb(33, 33, 41)":
+					case "rgb(42, 95, 163)":
+						$(".message").text("PlayStation 2");
+						$(".message").addClass("info");
+						break;
+					case "rgb(85, 58, 153)":
+					case "rgb(144,138,153)":
+					case "rgb(181, 182, 228)":
+					case "rgb(209, 209, 209)":
+						$(".message").text("Super Nintendo");
 						$(".message").addClass("info");
 						break;
 				}
@@ -488,8 +655,142 @@ $(document).ready(function () {
 			
 			$(".contrast input, .rgb input").blur();
 		}
+		
+		if(bezelStyle == "mbz" && hexError == "false" && rgbError == "false"){
+			var hue = Math.round(mbzHSB[0]),
+				saturation = Math.round(mbzHSB[1]),
+				brightness = Math.round(mbzHSB[2]);
+			
+			if(imageType == "yellow"){
+				if(hue < 52 && $(".range input").val() != "1"){
+					hue = hue + 308;
+				}
+				else if($(".range input").val() != "1"){
+					hue = hue - 52;
+				}
+				
+				switch($(".range input").val()){
+					case "1":
+						$(".conversion").text('HSM_BZL_COLOR_HUE = "'+hue+'.000000"\nHSM_BZL_COLOR_SATURATION = "'+saturation+'.000000"\nHSM_BZL_COLOR_VALUE = "'+brightness+'.000000"');
+						break;
+					case "2":
+						$(".conversion").text('HSM_BG_HUE = "'+hue+'.000000"\nHSM_BG_SATURATION = "'+saturation+'.000000"\nHSM_BG_BRIGHTNESS = "'+brightness+'.000000"\nHSM_BG_GAMMA = "0.450000"');
+						break;
+					case "3":
+						$(".conversion").text('HSM_LED_HUE = "'+hue+'.000000"\nHSM_LED_SATURATION = "'+saturation+'.000000"\nHSM_LED_BRIGHTNESS = "'+brightness+'.000000"\nHSM_LED_GAMMA = "0.450000"');
+						break;
+					case "4":
+						$(".conversion").text('HSM_DEVICE_HUE = "'+hue+'.000000"\nHSM_DEVICE_SATURATION = "'+saturation+'.000000"\nHSM_DEVICE_BRIGHTNESS = "'+brightness+'.000000"\nHSM_DEVICE_GAMMA = "0.450000"');
+						break;
+					case "5":
+						$(".conversion").text('HSM_DEVICELED_HUE = "'+hue+'.000000"\nHSM_DEVICELED_SATURATION = "'+saturation+'.000000"\nHSM_DEVICELED_BRIGHTNESS = "'+brightness+'.000000"\nHSM_DEVICELED_GAMMA = "0.450000"');
+						break;
+					case "6":
+						$(".conversion").text('HSM_DECAL_HUE = "'+hue+'.000000"\nHSM_DECAL_SATURATION = "'+saturation+'.000000"\nHSM_DECAL_BRIGHTNESS = "'+brightness+'.000000"\nHSM_DECAL_GAMMA = "0.450000"');
+						break;
+					case "7":
+						$(".conversion").text('HSM_TOP_HUE = "'+hue+'.000000"\nHSM_TOP_SATURATION = "'+saturation+'.000000"\nHSM_TOP_BRIGHTNESS = "'+brightness+'.000000"\nHSM_BRIGHTNESS_GAMMA = "0.450000"');
+						break;
+					case "8":
+						$(".conversion").text('HSM_CAB_GLASS_HUE = "'+hue+'.000000"\nHSM_CAB_GLASS_SATURATION = "'+saturation+'.000000"\nHSM_CAB_GLASS_BRIGHTNESS = "'+brightness+'.000000"\nHSM_CAB_GLASS_GAMMA = "0.450000"');
+						break;
+				}
+			}
+			else{
+				switch($(".range input").val()){
+					case "1":
+						$(".conversion").text('HSM_BZL_COLOR_HUE = "'+hue+'.000000"\nHSM_BZL_COLOR_SATURATION = "'+saturation+'.000000"\nHSM_BZL_COLOR_VALUE = "'+brightness+'.000000"');
+						break;
+					case "2":
+						$(".conversion").text('HSM_BG_HUE = "'+hue+'.000000"\nHSM_BG_SATURATION = "'+saturation+'.000000"\nHSM_BG_BRIGHTNESS = "'+brightness+'.000000"');
+						break;
+					case "3":
+						$(".conversion").text('HSM_LED_HUE = "'+hue+'.000000"\nHSM_LED_SATURATION = "'+saturation+'.000000"\nHSM_LED_BRIGHTNESS = "'+brightness+'.000000"');
+						break;
+					case "4":
+						$(".conversion").text('HSM_DEVICE_HUE = "'+hue+'.000000"\nHSM_DEVICE_SATURATION = "'+saturation+'.000000"\nHSM_DEVICE_BRIGHTNESS = "'+brightness+'.000000"');
+						break;
+					case "5":
+						$(".conversion").text('HSM_DEVICELED_HUE = "'+hue+'.000000"\nHSM_DEVICELED_SATURATION = "'+saturation+'.000000"\nHSM_DEVICELED_BRIGHTNESS = "'+brightness+'.000000"');
+						break;
+					case "6":
+						$(".conversion").text('HSM_DECAL_HUE = "'+hue+'.000000"\nHSM_DECAL_SATURATION = "'+saturation+'.000000"\nHSM_DECAL_BRIGHTNESS = "'+brightness+'.000000"');
+						break;
+					case "7":
+						$(".conversion").text('HSM_TOP_HUE = "'+hue+'.000000"\nHSM_TOP_SATURATION = "'+saturation+'.000000"\nHSM_TOP_BRIGHTNESS = "'+brightness+'.000000"');
+						break;
+					case "8":
+						$(".conversion").text('HSM_CAB_GLASS_HUE = "'+hue+'.000000"\nHSM_CAB_GLASS_SATURATION = "'+saturation+'.000000"\nHSM_CAB_GLASS_BRIGHTNESS = "'+brightness+'.000000"');
+						break;
+				}
+			}
+		}
 
 		event.preventDefault();
 		
 	});
+	
+	if(bezelStyle == "mbz"){
+		var sheet = document.createElement('style'),
+		$rangeInput = $('.range input'),
+		prefs = ['webkit-slider-runnable-track', 'moz-range-track', 'ms-track'];
+
+		document.body.appendChild(sheet);
+
+		var getTrackStyle = function (el) {
+		  var curVal = el.value,
+		  val = (curVal - 1) * 16.666666667,
+		  style = '';
+
+		  // Set active label
+		  $('.range-labels li').removeClass('active');
+
+		  var curLabel = $('.range-labels').find('li:nth-child(' + curVal + ')');
+
+		  curLabel.addClass('active');
+
+		  return style;
+		};
+
+		$rangeInput.on('input', function () {
+		  sheet.textContent = getTrackStyle(this);
+		});
+
+		// Change input value on label click
+		$('.range-labels li').on('click', function () {
+			var index = $(this).index();
+
+			$rangeInput.val(index + 1).trigger('input');
+			layerToggle($(this).text());
+		});
+		
+		switch(imageLayer){
+			case "Bezel":
+				$rangeInput.val(1).trigger('input');
+				break;
+			case "Background":
+				$rangeInput.val(2).trigger('input');
+				break;
+			case "LED":
+				$rangeInput.val(3).trigger('input');
+				break;
+			case "Device":
+				$rangeInput.val(4).trigger('input');
+				break;
+			case "Device LED":
+				$rangeInput.val(5).trigger('input');
+				break;
+			case "Decal":
+				$rangeInput.val(6).trigger('input');
+				break;
+			case "Top":
+				$rangeInput.val(7).trigger('input');
+				break;
+			case "Cab Glass":
+				$rangeInput.val(8).trigger('input');
+				break;
+			default:
+				$rangeInput.val(1).trigger('input');
+		}
+	}
 });

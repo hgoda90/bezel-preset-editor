@@ -5,13 +5,17 @@
 		<link rel="stylesheet" href="assets/OwlCarousel/owl.carousel.css">
 		<link rel="stylesheet" href="assets/OwlCarousel/owl.theme.default.css">
 		<link rel="stylesheet" href="assets/layout.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 	</head>
 	<body>
 		<div class="content">
 			<form name="color-convert" method="post" onsubmit="return false;" autocomplete="off">
-				<h1 id="title">Bezel Color Converter</h1>
-				<textarea class="conversion" rows="5" cols="36" readonly></textarea>
+				<h1 class="title"><span id="mb">Mega Bezel</span><span id="koko">koko-aio</span> Color Converter</h1>
+				<div class="text-box">
+					<textarea class="conversion" rows="5" cols="36" readonly></textarea>
+					<span class="material-symbols-outlined" id="copy" onclick="presetCopy();"  disabled>content_copy</span>
+				</div>
 				<div class="contrast">
 					<label for="contrasts">Contrast: </label>
 					<select id="contrasts" name="contrasts">
@@ -52,33 +56,58 @@
 						<option value="2.40">2.40</option>
 					</select>
 				</div>
-				<div class="square"></div>
+				<div class="square">
+					<span class="square-title">Preview:</span>
+				</div>
 				<span class="message"></span>
 				<br>
 				<br>
-				<div class="input-group">
-					<input type="submit" name="submit" value="Convert" id="submit">
-					<input type="button" name="copy" value="Copy Settings" id="copy" onclick="presetCopy();" disabled>
+				<div class="switch-panel">
+					<div class="bezel">
+						<span class="panel-label">Bezel Style: </span>
+						<span class="switch-label">koko-aio</span>
+						<label class="switch">
+							<input type="checkbox">
+							<span class="slider round"></span>
+						</label>
+						<span class="switch-label">MBZ</span>
+					</div>
+					<div class="format">
+						<span class="panel-label">Color Format: </span>
+						<span class="switch-label">HEX</span>
+						<label class="switch">
+							<input type="checkbox">
+							<span class="slider round"></span>
+						</label>
+						<span class="switch-label">RGB</span>
+					</div>
+					<div class="imageType">
+						<span class="panel-label">Image Type: </span>
+						<span class="switch-label">Standard</span>
+						<label class="switch">
+							<input type="checkbox">
+							<span class="slider round"></span>
+						</label>
+						<span class="switch-label">Yellow</span>
+					</div>
 				</div>
+				<div class="range-wrap">
+					<div class="range">
+					  <input type="range" min="1" max="8" steps="1" value="1">
+					</div>
+					<ul class="range-labels">
+					  <li class="active selected">Bezel</li>
+					  <li>Background</li>
+					  <li>LED</li>
+					  <li>Device</li>
+					  <li>Device LED</li>
+					  <li>Decal</li>
+					  <li>Top</li>
+					  <li>Cab Glass</li>
+					</ul>
+				</div>
+				<input type="submit" name="submit" value="Convert" id="submit">
 			</form>
-			<div class="switch-panel bezel">
-				<span class="panel-label">Bezel Style: </span>
-				<span class="switch-label">koko-aio</span>
-				<label class="switch">
-					<input type="checkbox">
-					<span class="slider round"></span>
-				</label>
-				<span class="switch-label">MBZ</span>
-			</div>
-			<div class="switch-panel format">
-				<span class="panel-label">Color Format: </span>
-				<span class="switch-label">HEX</span>
-				<label class="switch">
-					<input type="checkbox">
-					<span class="slider round"></span>
-				</label>
-				<span class="switch-label">RGB</span>
-			</div>
 		</div>
 		<div class="owl-wrapper">
 			<h3>Console Color Swatches</h3>
@@ -96,6 +125,11 @@
 				<div class="swatch" id="gc">
 					<div class="colors"></div>
 					<h4 class="color-title">GameCube</h4>
+					<span class="color-code"></span>
+				</div>
+				<div class="swatch" id="nes">
+					<div class="colors"></div>
+					<h4 class="color-title">NES</h4>
 					<span class="color-code"></span>
 				</div>
 				<div class="swatch" id="ps">
