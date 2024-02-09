@@ -13,8 +13,8 @@
 			<form name="color-convert" method="post" onsubmit="return false;" autocomplete="off">
 				<h1 class="title"><span id="mb">Mega Bezel</span><span id="koko">koko-aio</span> Color Converter</h1>
 				<div class="text-box">
-					<textarea class="conversion" rows="5" cols="36" readonly></textarea>
-					<span class="material-symbols-outlined" id="copy" onclick="presetCopy();"  disabled>content_copy</span>
+					<textarea class="conversion" rows="6" cols="36" readonly></textarea>
+					<span class="button" id="copy" onclick="presetCopy();" disabled>Copy</span>
 				</div>
 				<div class="contrast">
 					<label for="contrasts">Contrast: </label>
@@ -91,11 +91,11 @@
 						<span class="switch-label">Yellow</span>
 					</div>
 				</div>
-				<div class="range-wrap">
-					<div class="range">
+				<div class="layers-wrap">
+					<div class="layer">
 					  <input type="range" min="1" max="8" steps="1" value="1">
 					</div>
-					<ul class="range-labels">
+					<ul class="layer-labels">
 					  <li>Bezel</li>
 					  <li>Background</li>
 					  <li>LED</li>
@@ -106,7 +106,7 @@
 					  <li>Cab Glass</li>
 					</ul>
 				</div>
-				<input type="submit" name="submit" value="Convert" id="submit">
+				<input type="submit" name="submit" value="Convert" id="submit" class="button">
 			</form>
 		</div>
 		<div class="owl-wrapper">
@@ -125,6 +125,11 @@
 				<div class="swatch" id="gc">
 					<div class="colors"></div>
 					<h4 class="color-title">GameCube</h4>
+					<span class="color-code"></span>
+				</div>
+				<div class="swatch" id="n64">
+					<div class="colors"></div>
+					<h4 class="color-title">Nintendo 64</h4>
 					<span class="color-code"></span>
 				</div>
 				<div class="swatch" id="nes">
@@ -167,6 +172,7 @@
 				</div>
 			</div>
 		</footer>
+		<script src="assets/colors.js"></script>
 		<script src="assets/functions.js"></script>
 		<script src="assets/OwlCarousel/owl.carousel.js"></script>
 		<script>
@@ -174,7 +180,8 @@
 				loop:false,
 				margin:16,
 				nav:true,
-				items: 6
+				items: 5,
+				slideBy: 2
 			});
 		</script>
 	</body>

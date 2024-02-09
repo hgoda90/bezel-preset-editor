@@ -1,7 +1,3 @@
-function presetCopy() {
-	navigator.clipboard.writeText($(".conversion").text().trim());
-}
-
 function setCookie(cname, cvalue, exdays) {
 	const d = new Date();
 	d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
@@ -28,6 +24,7 @@ function bezelToggle(){
 	if($(".switch-panel .bezel input").is(":checked")){
 		setCookie("bezelStyle", "mbz", 30);
 		bezelStyle = "mbz";
+		layerToggle(imageLayer);
 	}
 	else{
 		setCookie("bezelStyle", "koko-aio", 30);
@@ -36,12 +33,16 @@ function bezelToggle(){
 	
 	$(".info").empty();
 	colorReset();
+	settingReset();
 };
 
 function colorReset(){
+	$(".hex input").val("");
+	$(".rgb input").val("");
+	
 	if(bezelStyle == "mbz"){
 		$(".contrast").css("opacity", 0);
-		$(".range-wrap, .imageType").css("opacity", 1);
+		$(".layers-wrap, .imageType").css("opacity", 1);
 		$("#mb").css("display", "inline-block");
 		$("#koko").css("display", "none");
 		
@@ -62,7 +63,7 @@ function colorReset(){
 		$(".contrast").css("opacity", 1);
 		$(".contrast option").prop("selected", false);
 		$(".contrast option[value='1.30']").prop("selected", "selected");
-		$(".range-wrap, .imageType").css("opacity", 0);
+		$(".layers-wrap, .imageType").css("opacity", 0);
 		$("#koko").css("display", "inline-block");
 		$("#mb").css("display", "none");
 		
@@ -103,13 +104,51 @@ function formatToggle(){
 
 function layerToggle(imageLayers){
 	setCookie("imageLayer", imageLayers, 30);
-	imageLayer = imageLayers;
+	imageLayer = imageLayers
 	
 	if($(".hex input, .rgb input").val() == ""){
 		settingReset();
 	}
 	else{
 		$("form").submit();
+	}
+	
+	switch(imageLayer){
+		case "Bezel":
+			$(".layer input").val(1).trigger('input');
+			$(".layer-labels li:nth-child(1)").addClass("active");
+			break;
+		case "Background":
+			$(".layer input").val(2).trigger('input');
+			$(".layer-labels li:nth-child(2)").addClass("active");
+			break;
+		case "LED":
+			$(".layer input").val(3).trigger('input');
+			$(".layer-labels li:nth-child(3)").addClass("active");
+			break;
+		case "Device":
+			$(".layer input").val(4).trigger('input');
+			$(".layer-labels li:nth-child(4)").addClass("active");
+			break;
+		case "Device LED":
+			$(".layer input").val(5).trigger('input');
+			$(".layer-labels li:nth-child(5)").addClass("active");
+			break;
+		case "Decal":
+			$(".layer input").val(6).trigger('input');
+			$(".layer-labels li:nth-child(6)").addClass("active");
+			break;
+		case "Top":
+			$(".layer input").val(7).trigger('input');
+			$(".layer-labels li:nth-child(7)").addClass("active");
+			break;
+		case "Cab Glass":
+			$(".layer input").val(8).trigger('input');
+			$(".layer-labels li:nth-child(8)").addClass("active");
+			break;
+		default:
+			$(".layer input").val(1).trigger('input');
+			$(".layer-labels li:nth-child(1)").addClass("active");
 	}
 }
 
@@ -129,6 +168,10 @@ function imageTypeToggle(){
 	else{
 		$("form").submit();
 	}
+}
+
+function presetCopy() {
+	navigator.clipboard.writeText($(".conversion").text().trim());
 }
 
 function rgbToHSB(r, g, b){
@@ -241,6 +284,7 @@ function start(){
 	
 	if(bezelStyle == "mbz"){
 		$(".switch-panel .bezel input").attr("checked", "checked");
+		layerToggle(imageLayer);
 	}
 	
 	if(colorFormat == "RGB"){
@@ -257,100 +301,7 @@ function start(){
 }
 
 function swatches(){
-	if(colorFormat == "RGB"){
-		$(".swatch").each(function(element){
-			switch($(this).attr("id")){
-				case "a26":
-					$(this).find(".colors").append("<div class='color' data-code='rgb(36, 35, 35)' style='background: rgb(36, 35, 35);'></div>");
-					$(this).find(".colors").append("<div class='color' data-code='rgb(148, 110, 74)' style='background: rgb(148, 110, 74);'></div>");
-					$(this).find(".colors").append("<div class='color' data-code='rgb(255, 146, 51)' style='background: rgb(255, 146, 51);'></div>");
-					break;
-				case "dc":
-					$(this).find(".colors").append("<div class='color' data-code='rgb(237, 131, 50)' style='background: rgb(237, 131, 50);'></div>");
-					$(this).find(".colors").append("<div class='color' data-code='rgb(207, 51, 17)' style='background: rgb(207, 51, 17);'></div>");
-					$(this).find(".colors").append("<div class='color' data-code='rgb(58, 117, 194)' style='background: rgb(58, 117, 194);'></div>");
-					break;
-				case "gc":
-					$(this).find(".colors").append("<div class='color' data-code='rgb(78, 68, 128)' style='background: rgb(78, 68, 128);'></div>");
-					$(this).find(".colors").append("<div class='color' data-code='rgb(38, 38, 38)' style='background: rgb(38, 38, 38);'></div>");
-					$(this).find(".colors").append("<div class='color' data-code='rgb(173, 173, 173)' style='background: rgb(173, 173, 173);'></div>");
-					$(this).find(".colors").append("<div class='color' data-code='rgb(255, 120, 31)' style='background: rgb(255, 120, 31);'></div>");
-					break;
-				case "nes":
-					$(this).find(".colors").append("<div class='color' data-code='rgb(229, 229, 229)' style='background: rgb(229, 229, 229);'></div>");
-					$(this).find(".colors").append("<div class='color' data-code='rgb(165, 162, 162)' style='background: rgb(165, 162, 162);'></div>");
-					$(this).find(".colors").append("<div class='color' data-code='rgb(13, 12, 12)' style='background: rgb(13, 12, 12);'></div>");
-					$(this).find(".colors").append("<div class='color' data-code='rgb(221, 32, 32)' style='background: rgb(221, 32, 32);'></div>");
-					break;
-				case "ps":
-					$(this).find(".colors").append("<div class='color' data-code='rgb(168, 165, 166)' style='background: rgb(168, 165, 166);'></div>");
-					$(this).find(".colors").append("<div class='color' data-code='rgb(213, 221, 237)' style='background: rgb(213, 221, 237);'></div>");
-					$(this).find(".colors").append("<div class='color' data-code='rgb(29, 49, 92)' style='background: rgb(29, 49, 92);'></div>");
-					break;
-				case "ps2":
-					$(this).find(".colors").append("<div class='color' data-code='rgb(17, 143, 219)' style='background: rgb(17, 143, 219);'></div>");
-					$(this).find(".colors").append("<div class='color' data-code='rgb(42, 95, 163)' style='background: rgb(42, 95, 163);'></div>");
-					$(this).find(".colors").append("<div class='color' data-code='rgb(19, 6, 128)' style='background: rgb(19, 6, 128);'></div>");
-					$(this).find(".colors").append("<div class='color' data-code='rgb(33, 33, 41)' style='background: rgb(33, 33, 41);'></div>");
-					break;
-				case "snes":
-					$(this).find(".colors").append("<div class='color' data-code='rgb(181, 182, 228)' style='background: rgb(181, 182, 228);'></div>");
-					$(this).find(".colors").append("<div class='color' data-code='rgb(85, 58, 153)' style='background: rgb(85, 58, 153);'></div>");
-					$(this).find(".colors").append("<div class='color' data-code='rgb(144,138,153)' style='background: rgb(144,138,153);'></div>");
-					$(this).find(".colors").append("<div class='color' data-code='rgb(209, 209, 209)' style='background: rgb(209, 209, 209);'></div>");
-					break;
-			}
-		});
-		$(".color-code").css("text-align", "center");
-	}
-	else{
-		$(".swatch").each(function(){
-			switch($(this).attr("id")){
-				case "a26":
-					$(this).find(".colors").append("<div class='color' data-code='#242323' style='background: #242323;'></div>");
-					$(this).find(".colors").append("<div class='color' data-code='#946E4A' style='background: #946E4A'></div>");
-					$(this).find(".colors").append("<div class='color' data-code='#FF9233' style='background: #FF9233;'></div>");
-					break;
-				case "dc":
-					$(this).find(".colors").append("<div class='color' data-code='#ED8332' style='background: #ED8332;'></div>");
-					$(this).find(".colors").append("<div class='color' data-code='#CF3311' style='background: #CF3311;'></div>");
-					$(this).find(".colors").append("<div class='color' data-code='#3A75C2' style='background: #3A75C2;'></div>");
-					break;
-				case "gc":
-					$(this).find(".colors").append("<div class='color' data-code='#4E4480' style='background: #4E4480;'></div>");
-					$(this).find(".colors").append("<div class='color' data-code='#262626' style='background: #262626;'></div>");
-					$(this).find(".colors").append("<div class='color' data-code='#ADADAD' style='background: #ADADAD;'></div>");
-					$(this).find(".colors").append("<div class='color' data-code='#FF781F' style='background: #FF781F;'></div>");
-					break;
-				case "nes":
-					$(this).find(".colors").append("<div class='color' data-code='#E5E5E5' style='background: #E5E5E5;'></div>");
-					$(this).find(".colors").append("<div class='color' data-code='#A5A2A2' style='background: #A5A2A2;'></div>");
-					$(this).find(".colors").append("<div class='color' data-code='#0D0C0C' style='background: #0D0C0C;'></div>");
-					$(this).find(".colors").append("<div class='color' data-code='#DD2020' style='background: #DD2020;'></div>");
-					break;
-				case "ps":
-					$(this).find(".colors").append("<div class='color' data-code='#A8A5A6' style='background: #A8A5A6;'></div>");
-					$(this).find(".colors").append("<div class='color' data-code='#D5DDED' style='background: #D5DDED;'></div>");
-					$(this).find(".colors").append("<div class='color' data-code='#1D315C' style='background: #1D315C;'></div>");
-					break;
-				case "ps2":
-					$(this).find(".colors").append("<div class='color' data-code='#118FDB' style='background: #118FDB;'></div>");
-					$(this).find(".colors").append("<div class='color' data-code='#2A5FA3' style='background: #2A5FA3;'></div>");
-					$(this).find(".colors").append("<div class='color' data-code='#13017D' style='background: #13017D;'></div>");
-					$(this).find(".colors").append("<div class='color' data-code='#212129' style='background: #212129;'></div>");
-					break;
-				case "snes":
-					$(this).find(".colors").append("<div class='color' data-code='#B5B6E4' style='background: #B5B6E4;'></div>");
-					$(this).find(".colors").append("<div class='color' data-code='#553A99' style='background: #553A99;'></div>");
-					$(this).find(".colors").append("<div class='color' data-code='#908A99' style='background: #908A99;'></div>");
-					$(this).find(".colors").append("<div class='color' data-code='#D1D1D1' style='background: #D1D1D1;'></div>");
-					break;
-			}
-		});
-		
-		$(".color-code").css("text-align", "left");
-	}
-	
+	swatchColors();
 	$(".hex input").val("");
 	$(".rgb input").val("");
 	
@@ -404,6 +355,15 @@ else{
 	$(".switch-panel").removeClass("koko-aio");
 }
 
+$('.layer-labels li').on('click', function () {
+	var index = $(this).index();
+	
+	$(".layer-labels li").removeClass("active");
+	$(".layer input").val(index+1).trigger('input');
+	$('.layer-labels').find("li:nth-child("+(index+1)+")").addClass("active");
+	layerToggle($(this).text());
+});
+
 $(document).ready(function () {
 	$("form").submit(function (event) {
 		$(".message").removeClass("info");
@@ -454,58 +414,7 @@ $(document).ready(function () {
 				$(".square").css("background", "#"+hex);
 				
 				$("#copy").prop("disabled", false);
-				
-				switch(hex){
-					case "242323":
-					case "946E4A":
-					case "FF9233":
-						$(".message").text("Atari 2600");
-						$(".message").addClass("info");
-						break;
-					case "3A75C2":
-					case "CF3311":
-					case "ED8332":
-						$(".message").text("Dreamcast");
-						$(".message").addClass("info");
-						break;
-					case "262626":
-					case "4E4480":
-					case "ADADAD":
-					case "FF781F":
-						$(".message").text("GameCube");
-						$(".message").addClass("info");
-						break;
-					case "0D0C0C":
-					case "A5A2A2":
-					case "DD2020":
-					case "E5E5E5":
-						$(".message").text("Nintendo Entertainment System");
-						$(".message").addClass("info");
-						break;
-					case "1D315C":
-					case "A8A5A6":
-					case "D5DDED":
-						$(".message").text("PlayStation");
-						$(".message").addClass("info");
-						break;
-					case "118FDB":
-					case "13017D":
-					case "212129":
-					case "2A5FA3":
-						$(".message").text("PlayStation 2");
-						$(".message").addClass("info");
-						break;
-					case "553A99":
-					case "908A99":
-					case "B5B6E4":
-					case "D1D1D1":
-						$(".message").text("Super Nintendo");
-						$(".message").addClass("info");
-						break;
-					default:
-						$(".message").removeClass("info");
-						$(".message").empty();
-				}
+				colorMessage(hex);
 			}
 			
 			if(hexError == "true"){
@@ -558,55 +467,7 @@ $(document).ready(function () {
 				$(".square").css("background", rgb);
 				
 				$("#copy").prop("disabled", false);
-				
-				switch(rgb){
-					case "rgb(36, 35, 35)":
-					case "rgb(148, 110, 74)":
-					case "rgb(255, 146, 51)":
-						$(".message").text("Atari 2600");
-						$(".message").addClass("info");
-						break;
-					case "rgb(58, 117, 194)":
-					case "rgb(207, 51, 17)":
-					case "rgb(237, 131, 50)":
-						$(".message").text("Dreamcast");
-						$(".message").addClass("info");
-						break;
-					case "rgb(38, 38, 38)":
-					case "rgb(78, 68, 128)":
-					case "rgb(173, 173, 173)":
-					case "rgb(255, 120, 31)":
-						$(".message").text("GameCube");
-						$(".message").addClass("info");
-						break;
-					case "rgb(13, 12, 12)":
-					case "rgb(165, 162, 162)":
-					case "rgb(221, 32, 32)":
-					case "rgb(229, 229, 229)":
-						$(".message").text("Nintendo Entertainment System");
-						$(".message").addClass("info");
-						break;
-					case "rgb(29, 49, 92)":
-					case "rgb(168, 165, 166)":
-					case "rgb(213, 221, 237)":
-						$(".message").text("PlayStation");
-						$(".message").addClass("info");
-						break;
-					case "rgb(17, 143, 219)":
-					case "rgb(19, 6, 128)":
-					case "rgb(33, 33, 41)":
-					case "rgb(42, 95, 163)":
-						$(".message").text("PlayStation 2");
-						$(".message").addClass("info");
-						break;
-					case "rgb(85, 58, 153)":
-					case "rgb(144,138,153)":
-					case "rgb(181, 182, 228)":
-					case "rgb(209, 209, 209)":
-						$(".message").text("Super Nintendo");
-						$(".message").addClass("info");
-						break;
-				}
+				colorMessage(rgb);
 			}
 			
 			if(rgbError == "true"){
@@ -627,14 +488,14 @@ $(document).ready(function () {
 				brightness = Math.round(mbzHSB[2]);
 			
 			if(imageType == "yellow"){
-				if(hue < 52 && $(".range input").val() != "1"){
+				if(hue < 52 && $(".layer input").val() != "1"){
 					hue = hue + 308;
 				}
-				else if($(".range input").val() != "1"){
+				else if($(".layer input").val() != "1"){
 					hue = hue - 52;
 				}
 				
-				switch($(".range input").val()){
+				switch($(".layer input").val()){
 					case "1":
 						$(".conversion").text('HSM_BZL_COLOR_HUE = "'+hue+'.000000"\nHSM_BZL_COLOR_SATURATION = "'+saturation+'.000000"\nHSM_BZL_COLOR_VALUE = "'+brightness+'.000000"');
 						break;
@@ -662,7 +523,7 @@ $(document).ready(function () {
 				}
 			}
 			else{
-				switch($(".range input").val()){
+				switch($(".layer input").val()){
 					case "1":
 						$(".conversion").text('HSM_BZL_COLOR_HUE = "'+hue+'.000000"\nHSM_BZL_COLOR_SATURATION = "'+saturation+'.000000"\nHSM_BZL_COLOR_VALUE = "'+brightness+'.000000"');
 						break;
@@ -694,69 +555,4 @@ $(document).ready(function () {
 		event.preventDefault();
 		
 	});
-	
-	if(bezelStyle == "mbz"){
-		var sheet = document.createElement('style'),
-		$rangeInput = $('.range input'),
-		prefs = ['webkit-slider-runnable-track', 'moz-range-track', 'ms-track'];
-
-		document.body.appendChild(sheet);
-
-		var getTrackStyle = function (el) {
-		  var curVal = el.value,
-		  val = (curVal - 1) * 16.666666667,
-		  style = '';
-
-		  // Set active label
-		  $('.range-labels li').removeClass('active');
-
-		  var curLabel = $('.range-labels').find('li:nth-child(' + curVal + ')');
-
-		  curLabel.addClass('active');
-
-		  return style;
-		};
-
-		$rangeInput.on('input', function () {
-		  sheet.textContent = getTrackStyle(this);
-		});
-
-		// Change input value on label click
-		$('.range-labels li').on('click', function () {
-			var index = $(this).index();
-
-			$rangeInput.val(index + 1).trigger('input');
-			
-			layerToggle($(this).text());
-		});
-		
-		switch(imageLayer){
-			case "Bezel":
-				$rangeInput.val(1).trigger('input');
-				break;
-			case "Background":
-				$rangeInput.val(2).trigger('input');
-				break;
-			case "LED":
-				$rangeInput.val(3).trigger('input');
-				break;
-			case "Device":
-				$rangeInput.val(4).trigger('input');
-				break;
-			case "Device LED":
-				$rangeInput.val(5).trigger('input');
-				break;
-			case "Decal":
-				$rangeInput.val(6).trigger('input');
-				break;
-			case "Top":
-				$rangeInput.val(7).trigger('input');
-				break;
-			case "Cab Glass":
-				$rangeInput.val(8).trigger('input');
-				break;
-			default:
-				$rangeInput.val(1).trigger('input');
-		}
-	}
 });
