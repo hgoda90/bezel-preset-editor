@@ -104,9 +104,9 @@ function swatchColors() {
 	}
 }
 
-function colorMessage(color) {
+function colorMessage(colors) {
 	if(colorFormat == "HEX"){
-		switch(color){
+		switch(colors){
 			case "242323":
 			case "946E4A":
 			case "FF9233":
@@ -165,7 +165,7 @@ function colorMessage(color) {
 		}
 	}
 	else{
-		switch(color){
+		switch(colors){
 			case "rgb(36, 35, 35)":
 			case "rgb(148, 110, 74)":
 			case "rgb(255, 146, 51)":

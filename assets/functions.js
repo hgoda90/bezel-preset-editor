@@ -46,9 +46,11 @@ function colorReset(){
 		$("#mb").css("display", "inline-block");
 		$("#koko").css("display", "none");
 		
-		$(".square").css("background", "#1A1A1A");
-		$(".square").css("box-shadow", "0px 0px 14px 4px rgba(26, 26, 26, 0.25)");
-		settingReset();
+		$(".square").css({"background": "#1A1A1A", "box-shadow": "0px 0px 14px 4px rgba(26, 26, 26, 0.25)"});
+		
+		if(hold == "off"){
+			settingReset();
+		}
 		
 		if($("div").hasClass("hex") == true){
 			$(".hex input").attr("placeholder", "1A1A1A");
@@ -67,8 +69,7 @@ function colorReset(){
 		$("#koko").css("display", "inline-block");
 		$("#mb").css("display", "none");
 		
-		$(".square").css("background", "#808080");
-		$(".square").css("box-shadow", "0px 0px 14px 4px rgba(128, 128, 128, 0.25)");
+		$(".square").css({"background": "#808080", "box-shadow": "0px 0px 14px 4px rgba(128, 128, 128, 0.25)"});
 	
 		if($("div").hasClass("hex") == true){
 			$(".hex input").attr("placeholder", "808080");
@@ -102,14 +103,35 @@ function formatToggle(){
 	swatches();
 }
 
+function hexToRgb(color) {
+	var rgb = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(color);
+	
+	return rgb ? {
+		r: parseInt(rgb[1], 16),
+		g: parseInt(rgb[2], 16),
+		b: parseInt(rgb[3], 16)
+	} : null;
+}
+
+function holdToggle(){
+	if($(".hold input").is(":checked")){
+		setCookie("hold", "on", 30);
+		hold = "on";
+	}
+	else{
+		setCookie("hold", "off", 30);
+		hold = "off";
+	}
+}
+
 function layerToggle(imageLayers){
 	setCookie("imageLayer", imageLayers, 30);
 	imageLayer = imageLayers
 	
-	if($(".hex input, .rgb input").val() == ""){
+	if($(".hex input, .rgb input").val() == "" && hold == "off"){
 		settingReset();
 	}
-	else{
+	else if(hold == "off"){
 		$("form").submit();
 	}
 	
@@ -162,16 +184,29 @@ function imageTypeToggle(){
 		imageType = "standard";
 	}
 	
-	if($(".hex input, .rgb input").val() == ""){
+	if($(".hex input, .rgb input").val() == "" && hold == "off"){
 		settingReset();
 	}
-	else{
+	else if(hold == "off"){
 		$("form").submit();
 	}
 }
 
 function presetCopy() {
 	navigator.clipboard.writeText($(".conversion").text().trim());
+}
+
+function preview(){
+	hex = $('.hex input').val();
+	
+	if(colorFormat == "HEX"){
+		$(".square").css("box-shadow", "0px 0px 14px 4px rgba("+hexToRgb(hex).r+", "+hexToRgb(hex).g+", "+hexToRgb(hex).b+", 0.25)");
+		$(".square").css("background", "#"+hex);
+	}
+	else{
+		$(".square").css("box-shadow", "0px 0px 14px 4px rgba("+r+", "+g+", "+b+", 0.25)");
+		$(".square").css("background", "rgb("+r+", "+g+", "+b+")");
+	}
 }
 
 function rgbToHSB(r, g, b){
@@ -275,12 +310,20 @@ function start(){
 		imageType = getCookie("imageType");
 	}
 	
+	if(getCookie("hold") == ""){
+		hold = "off";
+	}
+	else{
+		hold = getCookie("hold");
+	}
+	
 	if(colorFormat == "RGB"){
 		$(".text-box").after('<div class="rgb">rgb(<input type="text" name="red" size=3 maxLength=3>, <input type="text" name="green" size=3 maxLength=3>, <input type="text" name="blue" size=3 maxLength=3>)</div>');
 	}
 	else{
 		$(".text-box").after('<div class="hex">HEX: # <input type="text" name="hex" size=6 maxlength=6></div>');
 	}
+	
 	
 	if(bezelStyle == "mbz"){
 		$(".switch-panel .bezel input").attr("checked", "checked");
@@ -289,6 +332,10 @@ function start(){
 	
 	if(colorFormat == "RGB"){
 		$(".switch-panel .format input").attr("checked", "checked");
+	}
+	
+	if(hold == "on"){
+		$(".hold input").attr("checked", "checked");
 	}
 	
 	if(imageType == "yellow"){
@@ -315,9 +362,18 @@ function swatches(){
 			$(".rgb input[name='red']").val(swatchRGB[0]);
 			$(".rgb input[name='green']").val(swatchRGB[1]);
 			$(".rgb input[name='blue']").val(swatchRGB[2]);
+			
+			
+			r = parseInt($(".rgb [name='red']").val()),
+			g = parseInt($(".rgb [name='green']").val()),
+			b = parseInt($(".rgb [name='blue']").val());
 		}
 		
-		$("form").submit();
+		if(hold == "off"){
+			$("form").submit();
+		}
+		
+		preview();
 	});
 	
 	$(".swatch .color").on('mouseover', function(){
@@ -326,6 +382,10 @@ function swatches(){
 }
 
 start();
+
+$(".hold input").on('click', function(){
+	holdToggle();
+});
 
 $(".switch-panel .bezel input").on('click', function(){
 	bezelToggle();
@@ -378,16 +438,6 @@ $(document).ready(function () {
 				hexError = "true";
 			}
 			else{
-				function hexToRgb(color) {
-					var rgb = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(color);
-					
-					return rgb ? {
-						r: parseInt(rgb[1], 16),
-						g: parseInt(rgb[2], 16),
-						b: parseInt(rgb[3], 16)
-					} : null;
-				}
-				
 				hexError = "false";
 				
 				if(bezelStyle == "koko-aio"){
@@ -410,9 +460,6 @@ $(document).ready(function () {
 					mbzHSB = rgbToHSB(hexToRgb(hex).r, hexToRgb(hex).g, hexToRgb(hex).b);
 				}
 				
-				$(".square").css("box-shadow", "0px 0px 14px 4px rgba("+hexToRgb(hex).r+", "+hexToRgb(hex).g+", "+hexToRgb(hex).b+", 0.25)");
-				$(".square").css("background", "#"+hex);
-				
 				$("#copy").prop("disabled", false);
 				colorMessage(hex);
 			}
@@ -429,11 +476,6 @@ $(document).ready(function () {
 			$(".contrast input, .hex input").blur();
 		}
 		else{
-			var r = parseInt($(".rgb input[name='red']").val()),
-			g = parseInt($(".rgb input[name='green']").val()),
-			b = parseInt($(".rgb input[name='blue']").val()),
-			rgb = "rgb("+r+", "+g+", "+b+")";
-			
 			if(r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255){
 				rgbError = "true";
 			}
@@ -463,11 +505,7 @@ $(document).ready(function () {
 					mbzHSB = rgbToHSB(r, g, b);
 				}
 				
-				$(".square").css("box-shadow", "0px 0px 14px 4px rgba("+r+", "+g+", "+b+", 0.25)");
-				$(".square").css("background", rgb);
-				
 				$("#copy").prop("disabled", false);
-				colorMessage(rgb);
 			}
 			
 			if(rgbError == "true"){
@@ -482,6 +520,8 @@ $(document).ready(function () {
 			$(".contrast input, .rgb input").blur();
 		}
 		
+		$(".conversion").val();
+		
 		if(bezelStyle == "mbz" && hexError == "false" && rgbError == "false"){
 			var hue = Math.round(mbzHSB[0]),
 				saturation = Math.round(mbzHSB[1]),
@@ -495,59 +535,119 @@ $(document).ready(function () {
 					hue = hue - 52;
 				}
 				
-				switch($(".layer input").val()){
-					case "1":
-						$(".conversion").text('HSM_BZL_COLOR_HUE = "'+hue+'.000000"\nHSM_BZL_COLOR_SATURATION = "'+saturation+'.000000"\nHSM_BZL_COLOR_VALUE = "'+brightness+'.000000"');
-						break;
-					case "2":
-						$(".conversion").text('HSM_BG_HUE = "'+hue+'.000000"\nHSM_BG_SATURATION = "'+saturation+'.000000"\nHSM_BG_BRIGHTNESS = "'+brightness+'.000000"\nHSM_BG_GAMMA = "0.450000"');
-						break;
-					case "3":
-						$(".conversion").text('HSM_LED_HUE = "'+hue+'.000000"\nHSM_LED_SATURATION = "'+saturation+'.000000"\nHSM_LED_BRIGHTNESS = "'+brightness+'.000000"\nHSM_LED_GAMMA = "0.450000"');
-						break;
-					case "4":
-						$(".conversion").text('HSM_DEVICE_HUE = "'+hue+'.000000"\nHSM_DEVICE_SATURATION = "'+saturation+'.000000"\nHSM_DEVICE_BRIGHTNESS = "'+brightness+'.000000"\nHSM_DEVICE_GAMMA = "0.450000"');
-						break;
-					case "5":
-						$(".conversion").text('HSM_DEVICELED_HUE = "'+hue+'.000000"\nHSM_DEVICELED_SATURATION = "'+saturation+'.000000"\nHSM_DEVICELED_BRIGHTNESS = "'+brightness+'.000000"\nHSM_DEVICELED_GAMMA = "0.450000"');
-						break;
-					case "6":
-						$(".conversion").text('HSM_DECAL_HUE = "'+hue+'.000000"\nHSM_DECAL_SATURATION = "'+saturation+'.000000"\nHSM_DECAL_BRIGHTNESS = "'+brightness+'.000000"\nHSM_DECAL_GAMMA = "0.450000"');
-						break;
-					case "7":
-						$(".conversion").text('HSM_TOP_HUE = "'+hue+'.000000"\nHSM_TOP_SATURATION = "'+saturation+'.000000"\nHSM_TOP_BRIGHTNESS = "'+brightness+'.000000"\nHSM_BRIGHTNESS_GAMMA = "0.450000"');
-						break;
-					case "8":
-						$(".conversion").text('HSM_CAB_GLASS_HUE = "'+hue+'.000000"\nHSM_CAB_GLASS_SATURATION = "'+saturation+'.000000"\nHSM_CAB_GLASS_BRIGHTNESS = "'+brightness+'.000000"\nHSM_CAB_GLASS_GAMMA = "0.450000"');
-						break;
+				if(hold == "off"){
+					switch($(".layer input").val()){
+						case "1":
+							$(".conversion").text('HSM_BZL_COLOR_HUE = "'+hue+'.000000"\nHSM_BZL_COLOR_SATURATION = "'+saturation+'.000000"\nHSM_BZL_COLOR_VALUE = "'+brightness+'.000000"');
+							break;
+						case "2":
+							$(".conversion").text('HSM_BG_HUE = "'+hue+'.000000"\nHSM_BG_SATURATION = "'+saturation+'.000000"\nHSM_BG_BRIGHTNESS = "'+brightness+'.000000"\nHSM_BG_GAMMA = "0.450000"');
+							break;
+						case "3":
+							$(".conversion").text('HSM_LED_HUE = "'+hue+'.000000"\nHSM_LED_SATURATION = "'+saturation+'.000000"\nHSM_LED_BRIGHTNESS = "'+brightness+'.000000"\nHSM_LED_GAMMA = "0.450000"');
+							break;
+						case "4":
+							$(".conversion").text('HSM_DEVICE_HUE = "'+hue+'.000000"\nHSM_DEVICE_SATURATION = "'+saturation+'.000000"\nHSM_DEVICE_BRIGHTNESS = "'+brightness+'.000000"\nHSM_DEVICE_GAMMA = "0.450000"');
+							break;
+						case "5":
+							$(".conversion").text('HSM_DEVICELED_HUE = "'+hue+'.000000"\nHSM_DEVICELED_SATURATION = "'+saturation+'.000000"\nHSM_DEVICELED_BRIGHTNESS = "'+brightness+'.000000"\nHSM_DEVICELED_GAMMA = "0.450000"');
+							break;
+						case "6":
+							$(".conversion").text('HSM_DECAL_HUE = "'+hue+'.000000"\nHSM_DECAL_SATURATION = "'+saturation+'.000000"\nHSM_DECAL_BRIGHTNESS = "'+brightness+'.000000"\nHSM_DECAL_GAMMA = "0.450000"');
+							break;
+						case "7":
+							$(".conversion").text('HSM_TOP_HUE = "'+hue+'.000000"\nHSM_TOP_SATURATION = "'+saturation+'.000000"\nHSM_TOP_BRIGHTNESS = "'+brightness+'.000000"\nHSM_BRIGHTNESS_GAMMA = "0.450000"');
+							break;
+						case "8":
+							$(".conversion").text('HSM_CAB_GLASS_HUE = "'+hue+'.000000"\nHSM_CAB_GLASS_SATURATION = "'+saturation+'.000000"\nHSM_CAB_GLASS_BRIGHTNESS = "'+brightness+'.000000"\nHSM_CAB_GLASS_GAMMA = "0.450000"');
+							break;
+					}
+				}
+				else{
+					switch($(".layer input").val()){
+						case "1":
+							$(".conversion").append('HSM_BZL_COLOR_HUE = "'+hue+'.000000"\nHSM_BZL_COLOR_SATURATION = "'+saturation+'.000000"\nHSM_BZL_COLOR_VALUE = "'+brightness+'.000000"');
+							break;
+						case "2":
+							$(".conversion").append('HSM_BG_HUE = "'+hue+'.000000"\nHSM_BG_SATURATION = "'+saturation+'.000000"\nHSM_BG_BRIGHTNESS = "'+brightness+'.000000"\nHSM_BG_GAMMA = "0.450000"');
+							break;
+						case "3":
+							$(".conversion").append('HSM_LED_HUE = "'+hue+'.000000"\nHSM_LED_SATURATION = "'+saturation+'.000000"\nHSM_LED_BRIGHTNESS = "'+brightness+'.000000"\nHSM_LED_GAMMA = "0.450000"');
+							break;
+						case "4":
+							$(".conversion").append('HSM_DEVICE_HUE = "'+hue+'.000000"\nHSM_DEVICE_SATURATION = "'+saturation+'.000000"\nHSM_DEVICE_BRIGHTNESS = "'+brightness+'.000000"\nHSM_DEVICE_GAMMA = "0.450000"');
+							break;
+						case "5":
+							$(".conversion").append('HSM_DEVICELED_HUE = "'+hue+'.000000"\nHSM_DEVICELED_SATURATION = "'+saturation+'.000000"\nHSM_DEVICELED_BRIGHTNESS = "'+brightness+'.000000"\nHSM_DEVICELED_GAMMA = "0.450000"');
+							break;
+						case "6":
+							$(".conversion").append('HSM_DECAL_HUE = "'+hue+'.000000"\nHSM_DECAL_SATURATION = "'+saturation+'.000000"\nHSM_DECAL_BRIGHTNESS = "'+brightness+'.000000"\nHSM_DECAL_GAMMA = "0.450000"');
+							break;
+						case "7":
+							$(".conversion").append('HSM_TOP_HUE = "'+hue+'.000000"\nHSM_TOP_SATURATION = "'+saturation+'.000000"\nHSM_TOP_BRIGHTNESS = "'+brightness+'.000000"\nHSM_BRIGHTNESS_GAMMA = "0.450000"');
+							break;
+						case "8":
+							$(".conversion").append('HSM_CAB_GLASS_HUE = "'+hue+'.000000"\nHSM_CAB_GLASS_SATURATION = "'+saturation+'.000000"\nHSM_CAB_GLASS_BRIGHTNESS = "'+brightness+'.000000"\nHSM_CAB_GLASS_GAMMA = "0.450000"');
+							break;
+					}
 				}
 			}
 			else{
-				switch($(".layer input").val()){
-					case "1":
-						$(".conversion").text('HSM_BZL_COLOR_HUE = "'+hue+'.000000"\nHSM_BZL_COLOR_SATURATION = "'+saturation+'.000000"\nHSM_BZL_COLOR_VALUE = "'+brightness+'.000000"');
-						break;
-					case "2":
-						$(".conversion").text('HSM_BG_HUE = "'+hue+'.000000"\nHSM_BG_SATURATION = "'+saturation+'.000000"\nHSM_BG_BRIGHTNESS = "'+brightness+'.000000"');
-						break;
-					case "3":
-						$(".conversion").text('HSM_LED_HUE = "'+hue+'.000000"\nHSM_LED_SATURATION = "'+saturation+'.000000"\nHSM_LED_BRIGHTNESS = "'+brightness+'.000000"');
-						break;
-					case "4":
-						$(".conversion").text('HSM_DEVICE_HUE = "'+hue+'.000000"\nHSM_DEVICE_SATURATION = "'+saturation+'.000000"\nHSM_DEVICE_BRIGHTNESS = "'+brightness+'.000000"');
-						break;
-					case "5":
-						$(".conversion").text('HSM_DEVICELED_HUE = "'+hue+'.000000"\nHSM_DEVICELED_SATURATION = "'+saturation+'.000000"\nHSM_DEVICELED_BRIGHTNESS = "'+brightness+'.000000"');
-						break;
-					case "6":
-						$(".conversion").text('HSM_DECAL_HUE = "'+hue+'.000000"\nHSM_DECAL_SATURATION = "'+saturation+'.000000"\nHSM_DECAL_BRIGHTNESS = "'+brightness+'.000000"');
-						break;
-					case "7":
-						$(".conversion").text('HSM_TOP_HUE = "'+hue+'.000000"\nHSM_TOP_SATURATION = "'+saturation+'.000000"\nHSM_TOP_BRIGHTNESS = "'+brightness+'.000000"');
-						break;
-					case "8":
-						$(".conversion").text('HSM_CAB_GLASS_HUE = "'+hue+'.000000"\nHSM_CAB_GLASS_SATURATION = "'+saturation+'.000000"\nHSM_CAB_GLASS_BRIGHTNESS = "'+brightness+'.000000"');
-						break;
+				if(hold == "off"){
+					switch($(".layer input").val()){
+						case "1":
+							$(".conversion").text('HSM_BZL_COLOR_HUE = "'+hue+'.000000"\nHSM_BZL_COLOR_SATURATION = "'+saturation+'.000000"\nHSM_BZL_COLOR_VALUE = "'+brightness+'.000000"');
+							break;
+						case "2":
+							$(".conversion").text('HSM_BG_HUE = "'+hue+'.000000"\nHSM_BG_SATURATION = "'+saturation+'.000000"\nHSM_BG_BRIGHTNESS = "'+brightness+'.000000"');
+							break;
+						case "3":
+							$(".conversion").text('HSM_LED_HUE = "'+hue+'.000000"\nHSM_LED_SATURATION = "'+saturation+'.000000"\nHSM_LED_BRIGHTNESS = "'+brightness+'.000000"');
+							break;
+						case "4":
+							$(".conversion").text('HSM_DEVICE_HUE = "'+hue+'.000000"\nHSM_DEVICE_SATURATION = "'+saturation+'.000000"\nHSM_DEVICE_BRIGHTNESS = "'+brightness+'.000000"');
+							break;
+						case "5":
+							$(".conversion").text('HSM_DEVICELED_HUE = "'+hue+'.000000"\nHSM_DEVICELED_SATURATION = "'+saturation+'.000000"\nHSM_DEVICELED_BRIGHTNESS = "'+brightness+'.000000"');
+							break;
+						case "6":
+							$(".conversion").text('HSM_DECAL_HUE = "'+hue+'.000000"\nHSM_DECAL_SATURATION = "'+saturation+'.000000"\nHSM_DECAL_BRIGHTNESS = "'+brightness+'.000000"');
+							break;
+						case "7":
+							$(".conversion").text('HSM_TOP_HUE = "'+hue+'.000000"\nHSM_TOP_SATURATION = "'+saturation+'.000000"\nHSM_TOP_BRIGHTNESS = "'+brightness+'.000000"');
+							break;
+						case "8":
+							$(".conversion").text('HSM_CAB_GLASS_HUE = "'+hue+'.000000"\nHSM_CAB_GLASS_SATURATION = "'+saturation+'.000000"\nHSM_CAB_GLASS_BRIGHTNESS = "'+brightness+'.000000"');
+							break;
+					}
+				}
+				else{
+					switch($(".layer input").val()){
+						case "1":
+							$(".conversion").append('\nHSM_BZL_COLOR_HUE = "'+hue+'.000000"\nHSM_BZL_COLOR_SATURATION = "'+saturation+'.000000"\nHSM_BZL_COLOR_VALUE = "'+brightness+'.000000"');
+							break;
+						case "2":
+							$(".conversion").append('\nHSM_BG_HUE = "'+hue+'.000000"\nHSM_BG_SATURATION = "'+saturation+'.000000"\nHSM_BG_BRIGHTNESS = "'+brightness+'.000000"');
+							break;
+						case "3":
+							$(".conversion").append('\nHSM_LED_HUE = "'+hue+'.000000"\nHSM_LED_SATURATION = "'+saturation+'.000000"\nHSM_LED_BRIGHTNESS = "'+brightness+'.000000"');
+							break;
+						case "4":
+							$(".conversion").append('\nHSM_DEVICE_HUE = "'+hue+'.000000"\nHSM_DEVICE_SATURATION = "'+saturation+'.000000"\nHSM_DEVICE_BRIGHTNESS = "'+brightness+'.000000"');
+							break;
+						case "5":
+							$(".conversion").append('\nHSM_DEVICELED_HUE = "'+hue+'.000000"\nHSM_DEVICELED_SATURATION = "'+saturation+'.000000"\nHSM_DEVICELED_BRIGHTNESS = "'+brightness+'.000000"');
+							break;
+						case "6":
+							$(".conversion").append('\nHSM_DECAL_HUE = "'+hue+'.000000"\nHSM_DECAL_SATURATION = "'+saturation+'.000000"\nHSM_DECAL_BRIGHTNESS = "'+brightness+'.000000"');
+							break;
+						case "7":
+							$(".conversion").append('\nHSM_TOP_HUE = "'+hue+'.000000"\nHSM_TOP_SATURATION = "'+saturation+'.000000"\nHSM_TOP_BRIGHTNESS = "'+brightness+'.000000"');
+							break;
+						case "8":
+							$(".conversion").append('\nHSM_CAB_GLASS_HUE = "'+hue+'.000000"\nHSM_CAB_GLASS_SATURATION = "'+saturation+'.000000"\nHSM_CAB_GLASS_BRIGHTNESS = "'+brightness+'.000000"');
+							break;
+					}
 				}
 			}
 		}

@@ -122,7 +122,7 @@ input[type="text"], select {
 }
 
 .square {
-	border: 1px solid #D2D2D2;
+	border: 3px groove rgb(0 0 0 / 50%);
 	background: #808080;
 	border-radius: 6px;
 	height: 150px;
@@ -458,6 +458,7 @@ a:hover {
 
 .swatch {
 	height: 100px;
+	margin-left: 4px;
 }
 
 .colors {
@@ -465,14 +466,17 @@ a:hover {
 }
 
 .color {
-	width: 22px;
-	height: 22px;
 	display: inline-block;
-	border-radius: 4px;
-	margin: 4px 6px 4px 0px;
-	border: 3px inset rgba(0, 0, 0, 0.35);
-	box-shadow: 0 0 22px -8px rgb(0 0 0 / 50%);
-	filter: brightness(1.15);
+	border-radius: 3px;
+	margin: 4px 10px 4px 0px;
+	border-color: rgb(255 255 255 / 8%);
+	border-top-style: ridge;
+	border-right-style: groove;
+	border-bottom-style: groove;
+	border-left-style: ridge;
+	outline: 1px solid #BBB;
+	height: 20.4px;
+	width: 20.4px;
 }
 
 .color:hover {
