@@ -28,6 +28,18 @@ function bezelToggle(){
 	if($(".switch-panel .bezel input").is(":checked")){
 		setCookie("bezelStyle", "mbz", 30);
 		bezelStyle = "mbz";
+	}
+	else{
+		setCookie("bezelStyle", "koko-aio", 30);
+		bezelStyle = "koko-aio";
+	}
+	
+	$(".info").empty();
+	colorReset();
+};
+
+function colorReset(){
+	if(bezelStyle == "mbz"){
 		$(".contrast").css("opacity", 0);
 		$(".range-wrap, .imageType").css("opacity", 1);
 		$("#mb").css("display", "inline-block");
@@ -47,8 +59,6 @@ function bezelToggle(){
 		}
 	}
 	else{
-		setCookie("bezelStyle", "koko-aio", 30);
-		bezelStyle = "koko-aio";
 		$(".contrast").css("opacity", 1);
 		$(".contrast option").prop("selected", false);
 		$(".contrast option[value='1.30']").prop("selected", "selected");
@@ -58,7 +68,6 @@ function bezelToggle(){
 		
 		$(".square").css("background", "#808080");
 		$(".square").css("box-shadow", "0px 0px 14px 4px rgba(128, 128, 128, 0.25)");
-		$(".conversion").text('BEZEL_R = "0.000000"\nBEZEL_G = "0.000000"\nBEZEL_B = "0.000000"\nBEZEL_CON = "1.300000"');
 	
 		if($("div").hasClass("hex") == true){
 			$(".hex input").attr("placeholder", "808080");
@@ -69,9 +78,7 @@ function bezelToggle(){
 			$(".rgb input[name='blue']").attr("placeholder", "128");
 		}
 	}
-	
-	$(".info").empty();
-};
+}
 
 function formatToggle(){
 	$(".colors").empty();
@@ -80,67 +87,26 @@ function formatToggle(){
 		setCookie("colorFormat", "RGB", 30);
 		colorFormat = "RGB";
 		$(".hex").remove();
-		
-		if(bezelStyle == "koko-aio"){
-			$(".text-box").after('<div class="rgb">rgb(<input type="text" name="red" placeholder="128">, <input type="text" name="green" placeholder="128">, <input type="text" name="blue" placeholder="128">)</div>');
-			$(".square").css("background", "#808080");
-			$(".square").css("box-shadow", "0px 0px 14px 4px rgba(128, 128, 128, 0.25)");
-			$(".conversion").text('BEZEL_R = "0.000000"\nBEZEL_G = "0.000000"\nBEZEL_B = "0.000000"\nBEZEL_CON = "1.300000"');
-			$(".contrast").css("opacity", 1);
-			$(".contrast option").prop("selected", false);
-			$(".contrast option[value='1.30']").prop("selected", "selected");
-		}
-		else{
-			$(".text-box").after('<div class="rgb">rgb(<input type="text" name="red" placeholder="26">, <input type="text" name="green" placeholder="26">, <input type="text" name="blue" placeholder="26">)</div>');
-			$(".square").css("background", "#1A1A1A");
-			$(".square").css("box-shadow", "0px 0px 14px 4px rgba(26, 26, 26, 0.25)");
-			$(".contrast").css("opacity", 0);
-			settingReset();
-		}
+		$(".text-box").after('<div class="rgb">rgb(<input type="text" name="red" size=3 maxLength=3>, <input type="text" name="green" size=3 maxLength=3>, <input type="text" name="blue" size=3 maxLength=3>)</div>');
 	}
 	else{
 		setCookie("colorFormat", "HEX", 30);
 		colorFormat = "HEX";
 		$(".rgb").remove();
-		
-		if(bezelStyle == "koko-aio"){
-			$(".text-box").after('<div class="hex">HEX: # <input type="text" name="hex" placeholder="808080"></div>');
-			$(".square").css("background", "#808080");
-			$(".square").css("box-shadow", "0px 0px 14px 4px rgba(128, 128, 128, 0.25)");
-			$(".conversion").text('BEZEL_R = "0.000000"\nBEZEL_G = "0.000000"\nBEZEL_B = "0.000000"\nBEZEL_CON = "1.300000"');
-			$(".contrast").css("opacity", 1);
-			$(".contrast option").prop("selected", false);
-			$(".contrast option[value='1.30']").prop("selected", "selected");
-		}
-		else{
-			$(".text-box").after('<div class="hex">HEX: # <input type="text" name="hex" placeholder="1A1A1A"></div>');
-			$(".square").css("background", "#1A1A1A");
-			$(".square").css("box-shadow", "0px 0px 14px 4px rgba(26, 26, 26, 0.25)");
-			$(".contrast").css("opacity", 0);
-			settingReset();
-		}
+		$(".text-box").after('<div class="hex">HEX: # <input type="text" name="hex" size=6 maxlength=6></div>');
 	}
 	
 	$(".info").empty();
+	colorReset();
 	swatches();
 }
 
-function layerToggle(imageLayer){
-	setCookie("imageLayer", imageLayer, 30);
-	
-	if(getCookie("imageType") == ""){
-		imageType = "standard";
-	}
-	else{
-		imageType = getCookie("imageType");
-	}
+function layerToggle(imageLayers){
+	setCookie("imageLayer", imageLayers, 30);
+	imageLayer = imageLayers;
 	
 	if($(".hex input, .rgb input").val() == ""){
-		$(".square").css("background", "#1A1A1A");
-		$(".square").css("box-shadow", "0px 0px 14px 4px rgba(26, 26, 26, 0.25)");
-		
 		settingReset();
-		$(".info").empty();
 	}
 	else{
 		$("form").submit();
@@ -174,6 +140,84 @@ function rgbToHSB(r, g, b){
 }
 
 function settingReset(){
+	if(bezelStyle == "mbz"){
+		if(imageType == "yellow"){
+			switch(imageLayer){
+				case "Bezel":
+					$(".conversion").text('HSM_BZL_COLOR_HUE = "0.000000"\nHSM_BZL_COLOR_SATURATION = "0.000000"\nHSM_BZL_COLOR_VALUE = "10.000000"');
+					break;
+				case "Background":
+					$(".conversion").text('HSM_BG_HUE = "0.000000"\nHSM_BG_SATURATION = "100.000000"\nHSM_BG_BRIGHTNESS = "100.000000"\nHSM_BG_GAMMA = "1.000000"');
+					break;
+				case "LED":
+					$(".conversion").text('HSM_LED_HUE = "0.000000"\nHSM_LED_SATURATION = "100.000000"\nHSM_LED_BRIGHTNESS = "100.000000"\nHSM_LED_GAMMA = "1.000000"');
+					break;
+				case "Device":
+					$(".conversion").text('HSM_DEVICE_HUE = "0.000000"\nHSM_DEVICE_SATURATION = "100.000000"\nHSM_DEVICE_BRIGHTNESS = "100.000000"\nHSM_DEVICE_GAMMA = "1.000000"');
+					break;
+				case "Device LED":
+					$(".conversion").text('HSM_DEVICELED_HUE = "0.000000"\nHSM_DEVICELED_SATURATION = "100.000000"\nHSM_DEVICELED_BRIGHTNESS = "100.000000"\nHSM_DEVICELED_GAMMA = "1.000000"');
+					break;
+				case "Decal":
+					$(".conversion").text('HSM_DECAL_HUE = "0.000000"\nHSM_DECAL_SATURATION = "100.000000"\nHSM_DECAL_BRIGHTNESS = "100.000000"\nHSM_DECAL_GAMMA = "1.000000"');
+					break;
+				case "Top":
+					$(".conversion").text('HSM_TOP_HUE = "0.000000"\nHSM_TOP_SATURATION = "100.000000"\nHSM_TOP_BRIGHTNESS = "100.000000"\nHSM_TOP_GAMMA = "1.000000"');
+					break;
+				case "Cab Glass":
+					$(".conversion").text('HSM_CAB_GLASS_HUE = "0.000000"\nHSM_CAB_GLASS_SATURATION = "100.000000"\nHSM_CAB_GLASS_BRIGHTNESS = "100.000000"\nHSM_CAB_GLASS_GAMMA = "1.000000"');
+					break;
+			}
+		}
+		else{
+			switch(imageLayer){
+				case "Bezel":
+					$(".conversion").text('HSM_BZL_COLOR_HUE = "0.000000"\nHSM_BZL_COLOR_SATURATION = "0.000000"\nHSM_BZL_COLOR_VALUE = "10.000000"');
+					break;
+				case "Background":
+					$(".conversion").text('HSM_BG_HUE = "0.000000"\nHSM_BG_SATURATION = "100.000000"\nHSM_BG_BRIGHTNESS = "100.000000"');
+					break;
+				case "LED":
+					$(".conversion").text('HSM_LED_HUE = "0.000000"\nHSM_LED_SATURATION = "100.000000"\nHSM_LED_BRIGHTNESS = "100.000000"');
+					break;
+				case "Device":
+					$(".conversion").text('HSM_DEVICE_HUE = "0.000000"\nHSM_DEVICE_SATURATION = "100.000000"\nHSM_DEVICE_BRIGHTNESS = "100.000000"');
+					break;
+				case "Device LED":
+					$(".conversion").text('HSM_DEVICELED_HUE = "0.000000"\nHSM_DEVICELED_SATURATION = "100.000000"\nHSM_DEVICELED_BRIGHTNESS = "100.000000"');
+					break;
+				case "Decal":
+					$(".conversion").text('HSM_DECAL_HUE = "0.000000"\nHSM_DECAL_SATURATION = "100.000000"\nHSM_DECAL_BRIGHTNESS = "100.000000"');
+					break;
+				case "Top":
+					$(".conversion").text('HSM_TOP_HUE = "0.000000"\nHSM_TOP_SATURATION = "100.000000"\nHSM_TOP_BRIGHTNESS = "100.000000"');
+					break;
+				case "Cab Glass":
+					$(".conversion").text('HSM_CAB_GLASS_HUE = "0.000000"\nHSM_CAB_GLASS_SATURATION = "100.000000"\nHSM_CAB_GLASS_BRIGHTNESS = "100.000000"');
+					break;
+			}
+		}
+	}
+	else{
+		$(".conversion").text('BEZEL_R = "0.000000"\nBEZEL_G = "0.000000"\nBEZEL_B = "0.000000"\nBEZEL_CON = "1.300000"');	
+	}
+}
+
+function start(){
+	if(getCookie("bezelStyle") == ""){
+		bezelStyle = "mbz";
+	}
+	else{
+		bezelStyle = getCookie("bezelStyle");
+	}
+	
+	if(getCookie("colorFormat") == ""){
+		colorFormat = "HEX";
+	}
+	else{
+		colorFormat = getCookie("colorFormat");
+	}
+	
 	if(getCookie("imageLayer") == ""){
 		imageLayer = "Bezel";
 	}
@@ -187,67 +231,33 @@ function settingReset(){
 	else{
 		imageType = getCookie("imageType");
 	}
-		
-	if(imageType == "yellow"){
-		switch(imageLayer){
-			case "Bezel":
-				$(".conversion").text('HSM_BZL_COLOR_HUE = "0.000000"\nHSM_BZL_COLOR_SATURATION = "0.000000"\nHSM_BZL_COLOR_VALUE = "10.000000"');
-				break;
-			case "Background":
-				$(".conversion").text('HSM_BG_HUE = "0.000000"\nHSM_BG_SATURATION = "100.000000"\nHSM_BG_BRIGHTNESS = "100.000000"\nHSM_BG_GAMMA = "1.000000"');
-				break;
-			case "LED":
-				$(".conversion").text('HSM_LED_HUE = "0.000000"\nHSM_LED_SATURATION = "100.000000"\nHSM_LED_BRIGHTNESS = "100.000000"\nHSM_LED_GAMMA = "1.000000"');
-				break;
-			case "Device":
-				$(".conversion").text('HSM_DEVICE_HUE = "0.000000"\nHSM_DEVICE_SATURATION = "100.000000"\nHSM_DEVICE_BRIGHTNESS = "100.000000"\nHSM_DEVICE_GAMMA = "1.000000"');
-				break;
-			case "Device LED":
-				$(".conversion").text('HSM_DEVICELED_HUE = "0.000000"\nHSM_DEVICELED_SATURATION = "100.000000"\nHSM_DEVICELED_BRIGHTNESS = "100.000000"\nHSM_DEVICELED_GAMMA = "1.000000"');
-				break;
-			case "Decal":
-				$(".conversion").text('HSM_DECAL_HUE = "0.000000"\nHSM_DECAL_SATURATION = "100.000000"\nHSM_DECAL_BRIGHTNESS = "100.000000"\nHSM_DECAL_GAMMA = "1.000000"');
-				break;
-			case "Top":
-				$(".conversion").text('HSM_TOP_HUE = "0.000000"\nHSM_TOP_SATURATION = "100.000000"\nHSM_TOP_BRIGHTNESS = "100.000000"\nHSM_TOP_GAMMA = "1.000000"');
-				break;
-			case "Cab Glass":
-				$(".conversion").text('HSM_CAB_GLASS_HUE = "0.000000"\nHSM_CAB_GLASS_SATURATION = "100.000000"\nHSM_CAB_GLASS_BRIGHTNESS = "100.000000"\nHSM_CAB_GLASS_GAMMA = "1.000000"');
-				break;
-		}
+	
+	if(colorFormat == "RGB"){
+		$(".text-box").after('<div class="rgb">rgb(<input type="text" name="red" size=3 maxLength=3>, <input type="text" name="green" size=3 maxLength=3>, <input type="text" name="blue" size=3 maxLength=3>)</div>');
 	}
 	else{
-		switch(imageLayer){
-			case "Bezel":
-				$(".conversion").text('HSM_BZL_COLOR_HUE = "0.000000"\nHSM_BZL_COLOR_SATURATION = "0.000000"\nHSM_BZL_COLOR_VALUE = "10.000000"');
-				break;
-			case "Background":
-				$(".conversion").text('HSM_BG_HUE = "0.000000"\nHSM_BG_SATURATION = "100.000000"\nHSM_BG_BRIGHTNESS = "100.000000"');
-				break;
-			case "LED":
-				$(".conversion").text('HSM_LED_HUE = "0.000000"\nHSM_LED_SATURATION = "100.000000"\nHSM_LED_BRIGHTNESS = "100.000000"');
-				break;
-			case "Device":
-				$(".conversion").text('HSM_DEVICE_HUE = "0.000000"\nHSM_DEVICE_SATURATION = "100.000000"\nHSM_DEVICE_BRIGHTNESS = "100.000000"');
-				break;
-			case "Device LED":
-				$(".conversion").text('HSM_DEVICELED_HUE = "0.000000"\nHSM_DEVICELED_SATURATION = "100.000000"\nHSM_DEVICELED_BRIGHTNESS = "100.000000"');
-				break;
-			case "Decal":
-				$(".conversion").text('HSM_DECAL_HUE = "0.000000"\nHSM_DECAL_SATURATION = "100.000000"\nHSM_DECAL_BRIGHTNESS = "100.000000"');
-				break;
-			case "Top":
-				$(".conversion").text('HSM_TOP_HUE = "0.000000"\nHSM_TOP_SATURATION = "100.000000"\nHSM_TOP_BRIGHTNESS = "100.000000"');
-				break;
-			case "Cab Glass":
-				$(".conversion").text('HSM_CAB_GLASS_HUE = "0.000000"\nHSM_CAB_GLASS_SATURATION = "100.000000"\nHSM_CAB_GLASS_BRIGHTNESS = "100.000000"');
-				break;
-		}
+		$(".text-box").after('<div class="hex">HEX: # <input type="text" name="hex" size=6 maxlength=6></div>');
 	}
+	
+	if(bezelStyle == "mbz"){
+		$(".switch-panel .bezel input").attr("checked", "checked");
+	}
+	
+	if(colorFormat == "RGB"){
+		$(".switch-panel .format input").attr("checked", "checked");
+	}
+	
+	if(imageType == "yellow"){
+		$(".switch-panel .imageType input").attr("checked", "checked");
+	}
+	
+	colorReset();
+	settingReset();
+	swatches();
 }
 
 function swatches(){
-	if($(".switch-panel .format input").is(":checked")){
+	if(colorFormat == "RGB"){
 		$(".swatch").each(function(element){
 			switch($(this).attr("id")){
 				case "a26":
@@ -364,49 +374,7 @@ function swatches(){
 	});
 }
 
-if(getCookie("bezelStyle") == "" || getCookie("bezelStyle") == "koko-aio"){
-	bezelStyle = "koko-aio";
-	$(".switch-panel .bezel input").attr("checked", false);
-	
-	if($("div").hasClass("hex") == true){
-		$(".hex input").attr("placeholder", "808080");
-	}
-	else{
-		$(".rgb input[name='red']").attr("placeholder", "128");
-		$(".rgb input[name='green']").attr("placeholder", "128");
-		$(".rgb input[name='blue']").attr("placeholder", "128");
-	}
-}
-else{
-	bezelStyle = "mbz";
-	settingReset();
-	$(".switch-panel .bezel input").attr("checked", true);
-	
-	if($("div").hasClass("hex") == true){
-		$(".hex input").attr("placeholder", "1A1A1A");
-	}
-	else{
-		$(".rgb input[name='red']").attr("placeholder", "26");
-		$(".rgb input[name='green']").attr("placeholder", "26");
-		$(".rgb input[name='blue']").attr("placeholder", "26");
-	}
-}
-
-if(getCookie("imageLayer") == "" || getCookie("imageLayer") == "Bezel"){
-	layerToggle(getCookie("imageLayer"), 0, 0, 10);
-}
-else{
-	layerToggle(getCookie("imageLayer"), 0, 100, 100);
-}
-
-if(getCookie("imageType") == "" || getCookie("imageType") == "standard"){
-	imageType = "standard";
-	$(".switch-panel .imageType input").attr("checked", false);
-}
-else{
-	imageType = "yellow";
-	$(".switch-panel .imageType input").attr("checked", true);
-}
+start();
 
 $(".switch-panel .bezel input").on('click', function(){
 	bezelToggle();
@@ -428,9 +396,6 @@ $(".switch-panel .format input").on('click', function(){
 $(".switch-panel .imageType input").on('click', function(){
 	imageTypeToggle();
 });
-
-formatToggle();
-bezelToggle();
 
 if(bezelStyle == "koko-aio"){
 	$(".switch-panel").addClass("koko-aio");
@@ -761,6 +726,7 @@ $(document).ready(function () {
 			var index = $(this).index();
 
 			$rangeInput.val(index + 1).trigger('input');
+			
 			layerToggle($(this).text());
 		});
 		
