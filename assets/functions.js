@@ -29,13 +29,11 @@ function bezelToggle(){
 	else{
 		setCookie("bezelStyle", "koko-aio", 30);
 		bezelStyle = "koko-aio";
-		
-		$(".conversion").text("").val("");
 	}
 	
 	$(".info").empty();
+	clearConversion();
 	colorReset();
-	settingReset();
 };
 
 function clearConversion(){
@@ -225,7 +223,18 @@ function rgbToHSB(r, g, b){
 
 function settingReset(){
 	if(bezelStyle == "mbz"){
-		var bezel = 'HSM_BZL_COLOR_HUE = "0.000000"\nHSM_BZL_COLOR_SATURATION = "0.000000"\nHSM_BZL_COLOR_VALUE = "10.000000"\n',
+		if(imageType == "yellow"){
+			var bezel = 'HSM_BZL_COLOR_HUE = "0.000000"\nHSM_BZL_COLOR_SATURATION = "0.000000"\nHSM_BZL_COLOR_VALUE = "10.000000"\n',
+					bg = 'HSM_BG_HUE = "0.000000"\nHSM_BG_SATURATION = "100.000000"\nHSM_BG_BRIGHTNESS = "100.000000"\nHSM_BG_GAMMA = "1.000000"\n',
+					led = 'HSM_LED_HUE = "0.000000"\nHSM_LED_SATURATION = "100.000000"\nHSM_LED_BRIGHTNESS = "100.000000"\nHSM_LED_GAMMA = "1.000000"\n',
+					device = 'HSM_DEVICE_HUE = "0.000000"\nHSM_DEVICE_SATURATION = "100.000000"\nHSM_DEVICE_BRIGHTNESS = "100.000000"\nHSM_DEVICE_GAMMA = "1.000000"\n',
+					deviceLED = 'HSM_DEVICELED_HUE = "0.000000"\nHSM_DEVICELED_SATURATION = "100.000000"\nHSM_DEVICELED_BRIGHTNESS = "100.000000"\nHSM_DEVICELED_GAMMA = "1.000000"\n',
+					decal = 'HSM_DECAL_HUE = "0.000000"\nHSM_DECAL_SATURATION = "100.000000"\nHSM_DECAL_BRIGHTNESS = "100.000000"\nHSM_DECAL_GAMMA = "1.000000"\n',
+					topLayer = 'HSM_TOP_HUE = "0.000000"\nHSM_TOP_SATURATION = "100.000000"\nHSM_TOP_BRIGHTNESS = "100.000000"\nHSM_TOP_GAMMA = "1.000000"\n',
+					cabGlass = 'HSM_CAB_GLASS_HUE = "0.000000"\nHSM_CAB_GLASS_SATURATION = "100.000000"\nHSM_CAB_GLASS_BRIGHTNESS = "100.000000"\nHSM_CAB_GLASS_GAMMA = "1.000000"\n';
+		}
+		else{
+			var bezel = 'HSM_BZL_COLOR_HUE = "0.000000"\nHSM_BZL_COLOR_SATURATION = "0.000000"\nHSM_BZL_COLOR_VALUE = "10.000000"\n',
 					bg = 'HSM_BG_HUE = "0.000000"\nHSM_BG_SATURATION = "100.000000"\nHSM_BG_BRIGHTNESS = "100.000000"\n',
 					led = 'HSM_LED_HUE = "0.000000"\nHSM_LED_SATURATION = "100.000000"\nHSM_LED_BRIGHTNESS = "100.000000"\n',
 					device = 'HSM_DEVICE_HUE = "0.000000"\nHSM_DEVICE_SATURATION = "100.000000"\nHSM_DEVICE_BRIGHTNESS = "100.000000"\n',
@@ -233,62 +242,33 @@ function settingReset(){
 					decal = 'HSM_DECAL_HUE = "0.000000"\nHSM_DECAL_SATURATION = "100.000000"\nHSM_DECAL_BRIGHTNESS = "100.000000"\n',
 					topLayer = 'HSM_TOP_HUE = "0.000000"\nHSM_TOP_SATURATION = "100.000000"\nHSM_TOP_BRIGHTNESS = "100.000000"\n',
 					cabGlass = 'HSM_CAB_GLASS_HUE = "0.000000"\nHSM_CAB_GLASS_SATURATION = "100.000000"\nHSM_CAB_GLASS_BRIGHTNESS = "100.000000"\n';
-					
-		if(imageType == "yellow"){
-			switch(imageLayer){
-				case "Bezel":
-					$(".conversion").text(bezel);
-					break;
-				case "Background":
-					$(".conversion").text(bg+'\nHSM_BG_GAMMA = "1.000000"');
-					break;
-				case "LED":
-					$(".conversion").text(led+'\nHSM_LED_GAMMA = "1.000000"');
-					break;
-				case "Device":
-					$(".conversion").text(device+'\nHSM_DEVICE_GAMMA = "1.000000"');
-					break;
-				case "Device LED":
-					$(".conversion").text(deviceLED+'\nHSM_DEVICELED_GAMMA = "1.000000"');
-					break;
-				case "Decal":
-					$(".conversion").text(decal+'\nHSM_DECAL_GAMMA = "1.000000"');
-					break;
-				case "Top":
-					$(".conversion").text(topLayer+'\nHSM_TOP_GAMMA = "1.000000"');
-					break;
-				case "Cab Glass":
-					$(".conversion").text(cabGlass+'\nHSM_CAB_GLASS_GAMMA = "1.000000"');
-					break;
-			}
 		}
-		else{
-			switch(imageLayer){
-				case "Bezel":
-					$(".conversion").text(bezel);
-					break;
-				case "Background":
-					$(".conversion").text(bg);
-					break;
-				case "LED":
-					$(".conversion").text(led);
-					break;
-				case "Device":
-					$(".conversion").text(device);
-					break;
-				case "Device LED":
-					$(".conversion").text(deviceLED);
-					break;
-				case "Decal":
-					$(".conversion").text(decal);
-					break;
-				case "Top":
-					$(".conversion").text(topLayer);
-					break;
-				case "Cab Glass":
-					$(".conversion").text(cabGlass);
-					break;
-			}
+		
+		switch(imageLayer){
+			case "Bezel":
+				$(".conversion").val(bezel).text(bezel);
+				break;
+			case "Background":
+				$(".conversion").val(bg).text(bg);
+				break;
+			case "LED":
+				$(".conversion").val(led).text(led);
+				break;
+			case "Device":
+				$(".conversion").val(device).text(device);
+				break;
+			case "DeviceLED":
+				$(".conversion").val(deviceLED).text(deviceLED);
+				break;
+			case "Decal":
+				$(".conversion").val(decal).text(decal);
+				break;
+			case "Top":
+				$(".conversion").val(topLayer).text(topLayer);
+				break;
+			case "Cab Glass":
+				$(".conversion").val(cabGlass).text(cabGlass);
+				break;
 		}
 	}
 	else{
@@ -573,28 +553,28 @@ $(document).ready(function () {
 			if(hold == "off"){
 				switch($(".layer input").val()){
 					case "1":
-						$(".conversion").text(bezel);
+						$(".conversion").val(bezel).text(bezel);
 						break;
 					case "2":
-						$(".conversion").text(bg);
+						$(".conversion").val(bg).text(bg);
 						break;
 					case "3":
-						$(".conversion").text(led);
+						$(".conversion").val(led).text(led);
 						break;
 					case "4":
-						$(".conversion").text(device);
+						$(".conversion").val(device).text(device);
 						break;
 					case "5":
-						$(".conversion").text(deviceLED);
+						$(".conversion").val(deviceLED).text(deviceLED);
 						break;
 					case "6":
-						$(".conversion").text(decal);
+						$(".conversion").val(decal).text(decal);
 						break;
 					case "7":
-						$(".conversion").text(topLayer);
+						$(".conversion").val(topLayer).text(topLayer);
 						break;
 					case "8":
-						$(".conversion").text(cabGlass);
+						$(".conversion").val(cabGlass).text(cabGlass);
 						break;
 				}
 			}
