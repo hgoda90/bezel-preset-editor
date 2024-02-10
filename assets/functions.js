@@ -520,6 +520,7 @@ $(document).ready(function () {
 				}
 				
 				$("#copy").prop("disabled", false);
+				colorMessage("rgb("+r+", "+g+", "+b+")");
 			}
 			
 			if(rgbError == "true"){
