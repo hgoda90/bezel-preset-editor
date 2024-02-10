@@ -47,7 +47,7 @@ form {
     box-shadow: 0 0 4px #8883;
 }
 
-.button:hover {
+.button:not(.us):not(.world):not(.watermark):hover {
     background: #DDD;
     border-color: #d2d2d2;
     color: #5A5A5A;
@@ -378,8 +378,8 @@ span.square-title {
 	padding: 14px;
 }
 
-#submit:hover, #copy:hover, #clear:hover {
-	cursor: pointer;
+.button:hover {
+    cursor: pointer;
 }
 
 .koko-aio ~ #submit {
@@ -408,6 +408,8 @@ span.square-title {
 
 .right-foot .credit {
     transform: scale(0.9);
+    display: inline-block;
+    margin-left: -26px;
 }
 
 a {
@@ -464,7 +466,7 @@ a:hover {
 	display: block;
 }
 
-.jewel {
+.owl-carousel .sample {
 	height: 100px;
 	margin-left: 4px;
 }
@@ -473,7 +475,7 @@ a:hover {
 	display: inline-block;
 }
 
-.color {
+.jewel .color {
 	display: inline-block;
 	border-radius: 5px;
 	margin: 4px 10px 4px 0px;
@@ -484,6 +486,25 @@ a:hover {
 	outline: 1px solid #BBB;
 	height: 15px;
 	width: 15px;
+}
+
+.palette .color {
+	width: 24px;
+	height: 24px;
+	display: inline-block;
+	border-radius: 50%;
+	margin: 4px 6px 4px 0px;
+	border: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.swatch .color {
+    display: inline-block;
+    border-radius: 4px;
+    margin: 4px 12px 4px 0px;
+    border: 1px solid rgb(0 0 0 / 3%);
+    outline: 1px solid #DDD;
+    width: 26px;
+    height: 26px;
 }
 
 .color:hover {
@@ -513,7 +534,7 @@ a:hover {
 }
 
 footer {
-    border-top: 1px dashed #DDD;
+    border-top: 1px solid #DDD;
     border-radius: 0px 0px 14px 14px;
     text-align: right;
     position: absolute;
@@ -525,22 +546,55 @@ footer {
     flex-direction: row;
 }
 
-footer em {
-	opacity: 0.5;
+.foot-wrapper {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.foot-wrapper .credit {
+    display: block;
+}
+
+footer {
+	color: rgb(51 51 51 / 50%);
+}
+
+footer .button {
+    display: inline-block;
+    margin-left: 12px;
+    border-radius: 50%;
+    padding: 10px;
+    width: 24px;
+    height: 24px;
+}
+
+.center-foot {
+	flex: 0 0 auto;
+}
+
+.center-foot .credit {
+    text-align: center;
 }
 
 .watermark {
-	width: 36px;
-	height: 36px;
-	border-radius: 50%;
-	border: 1px solid #DDD;
-	padding: 4px;
-	box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.05);
-	vertical-align: middle;
+    background-image: url("images/watermark.png");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
-.watermark:hover {
-	background: #FFF;
+.us {
+    background-image: url("images/usa.png");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.world {
+    background-image: url("images/world.png");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 ::-webkit-scrollbar {
@@ -559,8 +613,11 @@ footer em {
 	.owl-wrapper, footer {
 		position: relative;
 		margin: 48px auto 0px;
-		bottom: unset;
 		left: unset;
+	}
+
+	.owl-wrapper {
+		bottom: unset;
 	}
 }
 

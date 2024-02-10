@@ -11,7 +11,7 @@
 	<body>
 		<div class="content">
 			<form name="color-convert" method="post" onsubmit="return false;" autocomplete="off">
-				<h1 class="title"><span id="mb">Mega Bezel</span><span id="koko">koko-aio</span> Color Converter</h1>
+				<h1 class="title"><span id="mb">Mega Bezel</span><span id="koko">koko-aio</span> <span id="color">Colour</span> Converter</h1>
 				<div class="hold">
 					<span class="switch-label"></span>
 					<label class="switch">
@@ -21,7 +21,7 @@
 					<span class="switch-label">Hold</span>
 				</div>
 				<div class="text-box">
-					<textarea class="conversion" rows="6" cols="36" readonly></textarea>
+					<textarea class="conversion" rows="7" cols="36" readonly></textarea>
 					<span class="button" id="clear" onclick="clearConversion();">Clear</span>
 					<span class="button" id="copy" onclick="presetCopy();" disabled>Copy</span>
 				</div>
@@ -82,7 +82,7 @@
 						<span class="switch-label">MBZ</span>
 					</div>
 					<div class="format">
-						<span class="panel-label">Color Format: </span>
+						<span class="panel-label"></span>
 						<span class="switch-label">HEX</span>
 						<label class="switch">
 							<input type="checkbox">
@@ -119,44 +119,44 @@
 			</form>
 		</div>
 		<div class="owl-wrapper">
-			<h3>Console Jewels</h3>
+			<h3>Console Samples</h3>
 			<div class="owl-carousel">
-				<div class="jewel" id="a26">
+				<div class="sample" id="a26">
 					<div class="colors"></div>
 					<h4 class="color-title">Atari 2600</h4>
 					<span class="color-code"></span>
 				</div>
-				<div class="jewel" id="dc">
+				<div class="sample" id="dc">
 					<div class="colors"></div>
 					<h4 class="color-title">Dreamcast</h4>
 					<span class="color-code"></span>
 				</div>
-				<div class="jewel" id="gc">
+				<div class="sample" id="gc">
 					<div class="colors"></div>
 					<h4 class="color-title">GameCube</h4>
 					<span class="color-code"></span>
 				</div>
-				<div class="jewel" id="n64">
+				<div class="sample" id="n64">
 					<div class="colors"></div>
 					<h4 class="color-title">Nintendo 64</h4>
 					<span class="color-code"></span>
 				</div>
-				<div class="jewel" id="nes">
+				<div class="sample" id="nes">
 					<div class="colors"></div>
 					<h4 class="color-title">NES</h4>
 					<span class="color-code"></span>
 				</div>
-				<div class="jewel" id="ps">
+				<div class="sample" id="ps">
 					<div class="colors"></div>
 					<h4 class="color-title">PlayStation</h4>
 					<span class="color-code"></span>
 				</div>
-				<div class="jewel" id="ps2">
+				<div class="sample" id="ps2">
 					<div class="colors"></div>
 					<h4 class="color-title">PlayStation 2</h4>
 					<span class="color-code"></span>
 				</div>
-				<div class="jewel" id="snes">
+				<div class="sample" id="snes">
 					<div class="colors"></div>
 					<h4 class="color-title">Super Nintendo</h4>
 					<span class="color-code"></span>
@@ -165,20 +165,31 @@
 		</div>
 		<footer>
 			<div class="left-foot">
-				<div class="credit">
-					<a href="https://forums.libretro.com/t/koko-aio-shader-discussions-and-updates/38455">koko-aio Shader</a><em> by kokoko3k</em>
+				<div class="button">
+					<span class="material-symbols-outlined">diamond</span>
 				</div>
-				<div class="credit">
-					<a href="https://forums.libretro.com/t/mega-bezel-reflection-shader-feedback-and-updates/25512">Mega Bezel</a><em> by HyperspaceMadness</em>
+				<div class="button">
+					<span class="material-symbols-outlined">palette</span>
+				</div>
+				<div class="button">
+					<span class="material-symbols-outlined">style</span>
+				</div>
+			</div>
+			<div class="center-foot">
+				<div class="foot-wrapper">
+					<div class="credit design">
+						<em>Designed by hgoda90</em>
+					</div>
+					<div class="credit">
+						<a href="https://forums.libretro.com/t/koko-aio-shader-discussions-and-updates/38455">koko-aio Shader</a><em> by kokoko3k </em> - 
+						<a href="https://forums.libretro.com/t/mega-bezel-reflection-shader-feedback-and-updates/25512">Mega Bezel</a><em> by HyperspaceMadness</em>
+					</div>
 				</div>
 			</div>
 			<div class="right-foot">
-				<div class="credit">
-					<em>Designed by hgoda90</em>
-					<a href="https://forums.libretro.com/u/hgoda90">
-						<img class="watermark" src="assets/images/watermark.png">
-					</a>
-				</div>
+				<a class="button watermark" href="https://forums.libretro.com/u/hgoda90"></a>
+				<div class="button location us"></div>
+				<div class="button location world"></div>
 			</div>
 		</footer>
 		<script src="assets/colors.js"></script>

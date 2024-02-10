@@ -38,6 +38,8 @@ function bezelToggle(){
 
 function clearConversion(){
 	$(".conversion").text("").val("");
+	$(".info").empty();
+	colorReset();
 }
 
 function colorReset(){
@@ -86,6 +88,19 @@ function colorReset(){
 	}
 }
 
+function colorVersion(loc){
+	if(loc == "us"){
+		setCookie("colorVersion", "color", 30);
+		$(".format .panel-label").text("Color Format");
+		$("#color").text($("#color").text().replace("Colour", "Color"));
+	}
+	else{
+		setCookie("colorVersion", "colour", 30);
+		$(".format .panel-label").text("Colour Format");
+		$("#color").text($("#color").text().replace("Color", "Colour"));
+	}
+}
+
 function formatToggle(){
 	$(".colors").empty();
 	
@@ -104,7 +119,7 @@ function formatToggle(){
 	
 	$(".info").empty();
 	colorReset();
-	jewels();
+	samples();
 }
 
 function hexToRgb(color) {
@@ -125,6 +140,13 @@ function holdToggle(){
 	else{
 		setCookie("hold", "off", 30);
 		hold = "off";
+		
+		if(colorFormat == "HEX" && $('.hex input').val() != "" || colorFormat == "RGB" && $('.rgb input').val() != ""){
+			$("form").submit();
+		}
+		else{
+			colorReset();
+		}
 	}
 }
 
@@ -312,6 +334,20 @@ function start(){
 		hold = getCookie("hold");
 	}
 	
+	if(getCookie("sample") == ""){
+		sampleStyle = "diamond";
+	}
+	else{
+		sampleStyle = getCookie("sampleStyle");
+	}
+	
+	if(getCookie("colorVersion") == ""){
+		colorVer = "colour";
+	}
+	else{
+		colorVer = getCookie("colorVersion");
+	}
+	
 	if(colorFormat == "RGB"){
 		$(".text-box").after('<div class="rgb">rgb(<input type="text" name="red" size=3 maxLength=3>, <input type="text" name="green" size=3 maxLength=3>, <input type="text" name="blue" size=3 maxLength=3>)</div>');
 	}
@@ -338,24 +374,25 @@ function start(){
 	}
 	
 	colorReset();
-	jewels();
+	samples();
+	colorVersion(colorVer);
 }
 
-function jewels(){
-	jewelColors();
+function samples(){
+	sampleColors();
 	$(".hex input").val("");
 	$(".rgb input").val("");
 	
-	$(".jewel .color").on('click', function(){
+	$(".sample .color").on('click', function(){
 		if(colorFormat == "HEX"){
 			$(".hex input").val($(this).parents(".colors").siblings(".color-code").text().replace("#", ""));
 		}
 		else{
-			jewelRGB = $(this).parents(".colors").siblings(".color-code").text().replace("rgb(", "").replace(")", "").split(', ');
+			sampleRGB = $(this).parents(".colors").siblings(".color-code").text().replace("rgb(", "").replace(")", "").split(', ');
 			
-			$(".rgb input[name='red']").val(jewelRGB[0]);
-			$(".rgb input[name='green']").val(jewelRGB[1]);
-			$(".rgb input[name='blue']").val(jewelRGB[2]);
+			$(".rgb input[name='red']").val(sampleRGB[0]);
+			$(".rgb input[name='green']").val(sampleRGB[1]);
+			$(".rgb input[name='blue']").val(sampleRGB[2]);
 			
 			
 			r = parseInt($(".rgb [name='red']").val()),
@@ -370,9 +407,19 @@ function jewels(){
 		preview();
 	});
 	
-	$(".jewel .color").on('mouseover', function(){
+	$(".sample .color").on('mouseover', function(){
 		$(this).parents(".colors").siblings(".color-code").text($(this).data("code"));
 	});
+	
+	if(getCookie("sampleStyle") == "diamond" || getCookie("sampleStyle") == ""){
+		$(".sample").addClass("jewel").removeClass("swatch").removeClass("palette");
+	}
+	else if(getCookie("sampleStyle") == "palette"){
+		$(".sample").addClass("palette").removeClass("jewel").removeClass("swatch");
+	}
+	else{
+		$(".sample").addClass("swatch").removeClass("jewel").removeClass("palette");
+	}
 }
 
 start();
@@ -402,6 +449,15 @@ $(".switch-panel .imageType input").on('click', function(){
 	imageTypeToggle();
 });
 
+$(".us, .world").on('click', function(){
+	if($(this).hasClass("us") == true){
+		colorVersion("us");
+	}
+	else{
+		colorVersion("world");
+	}
+});
+
 if(bezelStyle == "koko-aio"){
 	$(".content").addClass("koko-aio");
 }
@@ -416,6 +472,13 @@ $('.layer-labels li').on('click', function () {
 	$(".layer input").val(index+1).trigger('input');
 	$('.layer-labels').find("li:nth-child("+(index+1)+")").addClass("active");
 	layerToggle($(this).text());
+});
+
+$(".left-foot .button").on('click', function(){
+	setCookie("sampleStyle", $(this).text().trim(), 30);
+	$(".colors").empty();
+	
+	samples();
 });
 
 $(document).ready(function () {

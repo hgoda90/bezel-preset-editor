@@ -1,6 +1,6 @@
-function jewelColors() {
+function sampleColors() {
 	if(colorFormat == "RGB"){
-		$(".jewel").each(function(element){
+		$(".sample").each(function(element){
 			switch($(this).attr("id")){
 				case "a26":
 					$(this).find(".colors").append("<div class='color' data-code='rgb(36, 35, 35)' style='background: rgb(36, 35, 35);'></div>");
@@ -51,7 +51,7 @@ function jewelColors() {
 		$(".color-code").css("text-align", "center");
 	}
 	else{
-		$(".jewel").each(function(){
+		$(".sample").each(function(){
 			switch($(this).attr("id")){
 				case "a26":
 					$(this).find(".colors").append("<div class='color' data-code='#242323' style='background: #242323;'></div>");
