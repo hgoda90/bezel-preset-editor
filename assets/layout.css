@@ -171,11 +171,11 @@ span.square-title {
     border: none;
 }
 
-..koko-aio .switch-panel .imageType, .koko-aio .layers-wrap {
+.koko-aio .switch-panel .imageType, .koko-aio .layers-wrap {
     opacity: 0;
 }
 
-..koko-aio .switch-panel {
+.koko-aio .switch-panel {
 	margin-bottom: -31px;
 	display: math;
 }
