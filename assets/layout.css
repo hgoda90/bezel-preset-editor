@@ -23,7 +23,7 @@ body {
 .title {
 	padding: 14px;
 	border-radius: 14px 14px 0px 0px;
-	margin-bottom: 10%;
+	margin-bottom: 8.5%;
 	font-weight: 300;
 }
 
@@ -76,7 +76,7 @@ textarea:focus-visible {
 	outline: none;
 }
 
-#copy {
+#copy, #clear {
     position: absolute;
     top: -36px;
     right: 12px;
@@ -135,7 +135,7 @@ input[type="text"], select {
 
 span.square-title {
     position: absolute;
-    top: -24px;
+    top: -28px;
 }
 
 .message {
@@ -374,7 +374,7 @@ span.square-title {
 	padding: 14px;
 }
 
-#submit:hover, #copy:hover {
+#submit:hover, #copy:hover, #clear:hover {
 	cursor: pointer;
 }
 
@@ -384,6 +384,10 @@ span.square-title {
 
 #copy:hover:disabled {
 	cursor: not-allowed;
+}
+
+#clear {
+    right: 84px;
 }
 
 .left-foot, .right-foot{
@@ -456,7 +460,7 @@ a:hover {
 	display: block;
 }
 
-.swatch {
+.jewel {
 	height: 100px;
 	margin-left: 4px;
 }
@@ -467,16 +471,15 @@ a:hover {
 
 .color {
 	display: inline-block;
-	border-radius: 3px;
+	border-radius: 5px;
 	margin: 4px 10px 4px 0px;
-	border-color: rgb(255 255 255 / 8%);
-	border-top-style: ridge;
-	border-right-style: groove;
-	border-bottom-style: groove;
-	border-left-style: ridge;
+	border-top: 10px inset rgb(0 0 0 / 5%);
+	border-right: 10px inset rgb(255 255 255 / 15%);
+	border-bottom: 10px outset rgb(255 255 255 / 15%);
+	border-left: 10px outset rgb(0 0 0 / 5%);
 	outline: 1px solid #BBB;
-	height: 20.4px;
-	width: 20.4px;
+	height: 15px;
+	width: 15px;
 }
 
 .color:hover {

@@ -1,6 +1,6 @@
-function swatchColors() {
+function jewelColors() {
 	if(colorFormat == "RGB"){
-		$(".swatch").each(function(element){
+		$(".jewel").each(function(element){
 			switch($(this).attr("id")){
 				case "a26":
 					$(this).find(".colors").append("<div class='color' data-code='rgb(36, 35, 35)' style='background: rgb(36, 35, 35);'></div>");
@@ -51,7 +51,7 @@ function swatchColors() {
 		$(".color-code").css("text-align", "center");
 	}
 	else{
-		$(".swatch").each(function(){
+		$(".jewel").each(function(){
 			switch($(this).attr("id")){
 				case "a26":
 					$(this).find(".colors").append("<div class='color' data-code='#242323' style='background: #242323;'></div>");
