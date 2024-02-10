@@ -106,6 +106,29 @@ function colorVersion(loc){
 	}
 }
 
+function colorVision(){
+	var hex = $(".dropper").val().replace("#", "");
+		
+	if(colorFormat == "HEX"){
+		$(".hex input").val(hex);
+	}
+	else{
+		r = hexToRgb(hex).r,
+		g = hexToRgb(hex).g,
+		b = hexToRgb(hex).b;
+		
+		$(".rgb input[name='red']").val(r);
+		$(".rgb input[name='green']").val(g);
+		$(".rgb input[name='blue']").val(b);
+	}
+	
+	if(hold == "off"){
+		$("form").submit();
+	}
+	
+	preview();
+}
+
 function formatToggle(){
 	$(".colors").empty();
 	
@@ -476,6 +499,10 @@ $(".us, .world").on('click', function(){
 	else{
 		colorVersion("world");
 	}
+});
+
+$(".dropper").on('change', function(){
+	colorVision();
 });
 
 if(bezelStyle == "koko-aio"){
