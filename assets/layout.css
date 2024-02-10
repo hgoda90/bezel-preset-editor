@@ -146,6 +146,18 @@ span.square-title {
     right: 0;
 }
 
+.dropper {
+    opacity: 0;
+    width: 158px;
+    height: 158px;
+    margin-left: -3px;
+    margin-top: -3px;
+}
+
+.dropper:hover {
+    cursor: pointer;
+}
+
 .message {
 	display: inline-block;
 	margin-top: 24px;
@@ -386,7 +398,7 @@ span.square-title {
     cursor: pointer;
 }
 
-.koko-aio ~ #submit {
+.koko-aio #submit {
     margin-top: -31px;
 }
 

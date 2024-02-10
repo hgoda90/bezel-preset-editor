@@ -29,6 +29,7 @@ function bezelToggle(){
 	else{
 		setCookie("bezelStyle", "koko-aio", 30);
 		bezelStyle = "koko-aio";
+		holdToggle();
 	}
 	
 	$(".info").empty();
@@ -51,6 +52,7 @@ function colorReset(){
 		$(".layers-wrap, .imageType").css("opacity", 1);
 		$("#mb").css("display", "inline-block");
 		$("#koko").css("display", "none");
+		$(".dropper").val("#1A1A1A");
 		
 		$(".square").css({"background": "#1A1A1A", "box-shadow": "0px 0px 14px 4px rgba(26, 26, 26, 0.25)"});
 		
@@ -74,6 +76,7 @@ function colorReset(){
 		$(".layers-wrap, .imageType").css("opacity", 0);
 		$("#koko").css("display", "inline-block");
 		$("#mb").css("display", "none");
+		$(".dropper").val("#808080");
 		
 		$(".square").css({"background": "#808080", "box-shadow": "0px 0px 14px 4px rgba(128, 128, 128, 0.25)"});
 	
@@ -135,7 +138,7 @@ function hexToRgb(color) {
 }
 
 function holdToggle(){
-	if($(".hold input").is(":checked")){
+	if($(".hold input").is(":checked") && bezelStyle == "mbz"){
 		setCookie("hold", "on", 30);
 		hold = "on";
 	}
@@ -149,6 +152,8 @@ function holdToggle(){
 		else{
 			colorReset();
 		}
+		
+		$(".hold input").prop( "checked", false );
 	}
 }
 
@@ -235,6 +240,14 @@ function preview(){
 		$(".square").css("box-shadow", "0px 0px 14px 4px rgba("+r+", "+g+", "+b+", 0.25)");
 		$(".square").css("background", "rgb("+r+", "+g+", "+b+")");
 	}
+}
+
+function rgb2hex(rgb){
+	rgb = rgb.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
+	return (rgb && rgb.length === 4) ? "#" +
+	("0" + parseInt(rgb[1],10).toString(16)).slice(-2) +
+	("0" + parseInt(rgb[2],10).toString(16)).slice(-2) +
+	("0" + parseInt(rgb[3],10).toString(16)).slice(-2) : '';
 }
 
 function rgbToHSB(r, g, b){
@@ -387,7 +400,10 @@ function samples(){
 	
 	$(".sample .color").on('click', function(){
 		if(colorFormat == "HEX"){
-			$(".hex input").val($(this).parents(".colors").siblings(".color-code").text().replace("#", ""));
+			hex = $(this).parents(".colors").siblings(".color-code").text()
+			
+			$(".hex input").val(hex.replace("#", ""));
+			$(".dropper").val(hex);
 		}
 		else{
 			sampleRGB = $(this).parents(".colors").siblings(".color-code").text().replace("rgb(", "").replace(")", "").split(', ');
@@ -400,6 +416,8 @@ function samples(){
 			r = parseInt($(".rgb [name='red']").val()),
 			g = parseInt($(".rgb [name='green']").val()),
 			b = parseInt($(".rgb [name='blue']").val());
+			
+			$(".dropper").val(rgb2hex("rgb("+r+", "+g+", "+b+")"));
 		}
 		
 		if(hold == "off"){
