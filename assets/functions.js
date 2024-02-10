@@ -29,6 +29,8 @@ function bezelToggle(){
 	else{
 		setCookie("bezelStyle", "koko-aio", 30);
 		bezelStyle = "koko-aio";
+		
+		$(".conversion").text("").val("");
 	}
 	
 	$(".info").empty();
@@ -290,7 +292,7 @@ function settingReset(){
 		}
 	}
 	else{
-		$(".conversion").text('BEZEL_R = "0.000000"\nBEZEL_G = "0.000000"\nBEZEL_B = "0.000000"\nBEZEL_CON = "1.300000"');	
+		$(".conversion").text('BEZEL_R = "0.000000"\nBEZEL_G = "0.000000"\nBEZEL_B = "0.000000"\nBEZEL_CON = "1.300000"').val('BEZEL_R = "0.000000"\nBEZEL_G = "0.000000"\nBEZEL_B = "0.000000"\nBEZEL_CON = "1.300000"');	
 	}
 }
 
@@ -404,11 +406,11 @@ $(".switch-panel .bezel input").on('click', function(){
 	
 	if(bezelStyle == "koko-aio"){
 		setTimeout(function () {
-			$(".switch-panel").addClass("koko-aio");
+			$(".content").addClass("koko-aio");
 		}, 400);
 	}
 	else{
-		$(".switch-panel").removeClass("koko-aio");
+		$(".content").removeClass("koko-aio");
 	}
 });
 
@@ -421,10 +423,10 @@ $(".switch-panel .imageType input").on('click', function(){
 });
 
 if(bezelStyle == "koko-aio"){
-	$(".switch-panel").addClass("koko-aio");
+	$(".content").addClass("koko-aio");
 }
 else{
-	$(".switch-panel").removeClass("koko-aio");
+	$(".content").removeClass("koko-aio");
 }
 
 $('.layer-labels li').on('click', function () {
@@ -466,7 +468,7 @@ $(document).ready(function () {
 					}
 					
 					contrastSetting = contrast+"0000";
-					$(".conversion").text('BEZEL_R = "'+rSetting+'"\nBEZEL_G = "'+gSetting+'"\nBEZEL_B = "'+bSetting+'"\nBEZEL_CON = "'+contrastSetting+'"');
+					$(".conversion").text('BEZEL_R = "'+rSetting+'"\nBEZEL_G = "'+gSetting+'"\nBEZEL_B = "'+bSetting+'"\nBEZEL_CON = "'+contrastSetting+'"').val('BEZEL_R = "'+rSetting+'"\nBEZEL_G = "'+gSetting+'"\nBEZEL_B = "'+bSetting+'"\nBEZEL_CON = "'+contrastSetting+'"');
 				}
 				else{
 					mbzHSB = rgbToHSB(hexToRgb(hex).r, hexToRgb(hex).g, hexToRgb(hex).b);
@@ -511,7 +513,7 @@ $(document).ready(function () {
 					}
 					
 						contrastSetting = contrast+"0000";
-						$(".conversion").text('BEZEL_R = "'+rSetting+'"\nBEZEL_G = "'+gSetting+'"\nBEZEL_B = "'+bSetting+'"\nBEZEL_CON = "'+contrastSetting+'"');
+						$(".conversion").text('BEZEL_R = "'+rSetting+'"\nBEZEL_G = "'+gSetting+'"\nBEZEL_B = "'+bSetting+'"\nBEZEL_CON = "'+contrastSetting+'"').val('BEZEL_R = "'+rSetting+'"\nBEZEL_G = "'+gSetting+'"\nBEZEL_B = "'+bSetting+'"\nBEZEL_CON = "'+contrastSetting+'"');
 				}
 				else{
 					mbzHSB = rgbToHSB(r, g, b);

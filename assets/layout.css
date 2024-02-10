@@ -82,6 +82,10 @@ textarea:focus-visible {
     right: 12px;
 }
 
+.koko-aio .hold, .koko-aio #clear {
+    opacity: 0;
+}
+
 .hex {
     width: 22%;
 }
@@ -163,15 +167,15 @@ span.square-title {
     display: inline-block;
 }
 
-.switch-panel.koko-aio .format {
+.koko-aio .switch-panel .format {
     border: none;
 }
 
-.switch-panel.koko-aio .imageType, .koko-aio ~ .layers-wrap {
+..koko-aio .switch-panel .imageType, .koko-aio .layers-wrap {
     opacity: 0;
 }
 
-.switch-panel.koko-aio {
+..koko-aio .switch-panel {
 	margin-bottom: -31px;
 	display: math;
 }
