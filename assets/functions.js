@@ -90,14 +90,16 @@ function colorReset(){
 
 function colorVersion(loc){
 	if(loc == "us"){
-		setCookie("colorVersion", "color", 30);
+		setCookie("colorVersion", "us", 30);
 		$(".format .panel-label").text("Color Format");
 		$("#color").text($("#color").text().replace("Colour", "Color"));
+		$(".square-title").text($(".square-title").text().replace("Colour", "Color"));
 	}
 	else{
-		setCookie("colorVersion", "colour", 30);
+		setCookie("colorVersion", "world", 30);
 		$(".format .panel-label").text("Colour Format");
 		$("#color").text($("#color").text().replace("Color", "Colour"));
+		$(".square-title").text($(".square-title").text().replace("Color", "Colour"));
 	}
 }
 
@@ -342,7 +344,7 @@ function start(){
 	}
 	
 	if(getCookie("colorVersion") == ""){
-		colorVer = "colour";
+		colorVer = "world";
 	}
 	else{
 		colorVer = getCookie("colorVersion");
