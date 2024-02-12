@@ -21,15 +21,19 @@ function getCookie(cname) {
 }
 
 function bezelToggle(){
+	$(".bezel .switch-label").removeClass("active");
+	
 	if($(".switch-panel .bezel input").is(":checked")){
 		setCookie("bezelStyle", "mbz", 30);
 		bezelStyle = "mbz";
 		layerToggle(imageLayer);
+		$(".bezel .switch-label:nth-child(3)").addClass("active");
 	}
 	else{
 		setCookie("bezelStyle", "koko-aio", 30);
 		bezelStyle = "koko-aio";
 		holdToggle();
+		$(".bezel .switch-label:nth-child(1)").addClass("active");
 	}
 	
 	$(".info").empty();
@@ -46,6 +50,7 @@ function clearConversion(){
 function colorReset(){
 	$(".hex input").val("");
 	$(".rgb input").val("");
+	$(".hsb input").val("");
 	
 	if(bezelStyle == "mbz"){
 		$(".contrast").css("opacity", 0);
@@ -60,8 +65,13 @@ function colorReset(){
 			settingReset();
 		}
 		
-		if($("div").hasClass("hex") == true){
+		if($(".format-labels .active").text() == "HEX"){
 			$(".hex input").attr("placeholder", "1A1A1A");
+		}
+		else if($(".format-labels .active").text() == "HSB"){
+			$(".hsb input[name='hue']").attr("placeholder", "0");
+			$(".hsb input[name='saturation']").attr("placeholder", "0");
+			$(".hsb input[name='brightness']").attr("placeholder", "10");
 		}
 		else{
 			$(".rgb input[name='red']").attr("placeholder", "26");
@@ -80,8 +90,13 @@ function colorReset(){
 		
 		$(".square").css({"background": "#808080", "box-shadow": "0px 0px 14px 4px rgba(128, 128, 128, 0.25)"});
 	
-		if($("div").hasClass("hex") == true){
+		if($(".format-labels .active").text() == "HEX"){
 			$(".hex input").attr("placeholder", "808080");
+		}
+		else if($(".format-labels .active").text() == "HSB"){
+			$(".hsb input[name='hue']").attr("placeholder", "0");
+			$(".hsb input[name='saturation']").attr("placeholder", "0");
+			$(".hsb input[name='brightness']").attr("placeholder", "50");
 		}
 		else{
 			$(".rgb input[name='red']").attr("placeholder", "128");
@@ -112,6 +127,16 @@ function colorVision(){
 	if(colorFormat == "HEX"){
 		$(".hex input").val(hex);
 	}
+	else if(colorFormat == "HSB"){
+		hsv = rgbToHSB(hexToRgb(hex).r, hexToRgb(hex).g, hexToRgb(hex).b),
+		h = Math.round(hsv[0]),
+		s = Math.round(hsv[1]),
+		v = Math.round(hsv[2]);
+		
+		$(".hsb input[name='hue']").val(h);
+		$(".hsb input[name='saturation']").val(s);
+		$(".hsb input[name='brightness']").val(v);
+	}
 	else{
 		r = hexToRgb(hex).r,
 		g = hexToRgb(hex).g,
@@ -129,20 +154,43 @@ function colorVision(){
 	preview();
 }
 
-function formatToggle(){
+function formatToggle(value){
+	  value = parseInt(value, 10);
+	  $(".format-labels span").removeClass("active");
+	  $(".hex, .hsb, .rgb").remove();
+
+	  if (value === 1) {
+		$('.format input').removeClass('hsbOn rgbOn');
+		$('.format input').addClass('hexOn');
+	  }
+	  else if (value === 2) {
+		$('.format input').removeClass('hexOn rgbOn');
+		$('.format input').addClass('hsbOn');
+	  }
+	  else if (value === 3) {
+		$('.format input').removeClass('hexOn hsbOn');
+		$('.format input').addClass('rgbOn');
+	  }
+	  
+	$('.format-labels').find("span:nth-child("+value+")").addClass("active");
+	$('.format input').val(value);
+
 	$(".colors").empty();
 	
-	if($(".switch-panel .format input").is(":checked")){
-		setCookie("colorFormat", "RGB", 30);
-		colorFormat = "RGB";
-		$(".hex").remove();
-		$(".text-box").after('<div class="rgb">rgb(<input type="text" name="red" size=3 maxLength=3>, <input type="text" name="green" size=3 maxLength=3>, <input type="text" name="blue" size=3 maxLength=3>)</div>');
-	}
-	else{
+	if(value == 1){
 		setCookie("colorFormat", "HEX", 30);
 		colorFormat = "HEX";
-		$(".rgb").remove();
 		$(".text-box").after('<div class="hex">HEX: # <input type="text" name="hex" size=6 maxlength=6></div>');
+	}
+	else if(value == 2){
+		setCookie("colorFormat", "HSB", 30);
+		colorFormat = "HSB";
+		$(".text-box").after('<div class="hsb">H: <input type="text" name="hue" size=3 maxLength=3>&deg;&nbsp;&nbsp;S: <input type="text" name="saturation" size=3 maxLength=3>%&nbsp;&nbsp;B: <input type="text" name="brightness" size=3 maxLength=3>% </div>');
+	}
+	else if(value == 3){
+		setCookie("colorFormat", "RGB", 30);
+		colorFormat = "RGB";
+		$(".text-box").after('<div class="rgb">rgb(<input type="text" name="red" size=3 maxLength=3>, <input type="text" name="green" size=3 maxLength=3>, <input type="text" name="blue" size=3 maxLength=3>)</div>');
 	}
 	
 	$(".info").empty();
@@ -169,7 +217,7 @@ function holdToggle(){
 		setCookie("hold", "off", 30);
 		hold = "off";
 		
-		if(colorFormat == "HEX" && $('.hex input').val() != "" || colorFormat == "RGB" && $('.rgb input').val() != ""){
+		if(colorFormat == "HEX" && $('.hex input').val() != "" || colorFormat == "HSB" && $('.hsb input').val() != "" || colorFormat == "RGB" && $('.rgb input').val() != ""){
 			$("form").submit();
 		}
 		else{
@@ -180,11 +228,30 @@ function holdToggle(){
 	}
 }
 
+function mix(a, b, v)
+{
+    return (1-v)*a + v*b;
+}
+
+function HSVtoRGB(H, S, V)
+{
+    var V2 = V * (1 - S);
+    var r  = ((H>=0 && H<=60) || (H>=300 && H<=360)) ? V : ((H>=120 && H<=240) ? V2 : ((H>=60 && H<=120) ? mix(V,V2,(H-60)/60) : ((H>=240 && H<=300) ? mix(V2,V,(H-240)/60) : 0)));
+    var g  = (H>=60 && H<=180) ? V : ((H>=240 && H<=360) ? V2 : ((H>=0 && H<=60) ? mix(V2,V,H/60) : ((H>=180 && H<=240) ? mix(V,V2,(H-180)/60) : 0)));
+    var b  = (H>=0 && H<=120) ? V2 : ((H>=180 && H<=300) ? V : ((H>=120 && H<=180) ? mix(V2,V,(H-120)/60) : ((H>=300 && H<=360) ? mix(V,V2,(H-300)/60) : 0)));
+
+    return {
+        r : Math.round(r * 255),
+        g : Math.round(g * 255),
+        b : Math.round(b * 255)
+    };
+}
+
 function layerToggle(imageLayers){
 	setCookie("imageLayer", imageLayers, 30);
 	imageLayer = imageLayers
 	
-	if($(".hex input, .rgb input").val() == "" && hold == "off"){
+	if($(".hex input, .hsb input, .rgb input").val() == "" && hold == "off"){
 		settingReset();
 	}
 	else if(hold == "off"){
@@ -231,16 +298,20 @@ function layerToggle(imageLayers){
 }
 
 function imageTypeToggle(){
+	$(".imageType .switch-label").removeClass("active");
+	
 	if($(".switch-panel .imageType input").is(":checked")){
 		setCookie("imageType", "yellow", 30);
 		imageType = "yellow";
+		$(".imageType .switch-label:nth-child(3)").addClass("active");
 	}
 	else{
 		setCookie("imageType", "standard", 30);
 		imageType = "standard";
+		$(".imageType .switch-label:nth-child(1)").addClass("active");
 	}
 	
-	if($(".hex input, .rgb input").val() == "" && hold == "off"){
+	if($(".hex input, .hsb input, .rgb input").val() == "" && hold == "off"){
 		settingReset();
 	}
 	else if(hold == "off"){
@@ -253,24 +324,38 @@ function presetCopy() {
 }
 
 function preview(){
-	hex = $('.hex input').val();
+	var hex = $('.hex input').val(),
+	r = parseInt($(".rgb [name='red']").val()),
+	b = parseInt($(".rgb [name='blue']").val()),
+	g = parseInt($(".rgb [name='green']").val()),
+	h = parseInt($(".hsb [name='hue']").val()),
+	s = parseInt($(".hsb [name='saturation']").val()),
+	v = parseInt($(".hsb [name='brightness']").val());
 	
 	if(colorFormat == "HEX"){
 		$(".square").css("box-shadow", "0px 0px 14px 4px rgba("+hexToRgb(hex).r+", "+hexToRgb(hex).g+", "+hexToRgb(hex).b+", 0.25)");
 		$(".square").css("background", "#"+hex);
+		$(".dropper").val("#"+hex);
+	}
+	else if(colorFormat == "HSB"){
+		$(".square").css("box-shadow", "0px 0px 14px 4px rgba("+HSVtoRGB(h, s/100, v/100).r+", "+HSVtoRGB(h, s/100, v/100).g+", "+HSVtoRGB(h, s/100, v/100).b+", 0.25)");
+		$(".square").css("background", "rgb("+HSVtoRGB(h, s/100, v/100).r+", "+HSVtoRGB(h, s/100, v/100).g+", "+HSVtoRGB(h, s/100, v/100).b+")");
+		$(".dropper").val(rgbToHex(HSVtoRGB(h, s/100, v/100).r, HSVtoRGB(h, s/100, v/100).g, HSVtoRGB(h, s/100, v/100).b));
 	}
 	else{
 		$(".square").css("box-shadow", "0px 0px 14px 4px rgba("+r+", "+g+", "+b+", 0.25)");
 		$(".square").css("background", "rgb("+r+", "+g+", "+b+")");
+		$(".dropper").val(rgbToHex(r, g, b));
 	}
 }
 
-function rgb2hex(rgb){
-	rgb = rgb.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
-	return (rgb && rgb.length === 4) ? "#" +
-	("0" + parseInt(rgb[1],10).toString(16)).slice(-2) +
-	("0" + parseInt(rgb[2],10).toString(16)).slice(-2) +
-	("0" + parseInt(rgb[3],10).toString(16)).slice(-2) : '';
+function componentToHex(c) {
+  var hex = c.toString(16);
+  return hex.length == 1 ? "0" + hex : hex;
+}
+
+function rgbToHex(r, g, b) {
+  return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
 }
 
 function rgbToHSB(r, g, b){
@@ -386,21 +471,23 @@ function start(){
 		colorVer = getCookie("colorVersion");
 	}
 	
-	if(colorFormat == "RGB"){
-		$(".text-box").after('<div class="rgb">rgb(<input type="text" name="red" size=3 maxLength=3>, <input type="text" name="green" size=3 maxLength=3>, <input type="text" name="blue" size=3 maxLength=3>)</div>');
+	if(colorFormat == "HEX"){
+		formatToggle(1);
+	}
+	else if(colorFormat == "HSB"){
+		formatToggle(2);
 	}
 	else{
-		$(".text-box").after('<div class="hex">HEX: # <input type="text" name="hex" size=6 maxlength=6></div>');
+		formatToggle(3);
 	}
-	
 	
 	if(bezelStyle == "mbz"){
 		$(".switch-panel .bezel input").attr("checked", "checked");
+		$(".bezel .switch-label:nth-child(3)").addClass("active");
 		layerToggle(imageLayer);
 	}
-	
-	if(colorFormat == "RGB"){
-		$(".switch-panel .format input").attr("checked", "checked");
+	else{
+		$(".bezel .switch-label:nth-child(1)").addClass("active");
 	}
 	
 	if(hold == "on"){
@@ -409,10 +496,13 @@ function start(){
 	
 	if(imageType == "yellow"){
 		$(".switch-panel .imageType input").attr("checked", "checked");
+		$(".imageType .switch-label:nth-child(3)").addClass("active");
+	}
+	else{
+		$(".imageType .switch-label:nth-child(1)").addClass("active");
 	}
 	
 	colorReset();
-	samples();
 	colorVersion(colorVer);
 }
 
@@ -428,6 +518,20 @@ function samples(){
 			$(".hex input").val(hex.replace("#", ""));
 			$(".dropper").val(hex);
 		}
+		else if(colorFormat == "HSB"){
+			sampleHSV = $(this).parents(".colors").siblings(".color-code").text().replace("hsb(", "").replace(")", "").replace("deg", "").replace(/%/g, "").split(', ');
+			
+			$(".hsb [name='hue']").val(sampleHSV[0]);
+			$(".hsb [name='saturation']").val(sampleHSV[1]);
+			$(".hsb [name='brightness']").val(sampleHSV[2]);
+			
+			
+			h = parseInt($(".hsb [name='hue']").val()),
+			s = parseInt($(".hsb [name='saturation']").val()),
+			v = parseInt($(".hsb [name='brightness']").val());
+			
+			$(".dropper").val(rgbToHex(HSVtoRGB(h, s/100, v/100).r, HSVtoRGB(h, s/100, v/100).g, HSVtoRGB(h, s/100, v/100).b));
+		}
 		else{
 			sampleRGB = $(this).parents(".colors").siblings(".color-code").text().replace("rgb(", "").replace(")", "").split(', ');
 			
@@ -440,7 +544,7 @@ function samples(){
 			g = parseInt($(".rgb [name='green']").val()),
 			b = parseInt($(".rgb [name='blue']").val());
 			
-			$(".dropper").val(rgb2hex("rgb("+r+", "+g+", "+b+")"));
+			$(".dropper").val(rgbToHex(r, g, b));
 		}
 		
 		if(hold == "off"){
@@ -484,8 +588,16 @@ $(".switch-panel .bezel input").on('click', function(){
 	}
 });
 
-$(".switch-panel .format input").on('click', function(){
-	formatToggle();
+$(".switch-panel .format-labels span").on('click', function(){
+	if($(this).text() == "HEX"){
+		formatToggle(1);
+	}
+	else if($(this).text() == "HSB"){
+		formatToggle(2);
+	}
+	else if($(this).text() == "RGB"){
+		formatToggle(3);
+	}
 });
 
 $(".switch-panel .imageType input").on('click', function(){
@@ -533,7 +645,7 @@ $(document).ready(function () {
 		$(".message").removeClass("info");
 		$(".message").removeClass("error");
 		$(".message").empty();
-		hexError = rgbError = "false";
+		hexError = hsvError = rgbError = "false";
 		
 		if(colorFormat == "HEX"){
 			var hex = $(".hex input").val().toUpperCase();
@@ -579,7 +691,63 @@ $(document).ready(function () {
 			
 			$(".contrast input, .hex input").blur();
 		}
+		else if(colorFormat == "HSB"){
+			var h = parseInt($(".hsb [name='hue']").val()),
+				s = parseInt($(".hsb [name='saturation']").val()),
+				v = parseInt($(".hsb [name='brightness']").val());
+			
+			if(h < 0 || h > 360 || s < 0 || s > 100 || v < 0 || v > 100){
+				hsvError = "true";
+			}
+			else if(Number.isInteger(h) == false || Number.isInteger(s) == false || Number.isInteger(v) == false){
+				hsvError = "true";
+			}
+			else{
+				hsvError = "false";
+				
+				s = s/100;
+				v = v/100;
+				
+				if(bezelStyle == "koko-aio"){
+					var contrast = $("#contrasts option:selected").val();
+					if(contrast < 1){
+						rSetting = (((HSVtoRGB(h, s, v).r - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .1 + .105) + (contrast * .01 + .0105))) / 128)).toFixed(10);
+						gSetting = (((HSVtoRGB(h, s, v).g - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .1 + .105) + (contrast * .01 + .0105))) / 128)).toFixed(10);
+						bSetting = (((HSVtoRGB(h, s, v).b - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .01 + .055) + (contrast * .001 + .0055))) / 128)).toFixed(10);
+					}
+					else{
+						rSetting = (((HSVtoRGB(h, s, v).r - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .01 + .105) + (contrast * .001 + .0105))) / 128)).toFixed(10);
+						gSetting = (((HSVtoRGB(h, s, v).g - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .01 + .105) + (contrast * .001 + .0105))) / 128)).toFixed(10);
+						bSetting = (((HSVtoRGB(h, s, v).b - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .001 + .055) + (contrast * .0001 + .0055))) / 128)).toFixed(10);
+					}
+					
+						contrastSetting = contrast+"0000";
+						$(".conversion").text('BEZEL_R = "'+rSetting+'"\nBEZEL_G = "'+gSetting+'"\nBEZEL_B = "'+bSetting+'"\nBEZEL_CON = "'+contrastSetting+'"').val('BEZEL_R = "'+rSetting+'"\nBEZEL_G = "'+gSetting+'"\nBEZEL_B = "'+bSetting+'"\nBEZEL_CON = "'+contrastSetting+'"');
+				}
+				else{
+					mbzHSB = rgbToHSB(HSVtoRGB(h, s, v).r, HSVtoRGB(h, s, v).g, HSVtoRGB(h, s, v).b);
+				}
+				
+				$("#copy").prop("disabled", false);
+				colorMessage("hsb("+h+"deg, "+s*100+"%, "+v*100+"%)");
+			}
+			
+			if(hsvError == "true"){
+				$(".message").text("HSV is in format 0-360deg, 0-100%, 0-100%");
+				$(".message").addClass("error");
+				$(".info").empty();
+			}
+			else{
+				$(".message").removeClass("error");
+			}
+			
+			$(".contrast input, .hsb input").blur();
+		}
 		else{
+			var r = parseInt($(".rgb [name='red']").val()),
+				g = parseInt($(".rgb [name='green']").val()),
+				b = parseInt($(".rgb [name='blue']").val());
+				
 			if(r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255){
 				rgbError = "true";
 			}
@@ -625,9 +793,10 @@ $(document).ready(function () {
 			$(".contrast input, .rgb input").blur();
 		}
 		
+		preview();
 		$(".conversion").val();
 		
-		if(bezelStyle == "mbz" && hexError == "false" && rgbError == "false"){
+		if(bezelStyle == "mbz" && hexError == "false" && hsvError == "false" && rgbError == "false"){
 			var hue = Math.round(mbzHSB[0]),
 				saturation = Math.round(mbzHSB[1]),
 				brightness = Math.round(mbzHSB[2]);

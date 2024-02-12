@@ -3,7 +3,7 @@ body {
 	font-size: 16px;
 	background: #F2F2F2;
 	color: #333;
-    margin: 0;
+	margin: 0;
 }
 
 .content {
@@ -63,6 +63,10 @@ form {
     padding: 10px;
 }
 
+.koko-aio .text-box {
+    width: 540px;
+}
+
 textarea {
 	font-size: 16px;
 	width: 100%;
@@ -86,19 +90,23 @@ textarea:focus-visible {
     opacity: 0;
 }
 
-.hex {
+.hex, .rgb {
     width: 22%;
 }
 
-.rgb {
-    width: 22%;
+.hsb {
+    width: 27%;
 }
 
 .contrast {
     width: 30%;
 }
 
-.hex, .contrast, .rgb {
+.koko-aio .hsb, .koko-aio .rgb {
+    width: 33%;
+}
+
+.hex, .contrast, .rgb, .hsb {
 	margin-top: 14px;
 	display: inline-block;
 }
@@ -107,9 +115,13 @@ textarea:focus-visible {
 	text-transform:uppercase;
 }
 
-.rgb input {
+.rgb input, .hsb input {
 	width: 48px;
 	text-align: center;
+}
+
+.hsb input {
+    margin-right: 6px;
 }
 
 input[type="text"], select {
@@ -131,7 +143,7 @@ input[type="text"], select {
 	border-radius: 6px;
 	height: 152px;
 	width: 152px;
-	right: 320px;
+	right: 140px;
 	top: 124px;
 	position: absolute;
 	box-shadow: 0px 0px 14px 4px rgba(128, 128, 128, 0.25);
@@ -144,6 +156,7 @@ span.square-title {
     font-weight: bold;
     left: 0;
     right: 0;
+    color: rgb(51 51 51 / 50%);
 }
 
 .dropper {
@@ -159,10 +172,11 @@ span.square-title {
 }
 
 .message {
-	display: inline-block;
-	margin-top: 24px;
-	height: 20px;
-	width: 50%;
+	text-align: center;
+	bottom: -48px;
+	left: -73px;
+	position: absolute;
+	width: 200%;
 }
 
 .error {
@@ -176,6 +190,7 @@ span.square-title {
 .switch-panel {
     display: table;
     width: 100%;
+    margin-top: 24px;
 }
 
 .koko-aio .bezel, .koko-aio .format {
@@ -207,12 +222,80 @@ span.square-title {
     border-right: 1px solid #DDD;
 }
 
+.format-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 28px 0 0;
+  flex-direction: column;
+  position: relative;
+}
+
+.format-labels span {
+    margin: 0 10px;
+}
+
+.format-labels .active, .switch-label.active {
+    color: #333;
+}
+
+.format input {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 8px;
+  width: 130px;
+  background-color: #DDD;
+  -webkit-border-radius: 25px;
+  border-radius: 25px;
+  padding: 0 2px;
+  margin: 0;
+  cursor: pointer;
+  left: 125px;
+  bottom: 26px;
+  position: absolute;
+}
+
+.format input::-webkit-slider-thumb {
+  background-color: #FFF;
+}
+
+.format input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  -webkit-border-radius: 25px;
+  border-radius: 25px;
+  border: 2px solid #DDD
+}
+
+.format input:focus {
+  outline: none;
+}
+
+.koko-aio # {
+    left: 200px;
+}
+
+.format-wrapper .format-labels {
+    width: 100%;
+    margin-top: 10px;
+    color: rgb(51 51 51 / 50%);
+}
+
+.switch-wrapper {
+    margin-top: 22px;
+}
+
 .switch-label {
 	display: inline-block;
     transition: all .3s ease-in-out;
+    color: rgb(51 51 51 / 50%);
 }
 
 .panel-label {
+    font-size: 14px;
+    margin-left: -160px;
     font-weight: 600;
 }
 
@@ -271,8 +354,8 @@ span.square-title {
 
 .layers-wrap {
 	display: inline-block;
-	padding-top: 10px;
-	margin: 0px auto 48px;
+	padding-top: 48px;
+	margin: 0px auto 12px;
 	position: relative;
 	width: 100%;
 	text-align: center;
@@ -390,11 +473,10 @@ span.square-title {
 }
 
 #submit {
-	width: 32%;
-	padding: 14px;
+	opacity: 0;
 }
 
-.button:hover {
+.button:hover, .format-labels span:hover {
     cursor: pointer;
 }
 
@@ -441,7 +523,7 @@ a:hover {
 .owl-wrapper {
 	width: 1044px;
 	position: absolute;
-	bottom: 120px;
+	bottom: 114px;
 	left: 50%;
 	margin-left: -500px;
 }
@@ -575,13 +657,21 @@ footer {
 	color: rgb(51 51 51 / 50%);
 }
 
-footer .button {
+footer .button, .submit.button {
     display: inline-block;
     margin-left: 12px;
     border-radius: 50%;
     padding: 10px;
     width: 24px;
     height: 24px;
+}
+
+.submit.button {
+    width: auto;
+    height: auto;
+    position: absolute;
+    right: -64px;
+    bottom: 0;
 }
 
 .center-foot {
@@ -628,7 +718,7 @@ footer .button {
 @media screen and (max-height: 924px){
 	.owl-wrapper, footer {
 		position: relative;
-		margin: 48px auto 0px;
+		margin: 36px auto 0px;
 		left: unset;
 	}
 

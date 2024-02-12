@@ -24,6 +24,7 @@
 					<textarea class="conversion" rows="7" cols="36" readonly></textarea>
 					<span class="button" id="clear" onclick="clearConversion();">Clear</span>
 					<span class="button" id="copy" onclick="presetCopy();" disabled>Copy</span>
+					<button class="submit button" type="submit"><span class="material-symbols-outlined">add</span></button>
 				</div>
 				<div class="contrast">
 					<label for="contrasts">Contrast: </label>
@@ -67,38 +68,44 @@
 				</div>
 				<div class="square">
 					<span class="square-title">Colour Vision</span>
+					<span class="message"></span>
 					<input type="color" class="dropper" name="dropper">
 				</div>
-				<span class="message"></span>
 				<br>
 				<br>
 				<div class="switch-panel">
 					<div class="bezel">
-						<span class="panel-label">Bezel Style: </span>
-						<span class="switch-label">koko-aio</span>
-						<label class="switch">
-							<input type="checkbox">
-							<span class="slider round"></span>
-						</label>
-						<span class="switch-label">MBZ</span>
+						<span class="panel-label">Bezel Style</span>
+						<div class="switch-wrapper">
+							<span class="switch-label">koko-aio</span>
+							<label class="switch">
+								<input type="checkbox">
+								<span class="slider round"></span>
+							</label>
+							<span class="switch-label">MBZ</span>
+						</div>
 					</div>
 					<div class="format">
-						<span class="panel-label"></span>
-						<span class="switch-label">HEX</span>
-						<label class="switch">
-							<input type="checkbox">
-							<span class="slider round"></span>
-						</label>
-						<span class="switch-label">RGB</span>
+						<span class="panel-label">Color Format</span>
+						<div class="format-wrapper">
+							<input type="range" name="points" onchange="formatToggle(this.value)" min="1" step="1" class="hexOn" max="3" value="1">
+							<div class="format-labels">
+								<span>HEX</span>
+								<span>HSB</span>
+								<span>RGB</span>
+							</div>
+						</div>
 					</div>
 					<div class="imageType">
-						<span class="panel-label">Image Type: </span>
-						<span class="switch-label">Standard</span>
-						<label class="switch">
-							<input type="checkbox">
-							<span class="slider round"></span>
-						</label>
-						<span class="switch-label">Yellow</span>
+						<span class="panel-label">Image Type</span>
+						<div class="switch-wrapper">
+							<span class="switch-label">Standard</span>
+							<label class="switch">
+								<input type="checkbox">
+								<span class="slider round"></span>
+							</label>
+							<span class="switch-label">Yellow</span>
+						</div>
 					</div>
 				</div>
 				<div class="layers-wrap">
@@ -116,7 +123,6 @@
 						<li>Cab Glass</li>
 					</ul>
 				</div>
-				<input type="submit" name="submit" value="Convert" id="submit" class="button">
 			</form>
 		</div>
 		<div class="owl-wrapper">
@@ -182,7 +188,7 @@
 						<em>Designed by hgoda90</em>
 					</div>
 					<div class="credit">
-						<a href="https://forums.libretro.com/t/koko-aio-shader-discussions-and-updates/38455">koko-aio Shader</a><em> by kokoko3k </em> - 
+						<a href="https://forums.libretro.com/t/koko-aio-shader-discussions-and-updates/38455">koko-aio</a><em> by kokoko3k </em> - 
 						<a href="https://forums.libretro.com/t/mega-bezel-reflection-shader-feedback-and-updates/25512">Mega Bezel</a><em> by HyperspaceMadness</em>
 					</div>
 				</div>
