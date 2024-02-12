@@ -20,9 +20,9 @@ function sampleColors() {
 					$(this).find(".colors").append("<div class='color' data-code='rgb(255, 120, 31)' style='background: rgb(255, 120, 31);'></div>");
 					break;
 				case "n64":
+					$(this).find(".colors").append("<div class='color' data-code='rgb(66, 64, 65)' style='background: rgb(66, 64, 65);'></div>");
 					$(this).find(".colors").append("<div class='color' data-code='rgb(199, 195, 197)' style='background: rgb(199, 195, 197);'></div>");
 					$(this).find(".colors").append("<div class='color' data-code='rgb(131, 105, 135)' style='background: rgb(131, 105, 135);'></div>");
-					$(this).find(".colors").append("<div class='color' data-code='rgb(66, 64, 65)' style='background: rgb(66, 64, 65);'></div>");
 					break;
 				case "nes":
 					$(this).find(".colors").append("<div class='color' data-code='rgb(229, 229, 229)' style='background: rgb(229, 229, 229);'></div>");
@@ -72,9 +72,9 @@ function sampleColors() {
 					$(this).find(".colors").append("<div class='color' data-code='hsb(24deg, 88%, 100%)' style='background: rgb(255, 120, 31);'></div>");
 					break;
 				case "n64":
+					$(this).find(".colors").append("<div class='color' data-code='hsb(330deg, 3%, 26%)' style='background: rgb(66, 64, 65);'></div>");
 					$(this).find(".colors").append("<div class='color' data-code='hsb(330deg, 2%, 78%)' style='background: rgb(199, 195, 197);'></div>");
 					$(this).find(".colors").append("<div class='color' data-code='hsb(292deg, 22%, 53%)' style='background: rgb(131, 105, 135);'></div>");
-					$(this).find(".colors").append("<div class='color' data-code='hsb(330deg, 3%, 26%)' style='background: rgb(66, 64, 65);'></div>");
 					break;
 				case "nes":
 					$(this).find(".colors").append("<div class='color' data-code='hsb(0deg, 0%, 90%)' style='background: rgb(229, 229, 229);'></div>");
@@ -124,9 +124,9 @@ function sampleColors() {
 					$(this).find(".colors").append("<div class='color' data-code='#FF781F' style='background: #FF781F;'></div>");
 					break;
 				case "n64":
+					$(this).find(".colors").append("<div class='color' data-code='#424041' style='background: #424041;'></div>");
 					$(this).find(".colors").append("<div class='color' data-code='#C7C3C5' style='background: #C7C3C5;'></div>");
 					$(this).find(".colors").append("<div class='color' data-code='#836987' style='background: #836987;'></div>");
-					$(this).find(".colors").append("<div class='color' data-code='#424041' style='background: #424041;'></div>");
 					break;
 				case "nes":
 					$(this).find(".colors").append("<div class='color' data-code='#E5E5E5' style='background: #E5E5E5;'></div>");
@@ -164,59 +164,50 @@ function colorMessage(colors) {
 			case "242323":
 			case "946E4A":
 			case "FF9233":
-				$(".message").text("Atari 2600");
-				$(".message").addClass("info");
+				$(".info").text("Atari 2600");
 				break;
 			case "3A75C2":
 			case "BDBAB1":
 			case "CF3311":
 			case "ED8332":
-				$(".message").text("Dreamcast");
-				$(".message").addClass("info");
+				$(".info").text("Dreamcast");
 				break;
 			case "262626":
 			case "4E4480":
 			case "ADADAD":
 			case "FF781F":
-				$(".message").text("GameCube");
-				$(".message").addClass("info");
+				$(".info").text("GameCube");
 				break;
 			case "424041":
 			case "836987":
 			case "C7C3C5":
-				$(".message").text("Nintendo 64");
-				$(".message").addClass("info");
+				$(".info").text("Nintendo 64");
 				break;
 			case "0D0C0C":
 			case "A5A2A2":
 			case "DD2020":
 			case "E5E5E5":
-				$(".message").text("Nintendo Entertainment System");
-				$(".message").addClass("info");
+				$(".info").text("Nintendo Entertainment System");
 				break;
 			case "1D315C":
 			case "A8A5A6":
 			case "D5DDED":
-				$(".message").text("PlayStation");
-				$(".message").addClass("info");
+				$(".info").text("PlayStation");
 				break;
 			case "118FDB":
 			case "212129":
 			case "2A5FA3":
 			case "2F4F98":
-				$(".message").text("PlayStation 2");
-				$(".message").addClass("info");
+				$(".info").text("PlayStation 2");
 				break;
 			case "553A99":
 			case "908A99":
 			case "B5B6E4":
 			case "D1D1D1":
-				$(".message").text("Super Nintendo");
-				$(".message").addClass("info");
+				$(".info").text("Super Nintendo");
 				break;
 			default:
-				$(".message").removeClass("info");
-				$(".message").empty();
+				$(".info").empty();
 		}
 	}
 	else if (colorFormat == "HSB"){
@@ -224,55 +215,47 @@ function colorMessage(colors) {
 			case "hsb(0deg, 3%, 14%)":
 			case "hsb(28deg, 80%, 100%)":
 			case "hsb(29deg, 50%, 58%)":
-				$(".message").text("Atari 2600");
-				$(".message").addClass("info");
+				$(".info").text("Atari 2600");
 				break;
 			case "hsb(11deg, 92%, 81%)":
 			case "hsb(26deg, 79%, 93%)":
 			case "hsb(45deg, 6%, 74%)":
 			case "hsb(214deg, 70%, 76%)":
-				$(".message").text("Dreamcast");
-				$(".message").addClass("info");
+				$(".info").text("Dreamcast");
 				break;
 			case "hsb(0deg, 0%, 15%)":
 			case "hsb(0deg, 0%, 68%)":
 			case "hsb(24deg, 88%, 100%)":
 			case "hsb(250deg, 47%, 50%)":
-				$(".message").text("GameCube");
-				$(".message").addClass("info");
+				$(".info").text("GameCube");
 				break;
 			case "hsb(292deg, 22%, 53%)":
 			case "hsb(330deg, 2%, 78%)":
 			case "hsb(330deg, 3%, 26%)":
-				$(".message").text("Nintendo 64");
-				$(".message").addClass("info");
+				$(".info").text("Nintendo 64");
 				break;
 			case "hsb(0deg, 0%, 90%)":
 			case "hsb(0deg, 2%, 65%)":
 			case "hsb(0deg, 8%, 5%)":
 			case "hsb(0deg, 86%, 87%)":
-				$(".message").text("Nintendo Entertainment System");
-				$(".message").addClass("info");
+				$(".info").text("Nintendo Entertainment System");
 				break;
 			case "hsb(220deg, 10%, 93%)":
 			case "hsb(221deg, 68%, 36%)":
 			case "hsb(340deg, 2%, 66%)":
-				$(".message").text("PlayStation");
-				$(".message").addClass("info");
+				$(".info").text("PlayStation");
 				break;
 			case "hsb(189deg, 96%, 81%)":
 			case "hsb(200deg, 84%, 70%)":
 			case "hsb(222deg, 69%, 60%)":
 			case "hsb(240deg, 20%, 16%)":
-				$(".message").text("PlayStation 2");
-				$(".message").addClass("info");
+				$(".info").text("PlayStation 2");
 				break;
 			case "hsb(0deg, 0%, 82%)":
 			case "hsb(239deg, 21%, 89%)":
 			case "hsb(257deg, 62%, 60%)":
 			case "hsb(264deg, 10%, 60%)":
-				$(".message").text("Super Nintendo");
-				$(".message").addClass("info");
+				$(".info").text("Super Nintendo");
 				break;
 		}
 	}
@@ -281,55 +264,47 @@ function colorMessage(colors) {
 			case "rgb(36, 35, 35)":
 			case "rgb(148, 110, 74)":
 			case "rgb(255, 146, 51)":
-				$(".message").text("Atari 2600");
-				$(".message").addClass("info");
+				$(".info").text("Atari 2600");
 				break;
 			case "rgb(58, 117, 194)":
 			case "rgb(189, 186, 177)":
 			case "rgb(207, 51, 17)":
 			case "rgb(237, 131, 50)":
-				$(".message").text("Dreamcast");
-				$(".message").addClass("info");
+				$(".info").text("Dreamcast");
 				break;
 			case "rgb(38, 38, 38)":
 			case "rgb(78, 68, 128)":
 			case "rgb(173, 173, 173)":
 			case "rgb(255, 120, 31)":
-				$(".message").text("GameCube");
-				$(".message").addClass("info");
+				$(".info").text("GameCube");
 				break;
 			case "rgb(66, 64, 65)":
 			case "rgb(131, 105, 135)":
 			case "rgb(199, 195, 197)":
-				$(".message").text("Nintendo 64");
-				$(".message").addClass("info");
+				$(".info").text("Nintendo 64");
 				break;
 			case "rgb(13, 12, 12)":
 			case "rgb(165, 162, 162)":
 			case "rgb(221, 32, 32)":
 			case "rgb(229, 229, 229)":
-				$(".message").text("Nintendo Entertainment System");
-				$(".message").addClass("info");
+				$(".info").text("Nintendo Entertainment System");
 				break;
 			case "rgb(29, 49, 92)":
 			case "rgb(168, 165, 166)":
 			case "rgb(213, 221, 237)":
-				$(".message").text("PlayStation");
-				$(".message").addClass("info");
+				$(".info").text("PlayStation");
 				break;
 			case "rgb(9, 178, 207)":
 			case "rgb(28, 128, 179)":
 			case "rgb(33, 33, 41)":
 			case "rgb(47, 79, 152)":
-				$(".message").text("PlayStation 2");
-				$(".message").addClass("info");
+				$(".info").text("PlayStation 2");
 				break;
 			case "rgb(85, 58, 153)":
 			case "rgb(144, 138, 153)":
 			case "rgb(181, 182, 228)":
 			case "rgb(209, 209, 209)":
-				$(".message").text("Super Nintendo");
-				$(".message").addClass("info");
+				$(".info").text("Super Nintendo");
 				break;
 		}
 	}

@@ -28,15 +28,29 @@ function bezelToggle(){
 		bezelStyle = "mbz";
 		layerToggle(imageLayer);
 		$(".bezel .switch-label:nth-child(3)").addClass("active");
+		$(".layers-wrap, .imageType").removeClass("disabled");
+		$(".imageType input").prop("disabled", false);
 	}
 	else{
 		setCookie("bezelStyle", "koko-aio", 30);
 		bezelStyle = "koko-aio";
 		holdToggle();
 		$(".bezel .switch-label:nth-child(1)").addClass("active");
+		$(".layers-wrap, .imageType").addClass("disabled");
+		$(".imageType input").prop("disabled", true);
+	}
+	
+	if(bezelStyle == "koko-aio"){
+		setTimeout(function () {
+			$(".content").addClass("koko-aio");
+		}, 400);
+	}
+	else{
+		$(".content").removeClass("koko-aio");
 	}
 	
 	$(".info").empty();
+	$(".error").empty();
 	clearConversion();
 	colorReset();
 };
@@ -44,6 +58,7 @@ function bezelToggle(){
 function clearConversion(){
 	$(".conversion").text("").val("");
 	$(".info").empty();
+	$(".error").empty();
 	colorReset();
 }
 
@@ -54,7 +69,6 @@ function colorReset(){
 	
 	if(bezelStyle == "mbz"){
 		$(".contrast").css("opacity", 0);
-		$(".layers-wrap, .imageType").css("opacity", 1);
 		$("#mb").css("display", "inline-block");
 		$("#koko").css("display", "none");
 		$(".dropper").val("#1A1A1A");
@@ -83,7 +97,6 @@ function colorReset(){
 		$(".contrast").css("opacity", 1);
 		$(".contrast option").prop("selected", false);
 		$(".contrast option[value='1.30']").prop("selected", "selected");
-		$(".layers-wrap, .imageType").css("opacity", 0);
 		$("#koko").css("display", "inline-block");
 		$("#mb").css("display", "none");
 		$(".dropper").val("#808080");
@@ -158,6 +171,7 @@ function formatToggle(value){
 	  value = parseInt(value, 10);
 	  $(".format-labels span").removeClass("active");
 	  $(".hex, .hsb, .rgb").remove();
+	  $(".error").empty();
 
 	  if (value === 1) {
 		$('.format input').removeClass('hsbOn rgbOn');
@@ -194,6 +208,7 @@ function formatToggle(value){
 	}
 	
 	$(".info").empty();
+	$(".error").empty();
 	colorReset();
 	samples();
 }
@@ -209,13 +224,17 @@ function hexToRgb(color) {
 }
 
 function holdToggle(){
+	$(".hold .switch-label").removeClass("active");
+	
 	if($(".hold input").is(":checked") && bezelStyle == "mbz"){
 		setCookie("hold", "on", 30);
 		hold = "on";
+		$(".hold .switch-label:nth-child(3)").addClass("active");
 	}
 	else{
 		setCookie("hold", "off", 30);
 		hold = "off";
+		$(".hold .switch-label:nth-child(1)").addClass("active");
 		
 		if(colorFormat == "HEX" && $('.hex input').val() != "" || colorFormat == "HSB" && $('.hsb input').val() != "" || colorFormat == "RGB" && $('.rgb input').val() != ""){
 			$("form").submit();
@@ -245,6 +264,28 @@ function HSVtoRGB(H, S, V)
         g : Math.round(g * 255),
         b : Math.round(b * 255)
     };
+}
+
+function imageTypeToggle(){
+	$(".imageType .switch-label").removeClass("active");
+	
+	if($(".switch-panel .imageType input").is(":checked")){
+		setCookie("imageType", "yellow", 30);
+		imageType = "yellow";
+		$(".imageType .switch-label:nth-child(3)").addClass("active");
+	}
+	else{
+		setCookie("imageType", "standard", 30);
+		imageType = "standard";
+		$(".imageType .switch-label:nth-child(1)").addClass("active");
+	}
+	
+	if($(".hex input, .hsb input, .rgb input").val() == "" && hold == "off"){
+		settingReset();
+	}
+	else if(hold == "off"){
+		$("form").submit();
+	}
 }
 
 function layerToggle(imageLayers){
@@ -297,28 +338,6 @@ function layerToggle(imageLayers){
 	}
 }
 
-function imageTypeToggle(){
-	$(".imageType .switch-label").removeClass("active");
-	
-	if($(".switch-panel .imageType input").is(":checked")){
-		setCookie("imageType", "yellow", 30);
-		imageType = "yellow";
-		$(".imageType .switch-label:nth-child(3)").addClass("active");
-	}
-	else{
-		setCookie("imageType", "standard", 30);
-		imageType = "standard";
-		$(".imageType .switch-label:nth-child(1)").addClass("active");
-	}
-	
-	if($(".hex input, .hsb input, .rgb input").val() == "" && hold == "off"){
-		settingReset();
-	}
-	else if(hold == "off"){
-		$("form").submit();
-	}
-}
-
 function presetCopy() {
 	navigator.clipboard.writeText($(".conversion").text().trim());
 }
@@ -364,6 +383,69 @@ function rgbToHSB(r, g, b){
 	var h = (n === 0) ? 0 : n && v === r ? (g - b) / n : v === g ? 2 + (b - r) / n : 4 + (r - g) / n;
 	
     return [60 * (h < 0 ? h + 6 : h), v && (n / v) * 100, v * 100];
+}
+
+function samples(){
+	sampleColors();
+	$(".hex input").val("");
+	$(".rgb input").val("");
+	
+	$(".sample .color").on('click', function(){
+		if(colorFormat == "HEX"){
+			hex = $(this).parents(".colors").siblings(".color-code").text()
+			
+			$(".hex input").val(hex.replace("#", ""));
+			$(".dropper").val(hex);
+		}
+		else if(colorFormat == "HSB"){
+			sampleHSV = $(this).parents(".colors").siblings(".color-code").text().replace("hsb(", "").replace(")", "").replace("deg", "").replace(/%/g, "").split(', ');
+			
+			$(".hsb [name='hue']").val(sampleHSV[0]);
+			$(".hsb [name='saturation']").val(sampleHSV[1]);
+			$(".hsb [name='brightness']").val(sampleHSV[2]);
+			
+			
+			h = parseInt($(".hsb [name='hue']").val()),
+			s = parseInt($(".hsb [name='saturation']").val()),
+			v = parseInt($(".hsb [name='brightness']").val());
+			
+			$(".dropper").val(rgbToHex(HSVtoRGB(h, s/100, v/100).r, HSVtoRGB(h, s/100, v/100).g, HSVtoRGB(h, s/100, v/100).b));
+		}
+		else{
+			sampleRGB = $(this).parents(".colors").siblings(".color-code").text().replace("rgb(", "").replace(")", "").split(', ');
+			
+			$(".rgb input[name='red']").val(sampleRGB[0]);
+			$(".rgb input[name='green']").val(sampleRGB[1]);
+			$(".rgb input[name='blue']").val(sampleRGB[2]);
+			
+			
+			r = parseInt($(".rgb [name='red']").val()),
+			g = parseInt($(".rgb [name='green']").val()),
+			b = parseInt($(".rgb [name='blue']").val());
+			
+			$(".dropper").val(rgbToHex(r, g, b));
+		}
+		
+		if(hold == "off"){
+			$("form").submit();
+		}
+		
+		preview();
+	});
+	
+	$(".sample .color").on('mouseover', function(){
+		$(this).parents(".colors").siblings(".color-code").text($(this).data("code"));
+	});
+	
+	if(getCookie("sampleStyle") == "diamond" || getCookie("sampleStyle") == ""){
+		$(".sample").addClass("jewel").removeClass("swatch").removeClass("palette");
+	}
+	else if(getCookie("sampleStyle") == "palette"){
+		$(".sample").addClass("palette").removeClass("jewel").removeClass("swatch");
+	}
+	else{
+		$(".sample").addClass("swatch").removeClass("jewel").removeClass("palette");
+	}
 }
 
 function settingReset(){
@@ -485,13 +567,21 @@ function start(){
 		$(".switch-panel .bezel input").attr("checked", "checked");
 		$(".bezel .switch-label:nth-child(3)").addClass("active");
 		layerToggle(imageLayer);
+		$(".layers-wrap, .imageType").removeClass("disabled");
+		$(".imageType input").prop("disabled", false);
 	}
 	else{
 		$(".bezel .switch-label:nth-child(1)").addClass("active");
+		$(".layers-wrap, .imageType").addClass("disabled");
+		$(".imageType input").prop("disabled", true);
 	}
 	
 	if(hold == "on"){
 		$(".hold input").attr("checked", "checked");
+		$(".hold .switch-label:nth-child(3)").addClass("active");
+	}
+	else{
+		$(".hold .switch-label:nth-child(1)").addClass("active");
 	}
 	
 	if(imageType == "yellow"){
@@ -506,86 +596,65 @@ function start(){
 	colorVersion(colorVer);
 }
 
-function samples(){
-	sampleColors();
-	$(".hex input").val("");
-	$(".rgb input").val("");
-	
-	$(".sample .color").on('click', function(){
-		if(colorFormat == "HEX"){
-			hex = $(this).parents(".colors").siblings(".color-code").text()
-			
-			$(".hex input").val(hex.replace("#", ""));
-			$(".dropper").val(hex);
-		}
-		else if(colorFormat == "HSB"){
-			sampleHSV = $(this).parents(".colors").siblings(".color-code").text().replace("hsb(", "").replace(")", "").replace("deg", "").replace(/%/g, "").split(', ');
-			
-			$(".hsb [name='hue']").val(sampleHSV[0]);
-			$(".hsb [name='saturation']").val(sampleHSV[1]);
-			$(".hsb [name='brightness']").val(sampleHSV[2]);
-			
-			
-			h = parseInt($(".hsb [name='hue']").val()),
-			s = parseInt($(".hsb [name='saturation']").val()),
-			v = parseInt($(".hsb [name='brightness']").val());
-			
-			$(".dropper").val(rgbToHex(HSVtoRGB(h, s/100, v/100).r, HSVtoRGB(h, s/100, v/100).g, HSVtoRGB(h, s/100, v/100).b));
-		}
-		else{
-			sampleRGB = $(this).parents(".colors").siblings(".color-code").text().replace("rgb(", "").replace(")", "").split(', ');
-			
-			$(".rgb input[name='red']").val(sampleRGB[0]);
-			$(".rgb input[name='green']").val(sampleRGB[1]);
-			$(".rgb input[name='blue']").val(sampleRGB[2]);
-			
-			
-			r = parseInt($(".rgb [name='red']").val()),
-			g = parseInt($(".rgb [name='green']").val()),
-			b = parseInt($(".rgb [name='blue']").val());
-			
-			$(".dropper").val(rgbToHex(r, g, b));
-		}
-		
-		if(hold == "off"){
-			$("form").submit();
-		}
-		
-		preview();
-	});
-	
-	$(".sample .color").on('mouseover', function(){
-		$(this).parents(".colors").siblings(".color-code").text($(this).data("code"));
-	});
-	
-	if(getCookie("sampleStyle") == "diamond" || getCookie("sampleStyle") == ""){
-		$(".sample").addClass("jewel").removeClass("swatch").removeClass("palette");
-	}
-	else if(getCookie("sampleStyle") == "palette"){
-		$(".sample").addClass("palette").removeClass("jewel").removeClass("swatch");
-	}
-	else{
-		$(".sample").addClass("swatch").removeClass("jewel").removeClass("palette");
-	}
-}
-
-start();
+$(".dropper").on('change', function(){
+	colorVision();
+});
 
 $(".hold input").on('click', function(){
 	holdToggle();
 });
 
-$(".switch-panel .bezel input").on('click', function(){
-	bezelToggle();
+$(".hold .switch-label").on('click', function(){
+	if($(this).hasClass("active") == false){
+		if($(".hold input").is(":checked")){
+			$(".hold input").prop('checked', false);
+		}
+		else{
+			$(".hold input").prop('checked', true);
+			
+		}
+		
+		$(".hold .switch-label").removeClass("active");
+		
+		holdToggle();
+	}
+});
+
+$('.layer-labels li').on('click', function () {
+	if($(".layers-wrap").hasClass("disabled") == false){
+		var index = $(this).index();
+		
+		$(".layer-labels li").removeClass("active");
+		$(".layer input").val(index+1).trigger('input');
+		$('.layer-labels').find("li:nth-child("+(index+1)+")").addClass("active");
+		layerToggle($(this).text());
+	}
+});
+
+$(".left-foot .button").on('click', function(){
+	setCookie("sampleStyle", $(this).text().trim(), 30);
+	$(".colors").empty();
 	
-	if(bezelStyle == "koko-aio"){
-		setTimeout(function () {
-			$(".content").addClass("koko-aio");
-		}, 400);
+	samples();
+});
+
+$(".switch-panel .bezel .switch-label").on('click', function(){
+	if($(this).hasClass("active") == false){
+		if($(".switch-panel .bezel input").is(":checked")){
+			$(".switch-panel .bezel input").prop('checked', false);
+		}
+		else{
+			$(".switch-panel .bezel input").prop('checked', true);
+		}
+		
+		$(".bezel .switch-label").toggleClass("active");
+		
+		bezelToggle();
 	}
-	else{
-		$(".content").removeClass("koko-aio");
-	}
+});
+
+$(".switch-panel .bezel input").on('click', function(){	
+	bezelToggle();
 });
 
 $(".switch-panel .format-labels span").on('click', function(){
@@ -600,8 +669,25 @@ $(".switch-panel .format-labels span").on('click', function(){
 	}
 });
 
+$(".switch-panel .imageType .switch-label").on('click', function(){
+	if($(this).hasClass("active") == false && $(".imageType").hasClass("disabled") == false){
+		if($(".switch-panel .imageType input").is(":checked")){
+			$(".switch-panel .imageType input").prop('checked', false);
+		}
+		else{
+			$(".switch-panel .imageType input").prop('checked', true);
+		}
+		
+		$(".imageType .switch-label").toggleClass("active");
+		
+		imageTypeToggle();
+	}
+});
+
 $(".switch-panel .imageType input").on('click', function(){
-	imageTypeToggle();
+	if($(".imageType").hasClass("disabled") == false){
+		imageTypeToggle();
+	}
 });
 
 $(".us, .world").on('click', function(){
@@ -613,38 +699,9 @@ $(".us, .world").on('click', function(){
 	}
 });
 
-$(".dropper").on('change', function(){
-	colorVision();
-});
-
-if(bezelStyle == "koko-aio"){
-	$(".content").addClass("koko-aio");
-}
-else{
-	$(".content").removeClass("koko-aio");
-}
-
-$('.layer-labels li').on('click', function () {
-	var index = $(this).index();
-	
-	$(".layer-labels li").removeClass("active");
-	$(".layer input").val(index+1).trigger('input');
-	$('.layer-labels').find("li:nth-child("+(index+1)+")").addClass("active");
-	layerToggle($(this).text());
-});
-
-$(".left-foot .button").on('click', function(){
-	setCookie("sampleStyle", $(this).text().trim(), 30);
-	$(".colors").empty();
-	
-	samples();
-});
-
 $(document).ready(function () {
 	$("form").submit(function (event) {
-		$(".message").removeClass("info");
-		$(".message").removeClass("error");
-		$(".message").empty();
+		$(".info, .error").empty();
 		hexError = hsvError = rgbError = "false";
 		
 		if(colorFormat == "HEX"){
@@ -681,12 +738,11 @@ $(document).ready(function () {
 			}
 			
 			if(hexError == "true"){
-				$(".message").html("HEX needs to be <strong>RRGGBB</strong> value");
-				$(".message").addClass("error");
+				$(".error").html("HEX needs to be <strong>RRGGBB</strong> value");
 				$(".info").empty();
 			}
 			else{
-				$(".message").removeClass("error");
+				$(".error").empty();
 			}
 			
 			$(".contrast input, .hex input").blur();
@@ -733,12 +789,11 @@ $(document).ready(function () {
 			}
 			
 			if(hsvError == "true"){
-				$(".message").text("HSV is in format 0-360deg, 0-100%, 0-100%");
-				$(".message").addClass("error");
+				$(".error").text("HSV is in format 0-360deg, 0-100%, 0-100%");
 				$(".info").empty();
 			}
 			else{
-				$(".message").removeClass("error");
+				$(".error").empty();
 			}
 			
 			$(".contrast input, .hsb input").blur();
@@ -782,21 +837,21 @@ $(document).ready(function () {
 			}
 			
 			if(rgbError == "true"){
-				$(".message").text("RGB has to be numerical values between 0 to 255");
-				$(".message").addClass("error");
+				$(".error").text("RGB has to be a number between 0 to 255");
 				$(".info").empty();
 			}
 			else{
-				$(".message").removeClass("error");
+				$(".error").empty();
 			}
 			
 			$(".contrast input, .rgb input").blur();
 		}
 		
-		preview();
 		$(".conversion").val();
 		
 		if(bezelStyle == "mbz" && hexError == "false" && hsvError == "false" && rgbError == "false"){
+			preview();
+			
 			var hue = Math.round(mbzHSB[0]),
 				saturation = Math.round(mbzHSB[1]),
 				brightness = Math.round(mbzHSB[2]);
@@ -890,4 +945,6 @@ $(document).ready(function () {
 		event.preventDefault();
 		
 	});
+	
+	start();
 });
