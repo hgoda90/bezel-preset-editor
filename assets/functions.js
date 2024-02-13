@@ -40,15 +40,6 @@ function bezelToggle(){
 		$(".imageType input").prop("disabled", true);
 	}
 	
-	if(bezelStyle == "koko-aio"){
-		setTimeout(function () {
-			$(".content").addClass("koko-aio");
-		}, 400);
-	}
-	else{
-		$(".content").removeClass("koko-aio");
-	}
-	
 	$(".info").empty();
 	$(".error").empty();
 	clearConversion();
@@ -167,6 +158,18 @@ function colorVision(){
 	preview();
 }
 
+function editConversion(){
+	if($(".conversion").attr("readonly") == "readonly"){
+		$(".conversion").prop("readonly", false);
+		$("#edit").addClass("active");
+	}
+	else{
+		$(".conversion").text($(".conversion").val());
+		$(".conversion").prop("readonly", true);
+		$("#edit").removeClass("active");
+	}
+}
+
 function formatToggle(value){
 	  value = parseInt(value, 10);
 	  $(".format-labels span").removeClass("active");
@@ -199,7 +202,7 @@ function formatToggle(value){
 	else if(value == 2){
 		setCookie("colorFormat", "HSB", 30);
 		colorFormat = "HSB";
-		$(".text-box").after('<div class="hsb">H: <input type="text" name="hue" size=3 maxLength=3>&deg;&nbsp;&nbsp;S: <input type="text" name="saturation" size=3 maxLength=3>%&nbsp;&nbsp;B: <input type="text" name="brightness" size=3 maxLength=3>% </div>');
+		$(".text-box").after('<div class="hsb">hsb(<input type="text" name="hue" size=3 maxLength=3>deg, <input type="text" name="saturation" size=3 maxLength=3>%, <input type="text" name="brightness" size=3 maxLength=3>%)</div>');
 	}
 	else if(value == 3){
 		setCookie("colorFormat", "RGB", 30);
@@ -226,7 +229,7 @@ function hexToRgb(color) {
 function holdToggle(){
 	$(".hold .switch-label").removeClass("active");
 	
-	if($(".hold input").is(":checked") && bezelStyle == "mbz"){
+	if($(".hold input").is(":checked")){
 		setCookie("hold", "on", 30);
 		hold = "on";
 		$(".hold .switch-label:nth-child(3)").addClass("active");
@@ -446,6 +449,41 @@ function samples(){
 	else{
 		$(".sample").addClass("swatch").removeClass("jewel").removeClass("palette");
 	}
+}
+
+function savePreset(){
+	  if ('Blob' in window) {
+		var fileName = prompt('Please enter file name to save', 'Preset.slangp');
+		if (fileName) {
+		  var textToWrite = $('.conversion').val().replace(/n/g, 'rn');
+		  var textFileAsBlob = new Blob([textToWrite], { type: 'text/plain' });
+
+		  if ('msSaveOrOpenBlob' in navigator) {
+			navigator.msSaveOrOpenBlob(textFileAsBlob, fileName);
+		  } else {
+			var downloadLink = document.createElement('a');
+			downloadLink.download = fileName;
+			downloadLink.innerHTML = 'Download File';
+			
+			if ('webkitURL' in window) {
+			  // Chrome allows the link to be clicked without actually adding it to the DOM.
+			  downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
+			} else {
+			  // Firefox requires the link to be added to the DOM before it can be clicked.
+			  downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+			  downloadLink.click(function(){
+				document.body.removeChild(event.target);
+			  }); 
+			  
+			  downloadLink.style.display = 'none';
+			  document.body.appendChild(downloadLink);
+			}
+			downloadLink.click();
+		  }
+		}
+	  } else {
+		alert('Your browser does not support the HTML5 Blob.');
+	  }
 }
 
 function settingReset(){
@@ -700,9 +738,61 @@ $(".us, .world").on('click', function(){
 });
 
 $(document).ready(function () {
+	$('.image input[type="file"]').change(function (e) {
+		const geekss = e.target.files[0].name;
+		var settings = $("textarea").text();
+		
+		if(bezelStyle == "mbz"){
+			switch($(".layer input").val()){
+				case "2":
+					$(".conversion").val(settings+'BackgroundImage = "'+geekss+'"\n').text(settings+'BackgroundImage = "'+geekss+'"\n');
+					break;
+				case "3":
+					$(".conversion").val(settings+'LEDImage = "'+geekss+'"\n').text(settings+'LEDImage = "'+geekss+'"\n');
+					break;
+				case "4":
+					$(".conversion").val(settings+'DeviceImage = "'+geekss+'"\n').text(settings+'DeviceImage = "'+geekss+'"\n');
+					break;
+				case "5":
+					$(".conversion").val(settings+'DeviceLEDImage = "'+geekss+'"\n').text(settings+'DeviceLEDImage = "'+geekss+'"\n');
+					break;
+				case "6":
+					$(".conversion").val(settings+'DecalImage = "'+geekss+'"\n').text(settings+'DecalImage = "'+geekss+'"\n');
+					break;
+				case "7":
+					$(".conversion").val(settings+'TopLayerImage = "'+geekss+'"\n').text(settings+'TopLayerImage = "'+geekss+'"\n');
+					break;
+				case "8":
+					$(".conversion").val(settings+'CabinetGlassImage = "'+geekss+'"\n').text(settings+'CabinetGlassImage = "'+geekss+'"\n');
+					break;
+			}
+		}
+		else{
+			$(".conversion").val(settings+'bg_under = "'+geekss+'"\n').text(settings+'bg_under = "'+geekss+'"\n');
+		}
+		
+		$('.image input[type="file"]').val("");
+		$(this).blur();
+	});
+	
+	$('.shader input[type="file"]').change(function (e) {
+		if(bezelStyle == "mbz"){
+			const geekss = $(".conversion").val()+'#reference "shaders_slang\\bezel\\Mega_Bezel\\Presets\\Base_CRT_Presets\\'+e.target.files[0].name+'"\n';
+			$(".conversion").val(geekss).text(geekss);
+		}
+		else{
+			const geekss = $(".conversion").val()+'#reference "shaders_slang\\bezel\\koko-aio-slang\\Presets-ng\\'+e.target.files[0].name+'"\n';
+			$(".conversion").val(geekss).text(geekss);
+		}
+		
+		$('.shader input[type="file"]').val("");
+		$(this).blur();
+	});
+	
 	$("form").submit(function (event) {
 		$(".info, .error").empty();
 		hexError = hsvError = rgbError = "false";
+		$(".submit").blur();
 		
 		if(colorFormat == "HEX"){
 			var hex = $(".hex input").val().toUpperCase();
@@ -727,7 +817,6 @@ $(document).ready(function () {
 					}
 					
 					contrastSetting = contrast+"0000";
-					$(".conversion").text('BEZEL_R = "'+rSetting+'"\nBEZEL_G = "'+gSetting+'"\nBEZEL_B = "'+bSetting+'"\nBEZEL_CON = "'+contrastSetting+'"').val('BEZEL_R = "'+rSetting+'"\nBEZEL_G = "'+gSetting+'"\nBEZEL_B = "'+bSetting+'"\nBEZEL_CON = "'+contrastSetting+'"');
 				}
 				else{
 					mbzHSB = rgbToHSB(hexToRgb(hex).r, hexToRgb(hex).g, hexToRgb(hex).b);
@@ -778,7 +867,6 @@ $(document).ready(function () {
 					}
 					
 						contrastSetting = contrast+"0000";
-						$(".conversion").text('BEZEL_R = "'+rSetting+'"\nBEZEL_G = "'+gSetting+'"\nBEZEL_B = "'+bSetting+'"\nBEZEL_CON = "'+contrastSetting+'"').val('BEZEL_R = "'+rSetting+'"\nBEZEL_G = "'+gSetting+'"\nBEZEL_B = "'+bSetting+'"\nBEZEL_CON = "'+contrastSetting+'"');
 				}
 				else{
 					mbzHSB = rgbToHSB(HSVtoRGB(h, s, v).r, HSVtoRGB(h, s, v).g, HSVtoRGB(h, s, v).b);
@@ -826,7 +914,6 @@ $(document).ready(function () {
 					}
 					
 						contrastSetting = contrast+"0000";
-						$(".conversion").text('BEZEL_R = "'+rSetting+'"\nBEZEL_G = "'+gSetting+'"\nBEZEL_B = "'+bSetting+'"\nBEZEL_CON = "'+contrastSetting+'"').val('BEZEL_R = "'+rSetting+'"\nBEZEL_G = "'+gSetting+'"\nBEZEL_B = "'+bSetting+'"\nBEZEL_CON = "'+contrastSetting+'"');
 				}
 				else{
 					mbzHSB = rgbToHSB(r, g, b);
@@ -941,10 +1028,24 @@ $(document).ready(function () {
 				}
 			}
 		}
-
+		
+		else if(bezelStyle == "koko-aio" && hexError == "false" && hsvError == "false" && rgbError == "false"){
+			preview();
+			
+			var preset = 'BEZEL_R = "'+rSetting+'"\nBEZEL_G = "'+gSetting+'"\nBEZEL_B = "'+bSetting+'"\nBEZEL_CON = "'+contrastSetting+'"\n';
+			
+			if(hold == "off"){
+				$(".conversion").val(preset).text(preset);
+			}
+			else{
+				$(".conversion").val($(".conversion").text()+preset).text($(".conversion").text()+preset);
+			}
+		}
+		
 		event.preventDefault();
 		
 	});
 	
 	start();
+	
 });

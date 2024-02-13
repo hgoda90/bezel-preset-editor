@@ -4,6 +4,7 @@ body {
 	background: #F2F2F2;
 	color: #333;
 	margin: 0;
+	line-height: unset;
 }
 
 .content {
@@ -52,7 +53,7 @@ form {
     box-shadow: 0 0 4px #8883;
 }
 
-.button:not(.us):not(.world):not(.watermark):hover {
+.button:not(.us):not(.world):not(.watermark):not(.shader):hover, .button.active {
     background: #DDD;
     border-color: #d2d2d2;
     color: #5A5A5A;
@@ -60,7 +61,7 @@ form {
 
 .text-box {
     position: relative;
-    width: 540px;
+    width: 480px;
     background: rgba(255, 255, 255, 0.35);
     border-radius: 12px;
     border: 1px solid rgba(0, 0, 0, 0.2);
@@ -74,13 +75,14 @@ textarea {
 	border: none;
 	display: block;
 	background: transparent;
+	white-space: pre;
 }
 
 textarea:focus-visible {
 	outline: none;
 }
 
-#copy, #clear {
+#copy, #clear, #edit, #save {
     position: absolute;
     top: -36px;
     right: 12px;
@@ -91,7 +93,7 @@ textarea:focus-visible {
 }
 
 .hsb {
-    width: 34%;
+    width: 29%;
 }
 
 .contrast {
@@ -355,7 +357,7 @@ span.square-title {
 	width: 100%;
 	position: absolute;
 	top: 32px;
-	left: 194px;
+	left: 196px;
 	height: 0;
 	-webkit-appearance: none;
 }
@@ -437,7 +439,7 @@ span.square-title {
 
 .layer-labels li::before {
 	position: absolute;
-	top: -27px;
+	top: -29px;
 	right: 0;
 	left: 0;
 	content: "";
@@ -461,7 +463,7 @@ span.square-title {
     display: none;
 }
 
-.layers-wrap .layer-labels li:hover{
+.layers-wrap.disabled .layer-labels li:hover{
     cursor: default;
 }
 
@@ -469,7 +471,7 @@ span.square-title {
 	opacity: 0;
 }
 
-.button:hover, .switch-label:hover, .format-labels span:hover {
+.button:hover, .switch-label:hover, .format-labels span:hover, .shader:hover {
     cursor: pointer;
 }
 
@@ -479,6 +481,10 @@ span.square-title {
 
 #clear {
     right: 84px;
+}
+
+#save {
+    right: 236px;
 }
 
 .left-foot, .right-foot {
@@ -653,7 +659,7 @@ footer {
 	color: rgb(51 51 51 / 50%);
 }
 
-footer .button, .submit.button {
+footer .button {
     display: inline-block;
     margin-left: 12px;
     margin-top: 4px;
@@ -661,14 +667,6 @@ footer .button, .submit.button {
     padding: 10px;
     width: 24px;
     height: 24px;
-}
-
-.submit.button {
-    width: auto;
-    height: auto;
-    position: absolute;
-    right: -64px;
-    bottom: 0;
 }
 
 .center-foot {
@@ -702,6 +700,7 @@ footer .button, .submit.button {
 
 ::-webkit-scrollbar {
 	width: 10px;
+	height: 7px;
 }
 
 ::-webkit-scrollbar-track {
@@ -730,6 +729,66 @@ footer .button, .submit.button {
 	}
 }
 
-*{
+*, *::before, *::after {
 	transition: opacity .3s ease-in;
+	box-sizing: revert;
+}
+
+.image.button input:hover {
+    cursor: pointer;
+}
+
+.image input:hover {
+    cursor: pointer;
+}
+
+.shader {
+    background-image: url("images/retroarch.png");
+    background-size: contain;
+    background-position: center;
+}
+
+#edit {
+    right: 164px;
+}
+
+.button-wrap .button {
+    width: 46px;
+    height: 46px;
+    padding: 0px;
+    position: relative;
+    display: inline-block;
+}
+
+.button-wrap {
+    position: absolute;
+    right: -64px;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.button-wrap input {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -22;
+    top: -22;
+    opacity: 0;
+    input[type="file"] {
+    display: none;
+};
+}
+
+.button-wrap button {
+    padding: 0;
+    border: 0;
+    margin-bottom: 8px;
+    position: relative;
+    overflow: hidden;
+}
+
+.button.active:hover {
+    background: rgba(255, 255, 255, 0.35) !important;
+    color: #888 !important;
 }
