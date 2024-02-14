@@ -50,7 +50,6 @@ function clearConversion(){
 	$(".conversion").text("").val("");
 	$(".info").empty();
 	$(".error").empty();
-	colorReset();
 }
 
 function colorReset(){
@@ -60,8 +59,6 @@ function colorReset(){
 	
 	if(bezelStyle == "mbz"){
 		$(".contrast").css("opacity", 0);
-		$("#mb").css("display", "inline-block");
-		$("#koko").css("display", "none");
 		$(".dropper").val("#1A1A1A");
 		
 		$(".square").css({"background": "#1A1A1A", "box-shadow": "0px 0px 14px 4px rgba(26, 26, 26, 0.25)"});
@@ -78,6 +75,11 @@ function colorReset(){
 			$(".hsb input[name='saturation']").attr("placeholder", "0");
 			$(".hsb input[name='brightness']").attr("placeholder", "10");
 		}
+		else if($(".format-labels .active").text() == "HSL"){
+			$(".hsl input[name='hue']").attr("placeholder", "0");
+			$(".hsl input[name='saturation']").attr("placeholder", "0");
+			$(".hsl input[name='lightness']").attr("placeholder", "10");
+		}
 		else{
 			$(".rgb input[name='red']").attr("placeholder", "26");
 			$(".rgb input[name='green']").attr("placeholder", "26");
@@ -88,8 +90,6 @@ function colorReset(){
 		$(".contrast").css("opacity", 1);
 		$(".contrast option").prop("selected", false);
 		$(".contrast option[value='1.30']").prop("selected", "selected");
-		$("#koko").css("display", "inline-block");
-		$("#mb").css("display", "none");
 		$(".dropper").val("#808080");
 		
 		$(".square").css({"background": "#808080", "box-shadow": "0px 0px 14px 4px rgba(128, 128, 128, 0.25)"});
@@ -101,6 +101,11 @@ function colorReset(){
 			$(".hsb input[name='hue']").attr("placeholder", "0");
 			$(".hsb input[name='saturation']").attr("placeholder", "0");
 			$(".hsb input[name='brightness']").attr("placeholder", "50");
+		}
+		else if($(".format-labels .active").text() == "HSL"){
+			$(".hsl input[name='hue']").attr("placeholder", "0");
+			$(".hsl input[name='saturation']").attr("placeholder", "0");
+			$(".hsl input[name='lightness']").attr("placeholder", "20");
 		}
 		else{
 			$(".rgb input[name='red']").attr("placeholder", "128");
@@ -114,13 +119,11 @@ function colorVersion(loc){
 	if(loc == "us"){
 		setCookie("colorVersion", "us", 30);
 		$(".format .panel-label").text("Color Format");
-		$("#color").text($("#color").text().replace("Colour", "Color"));
 		$(".square-title").text($(".square-title").text().replace("Colour", "Color"));
 	}
 	else{
 		setCookie("colorVersion", "world", 30);
 		$(".format .panel-label").text("Colour Format");
-		$("#color").text($("#color").text().replace("Color", "Colour"));
 		$(".square-title").text($(".square-title").text().replace("Color", "Colour"));
 	}
 }
@@ -140,6 +143,16 @@ function colorVision(){
 		$(".hsb input[name='hue']").val(h);
 		$(".hsb input[name='saturation']").val(s);
 		$(".hsb input[name='brightness']").val(v);
+	}
+	else if(colorFormat == "HSL"){
+		hsl = RGBToHSL(hexToRgb(hex).r, hexToRgb(hex).g, hexToRgb(hex).b),
+		h = Math.round(hsl[0]),
+		s = Math.round(hsl[1]),
+		l = Math.round(hsl[2]);
+		
+		$(".hsl input[name='hue']").val(h);
+		$(".hsl input[name='saturation']").val(s);
+		$(".hsl input[name='lightness']").val(l);
 	}
 	else{
 		r = hexToRgb(hex).r,
@@ -173,19 +186,23 @@ function editConversion(){
 function formatToggle(value){
 	  value = parseInt(value, 10);
 	  $(".format-labels span").removeClass("active");
-	  $(".hex, .hsb, .rgb").remove();
+	  $(".hex, .hsb, .hsl, .rgb").remove();
 	  $(".error").empty();
 
 	  if (value === 1) {
-		$('.format input').removeClass('hsbOn rgbOn');
+		$('.format input').removeClass('hsbOn hslOn rgbOn');
 		$('.format input').addClass('hexOn');
 	  }
 	  else if (value === 2) {
-		$('.format input').removeClass('hexOn rgbOn');
+		$('.format input').removeClass('hexOn hslOn rgbOn');
 		$('.format input').addClass('hsbOn');
 	  }
 	  else if (value === 3) {
-		$('.format input').removeClass('hexOn hsbOn');
+		$('.format input').removeClass('hexOn hsbOn rgbOn');
+		$('.format input').addClass('hslOn');
+	  }
+	  else if (value === 4) {
+		$('.format input').removeClass('hexOn hsbOn hslOn');
 		$('.format input').addClass('rgbOn');
 	  }
 	  
@@ -205,6 +222,11 @@ function formatToggle(value){
 		$(".text-box").after('<div class="hsb">hsb(<input type="text" name="hue" size=3 maxLength=3>deg, <input type="text" name="saturation" size=3 maxLength=3>%, <input type="text" name="brightness" size=3 maxLength=3>%)</div>');
 	}
 	else if(value == 3){
+		setCookie("colorFormat", "HSL", 30);
+		colorFormat = "HSL";
+		$(".text-box").after('<div class="hsl">hsl(<input type="text" name="hue" size=3 maxLength=3>deg, <input type="text" name="saturation" size=3 maxLength=3>%, <input type="text" name="lightness" size=3 maxLength=3>%)</div>');
+	}
+	else if(value == 4){
 		setCookie("colorFormat", "RGB", 30);
 		colorFormat = "RGB";
 		$(".text-box").after('<div class="rgb">rgb(<input type="text" name="red" size=3 maxLength=3>, <input type="text" name="green" size=3 maxLength=3>, <input type="text" name="blue" size=3 maxLength=3>)</div>');
@@ -238,16 +260,40 @@ function holdToggle(){
 		setCookie("hold", "off", 30);
 		hold = "off";
 		$(".hold .switch-label:nth-child(1)").addClass("active");
-		
-		if(colorFormat == "HEX" && $('.hex input').val() != "" || colorFormat == "HSB" && $('.hsb input').val() != "" || colorFormat == "RGB" && $('.rgb input').val() != ""){
-			$("form").submit();
-		}
-		else{
-			colorReset();
-		}
-		
 		$(".hold input").prop( "checked", false );
 	}
+}
+
+function hslToHex(h, s, l) {
+  l /= 100;
+  const a = s * Math.min(l, 1 - l) / 100;
+  const f = n => {
+    const k = (n + h / 30) % 12;
+    const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
+    return Math.round(255 * color).toString(16).padStart(2, '0');   // convert to Hex and prefix "0" if needed
+  };
+  return `#${f(0)}${f(8)}${f(4)}`;
+}
+
+const { abs, min, max, round } = Math;
+
+const HSLToRGB = (h, s, l) => {
+  s /= 100;
+  l /= 100;
+  const k = n => (n + h / 30) % 12;
+  const a = s * Math.min(l, 1 - l);
+  const f = n =>
+    l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)));
+  return [255 * f(0), 255 * f(8), 255 * f(4)];
+};
+
+function hueToRgb(p, q, t) {
+  if (t < 0) t += 1;
+  if (t > 1) t -= 1;
+  if (t < 1/6) return p + (q - p) * 6 * t;
+  if (t < 1/2) return q;
+  if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+  return p;
 }
 
 function mix(a, b, v)
@@ -353,21 +399,34 @@ function preview(){
 	h = parseInt($(".hsb [name='hue']").val()),
 	s = parseInt($(".hsb [name='saturation']").val()),
 	v = parseInt($(".hsb [name='brightness']").val());
+	h2 = parseInt($(".hsl [name='hue']").val()),
+	s2 = parseInt($(".hsl [name='saturation']").val()),
+	l = parseInt($(".hsl [name='lightness']").val()),
+	hslHEX = hslToHex(h2, s2, l);
 	
 	if(colorFormat == "HEX"){
 		$(".square").css("box-shadow", "0px 0px 14px 4px rgba("+hexToRgb(hex).r+", "+hexToRgb(hex).g+", "+hexToRgb(hex).b+", 0.25)");
 		$(".square").css("background", "#"+hex);
 		$(".dropper").val("#"+hex);
+		colorMessage(hex);
 	}
 	else if(colorFormat == "HSB"){
 		$(".square").css("box-shadow", "0px 0px 14px 4px rgba("+HSVtoRGB(h, s/100, v/100).r+", "+HSVtoRGB(h, s/100, v/100).g+", "+HSVtoRGB(h, s/100, v/100).b+", 0.25)");
 		$(".square").css("background", "rgb("+HSVtoRGB(h, s/100, v/100).r+", "+HSVtoRGB(h, s/100, v/100).g+", "+HSVtoRGB(h, s/100, v/100).b+")");
 		$(".dropper").val(rgbToHex(HSVtoRGB(h, s/100, v/100).r, HSVtoRGB(h, s/100, v/100).g, HSVtoRGB(h, s/100, v/100).b));
+		colorMessage("hsb("+h+"deg, "+s+"%, "+v+"%)");
+	}
+	else if(colorFormat == "HSL"){
+		$(".square").css("box-shadow", "0px 0px 14px 4px rgba("+hexToRgb(hslHEX).r+", "+hexToRgb(hslHEX).g+", "+hexToRgb(hslHEX).b+", 0.25)");
+		$(".square").css("background", hslHEX);
+		$(".dropper").val(hslHEX);
+		colorMessage("hsl("+h2+"deg, "+s2+"%, "+l+"%)");
 	}
 	else{
 		$(".square").css("box-shadow", "0px 0px 14px 4px rgba("+r+", "+g+", "+b+", 0.25)");
 		$(".square").css("background", "rgb("+r+", "+g+", "+b+")");
 		$(".dropper").val(rgbToHex(r, g, b));
+		colorMessage("rgb("+r+", "+g+", "+b+")");
 	}
 }
 
@@ -387,6 +446,26 @@ function rgbToHSB(r, g, b){
 	
     return [60 * (h < 0 ? h + 6 : h), v && (n / v) * 100, v * 100];
 }
+
+const RGBToHSL = (r, g, b) => {
+  r /= 255;
+  g /= 255;
+  b /= 255;
+  const l = Math.max(r, g, b);
+  const s = l - Math.min(r, g, b);
+  const h = s
+    ? l === r
+      ? (g - b) / s
+      : l === g
+      ? 2 + (b - r) / s
+      : 4 + (r - g) / s
+    : 0;
+  return [
+    60 * h < 0 ? 60 * h + 360 : 60 * h,
+    100 * (s ? (l <= 0.5 ? s / (2 * l - s) : s / (2 - (2 * l - s))) : 0),
+    (100 * (2 * l - s)) / 2,
+  ];
+};
 
 function samples(){
 	sampleColors();
@@ -413,6 +492,20 @@ function samples(){
 			v = parseInt($(".hsb [name='brightness']").val());
 			
 			$(".dropper").val(rgbToHex(HSVtoRGB(h, s/100, v/100).r, HSVtoRGB(h, s/100, v/100).g, HSVtoRGB(h, s/100, v/100).b));
+		}
+		else if(colorFormat == "HSL"){
+			sampleHSL = $(this).parents(".colors").siblings(".color-code").text().replace("hsl(", "").replace(")", "").replace("deg", "").replace(/%/g, "").split(', ');
+			
+			$(".hsl [name='hue']").val(sampleHSL[0]);
+			$(".hsl [name='saturation']").val(sampleHSL[1]);
+			$(".hsl [name='lightness']").val(sampleHSL[2]);
+			
+			
+			h = parseInt($(".hsl [name='hue']").val()),
+			s = parseInt($(".hsl [name='saturation']").val()),
+			l = parseInt($(".hsl [name='lightness']").val());
+			
+			$(".dropper").val(hslToHex(h, s, l));
 		}
 		else{
 			sampleRGB = $(this).parents(".colors").siblings(".color-code").text().replace("rgb(", "").replace(")", "").split(', ');
@@ -597,8 +690,11 @@ function start(){
 	else if(colorFormat == "HSB"){
 		formatToggle(2);
 	}
-	else{
+	else if(colorFormat == "HSL"){
 		formatToggle(3);
+	}
+	else{
+		formatToggle(4);
 	}
 	
 	if(bezelStyle == "mbz"){
@@ -702,8 +798,11 @@ $(".switch-panel .format-labels span").on('click', function(){
 	else if($(this).text() == "HSB"){
 		formatToggle(2);
 	}
-	else if($(this).text() == "RGB"){
+	else if($(this).text() == "HSL"){
 		formatToggle(3);
+	}
+	else if($(this).text() == "RGB"){
+		formatToggle(4);
 	}
 });
 
@@ -738,6 +837,8 @@ $(".us, .world").on('click', function(){
 });
 
 $(document).ready(function () {
+	$('[data-toggle="tooltip"]').tooltip();
+	
 	$('#load input[type="file"]').change(function (e) {
 		const geekss = e.target.files[0];
 		
@@ -747,6 +848,8 @@ $(document).ready(function () {
 		};
 		
 		reader.readAsText(geekss);
+		$('#load input[type="file"]').val("");
+		$(this).blur();
 	});
 
 	$('.image input[type="file"]').change(function (e) {
@@ -802,8 +905,9 @@ $(document).ready(function () {
 	
 	$("form").submit(function (event) {
 		$(".info, .error").empty();
-		hexError = hsvError = rgbError = "false";
+		hexError = hslError = hsvError = rgbError = "false";
 		$(".submit").blur();
+		hslHEX = hslToHex(h, s, l);
 		
 		if(colorFormat == "HEX"){
 			var hex = $(".hex input").val().toUpperCase();
@@ -897,6 +1001,53 @@ $(document).ready(function () {
 			
 			$(".contrast input, .hsb input").blur();
 		}
+		else if(colorFormat == "HSL"){
+			var h = parseInt($(".hsl [name='hue']").val()),
+				s = parseInt($(".hsl [name='saturation']").val()),
+				l = parseInt($(".hsl [name='lightness']").val());
+			
+			if(h < 0 || h > 360 || s < 0 || s > 100 || l < 0 || l > 100){
+				hslError = "true";
+			}
+			else if(Number.isInteger(h) == false || Number.isInteger(s) == false || Number.isInteger(l) == false){
+				hslError = "true";
+			}
+			else{
+				hslError = "false";
+				
+				if(bezelStyle == "koko-aio"){
+					var contrast = $("#contrasts option:selected").val();
+					if(contrast < 1){
+						rSetting = (((HSLToRGB(h, s, l)[0] - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .1 + .105) + (contrast * .01 + .0105))) / 128)).toFixed(10);
+						gSetting = (((HSLToRGB(h, s, l)[1] - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .1 + .105) + (contrast * .01 + .0105))) / 128)).toFixed(10);
+						bSetting = (((HSLToRGB(h, s, l)[2] - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .01 + .055) + (contrast * .001 + .0055))) / 128)).toFixed(10);
+					}
+					else{
+						rSetting = (((HSLToRGB(h, s, l)[0] - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .01 + .105) + (contrast * .001 + .0105))) / 128)).toFixed(10);
+						gSetting = (((HSLToRGB(h, s, l)[1] - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .01 + .105) + (contrast * .001 + .0105))) / 128)).toFixed(10);
+						bSetting = (((HSLToRGB(h, s, l)[2] - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .001 + .055) + (contrast * .0001 + .0055))) / 128)).toFixed(10);
+					}
+					
+						contrastSetting = contrast+"0000";
+				}
+				else{
+					mbzHSB = rgbToHSB(HSLToRGB(h, s, l)[0], HSLToRGB(h, s, l)[1], HSLToRGB(h, s, l)[2]);
+				}
+				
+				$("#copy").prop("disabled", false);
+				colorMessage("hsl("+h+"deg, "+s*100+"%, "+l*100+"%)");
+			}
+			
+			if(hsvError == "true"){
+				$(".error").text("HSL is in format 0-360deg, 0-100%, 0-100%");
+				$(".info").empty();
+			}
+			else{
+				$(".error").empty();
+			}
+			
+			$(".contrast input, .hsl input").blur();
+		}
 		else{
 			var r = parseInt($(".rgb [name='red']").val()),
 				g = parseInt($(".rgb [name='green']").val()),
@@ -947,7 +1098,7 @@ $(document).ready(function () {
 		
 		$(".conversion").val();
 		
-		if(bezelStyle == "mbz" && hexError == "false" && hsvError == "false" && rgbError == "false"){
+		if(bezelStyle == "mbz" && hexError == "false" && hslError == "false" && hsvError == "false" && rgbError == "false"){
 			preview();
 			
 			var hue = Math.round(mbzHSB[0]),
@@ -1040,7 +1191,7 @@ $(document).ready(function () {
 			}
 		}
 		
-		else if(bezelStyle == "koko-aio" && hexError == "false" && hsvError == "false" && rgbError == "false"){
+		else if(bezelStyle == "koko-aio" && hexError == "false" && hslError == "false" && hsvError == "false" && rgbError == "false"){
 			preview();
 			
 			var preset = 'BEZEL_R = "'+rSetting+'"\nBEZEL_G = "'+gSetting+'"\nBEZEL_B = "'+bSetting+'"\nBEZEL_CON = "'+contrastSetting+'"\n';
@@ -1058,5 +1209,4 @@ $(document).ready(function () {
 	});
 	
 	start();
-	
 });

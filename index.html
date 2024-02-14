@@ -12,7 +12,7 @@
 	<body>
 		<div class="content">
 			<form name="color-convert" method="post" onsubmit="return false;" autocomplete="off">
-				<h1 class="title"><span id="mb">Mega Bezel</span><span id="koko">koko-aio</span> <span id="color">Colour</span> Converter</h1>
+				<h1 class="title">Bezel Preset Editor</h1>
 				<div class="switch-panel">
 					<div class="bezel">
 						<span class="panel-label">Bezel Style</span>
@@ -28,10 +28,11 @@
 					<div class="format">
 						<span class="panel-label">Color Format</span>
 						<div class="format-wrapper">
-							<input type="range" name="points" onchange="formatToggle(this.value)" min="1" step="1" class="hexOn" max="3" value="1">
+							<input type="range" name="points" onchange="formatToggle(this.value)" min="1" step="1" class="hexOn" max="4" value="1">
 							<div class="format-labels">
 								<span>HEX</span>
 								<span>HSB</span>
+								<span>HSL</span>
 								<span>RGB</span>
 							</div>
 						</div>
@@ -75,7 +76,7 @@
 					<div class="text-box">
 						<textarea class="conversion" rows="7" cols="36" readonly></textarea>
 						<label class="button" id="load">Load
-							<input type="file" accept=".slangp">
+							<input type="file" accept=".slangp, .params">
 						</label>
 						<span class="button" id="edit" onclick="editConversion();">Edit</span>
 						<span class="button" id="clear" onclick="clearConversion();">Clear</span>
@@ -83,7 +84,7 @@
 						<span class="button" id="save" onclick="savePreset();">Save</span>
 						<div class="button-wrap">
 							<button class="shader button" type="button" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Add Preset File">
-								<input type="file" accept=".slangp">
+								<input type="file" accept=".slangp, .params">
 							</button>
 							<button class="submit button" type="submit" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Add Color Setting"><span class="material-symbols-outlined">add</span></button>
 							<button class="image button" type="button" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Add Image Path">
@@ -133,11 +134,11 @@
 							<option value="2.40">2.40</option>
 						</select>
 					</div>
-				</div>
-				<div class="square">
-					<span class="square-title">Colour Vision</span>
-					<span class="info"></span>
-					<input type="color" class="dropper" name="dropper">
+					<div class="square">
+						<span class="square-title">Colour Vision</span>
+						<span class="info"></span>
+						<input type="color" class="dropper" name="dropper">
+					</div>
 				</div>
 				<br>
 				<br>
@@ -190,13 +191,13 @@
 		</div>
 		<footer>
 			<div class="left-foot">
-				<div class="button" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Jewels">
+				<div class="button" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Jewels">
 					<span class="material-symbols-outlined">diamond</span>
 				</div>
-				<div class="button" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Palette">
+				<div class="button" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Palette">
 					<span class="material-symbols-outlined">palette</span>
 				</div>
-				<div class="button" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Swatches">
+				<div class="button" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Swatches">
 					<span class="material-symbols-outlined">style</span>
 				</div>
 			</div>
@@ -213,8 +214,8 @@
 			</div>
 			<div class="right-foot">
 				<a class="button watermark" href="https://forums.libretro.com/u/hgoda90"></a>
-				<div class="button location us" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Color"></div>
-				<div class="button location world" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Colour"></div>
+				<div class="button location us" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Color"></div>
+				<div class="button location world" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Colour"></div>
 			</div>
 		</footer>
 		<script src="assets/colors.js"></script>

@@ -103,6 +103,58 @@ function sampleColors() {
 		});
 		$(".color-code").css("text-align", "center");
 	}
+	else if (colorFormat == "HSL"){
+		$(".sample").each(function(element){
+			switch($(this).attr("id")){
+				case "a26":
+					$(this).find(".colors").append("<div class='color' data-code='hsl(0deg, 1%, 14%)' style='background: rgb(36, 35, 35);'></div>");
+					$(this).find(".colors").append("<div class='color' data-code='hsl(29deg, 33%, 44%)' style='background: rgb(148, 110, 74);'></div>");
+					$(this).find(".colors").append("<div class='color' data-code='hsl(28deg, 100%, 60%)' style='background: rgb(255, 146, 51);'></div>");
+					break;
+				case "dc":
+					$(this).find(".colors").append("<div class='color' data-code='hsl(26deg, 84%, 56%)' style='background: rgb(237, 131, 50);'></div>");
+					$(this).find(".colors").append("<div class='color' data-code='hsl(11deg, 85%, 44%)' style='background: rgb(207, 51, 17);'></div>");
+					$(this).find(".colors").append("<div class='color' data-code='hsl(214deg, 54%, 49%)' style='background: rgb(58, 117, 194);'></div>");
+					$(this).find(".colors").append("<div class='color' data-code='hsl(45deg, 8%, 72%)' style='background: rgb(189, 186, 177);'></div>");
+					break;
+				case "gc":
+					$(this).find(".colors").append("<div class='color' data-code='hsl(250deg, 31%, 38%)' style='background: rgb(78, 68, 128);'></div>");
+					$(this).find(".colors").append("<div class='color' data-code='hsl(0deg, 0%, 15%)' style='background: rgb(38, 38, 38);'></div>");
+					$(this).find(".colors").append("<div class='color' data-code='hsl(0deg, 0%, 68%)' style='background: rgb(173, 173, 173);'></div>");
+					$(this).find(".colors").append("<div class='color' data-code='hsl(24deg, 100%, 56%)' style='background: rgb(255, 120, 31);'></div>");
+					break;
+				case "n64":
+					$(this).find(".colors").append("<div class='color' data-code='hsl(330deg, 2%, 25%)' style='background: rgb(66, 64, 65);'></div>");
+					$(this).find(".colors").append("<div class='color' data-code='hsl(330deg, 3%, 77%)' style='background: rgb(199, 195, 197);'></div>");
+					$(this).find(".colors").append("<div class='color' data-code='hsl(292deg, 13%, 47%)' style='background: rgb(131, 105, 135);'></div>");
+					break;
+				case "nes":
+					$(this).find(".colors").append("<div class='color' data-code='hsl(0deg, 0%, 90%)' style='background: rgb(229, 229, 229);'></div>");
+					$(this).find(".colors").append("<div class='color' data-code='hsl(0deg, 2%, 64%)' style='background: rgb(165, 162, 162);'></div>");
+					$(this).find(".colors").append("<div class='color' data-code='hsl(0deg, 4%, 5%)' style='background: rgb(13, 12, 12);'></div>");
+					$(this).find(".colors").append("<div class='color' data-code='hsl(0deg, 75%, 50%)' style='background: rgb(221, 32, 32);'></div>");
+					break;
+				case "ps":
+					$(this).find(".colors").append("<div class='color' data-code='hsl(340deg, 2%, 65%)' style='background: rgb(168, 165, 166);'></div>");
+					$(this).find(".colors").append("<div class='color' data-code='hsl(220deg, 40%, 88%)' style='background: rgb(213, 221, 237);'></div>");
+					$(this).find(".colors").append("<div class='color' data-code='hsl(221deg, 52%, 24%)' style='background: rgb(29, 49, 92);'></div>");
+					break;
+				case "ps2":
+					$(this).find(".colors").append("<div class='color' data-code='hsl(189deg, 92%, 42%)' style='background: rgb(9, 178, 207);'></div>");
+					$(this).find(".colors").append("<div class='color' data-code='hsl(200deg, 73%, 41%)' style='background: rgb(28, 128, 179);'></div>");
+					$(this).find(".colors").append("<div class='color' data-code='hsl(222deg, 53%, 39%)' style='background: rgb(47, 79, 152);'></div>");
+					$(this).find(".colors").append("<div class='color' data-code='hsl(240deg, 11%, 15%)' style='background: rgb(33, 33, 41);'></div>");
+					break;
+				case "snes":
+					$(this).find(".colors").append("<div class='color' data-code='hsl(239deg, 47%, 80%)' style='background: rgb(181, 182, 228);'></div>");
+					$(this).find(".colors").append("<div class='color' data-code='hsl(257deg, 45%, 41%)' style='background: rgb(85, 58, 153);'></div>");
+					$(this).find(".colors").append("<div class='color' data-code='hsl(264deg, 7%, 57%)' style='background: rgb(144, 138, 153);'></div>");
+					$(this).find(".colors").append("<div class='color' data-code='hsl(0deg, 0%, 82%)' style='background: rgb(209, 209, 209);'></div>");
+					break;
+			}
+		});
+		$(".color-code").css("text-align", "center");
+	}
 	else{
 		$(".sample").each(function(){
 			switch($(this).attr("id")){
@@ -255,6 +307,55 @@ function colorMessage(colors) {
 			case "hsb(239deg, 21%, 89%)":
 			case "hsb(257deg, 62%, 60%)":
 			case "hsb(264deg, 10%, 60%)":
+				$(".info").text("Super Nintendo");
+				break;
+		}
+	}
+	else if (colorFormat == "HSL"){
+		switch(colors){
+			case "hsl(0deg, 1%, 14%)":
+			case "hsl(28deg, 100%, 60%)":
+			case "hsl(29deg, 33%, 44%)":
+				$(".info").text("Atari 2600");
+				break;
+			case "hsl(11deg, 85%, 44%)":
+			case "hsl(26deg, 84%, 56%)":
+			case "hsl(45deg, 8%, 72%)":
+			case "hsl(214deg, 54%, 49%)":
+				$(".info").text("Dreamcast");
+				break;
+			case "hsl(0deg, 0%, 15%)":
+			case "hsl(0deg, 0%, 68%)":
+			case "hsl(24deg, 100%, 56%)":
+			case "hsl(250deg, 31%, 38%)":
+				$(".info").text("GameCube");
+				break;
+			case "hsl(292deg, 13%, 47%)":
+			case "hsl(330deg, 2%, 25%)":
+			case "hsl(330deg, 3%, 77%)":
+				$(".info").text("Nintendo 64");
+				break;
+			case "hsl(0deg, 0%, 90%)":
+			case "hsl(0deg, 2%, 64%)":
+			case "hsl(0deg, 4%, 5%)":
+			case "hsl(0deg, 75%, 50%)":
+				$(".info").text("Nintendo Entertainment System");
+				break;
+			case "hsl(220deg, 40%, 88%)":
+			case "hsl(221deg, 52%, 24%)":
+			case "hsl(340deg, 2%, 65%)":
+				$(".info").text("PlayStation");
+				break;
+			case "hsl(189deg, 92%, 42%)":
+			case "hsl(200deg, 73%, 41%)":
+			case "hsl(222deg, 53%, 39%)":
+			case "hsl(240deg, 11%, 15%)":
+				$(".info").text("PlayStation 2");
+				break;
+			case "hsl(0deg, 0%, 82%)":
+			case "hsl(239deg, 47%, 80%)":
+			case "hsl(257deg, 45%, 41%)":
+			case "hsl(264deg, 7%, 57%)":
 				$(".info").text("Super Nintendo");
 				break;
 		}

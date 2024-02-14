@@ -35,6 +35,7 @@ form {
 .text-wrap {
     padding-left: 24px;
     margin-top: 60px;
+    position: relative;
 }
 
 .hold {
@@ -61,16 +62,19 @@ form {
 
 .text-box {
     position: relative;
-    width: 480px;
+    width: 640px;
+    height: 44vh;
     background: rgba(255, 255, 255, 0.35);
     border-radius: 12px;
     border: 1px solid rgba(0, 0, 0, 0.2);
     padding: 10px;
+    min-height: 200px;
 }
 
 textarea {
 	font-size: 16px;
 	width: 100%;
+	height: 100%;
 	resize: none;
 	border: none;
 	display: block;
@@ -92,7 +96,7 @@ textarea:focus-visible {
     width: 22%;
 }
 
-.hsb {
+.hsb, .hsl {
     width: 29%;
 }
 
@@ -100,7 +104,7 @@ textarea:focus-visible {
     width: 30%;
 }
 
-.hex, .contrast, .rgb, .hsb {
+.hex, .contrast, .rgb, .hsb, .hsl {
 	margin-top: 12px;
 	display: inline-block;
 }
@@ -109,12 +113,12 @@ textarea:focus-visible {
 	text-transform:uppercase;
 }
 
-.rgb input, .hsb input {
+.rgb input, .hsb input, .hsl input {
 	width: 48px;
 	text-align: center;
 }
 
-.hsb input {
+.hsb input, .hsl input {
     margin-right: 6px;
 }
 
@@ -134,10 +138,10 @@ input[type="text"], select {
 .square {
 	border-radius: 10px;
 	border: 1px solid #7776;
-	height: 152px;
-	width: 152px;
-	right: 140px;
-	bottom: 114px;
+	height: 200px;
+	width: 200px;
+	right: 48px;
+	top: 90px;
 	position: absolute;
 	box-shadow: 0px 0px 14px 4px rgba(128, 128, 128, 0.25);
 	text-align: center;
@@ -154,8 +158,8 @@ span.square-title {
 
 .dropper {
     opacity: 0;
-    width: 158px;
-    height: 158px;
+    width: 205px;
+    height: 205px;
     margin-left: -3px;
     margin-top: -3px;
 }
@@ -176,10 +180,10 @@ span.square-title {
 
 .info {
 	text-align: center;
-	bottom: -48px;
-	left: -73px;
+	bottom: -52px;
+	left: -25%;
 	position: absolute;
-	width: 200%;
+	width: 150%;
 	font-weight: bold;
 }
 
@@ -229,14 +233,14 @@ span.square-title {
 	-webkit-appearance: none;
 	appearance: none;
 	height: 8px;
-	width: 130px;
+	width: 190px;
 	background-color: #DDD;
 	-webkit-border-radius: 25px;
 	border-radius: 25px;
 	padding: 0 2px;
 	margin: 0;
 	cursor: pointer;
-	left: 125px;
+	left: 95px;
 	bottom: 26px;
 	position: absolute;
 }
@@ -524,10 +528,7 @@ a:hover {
 
 .owl-wrapper {
 	width: 1044px;
-	position: absolute;
-	bottom: 114px;
-	left: 50%;
-	margin-left: -500px;
+	margin: 0 auto;
 }
 
 .owl-wrapper h3 {
@@ -635,11 +636,8 @@ footer {
     border-top: 1px solid #DDD;
     border-radius: 0px 0px 14px 14px;
     text-align: right;
-    position: absolute;
-    bottom: 24px;
     width: 1140px;
-    left: 50%;
-    margin: 32px -562px 0px;
+    margin: 32px auto 24px;
     display: flex;
     flex-direction: row;
 }
@@ -707,24 +705,6 @@ footer .button {
 
 ::-webkit-scrollbar-thumb {
 	background: #DDD;
-}
-
-@media screen and (max-height: 924px){
-	.owl-wrapper, footer {
-		position: relative;
-		margin: 36px auto 0px;
-		left: unset;
-	}
-
-	.owl-wrapper {
-		bottom: unset;
-	}
-}
-
-@media screen and (max-width: 1024px){
-	.owl-wrapper, footer {
-		margin-left: -390px;
-	}
 }
 
 *, *::before, *::after {
