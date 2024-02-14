@@ -135,7 +135,7 @@ function colorVision(){
 		$(".hex input").val(hex);
 	}
 	else if(colorFormat == "HSB"){
-		hsv = rgbToHSB(hexToRgb(hex).r, hexToRgb(hex).g, hexToRgb(hex).b),
+		hsv = colorcolor("#"+hex, 'hsb').replace("hsb(", "").replace(")", "").replace("deg", "").replace(/%/g, "").split(', '),
 		h = Math.round(hsv[0]),
 		s = Math.round(hsv[1]),
 		v = Math.round(hsv[2]);
@@ -145,7 +145,7 @@ function colorVision(){
 		$(".hsb input[name='brightness']").val(v);
 	}
 	else if(colorFormat == "HSL"){
-		hsl = RGBToHSL(hexToRgb(hex).r, hexToRgb(hex).g, hexToRgb(hex).b),
+		hsl = colorcolor("#"+hex, 'hsl').replace("hsl(", "").replace(")", "").replace("deg", "").replace(/%/g, "").split(', '),
 		h = Math.round(hsl[0]),
 		s = Math.round(hsl[1]),
 		l = Math.round(hsl[2]);
@@ -155,9 +155,10 @@ function colorVision(){
 		$(".hsl input[name='lightness']").val(l);
 	}
 	else{
-		r = hexToRgb(hex).r,
-		g = hexToRgb(hex).g,
-		b = hexToRgb(hex).b;
+		rgb = colorcolor("#"+hex, 'rgb').replace("rgb(", "").replace(")", "").split(', ')
+		r = rgb[0],
+		g = rgb[1],
+		b = rgb[2];
 		
 		$(".rgb input[name='red']").val(r);
 		$(".rgb input[name='green']").val(g);
@@ -238,16 +239,6 @@ function formatToggle(value){
 	samples();
 }
 
-function hexToRgb(color) {
-	var rgb = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(color);
-	
-	return rgb ? {
-		r: parseInt(rgb[1], 16),
-		g: parseInt(rgb[2], 16),
-		b: parseInt(rgb[3], 16)
-	} : null;
-}
-
 function holdToggle(){
 	$(".hold .switch-label").removeClass("active");
 	
@@ -262,57 +253,6 @@ function holdToggle(){
 		$(".hold .switch-label:nth-child(1)").addClass("active");
 		$(".hold input").prop( "checked", false );
 	}
-}
-
-function hslToHex(h, s, l) {
-  l /= 100;
-  const a = s * Math.min(l, 1 - l) / 100;
-  const f = n => {
-    const k = (n + h / 30) % 12;
-    const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
-    return Math.round(255 * color).toString(16).padStart(2, '0');   // convert to Hex and prefix "0" if needed
-  };
-  return `#${f(0)}${f(8)}${f(4)}`;
-}
-
-const { abs, min, max, round } = Math;
-
-const HSLToRGB = (h, s, l) => {
-  s /= 100;
-  l /= 100;
-  const k = n => (n + h / 30) % 12;
-  const a = s * Math.min(l, 1 - l);
-  const f = n =>
-    l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)));
-  return [255 * f(0), 255 * f(8), 255 * f(4)];
-};
-
-function hueToRgb(p, q, t) {
-  if (t < 0) t += 1;
-  if (t > 1) t -= 1;
-  if (t < 1/6) return p + (q - p) * 6 * t;
-  if (t < 1/2) return q;
-  if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
-  return p;
-}
-
-function mix(a, b, v)
-{
-    return (1-v)*a + v*b;
-}
-
-function HSVtoRGB(H, S, V)
-{
-    var V2 = V * (1 - S);
-    var r  = ((H>=0 && H<=60) || (H>=300 && H<=360)) ? V : ((H>=120 && H<=240) ? V2 : ((H>=60 && H<=120) ? mix(V,V2,(H-60)/60) : ((H>=240 && H<=300) ? mix(V2,V,(H-240)/60) : 0)));
-    var g  = (H>=60 && H<=180) ? V : ((H>=240 && H<=360) ? V2 : ((H>=0 && H<=60) ? mix(V2,V,H/60) : ((H>=180 && H<=240) ? mix(V,V2,(H-180)/60) : 0)));
-    var b  = (H>=0 && H<=120) ? V2 : ((H>=180 && H<=300) ? V : ((H>=120 && H<=180) ? mix(V2,V,(H-120)/60) : ((H>=300 && H<=360) ? mix(V,V2,(H-300)/60) : 0)));
-
-    return {
-        r : Math.round(r * 255),
-        g : Math.round(g * 255),
-        b : Math.round(b * 255)
-    };
 }
 
 function imageTypeToggle(){
@@ -401,71 +341,33 @@ function preview(){
 	v = parseInt($(".hsb [name='brightness']").val());
 	h2 = parseInt($(".hsl [name='hue']").val()),
 	s2 = parseInt($(".hsl [name='saturation']").val()),
-	l = parseInt($(".hsl [name='lightness']").val()),
-	hslHEX = hslToHex(h2, s2, l);
+	l = parseInt($(".hsl [name='lightness']").val())
 	
 	if(colorFormat == "HEX"){
-		$(".square").css("box-shadow", "0px 0px 14px 4px rgba("+hexToRgb(hex).r+", "+hexToRgb(hex).g+", "+hexToRgb(hex).b+", 0.25)");
+		$(".square").css("box-shadow", "0px 0px 14px 4px "+colorcolor("#"+hex+"40", 'rgba'));
 		$(".square").css("background", "#"+hex);
 		$(".dropper").val("#"+hex);
 		colorMessage(hex);
 	}
 	else if(colorFormat == "HSB"){
-		$(".square").css("box-shadow", "0px 0px 14px 4px rgba("+HSVtoRGB(h, s/100, v/100).r+", "+HSVtoRGB(h, s/100, v/100).g+", "+HSVtoRGB(h, s/100, v/100).b+", 0.25)");
-		$(".square").css("background", "rgb("+HSVtoRGB(h, s/100, v/100).r+", "+HSVtoRGB(h, s/100, v/100).g+", "+HSVtoRGB(h, s/100, v/100).b+")");
-		$(".dropper").val(rgbToHex(HSVtoRGB(h, s/100, v/100).r, HSVtoRGB(h, s/100, v/100).g, HSVtoRGB(h, s/100, v/100).b));
+		$(".square").css("box-shadow", "0px 0px 14px 4px "+colorcolor("hsv("+h+", "+s+"%, "+v+"%)", 'rgba').replace("1)", "0.25)"));
+		$(".square").css("background", colorcolor("hsv("+h+", "+s+"%, "+v+"%)", 'hex'));
+		$(".dropper").val(colorcolor("hsv("+h+", "+s+"%, "+v+"%)", 'hex'));
 		colorMessage("hsb("+h+"deg, "+s+"%, "+v+"%)");
 	}
 	else if(colorFormat == "HSL"){
-		$(".square").css("box-shadow", "0px 0px 14px 4px rgba("+hexToRgb(hslHEX).r+", "+hexToRgb(hslHEX).g+", "+hexToRgb(hslHEX).b+", 0.25)");
-		$(".square").css("background", hslHEX);
-		$(".dropper").val(hslHEX);
+		$(".square").css("box-shadow", "0px 0px 14px 4px "+colorcolor("hsl("+h2+", "+s2+"%, "+l+"%)", 'rgba').replace("1)", "0.25)"));
+		$(".square").css("background", colorcolor("hsl("+h2+", "+s2+"%, "+l+"%)", 'hex'));
+		$(".dropper").val(colorcolor("hsl("+h2+", "+s2+"%, "+l+"%)", 'hex'));
 		colorMessage("hsl("+h2+"deg, "+s2+"%, "+l+"%)");
 	}
 	else{
 		$(".square").css("box-shadow", "0px 0px 14px 4px rgba("+r+", "+g+", "+b+", 0.25)");
 		$(".square").css("background", "rgb("+r+", "+g+", "+b+")");
-		$(".dropper").val(rgbToHex(r, g, b));
+		$(".dropper").val(colorcolor("rgb("+r+", "+g+", "+b+")", 'hex'));
 		colorMessage("rgb("+r+", "+g+", "+b+")");
 	}
 }
-
-function componentToHex(c) {
-  var hex = c.toString(16);
-  return hex.length == 1 ? "0" + hex : hex;
-}
-
-function rgbToHex(r, g, b) {
-  return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
-}
-
-function rgbToHSB(r, g, b){
-    r /= 255, g /= 255, b /= 255;
-	var v = Math.max(r, g, b), n = v - Math.min(r, g, b);
-	var h = (n === 0) ? 0 : n && v === r ? (g - b) / n : v === g ? 2 + (b - r) / n : 4 + (r - g) / n;
-	
-    return [60 * (h < 0 ? h + 6 : h), v && (n / v) * 100, v * 100];
-}
-
-const RGBToHSL = (r, g, b) => {
-  r /= 255;
-  g /= 255;
-  b /= 255;
-  const l = Math.max(r, g, b);
-  const s = l - Math.min(r, g, b);
-  const h = s
-    ? l === r
-      ? (g - b) / s
-      : l === g
-      ? 2 + (b - r) / s
-      : 4 + (r - g) / s
-    : 0;
-  return [
-    60 * h < 0 ? 60 * h + 360 : 60 * h,
-    100 * (s ? (l <= 0.5 ? s / (2 * l - s) : s / (2 - (2 * l - s))) : 0),
-    (100 * (2 * l - s)) / 2,
-  ];
-};
 
 function samples(){
 	sampleColors();
@@ -491,7 +393,7 @@ function samples(){
 			s = parseInt($(".hsb [name='saturation']").val()),
 			v = parseInt($(".hsb [name='brightness']").val());
 			
-			$(".dropper").val(rgbToHex(HSVtoRGB(h, s/100, v/100).r, HSVtoRGB(h, s/100, v/100).g, HSVtoRGB(h, s/100, v/100).b));
+			$(".dropper").val(colorcolor("hsb("+h+", "+s+"%, "+v+"%)", 'hex'));
 		}
 		else if(colorFormat == "HSL"){
 			sampleHSL = $(this).parents(".colors").siblings(".color-code").text().replace("hsl(", "").replace(")", "").replace("deg", "").replace(/%/g, "").split(', ');
@@ -505,7 +407,7 @@ function samples(){
 			s = parseInt($(".hsl [name='saturation']").val()),
 			l = parseInt($(".hsl [name='lightness']").val());
 			
-			$(".dropper").val(hslToHex(h, s, l));
+			$(".dropper").val(colorcolor("hsl("+h+", "+s+"%, "+l+"%)", 'hex'));
 		}
 		else{
 			sampleRGB = $(this).parents(".colors").siblings(".color-code").text().replace("rgb(", "").replace(")", "").split(', ');
@@ -519,7 +421,7 @@ function samples(){
 			g = parseInt($(".rgb [name='green']").val()),
 			b = parseInt($(".rgb [name='blue']").val());
 			
-			$(".dropper").val(rgbToHex(r, g, b));
+			$(".dropper").val(colorcolor("rgb("+r+", "+g+", "+b+")", 'hex'));
 		}
 		
 		if(hold == "off"){
@@ -907,7 +809,6 @@ $(document).ready(function () {
 		$(".info, .error").empty();
 		hexError = hslError = hsvError = rgbError = "false";
 		$(".submit").blur();
-		hslHEX = hslToHex(h, s, l);
 		
 		if(colorFormat == "HEX"){
 			var hex = $(".hex input").val().toUpperCase();
@@ -917,24 +818,29 @@ $(document).ready(function () {
 			}
 			else{
 				hexError = "false";
-				
+			
+				rgb = colorcolor("#"+hex, 'rgb').replace("rgb(", "").replace(")", "").split(', ')
+				r = rgb[0],
+				g = rgb[1],
+				b = rgb[2];
+			
 				if(bezelStyle == "koko-aio"){
 					var contrast = $("#contrasts option:selected").val();
 					if(contrast < 1){
-						rSetting = (((hexToRgb(hex).r - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .1 + .105) + (contrast * .01 + .0105))) / 128)).toFixed(10);
-						gSetting = (((hexToRgb(hex).g - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .1 + .105) + (contrast * .01 + .0105))) / 128)).toFixed(10);
-						bSetting = (((hexToRgb(hex).b - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .01 + .055) + (contrast * .001 + .0055))) / 128)).toFixed(10);
+						rSetting = (((r - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .1 + .105) + (contrast * .01 + .0105))) / 128)).toFixed(10);
+						gSetting = (((g - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .1 + .105) + (contrast * .01 + .0105))) / 128)).toFixed(10);
+						bSetting = (((b - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .01 + .055) + (contrast * .001 + .0055))) / 128)).toFixed(10);
 					}
 					else{
-						rSetting = (((hexToRgb(hex).r - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .01 + .105) + (contrast * .001 + .0105))) / 128)).toFixed(10);
-						gSetting = (((hexToRgb(hex).g - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .01 + .105) + (contrast * .001 + .0105))) / 128)).toFixed(10);
-						bSetting = (((hexToRgb(hex).b - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .001 + .055) + (contrast * .0001 + .0055))) / 128)).toFixed(10);
+						rSetting = (((r - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .01 + .105) + (contrast * .001 + .0105))) / 128)).toFixed(10);
+						gSetting = (((g - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .01 + .105) + (contrast * .001 + .0105))) / 128)).toFixed(10);
+						bSetting = (((b - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .001 + .055) + (contrast * .0001 + .0055))) / 128)).toFixed(10);
 					}
 					
 					contrastSetting = contrast+"0000";
 				}
 				else{
-					mbzHSB = rgbToHSB(hexToRgb(hex).r, hexToRgb(hex).g, hexToRgb(hex).b);
+					mbzHSB = colorcolor("#"+hex, 'hsb');
 				}
 				
 				$("#copy").prop("disabled", false);
@@ -965,26 +871,28 @@ $(document).ready(function () {
 			else{
 				hsvError = "false";
 				
-				s = s/100;
-				v = v/100;
+				rgb = colorcolor("hsv("+h+", "+s+"%, "+v+"%)", 'rgb').replace("hsv(", "").replace(")", "").split(', ')
+				r = rgb[0],
+				g = rgb[1],
+				b = rgb[2];
 				
 				if(bezelStyle == "koko-aio"){
 					var contrast = $("#contrasts option:selected").val();
 					if(contrast < 1){
-						rSetting = (((HSVtoRGB(h, s, v).r - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .1 + .105) + (contrast * .01 + .0105))) / 128)).toFixed(10);
-						gSetting = (((HSVtoRGB(h, s, v).g - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .1 + .105) + (contrast * .01 + .0105))) / 128)).toFixed(10);
-						bSetting = (((HSVtoRGB(h, s, v).b - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .01 + .055) + (contrast * .001 + .0055))) / 128)).toFixed(10);
+						rSetting = (((r - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .1 + .105) + (contrast * .01 + .0105))) / 128)).toFixed(10);
+						gSetting = (((g - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .1 + .105) + (contrast * .01 + .0105))) / 128)).toFixed(10);
+						bSetting = (((b - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .01 + .055) + (contrast * .001 + .0055))) / 128)).toFixed(10);
 					}
 					else{
-						rSetting = (((HSVtoRGB(h, s, v).r - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .01 + .105) + (contrast * .001 + .0105))) / 128)).toFixed(10);
-						gSetting = (((HSVtoRGB(h, s, v).g - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .01 + .105) + (contrast * .001 + .0105))) / 128)).toFixed(10);
-						bSetting = (((HSVtoRGB(h, s, v).b - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .001 + .055) + (contrast * .0001 + .0055))) / 128)).toFixed(10);
+						rSetting = (((r - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .01 + .105) + (contrast * .001 + .0105))) / 128)).toFixed(10);
+						gSetting = (((g - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .01 + .105) + (contrast * .001 + .0105))) / 128)).toFixed(10);
+						bSetting = (((b - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .001 + .055) + (contrast * .0001 + .0055))) / 128)).toFixed(10);
 					}
 					
 						contrastSetting = contrast+"0000";
 				}
 				else{
-					mbzHSB = rgbToHSB(HSVtoRGB(h, s, v).r, HSVtoRGB(h, s, v).g, HSVtoRGB(h, s, v).b);
+					mbzHSB = "hsb("+h+", "+s+"%, "+v+"%)";
 				}
 				
 				$("#copy").prop("disabled", false);
@@ -1015,27 +923,32 @@ $(document).ready(function () {
 			else{
 				hslError = "false";
 				
+				rgb = colorcolor("hsl("+h+", "+s+"%, "+l+"%)", 'rgb').replace("hsl(", "").replace(")", "").split(', ')
+				r = rgb[0],
+				g = rgb[1],
+				b = rgb[2];
+				
 				if(bezelStyle == "koko-aio"){
 					var contrast = $("#contrasts option:selected").val();
 					if(contrast < 1){
-						rSetting = (((HSLToRGB(h, s, l)[0] - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .1 + .105) + (contrast * .01 + .0105))) / 128)).toFixed(10);
-						gSetting = (((HSLToRGB(h, s, l)[1] - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .1 + .105) + (contrast * .01 + .0105))) / 128)).toFixed(10);
-						bSetting = (((HSLToRGB(h, s, l)[2] - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .01 + .055) + (contrast * .001 + .0055))) / 128)).toFixed(10);
+						rSetting = (((r - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .1 + .105) + (contrast * .01 + .0105))) / 128)).toFixed(10);
+						gSetting = (((g - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .1 + .105) + (contrast * .01 + .0105))) / 128)).toFixed(10);
+						bSetting = (((b - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .01 + .055) + (contrast * .001 + .0055))) / 128)).toFixed(10);
 					}
 					else{
-						rSetting = (((HSLToRGB(h, s, l)[0] - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .01 + .105) + (contrast * .001 + .0105))) / 128)).toFixed(10);
-						gSetting = (((HSLToRGB(h, s, l)[1] - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .01 + .105) + (contrast * .001 + .0105))) / 128)).toFixed(10);
-						bSetting = (((HSLToRGB(h, s, l)[2] - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .001 + .055) + (contrast * .0001 + .0055))) / 128)).toFixed(10);
+						rSetting = (((r - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .01 + .105) + (contrast * .001 + .0105))) / 128)).toFixed(10);
+						gSetting = (((g - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .01 + .105) + (contrast * .001 + .0105))) / 128)).toFixed(10);
+						bSetting = (((b - 128) * (0.395 - (contrast - 1.30) * ((3.75 - contrast) * (contrast * .001 + .055) + (contrast * .0001 + .0055))) / 128)).toFixed(10);
 					}
 					
 						contrastSetting = contrast+"0000";
 				}
 				else{
-					mbzHSB = rgbToHSB(HSLToRGB(h, s, l)[0], HSLToRGB(h, s, l)[1], HSLToRGB(h, s, l)[2]);
+					mbzHSB = colorcolor("hsl("+h+", "+s+"%, "+l+"%)", 'hsb');
 				}
 				
 				$("#copy").prop("disabled", false);
-				colorMessage("hsl("+h+"deg, "+s*100+"%, "+l*100+"%)");
+				colorMessage("hsl("+h+"deg, "+s+"%, "+l+"%)");
 			}
 			
 			if(hsvError == "true"){
@@ -1078,7 +991,7 @@ $(document).ready(function () {
 						contrastSetting = contrast+"0000";
 				}
 				else{
-					mbzHSB = rgbToHSB(r, g, b);
+					mbzHSB = colorcolor("rgb("+r+", "+g+", "+b+")", 'hsb');
 				}
 				
 				$("#copy").prop("disabled", false);
@@ -1100,6 +1013,8 @@ $(document).ready(function () {
 		
 		if(bezelStyle == "mbz" && hexError == "false" && hslError == "false" && hsvError == "false" && rgbError == "false"){
 			preview();
+			
+			mbzHSB = mbzHSB.replace("hsb(", "").replace(")", "").replace(/%/g, "").split(', ')
 			
 			var hue = Math.round(mbzHSB[0]),
 				saturation = Math.round(mbzHSB[1]),
