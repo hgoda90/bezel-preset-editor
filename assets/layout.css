@@ -82,7 +82,7 @@ textarea:focus-visible {
 	outline: none;
 }
 
-#copy, #clear, #edit, #save {
+#copy, #clear, #edit, #save, #load {
     position: absolute;
     top: -36px;
     right: 12px;
@@ -599,10 +599,8 @@ a:hover {
 
 .swatch .color {
     display: inline-block;
-    border-radius: 4px;
-    margin: 4px 12px 4px 0px;
+    margin: 4px 0px 4px 0px;
     border: 1px solid rgb(0 0 0 / 3%);
-    outline: 1px solid #DDD;
     width: 26px;
     height: 26px;
 }
@@ -791,4 +789,12 @@ footer .button {
 .button.active:hover {
     background: rgba(255, 255, 255, 0.35) !important;
     color: #888 !important;
+}
+
+#load {
+    right: 308px;
+}
+
+#load input {
+    display: none;
 }

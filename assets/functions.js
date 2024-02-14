@@ -341,7 +341,7 @@ function layerToggle(imageLayers){
 	}
 }
 
-function presetCopy() {
+function presetCopy(){
 	navigator.clipboard.writeText($(".conversion").text().trim());
 }
 
@@ -455,7 +455,7 @@ function savePreset(){
 	  if ('Blob' in window) {
 		var fileName = prompt('Please enter file name to save', 'Preset.slangp');
 		if (fileName) {
-		  var textToWrite = $('.conversion').val().replace(/n/g, 'rn');
+		  var textToWrite = $('.conversion').val();
 		  var textFileAsBlob = new Blob([textToWrite], { type: 'text/plain' });
 
 		  if ('msSaveOrOpenBlob' in navigator) {
@@ -738,6 +738,17 @@ $(".us, .world").on('click', function(){
 });
 
 $(document).ready(function () {
+	$('#load input[type="file"]').change(function (e) {
+		const geekss = e.target.files[0];
+		
+		var reader = new FileReader();
+		reader.onload = function (e) {
+			$("textarea").val(e.target.result).text(e.target.result);
+		};
+		
+		reader.readAsText(geekss);
+	});
+
 	$('.image input[type="file"]').change(function (e) {
 		const geekss = e.target.files[0].name;
 		var settings = $("textarea").text();
