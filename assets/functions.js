@@ -753,6 +753,19 @@ $(document).ready(function () {
 		$('#load input[type="file"]').val("");
 		$(this).blur();
 	});
+	
+	$('.custom input[type="file"]').change(function (e) {
+		const geekss = e.target.files[0];
+		
+		var reader = new FileReader();
+		reader.onload = function (e) {
+			$("textarea").val($("textarea").text()+"\n"+e.target.result).text($("textarea").text()+"\n"+e.target.result);
+		};
+		
+		reader.readAsText(geekss);
+		$('.custom input[type="file"]').val("");
+		$(this).blur();
+	});
 
 	$('.image input[type="file"]').change(function (e) {
 		const geekss = e.target.files[0].name;
@@ -761,30 +774,30 @@ $(document).ready(function () {
 		if(bezelStyle == "mbz"){
 			switch($(".layer input").val()){
 				case "2":
-					$(".conversion").val(settings+'BackgroundImage = "'+geekss+'"\n').text(settings+'BackgroundImage = "'+geekss+'"\n');
+					$(".conversion").val(settings+'BackgroundImage = "pathtofile\\'+geekss+'"\n').text(settings+'BackgroundImage = "pathtofile\\'+geekss+'"\n');
 					break;
 				case "3":
-					$(".conversion").val(settings+'LEDImage = "'+geekss+'"\n').text(settings+'LEDImage = "'+geekss+'"\n');
+					$(".conversion").val(settings+'LEDImage = "pathtofile\\'+geekss+'"\n').text(settings+'LEDImage = "pathtofile\\'+geekss+'"\n');
 					break;
 				case "4":
-					$(".conversion").val(settings+'DeviceImage = "'+geekss+'"\n').text(settings+'DeviceImage = "'+geekss+'"\n');
+					$(".conversion").val(settings+'DeviceImage = "pathtofile\\'+geekss+'"\n').text(settings+'DeviceImage = "pathtofile\\'+geekss+'"\n');
 					break;
 				case "5":
-					$(".conversion").val(settings+'DeviceLEDImage = "'+geekss+'"\n').text(settings+'DeviceLEDImage = "'+geekss+'"\n');
+					$(".conversion").val(settings+'DeviceLEDImage = "pathtofile\\'+geekss+'"\n').text(settings+'DeviceLEDImage = "pathtofile\\'+geekss+'"\n');
 					break;
 				case "6":
-					$(".conversion").val(settings+'DecalImage = "'+geekss+'"\n').text(settings+'DecalImage = "'+geekss+'"\n');
+					$(".conversion").val(settings+'DecalImage = "pathtofile\\'+geekss+'"\n').text(settings+'DecalImage = "pathtofile\\'+geekss+'"\n');
 					break;
 				case "7":
-					$(".conversion").val(settings+'TopLayerImage = "'+geekss+'"\n').text(settings+'TopLayerImage = "'+geekss+'"\n');
+					$(".conversion").val(settings+'TopLayerImage = "pathtofile\\'+geekss+'"\n').text(settings+'TopLayerImage = "pathtofile\\'+geekss+'"\n');
 					break;
 				case "8":
-					$(".conversion").val(settings+'CabinetGlassImage = "'+geekss+'"\n').text(settings+'CabinetGlassImage = "'+geekss+'"\n');
+					$(".conversion").val(settings+'CabinetGlassImage = "pathtofile\\'+geekss+'"\n').text(settings+'CabinetGlassImage = "pathtofile\\'+geekss+'"\n');
 					break;
 			}
 		}
 		else{
-			$(".conversion").val(settings+'bg_under = "'+geekss+'"\n').text(settings+'bg_under = "'+geekss+'"\n');
+			$(".conversion").val(settings+'bg_under = "pathtofile\\'+geekss+'"\n').text(settings+'bg_under = "pathtofile\\'+geekss+'"\n');
 		}
 		
 		$('.image input[type="file"]').val("");
@@ -793,11 +806,11 @@ $(document).ready(function () {
 	
 	$('.shader input[type="file"]').change(function (e) {
 		if(bezelStyle == "mbz"){
-			const geekss = $(".conversion").val()+'#reference "shaders_slang\\bezel\\Mega_Bezel\\Presets\\Base_CRT_Presets\\'+e.target.files[0].name+'"\n';
+			const geekss = $(".conversion").val()+'#reference "pathtofile\\'+e.target.files[0].name+'"\n';
 			$(".conversion").val(geekss).text(geekss);
 		}
 		else{
-			const geekss = $(".conversion").val()+'#reference "shaders_slang\\bezel\\koko-aio-slang\\Presets-ng\\'+e.target.files[0].name+'"\n';
+			const geekss = $(".conversion").val()+'#reference "pathtofile\\'+e.target.files[0].name+'"\n';
 			$(".conversion").val(geekss).text(geekss);
 		}
 		
