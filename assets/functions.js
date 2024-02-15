@@ -215,22 +215,22 @@ function formatToggle(value){
 	if(value == 1){
 		setCookie("colorFormat", "HEX", 30);
 		colorFormat = "HEX";
-		$(".text-box").after('<div class="hex">HEX: # <input type="text" name="hex" size=6 maxlength=6></div>');
+		$(".info").after('<div class="hex">HEX: # <input type="text" name="hex" size=6 maxlength=6></div>');
 	}
 	else if(value == 2){
 		setCookie("colorFormat", "HSB", 30);
 		colorFormat = "HSB";
-		$(".text-box").after('<div class="hsb">hsb(<input type="text" name="hue" size=3 maxLength=3>deg, <input type="text" name="saturation" size=3 maxLength=3>%, <input type="text" name="brightness" size=3 maxLength=3>%)</div>');
+		$(".info").after('<div class="hsb">hsb(<input type="text" name="hue" size=3 maxLength=3>deg, <input type="text" name="saturation" size=3 maxLength=3>%, <input type="text" name="brightness" size=3 maxLength=3>%)</div>');
 	}
 	else if(value == 3){
 		setCookie("colorFormat", "HSL", 30);
 		colorFormat = "HSL";
-		$(".text-box").after('<div class="hsl">hsl(<input type="text" name="hue" size=3 maxLength=3>deg, <input type="text" name="saturation" size=3 maxLength=3>%, <input type="text" name="lightness" size=3 maxLength=3>%)</div>');
+		$(".info").after('<div class="hsl">hsl(<input type="text" name="hue" size=3 maxLength=3>deg, <input type="text" name="saturation" size=3 maxLength=3>%, <input type="text" name="lightness" size=3 maxLength=3>%)</div>');
 	}
 	else if(value == 4){
 		setCookie("colorFormat", "RGB", 30);
 		colorFormat = "RGB";
-		$(".text-box").after('<div class="rgb">rgb(<input type="text" name="red" size=3 maxLength=3>, <input type="text" name="green" size=3 maxLength=3>, <input type="text" name="blue" size=3 maxLength=3>)</div>');
+		$(".info").after('<div class="rgb">rgb(<input type="text" name="red" size=3 maxLength=3>, <input type="text" name="green" size=3 maxLength=3>, <input type="text" name="blue" size=3 maxLength=3>)</div>');
 	}
 	
 	$(".info").empty();
