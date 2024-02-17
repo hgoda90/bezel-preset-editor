@@ -52,6 +52,10 @@ function clearConversion(){
 	$(".error").empty();
 }
 
+function clearSide(){
+	$(".side-text").text("").val("");
+}
+
 function colorReset(){
 	$(".hex input").val("");
 	$(".rgb input").val("");
@@ -61,7 +65,7 @@ function colorReset(){
 		$(".contrast").css("opacity", 0);
 		$(".dropper").val("#1A1A1A");
 		
-		$(".square").css({"background": "#1A1A1A", "box-shadow": "0px 0px 14px 4px rgba(26, 26, 26, 0.25)"});
+		$(".square").css({"background": "#1A1A1A"});
 		
 		if(hold == "off"){
 			settingReset();
@@ -92,7 +96,7 @@ function colorReset(){
 		$(".contrast option[value='1.30']").prop("selected", "selected");
 		$(".dropper").val("#808080");
 		
-		$(".square").css({"background": "#808080", "box-shadow": "0px 0px 14px 4px rgba(128, 128, 128, 0.25)"});
+		$(".square").css({"background": "#808080"});
 	
 		if($(".format-labels .active").text() == "HEX"){
 			$(".hex input").attr("placeholder", "808080");
@@ -184,6 +188,18 @@ function editConversion(){
 	}
 }
 
+function editSide(){
+	if($(".side-text").attr("readonly") == "readonly"){
+		$(".side-text").prop("readonly", false);
+		$("#side-edit").addClass("active");
+	}
+	else{
+		$(".side-text").text($(".conversion").val());
+		$(".side-text").prop("readonly", true);
+		$("#side-edit").removeClass("active");
+	}
+}
+
 function formatToggle(value){
 	  value = parseInt(value, 10);
 	  $(".format-labels span").removeClass("active");
@@ -215,22 +231,22 @@ function formatToggle(value){
 	if(value == 1){
 		setCookie("colorFormat", "HEX", 30);
 		colorFormat = "HEX";
-		$(".info").after('<div class="hex">HEX: # <input type="text" name="hex" size=6 maxlength=6></div>');
+		$(".color-vision").prepend('<div class="hex">HEX: # <input type="text" name="hex" size=6 maxlength=6></div>');
 	}
 	else if(value == 2){
 		setCookie("colorFormat", "HSB", 30);
 		colorFormat = "HSB";
-		$(".info").after('<div class="hsb">hsb(<input type="text" name="hue" size=3 maxLength=3>deg, <input type="text" name="saturation" size=3 maxLength=3>%, <input type="text" name="brightness" size=3 maxLength=3>%)</div>');
+		$(".color-vision").prepend('<div class="hsb">hsb(<input type="text" name="hue" size=3 maxLength=3>deg, <input type="text" name="saturation" size=3 maxLength=3>%, <input type="text" name="brightness" size=3 maxLength=3>%)</div>');
 	}
 	else if(value == 3){
 		setCookie("colorFormat", "HSL", 30);
 		colorFormat = "HSL";
-		$(".info").after('<div class="hsl">hsl(<input type="text" name="hue" size=3 maxLength=3>deg, <input type="text" name="saturation" size=3 maxLength=3>%, <input type="text" name="lightness" size=3 maxLength=3>%)</div>');
+		$(".color-vision").prepend('<div class="hsl">hsl(<input type="text" name="hue" size=3 maxLength=3>deg, <input type="text" name="saturation" size=3 maxLength=3>%, <input type="text" name="lightness" size=3 maxLength=3>%)</div>');
 	}
 	else if(value == 4){
 		setCookie("colorFormat", "RGB", 30);
 		colorFormat = "RGB";
-		$(".info").after('<div class="rgb">rgb(<input type="text" name="red" size=3 maxLength=3>, <input type="text" name="green" size=3 maxLength=3>, <input type="text" name="blue" size=3 maxLength=3>)</div>');
+		$(".color-vision").prepend('<div class="rgb">rgb(<input type="text" name="red" size=3 maxLength=3>, <input type="text" name="green" size=3 maxLength=3>, <input type="text" name="blue" size=3 maxLength=3>)</div>');
 	}
 	
 	$(".info").empty();
@@ -344,25 +360,21 @@ function preview(){
 	l = parseInt($(".hsl [name='lightness']").val())
 	
 	if(colorFormat == "HEX"){
-		$(".square").css("box-shadow", "0px 0px 14px 4px "+colorcolor("#"+hex+"40", 'rgba'));
 		$(".square").css("background", "#"+hex);
 		$(".dropper").val("#"+hex);
 		colorMessage(hex);
 	}
 	else if(colorFormat == "HSB"){
-		$(".square").css("box-shadow", "0px 0px 14px 4px "+colorcolor("hsv("+h+", "+s+"%, "+v+"%)", 'rgba').replace("1)", "0.25)"));
 		$(".square").css("background", colorcolor("hsv("+h+", "+s+"%, "+v+"%)", 'hex'));
 		$(".dropper").val(colorcolor("hsv("+h+", "+s+"%, "+v+"%)", 'hex'));
 		colorMessage("hsb("+h+"deg, "+s+"%, "+v+"%)");
 	}
 	else if(colorFormat == "HSL"){
-		$(".square").css("box-shadow", "0px 0px 14px 4px "+colorcolor("hsl("+h2+", "+s2+"%, "+l+"%)", 'rgba').replace("1)", "0.25)"));
 		$(".square").css("background", colorcolor("hsl("+h2+", "+s2+"%, "+l+"%)", 'hex'));
 		$(".dropper").val(colorcolor("hsl("+h2+", "+s2+"%, "+l+"%)", 'hex'));
 		colorMessage("hsl("+h2+"deg, "+s2+"%, "+l+"%)");
 	}
 	else{
-		$(".square").css("box-shadow", "0px 0px 14px 4px rgba("+r+", "+g+", "+b+", 0.25)");
 		$(".square").css("background", "rgb("+r+", "+g+", "+b+")");
 		$(".dropper").val(colorcolor("rgb("+r+", "+g+", "+b+")", 'hex'));
 		colorMessage("rgb("+r+", "+g+", "+b+")");
@@ -375,6 +387,8 @@ function samples(){
 	$(".rgb input").val("");
 	
 	$(".sample .color").on('click', function(){
+		$(".sample .color").removeClass("active");
+		
 		if(colorFormat == "HEX"){
 			hex = $(this).parents(".colors").siblings(".color-code").text()
 			
@@ -424,10 +438,11 @@ function samples(){
 			$(".dropper").val(colorcolor("rgb("+r+", "+g+", "+b+")", 'hex'));
 		}
 		
-		if(hold == "off"){
+		if(hold == "off" && $("#edit").hasClass("active") == false){
 			$("form").submit();
 		}
 		
+		$(this).addClass("active");
 		preview();
 	});
 	
@@ -436,13 +451,13 @@ function samples(){
 	});
 	
 	if(getCookie("sampleStyle") == "diamond" || getCookie("sampleStyle") == ""){
-		$(".sample").addClass("jewel").removeClass("swatch").removeClass("palette");
+		$(".sample, .square").addClass("jewel").removeClass("swatch").removeClass("palette");
 	}
 	else if(getCookie("sampleStyle") == "palette"){
-		$(".sample").addClass("palette").removeClass("jewel").removeClass("swatch");
+		$(".sample, .square").addClass("palette").removeClass("jewel").removeClass("swatch");
 	}
 	else{
-		$(".sample").addClass("swatch").removeClass("jewel").removeClass("palette");
+		$(".sample, .square").addClass("swatch").removeClass("jewel").removeClass("palette");
 	}
 }
 
@@ -534,6 +549,10 @@ function settingReset(){
 	else{
 		$(".conversion").text('BEZEL_R = "0.000000"\nBEZEL_G = "0.000000"\nBEZEL_B = "0.000000"\nBEZEL_CON = "1.300000"').val('BEZEL_R = "0.000000"\nBEZEL_G = "0.000000"\nBEZEL_B = "0.000000"\nBEZEL_CON = "1.300000"');	
 	}
+}
+
+function sideCopy(){
+	navigator.clipboard.writeText($(".side-text").text().trim());
 }
 
 function start(){
@@ -746,11 +765,24 @@ $(document).ready(function () {
 		
 		var reader = new FileReader();
 		reader.onload = function (e) {
-			$("textarea").val(e.target.result).text(e.target.result);
+			$(".conversion").val(e.target.result).text(e.target.result);
 		};
 		
 		reader.readAsText(geekss);
 		$('#load input[type="file"]').val("");
+		$(this).blur();
+	});
+	
+	$('#side-load input[type="file"]').change(function (e) {
+		const geekss = e.target.files[0];
+		
+		var reader = new FileReader();
+		reader.onload = function (e) {
+			$(".side-text").val(e.target.result).text(e.target.result);
+		};
+		
+		reader.readAsText(geekss);
+		$('#side-load input[type="file"]').val("");
 		$(this).blur();
 	});
 	

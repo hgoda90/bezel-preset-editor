@@ -82,29 +82,36 @@
 						<span class="button" id="clear" onclick="clearConversion();">Clear</span>
 						<span class="button" id="copy" onclick="presetCopy();" disabled>Copy</span>
 						<span class="button" id="save" onclick="savePreset();">Save</span>
-						<div class="button-wrap">
-							<button class="shader button" type="button" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Add Preset File">
-								<input type="file" accept=".slangp, .params">
-							</button>
-							<button class="submit button" type="submit" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Add Color Setting"><span class="material-symbols-outlined">add</span></button>
-							<button class="image button" type="button" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Add Image Path">
-								<input type="file" accept="image/*">
-								<span class="material-symbols-outlined">image</span>
-							</button>
-							<button class="custom button" type="button" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Add Custom Preset File">
-								<input type="file" accept=".slangp">
-								<span class="material-symbols-outlined">note_add</span>
-							</button>
-						</div>
 						<span class="error"></span>
+					</div>
+					<div class="button-wrap">
+						<button class="shader button" type="button" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Add Preset File">
+							<input type="file" accept=".slangp, .params">
+						</button>
+						<div class="square jewel">
+							<input type="color" class="dropper" name="dropper">
+						</div>
+						<button class="submit button" type="submit" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Add Color Setting"><span class="material-symbols-outlined">colors</span></button>
+						<button class="image button" type="button" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Add Image Path">
+							<input type="file" accept="image/*">
+							<span class="material-symbols-outlined">image</span>
+						</button>
+						<button class="custom button" type="button" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Add Custom Preset File">
+							<input type="file" accept=".slangp">
+							<span class="material-symbols-outlined">note_add</span>
+						</button>
+					</div>
+					<div class="text-box">
+						<textarea class="side-text" rows="7" cols="36" readonly></textarea>
+						<label class="button" id="side-load">Load
+							<input type="file" accept=".slangp, .params">
+						</label>
+						<span class="button" id="side-edit" onclick="editSide();">Edit</span>
+						<span class="button" id="side-clear" onclick="clearSide();">Clear</span>
+						<span class="button" id="side-copy" onclick="sideCopy();" disabled>Copy</span>
 					</div>
 				</div>
 				<div class="color-vision">
-					<div class="square">
-						<input type="color" class="dropper" name="dropper">
-					</div>
-					<span class="square-title">Colour Vision</span>
-					<span class="info"></span>
 					<div class="contrast">
 						<label for="contrasts">Contrast: </label>
 						<select id="contrasts" name="contrasts">

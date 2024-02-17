@@ -33,16 +33,17 @@ form {
 }
 
 .text-wrap {
-    padding-left: 24px;
-    margin-top: 72px;
+    margin-top: 118px;
     position: relative;
-    width: 710px;
-    display: inline-block;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
 }
 
 .hold {
-    display: inline-block;
     margin: 0px 0px 12px 0px;
+    position: absolute;
+    top: -32px;
 }
 
 .button {
@@ -64,13 +65,14 @@ form {
 
 .text-box {
     position: relative;
-    width: 606px;
+    width: 500px;
     height: 40vh;
     background: rgba(255, 255, 255, 0.35);
     border-radius: 12px;
     border: 1px solid rgba(0, 0, 0, 0.2);
     padding: 10px;
     min-height: 200px;
+    display: inline-block;
 }
 
 textarea {
@@ -88,7 +90,7 @@ textarea:focus-visible {
 	outline: none;
 }
 
-#copy, #clear, #edit, #save, #load {
+#copy, #clear, #edit, #save, #load, #side-copy, #side-clear, #side-edit, #side-load {
     position: absolute;
     top: -36px;
     right: 12px;
@@ -96,14 +98,11 @@ textarea:focus-visible {
 
 .color-vision {
     display: inline-block;
-    width: 396px;
-    height: 40vh;
-    position: absolute;
-    bottom: 34px;
+    width: 520px;
+    margin-top: 24px;
 }
 
 .hex, .contrast, .rgb, .hsb, .hsl {
-	margin-top: 24px;
 	display: inline-block;
 }
 
@@ -129,13 +128,10 @@ input[type="text"], select {
 }
 
 .square {
-	border-radius: 10px;
-	border: 1px solid #7776;
-	height: 200px;
-	width: 200px;
-	margin: 0 auto 10px;
-	box-shadow: 0px 0px 14px 4px rgba(128, 128, 128, 0.25);
-	text-align: center;
+	height: 20px;
+	width: 20px;
+	margin: 0 auto 12px;
+	position: relative;
 }
 
 span.square-title {
@@ -143,14 +139,16 @@ span.square-title {
     color: rgb(51 51 51 / 50%);
     display: block;
     text-align: center;
+    width: 200px;
 }
 
 .dropper {
     opacity: 0;
-    width: 205px;
-    height: 205px;
-    margin-left: -3px;
-    margin-top: -3px;
+    width: 44px;
+    height: 44px;
+    top: -12px !important;
+    left: -12px !important;
+    bottom: 0px !important;
 }
 
 .dropper:hover {
@@ -469,11 +467,11 @@ span.square-title {
 	cursor: not-allowed;
 }
 
-#clear {
+#clear, #side-clear {
     right: 84px;
 }
 
-#save {
+#save, #side-load {
     right: 236px;
 }
 
@@ -712,7 +710,7 @@ footer .button {
     background-position: center;
 }
 
-#edit {
+#edit, #side-edit {
     right: 164px;
 }
 
@@ -721,15 +719,14 @@ footer .button {
     height: 46px;
     padding: 0px;
     position: relative;
-    display: inline-block;
+    flex: 0 0 auto;
+    margin: 0 auto 12px;
 }
 
 .button-wrap {
-    position: absolute;
-    right: -64px;
-    top: 0;
     display: flex;
     flex-direction: column;
+    flex: 1 1 auto;
 }
 
 .button-wrap input {
@@ -761,6 +758,47 @@ footer .button {
     right: 308px;
 }
 
-#load input {
+#load input, #side-load input {
     display: none;
+}
+
+.square.jewel {
+    border-top: 10px inset rgb(0 0 0 / 5%);
+    border-right: 10px inset rgb(255 255 255 / 15%);
+    border-bottom: 10px outset rgb(255 255 255 / 15%);
+    border-left: 10px outset rgb(0 0 0 / 5%);
+    outline: 1px solid #BBB;
+    border-radius: 5px;
+}
+
+.square.palette {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.square.palette .dropper {
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    top: -3px !important;
+    left: -3px !important;
+}
+
+.square.swatch {
+    border: 1px solid rgb(0 0 0 / 3%);
+    width: 26px;
+    height: 26px;
+}
+
+.square.swatch .dropper {
+    width: 28px;
+    height: 28px;
+    top: -1px !important;
+    left: -1px !important;
+}
+
+.color.active, .color:hover {
+    transform: scale(1.15);
 }
