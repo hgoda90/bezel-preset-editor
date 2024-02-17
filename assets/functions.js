@@ -59,8 +59,6 @@ function changeView(){
 	}
 	
 	$(".text3, .text4").text("").val("");
-	$(".text3, .text4").prop("readonly", true);
-	$("#edit3, #edit4").removeClass("active");
 	$(".view").blur();
 }
 
@@ -261,28 +259,15 @@ function dropfile4(file) {
   reader.readAsText(file, "UTF-8");
 }
 
-function edit(id){
-	if(id == 1){
-		if($(".text").attr("readonly") == "readonly"){
-			$(".text").prop("readonly", false);
-			$("#edit").addClass("active");
-		}
-		else{
-			$(".text").text($(".text").val());
-			$(".text").prop("readonly", true);
-			$("#edit").removeClass("active");
-		}
+function edit(){
+	if($(".text").attr("readonly") == "readonly"){
+		$(".text").prop("readonly", false);
+		$("#edit").addClass("active");
 	}
-	else{	
-		if($(".text"+id).attr("readonly") == "readonly"){
-			$(".text"+id).prop("readonly", false);
-			$("#edit"+id).addClass("active");
-		}
-		else{
-			$(".text"+id).text($(".text"+id).val());
-			$(".text"+id).prop("readonly", true);
-			$("#edit"+id).removeClass("active");
-		}
+	else{
+		$(".text").text($(".text").val());
+		$(".text").prop("readonly", true);
+		$("#edit").removeClass("active");
 	}
 }
 

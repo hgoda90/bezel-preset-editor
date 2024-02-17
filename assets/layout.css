@@ -468,11 +468,11 @@ span.square-title {
 	cursor: not-allowed;
 }
 
-#clear, #clear2, #clear3, #clear4 {
-    right: 84px;
+#copy, #copy2, #copy3, #copy4 {
+    right: 92px;
 }
 
-#save, #save2, #save3, #save4 {
+#load, #save2, #save3, #save4 {
     right: 236px;
 }
 
@@ -711,7 +711,7 @@ footer .button {
     background-position: center;
 }
 
-#edit, #edit2, #edit3, #edit4 {
+#edit, #load2, #load3, #load4 {
     right: 164px;
 }
 
@@ -755,7 +755,7 @@ footer .button {
     color: #888 !important;
 }
 
-#load, #load2, #load3, #load4 {
+#save {
     right: 308px;
 }
 

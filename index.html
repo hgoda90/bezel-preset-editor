@@ -79,9 +79,9 @@
 							<input type="file" accept=".slangp, .params">
 						</label>
 						<span class="button" id="save" onclick="savePreset(1);">Save</span>
-						<span class="button" id="edit" onclick="edit(1);">Edit</span>
+						<span class="button" id="edit" onclick="edit();">Edit</span>
+						<span class="button" id="copy" onclick="copy(1);">Copy</span>
 						<span class="button" id="clear" onclick="clearText(1);">Clear</span>
-						<span class="button" id="copy" onclick="copy(1);" disabled>Copy</span>
 						<span class="error"></span>
 					</div>
 					<div class="button-wrap">
@@ -101,14 +101,13 @@
 						</button>
 					</div>
 					<div class="text-box">
-						<textarea class="text2" id="dropText2" rows="7" cols="36" readonly></textarea>
+						<textarea class="text2" id="dropText2" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
 						<label class="button" id="load2">Load
 							<input type="file" accept=".slangp, .params">
 						</label>
 						<span class="button" id="save2" onclick="savePreset(2);">Save</span>
-						<span class="button" id="edit2" onclick="edit(2);">Edit</span>
+						<span class="button" id="copy2" onclick="copy(2);">Copy</span>
 						<span class="button" id="clear2" onclick="clearText(2);">Clear</span>
-						<span class="button" id="copy2" onclick="copy(2);" disabled>Copy</span>
 					</div>
 				</div>
 				<div class="color-vision">
@@ -155,25 +154,23 @@
 				</div>
 				<div class="text-wrap extra">
 					<div class="text-box">
-						<textarea class="text3" id="dropText3" rows="7" cols="36" readonly></textarea>
+						<textarea class="text3" id="dropText3" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
 						<label class="button" id="load3">Load
 							<input type="file" accept=".slangp, .params">
 						</label>
 						<span class="button" id="save3" onclick="savePreset(3);">Save</span>
-						<span class="button" id="edit3" onclick="edit(3);">Edit</span>
+						<span class="button" id="copy3" onclick="copy(3);">Copy</span>
 						<span class="button" id="clear3" onclick="clearText(3);">Clear</span>
-						<span class="button" id="copy3" onclick="copy(3);" disabled>Copy</span>
 					</div>
 					<div class="button-wrap"></div>
 					<div class="text-box">
-						<textarea class="text4" id="dropText4" rows="7" cols="36" readonly></textarea>
+						<textarea class="text4" id="dropText4" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
 						<label class="button" id="load4">Load
 							<input type="file" accept=".slangp, .params">
 						</label>
 						<span class="button" id="save4" onclick="savePreset(4);">Save</span>
-						<span class="button" id="edit4" onclick="edit(4);">Edit</span>
+						<span class="button" id="copy4" onclick="copy(4);">Copy</span>
 						<span class="button" id="clear4" onclick="clearText(4);">Clear</span>
-						<span class="button" id="copy4" onclick="copy(4);" disabled>Copy</span>
 					</div>
 				</div>
 				<br>
