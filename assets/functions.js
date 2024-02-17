@@ -745,6 +745,13 @@ function start(){
 		$(".imageType .switch-label:nth-child(1)").addClass("active");
 	}
 	
+	if(view == "side-by-side"){
+		$(".view span").text("view_column_2");
+	}
+	else{
+		$(".view span").text("grid_view");
+	}
+	
 	colorReset();
 	colorVersion(colorVer);
 	changeView();
