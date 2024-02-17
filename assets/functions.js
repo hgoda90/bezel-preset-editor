@@ -28,21 +28,26 @@ function bezelToggle(){
 		bezelStyle = "mbz";
 		layerToggle(imageLayer);
 		$(".bezel .switch-label:nth-child(3)").addClass("active");
-		$(".layers-wrap, .imageType").removeClass("disabled");
+		$(".imageType").removeClass("disabled");
 		$(".imageType input").prop("disabled", false);
+		$(".mbz.layers-wrap").css("display", "inline-block");
+		$(".koko-aio.layers-wrap").css("display", "none");
 	}
 	else{
 		setCookie("bezelStyle", "koko-aio", 30);
 		bezelStyle = "koko-aio";
 		holdToggle();
+		layerToggle(imageLayer);
 		$(".bezel .switch-label:nth-child(1)").addClass("active");
-		$(".layers-wrap, .imageType").addClass("disabled");
+		$(".imageType").addClass("disabled");
 		$(".imageType input").prop("disabled", true);
+		$(".mbz.layers-wrap").css("display", "none");
+		$(".koko-aio.layers-wrap").css("display", "inline-block");
 	}
 	
 	$(".info").empty();
 	$(".error").empty();
-	clearConversion();
+	clearText(1);
 	colorReset();
 };
 
@@ -375,42 +380,68 @@ function layerToggle(imageLayers){
 		$("form").submit();
 	}
 	
-	switch(imageLayer){
-		case "Bezel":
-			$(".layer input").val(1).trigger('input');
-			$(".layer-labels li:nth-child(1)").addClass("active");
-			break;
-		case "Background":
-			$(".layer input").val(2).trigger('input');
-			$(".layer-labels li:nth-child(2)").addClass("active");
-			break;
-		case "LED":
-			$(".layer input").val(3).trigger('input');
-			$(".layer-labels li:nth-child(3)").addClass("active");
-			break;
-		case "Device":
-			$(".layer input").val(4).trigger('input');
-			$(".layer-labels li:nth-child(4)").addClass("active");
-			break;
-		case "Device LED":
-			$(".layer input").val(5).trigger('input');
-			$(".layer-labels li:nth-child(5)").addClass("active");
-			break;
-		case "Decal":
-			$(".layer input").val(6).trigger('input');
-			$(".layer-labels li:nth-child(6)").addClass("active");
-			break;
-		case "Top":
-			$(".layer input").val(7).trigger('input');
-			$(".layer-labels li:nth-child(7)").addClass("active");
-			break;
-		case "Cab Glass":
-			$(".layer input").val(8).trigger('input');
-			$(".layer-labels li:nth-child(8)").addClass("active");
-			break;
-		default:
-			$(".layer input").val(1).trigger('input');
-			$(".layer-labels li:nth-child(1)").addClass("active");
+	if(bezelStyle == "mbz"){
+		switch(imageLayer){
+			case "Bezel":
+				$(".mbz .layer input").val(1).trigger('input');
+				$(".mbz .layer-labels li:nth-child(1)").addClass("active");
+				break;
+			case "Background":
+				$(".mbz .layer input").val(2).trigger('input');
+				$(".mbz .layer-labels li:nth-child(2)").addClass("active");
+				break;
+			case "LED":
+				$(".mbz .layer input").val(3).trigger('input');
+				$(".mbz .layer-labels li:nth-child(3)").addClass("active");
+				break;
+			case "Device":
+				$(".mbz .layer input").val(4).trigger('input');
+				$(".mbz .layer-labels li:nth-child(4)").addClass("active");
+				break;
+			case "Device LED":
+				$(".mbz .layer input").val(5).trigger('input');
+				$(".mbz .layer-labels li:nth-child(5)").addClass("active");
+				break;
+			case "Decal":
+				$(".mbz .layer input").val(6).trigger('input');
+				$(".mbz .layer-labels li:nth-child(6)").addClass("active");
+				break;
+			case "Top":
+				$(".mbz .layer input").val(7).trigger('input');
+				$(".mbz .layer-labels li:nth-child(7)").addClass("active");
+				break;
+			case "Cab Glass":
+				$(".mbz .layer input").val(8).trigger('input');
+				$(".mbz .layer-labels li:nth-child(8)").addClass("active");
+				break;
+			default:
+				$(".mbz .layer input").val(1).trigger('input');
+				$(".mbz .layer-labels li:nth-child(1)").addClass("active");
+		}
+	}
+	else{
+		switch(imageLayer){
+			case "Bezel Curved":
+				$(".koko-aio .layer input").val(1).trigger('input');
+				$(".koko-aio .layer-labels li:nth-child(1)").addClass("active");
+				break;
+			case "Bezel Straight":
+				$(".koko-aio .layer input").val(2).trigger('input');
+				$(".koko-aio .layer-labels li:nth-child(2)").addClass("active");
+				break;
+			case "Background Under":
+				$(".koko-aio .layer input").val(3).trigger('input');
+				$(".koko-aio .layer-labels li:nth-child(3)").addClass("active");
+				break;
+			case "Background Over":
+				$(".koko-aio .layer input").val(4).trigger('input');
+				$(".koko-aio .layer-labels li:nth-child(4)").addClass("active");
+				break;
+			case "Backdrop":
+				$(".koko-aio .layer input").val(5).trigger('input');
+				$(".koko-aio .layer-labels li:nth-child(5)").addClass("active");
+				break;
+		}
 	}
 }
 
@@ -705,12 +736,17 @@ function start(){
 		$(".switch-panel .bezel input").attr("checked", "checked");
 		$(".bezel .switch-label:nth-child(3)").addClass("active");
 		layerToggle(imageLayer);
-		$(".layers-wrap, .imageType").removeClass("disabled");
+		$(".mbz.layers-wrap").css("display", "inline-block");
+		$(".koko-aio.layers-wrap").css("display", "none");
+		$(".imageType").removeClass("disabled");
 		$(".imageType input").prop("disabled", false);
 	}
 	else{
 		$(".bezel .switch-label:nth-child(1)").addClass("active");
-		$(".layers-wrap, .imageType").addClass("disabled");
+		$(".imageType").addClass("disabled");
+		$(".mbz.layers-wrap").css("display", "none");
+		$(".koko-aio.layers-wrap").css("display", "inline-block");
+		layerToggle(imageLayer);
 		$(".imageType input").prop("disabled", true);
 	}
 	
@@ -936,7 +972,7 @@ $(document).ready(function () {
 		var settings = $("textarea").text();
 		
 		if(bezelStyle == "mbz"){
-			switch($(".layer input").val()){
+			switch($(".mbz .layer input").val()){
 				case "2":
 					$(".text").val(settings+'BackgroundImage = "pathtofile\\'+geekss+'"\n').text(settings+'BackgroundImage = "pathtofile\\'+geekss+'"\n');
 					break;
@@ -961,7 +997,23 @@ $(document).ready(function () {
 			}
 		}
 		else{
-			$(".text").val(settings+'bg_under = "pathtofile\\'+geekss+'"\n').text(settings+'bg_under = "pathtofile\\'+geekss+'"\n');
+			switch($(".koko-aio .layer input").val()){
+				case "1":
+					$(".text").val(settings+'monitor_body_curved = "pathtofile\\'+geekss+'"\n').text(settings+'bg_under = "pathtofile\\'+geekss+'"\n');
+					break;
+				case "2":
+					$(".text").val(settings+'monitor_body_straight = "pathtofile\\'+geekss+'"\n').text(settings+'bg_under = "pathtofile\\'+geekss+'"\n');
+					break;
+				case "3":
+					$(".text").val(settings+'bg_under = "pathtofile\\'+geekss+'"\n').text(settings+'bg_under = "pathtofile\\'+geekss+'"\n');
+					break;
+				case "4":
+					$(".text").val(settings+'bg_over = "pathtofile\\'+geekss+'"\n').text(settings+'bg_under = "pathtofile\\'+geekss+'"\n');
+					break;
+				case "5":
+					$(".text").val(settings+'backdrop = "pathtofile\\'+geekss+'"\n').text(settings+'bg_under = "pathtofile\\'+geekss+'"\n');
+					break;
+			}
 		}
 		
 		$('.image input[type="file"]').val("");

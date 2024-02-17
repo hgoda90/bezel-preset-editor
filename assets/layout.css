@@ -811,3 +811,16 @@ footer .button {
 .text-wrap.extra{
 	display: none;
 }
+
+.koko-aio .layer-labels li {
+    width: 92px;
+    margin-right: 32px;
+}
+
+.koko-aio .layer {
+    width: 510px;
+}
+
+.koko-aio .layer input {
+    left: 298px;
+}
