@@ -72,6 +72,7 @@ form {
     border: 1px solid rgba(0, 0, 0, 0.2);
     padding: 10px;
     min-height: 200px;
+    max-height: 480px;
     display: inline-block;
 }
 
@@ -90,7 +91,7 @@ textarea:focus-visible {
 	outline: none;
 }
 
-#copy, #clear, #edit, #save, #load, #side-copy, #side-clear, #side-edit, #side-load {
+.text-box .button {
     position: absolute;
     top: -36px;
     right: 12px;
@@ -467,11 +468,11 @@ span.square-title {
 	cursor: not-allowed;
 }
 
-#clear, #side-clear {
+#clear, #clear2, #clear3, #clear4 {
     right: 84px;
 }
 
-#save, #side-load {
+#save, #save2, #save3, #save4 {
     right: 236px;
 }
 
@@ -710,7 +711,7 @@ footer .button {
     background-position: center;
 }
 
-#edit, #side-edit {
+#edit, #edit2, #edit3, #edit4 {
     right: 164px;
 }
 
@@ -754,11 +755,11 @@ footer .button {
     color: #888 !important;
 }
 
-#load {
+#load, #load2, #load3, #load4 {
     right: 308px;
 }
 
-#load input, #side-load input {
+.text-box input {
     display: none;
 }
 
@@ -801,4 +802,12 @@ footer .button {
 
 .color.active, .color:hover {
     transform: scale(1.15);
+}
+
+.color-vision + .text-wrap {
+    margin-top: 60px;
+}
+
+.text-wrap.extra{
+	display: none;
 }

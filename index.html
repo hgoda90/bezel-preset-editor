@@ -74,14 +74,14 @@
 						<span class="switch-label">Hold</span>
 					</div>
 					<div class="text-box">
-						<textarea class="conversion" rows="7" cols="36" readonly></textarea>
+						<textarea class="text" id="dropText" rows="7" cols="36" readonly></textarea>
 						<label class="button" id="load">Load
 							<input type="file" accept=".slangp, .params">
 						</label>
-						<span class="button" id="edit" onclick="editConversion();">Edit</span>
-						<span class="button" id="clear" onclick="clearConversion();">Clear</span>
-						<span class="button" id="copy" onclick="presetCopy();" disabled>Copy</span>
-						<span class="button" id="save" onclick="savePreset();">Save</span>
+						<span class="button" id="save" onclick="savePreset(1);">Save</span>
+						<span class="button" id="edit" onclick="edit(1);">Edit</span>
+						<span class="button" id="clear" onclick="clearText(1);">Clear</span>
+						<span class="button" id="copy" onclick="copy(1);" disabled>Copy</span>
 						<span class="error"></span>
 					</div>
 					<div class="button-wrap">
@@ -96,19 +96,19 @@
 							<input type="file" accept="image/*">
 							<span class="material-symbols-outlined">image</span>
 						</button>
-						<button class="custom button" type="button" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Add Custom Preset File">
-							<input type="file" accept=".slangp">
-							<span class="material-symbols-outlined">note_add</span>
+						<button class="view button" type="button" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Change View">
+							<span class="material-symbols-outlined">view_column_2</span>
 						</button>
 					</div>
 					<div class="text-box">
-						<textarea class="side-text" rows="7" cols="36" readonly></textarea>
-						<label class="button" id="side-load">Load
+						<textarea class="text2" id="dropText2" rows="7" cols="36" readonly></textarea>
+						<label class="button" id="load2">Load
 							<input type="file" accept=".slangp, .params">
 						</label>
-						<span class="button" id="side-edit" onclick="editSide();">Edit</span>
-						<span class="button" id="side-clear" onclick="clearSide();">Clear</span>
-						<span class="button" id="side-copy" onclick="sideCopy();" disabled>Copy</span>
+						<span class="button" id="save2" onclick="savePreset(2);">Save</span>
+						<span class="button" id="edit2" onclick="edit(2);">Edit</span>
+						<span class="button" id="clear2" onclick="clearText(2);">Clear</span>
+						<span class="button" id="copy2" onclick="copy(2);" disabled>Copy</span>
 					</div>
 				</div>
 				<div class="color-vision">
@@ -151,6 +151,29 @@
 							<option value="2.35">2.35</option><option value="2.36">2.36</option><option value="2.37">2.37</option><option value="2.38">2.38</option><option value="2.39">2.39</option>
 							<option value="2.40">2.40</option>
 						</select>
+					</div>
+				</div>
+				<div class="text-wrap extra">
+					<div class="text-box">
+						<textarea class="text3" id="dropText3" rows="7" cols="36" readonly></textarea>
+						<label class="button" id="load3">Load
+							<input type="file" accept=".slangp, .params">
+						</label>
+						<span class="button" id="save3" onclick="savePreset(3);">Save</span>
+						<span class="button" id="edit3" onclick="edit(3);">Edit</span>
+						<span class="button" id="clear3" onclick="clearText(3);">Clear</span>
+						<span class="button" id="copy3" onclick="copy(3);" disabled>Copy</span>
+					</div>
+					<div class="button-wrap"></div>
+					<div class="text-box">
+						<textarea class="text4" id="dropText4" rows="7" cols="36" readonly></textarea>
+						<label class="button" id="load4">Load
+							<input type="file" accept=".slangp, .params">
+						</label>
+						<span class="button" id="save4" onclick="savePreset(4);">Save</span>
+						<span class="button" id="edit4" onclick="edit(4);">Edit</span>
+						<span class="button" id="clear4" onclick="clearText(4);">Clear</span>
+						<span class="button" id="copy4" onclick="copy(4);" disabled>Copy</span>
 					</div>
 				</div>
 				<br>

@@ -46,14 +46,33 @@ function bezelToggle(){
 	colorReset();
 };
 
-function clearConversion(){
-	$(".conversion").text("").val("");
-	$(".info").empty();
-	$(".error").empty();
+function changeView(){
+	if($(".view span").text() == "view_column_2"){
+		setCookie("viewStyle", "side-by-side", 30);
+		$(".view span").text("grid_view");
+		$(".text-wrap.extra").css("display", "none");
+	}
+	else{
+		setCookie("viewStyle", "grid", 30);
+		$(".view span").text("view_column_2");
+		$(".text-wrap.extra").css("display", "flex");
+	}
+	
+	$(".text3, .text4").text("").val("");
+	$(".text3, .text4").prop("readonly", true);
+	$("#edit3, #edit4").removeClass("active");
+	$(".view").blur();
 }
 
-function clearSide(){
-	$(".side-text").text("").val("");
+function clearText(id){
+	if(id == 1){
+		$(".text").text("").val("");
+	}
+	else{
+		$(".text"+id).text("").val("");
+	}
+	$(".info").empty();
+	$(".error").empty();
 }
 
 function colorReset(){
@@ -134,9 +153,16 @@ function colorVersion(loc){
 
 function colorVision(){
 	var hex = $(".dropper").val().replace("#", "");
+	$(".color").removeClass("active");
 		
 	if(colorFormat == "HEX"){
 		$(".hex input").val(hex);
+		
+		$(".color").each(function(){
+			if($(this).data("code") == "#"+hex.toUpperCase()){
+				$(this).addClass("active");
+			}
+		});
 	}
 	else if(colorFormat == "HSB"){
 		hsv = colorcolor("#"+hex, 'hsb').replace("hsb(", "").replace(")", "").replace("deg", "").replace(/%/g, "").split(', '),
@@ -147,6 +173,12 @@ function colorVision(){
 		$(".hsb input[name='hue']").val(h);
 		$(".hsb input[name='saturation']").val(s);
 		$(".hsb input[name='brightness']").val(v);
+		
+		$(".color").each(function(){
+			if($(this).data("code") == "hsb("+h+"deg, "+s+"%, "+v+"%)"){
+				$(this).addClass("active");
+			}
+		});
 	}
 	else if(colorFormat == "HSL"){
 		hsl = colorcolor("#"+hex, 'hsl').replace("hsl(", "").replace(")", "").replace("deg", "").replace(/%/g, "").split(', '),
@@ -157,6 +189,12 @@ function colorVision(){
 		$(".hsl input[name='hue']").val(h);
 		$(".hsl input[name='saturation']").val(s);
 		$(".hsl input[name='lightness']").val(l);
+		
+		$(".color").each(function(){
+			if($(this).data("code") == "hsl("+h+"deg, "+s+"%, "+l+"%)"){
+				$(this).addClass("active");
+			}
+		});
 	}
 	else{
 		rgb = colorcolor("#"+hex, 'rgb').replace("rgb(", "").replace(")", "").split(', ')
@@ -167,6 +205,12 @@ function colorVision(){
 		$(".rgb input[name='red']").val(r);
 		$(".rgb input[name='green']").val(g);
 		$(".rgb input[name='blue']").val(b);
+		
+		$(".color").each(function(){
+			if($(this).data("code") == "rgb("+r+", "+g+", "+b+")"){
+				$(this).addClass("active");
+			}
+		});
 	}
 	
 	if(hold == "off"){
@@ -176,27 +220,69 @@ function colorVision(){
 	preview();
 }
 
-function editConversion(){
-	if($(".conversion").attr("readonly") == "readonly"){
-		$(".conversion").prop("readonly", false);
-		$("#edit").addClass("active");
+function copy(id){
+	if(id == 1){
+		navigator.clipboard.writeText($(".text").text().trim());
 	}
 	else{
-		$(".conversion").text($(".conversion").val());
-		$(".conversion").prop("readonly", true);
-		$("#edit").removeClass("active");
+		navigator.clipboard.writeText($(".text"+id).text().trim());
 	}
 }
 
-function editSide(){
-	if($(".side-text").attr("readonly") == "readonly"){
-		$(".side-text").prop("readonly", false);
-		$("#side-edit").addClass("active");
+function dropfile(file) {
+  var reader = new FileReader();
+  reader.onload = function(e) {
+	dropText.value = e.target.result;
+  };
+  reader.readAsText(file, "UTF-8");
+}
+
+function dropfile2(file) {
+  var reader = new FileReader();
+  reader.onload = function(e) {
+	dropText2.value = e.target.result;
+  };
+  reader.readAsText(file, "UTF-8");
+}
+
+function dropfile3(file) {
+  var reader = new FileReader();
+  reader.onload = function(e) {
+	dropText3.value = e.target.result;
+  };
+  reader.readAsText(file, "UTF-8");
+}
+
+function dropfile4(file) {
+  var reader = new FileReader();
+  reader.onload = function(e) {
+	dropText4.value = e.target.result;
+  };
+  reader.readAsText(file, "UTF-8");
+}
+
+function edit(id){
+	if(id == 1){
+		if($(".text").attr("readonly") == "readonly"){
+			$(".text").prop("readonly", false);
+			$("#edit").addClass("active");
+		}
+		else{
+			$(".text").text($(".text").val());
+			$(".text").prop("readonly", true);
+			$("#edit").removeClass("active");
+		}
 	}
-	else{
-		$(".side-text").text($(".conversion").val());
-		$(".side-text").prop("readonly", true);
-		$("#side-edit").removeClass("active");
+	else{	
+		if($(".text"+id).attr("readonly") == "readonly"){
+			$(".text"+id).prop("readonly", false);
+			$("#edit"+id).addClass("active");
+		}
+		else{
+			$(".text"+id).text($(".text"+id).val());
+			$(".text"+id).prop("readonly", true);
+			$("#edit"+id).removeClass("active");
+		}
 	}
 }
 
@@ -344,7 +430,7 @@ function layerToggle(imageLayers){
 }
 
 function presetCopy(){
-	navigator.clipboard.writeText($(".conversion").text().trim());
+	navigator.clipboard.writeText($(".text").text().trim());
 }
 
 function preview(){
@@ -461,39 +547,48 @@ function samples(){
 	}
 }
 
-function savePreset(){
+function savePreset(id){
 	  if ('Blob' in window) {
 		var fileName = prompt('Please enter file name to save', 'Preset.slangp');
 		if (fileName) {
-		  var textToWrite = $('.conversion').val();
-		  var textFileAsBlob = new Blob([textToWrite], { type: 'text/plain' });
-
-		  if ('msSaveOrOpenBlob' in navigator) {
-			navigator.msSaveOrOpenBlob(textFileAsBlob, fileName);
-		  } else {
-			var downloadLink = document.createElement('a');
-			downloadLink.download = fileName;
-			downloadLink.innerHTML = 'Download File';
-			
-			if ('webkitURL' in window) {
-			  // Chrome allows the link to be clicked without actually adding it to the DOM.
-			  downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
-			} else {
-			  // Firefox requires the link to be added to the DOM before it can be clicked.
-			  downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
-			  downloadLink.click(function(){
-				document.body.removeChild(event.target);
-			  }); 
-			  
-			  downloadLink.style.display = 'none';
-			  document.body.appendChild(downloadLink);
+		  
+			if(id == 1){
+				var textToWrite = $('.text').val();
 			}
-			downloadLink.click();
-		  }
+			else{
+				var textToWrite = $('.text'+id).val();
+			}
+			
+			var textFileAsBlob = new Blob([textToWrite], { type: 'text/plain' });
+
+			if ('msSaveOrOpenBlob' in navigator) {
+				navigator.msSaveOrOpenBlob(textFileAsBlob, fileName);
+			} else {
+				var downloadLink = document.createElement('a');
+				downloadLink.download = fileName;
+				downloadLink.innerHTML = 'Download File';
+
+				if ('webkitURL' in window) {
+					// Chrome allows the link to be clicked without actually adding it to the DOM.
+					downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
+				} else {
+					// Firefox requires the link to be added to the DOM before it can be clicked.
+					downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+					downloadLink.click(function(){
+						document.body.removeChild(event.target);
+					}); 
+
+					downloadLink.style.display = 'none';
+					document.body.appendChild(downloadLink);
+				}
+			
+				downloadLink.click();
+			
+			}
 		}
-	  } else {
+	} else {
 		alert('Your browser does not support the HTML5 Blob.');
-	  }
+	}
 }
 
 function settingReset(){
@@ -521,38 +616,34 @@ function settingReset(){
 		
 		switch(imageLayer){
 			case "Bezel":
-				$(".conversion").val(bezel).text(bezel);
+				$(".text").val(bezel).text(bezel);
 				break;
 			case "Background":
-				$(".conversion").val(bg).text(bg);
+				$(".text").val(bg).text(bg);
 				break;
 			case "LED":
-				$(".conversion").val(led).text(led);
+				$(".text").val(led).text(led);
 				break;
 			case "Device":
-				$(".conversion").val(device).text(device);
+				$(".text").val(device).text(device);
 				break;
 			case "DeviceLED":
-				$(".conversion").val(deviceLED).text(deviceLED);
+				$(".text").val(deviceLED).text(deviceLED);
 				break;
 			case "Decal":
-				$(".conversion").val(decal).text(decal);
+				$(".text").val(decal).text(decal);
 				break;
 			case "Top":
-				$(".conversion").val(topLayer).text(topLayer);
+				$(".text").val(topLayer).text(topLayer);
 				break;
 			case "Cab Glass":
-				$(".conversion").val(cabGlass).text(cabGlass);
+				$(".text").val(cabGlass).text(cabGlass);
 				break;
 		}
 	}
 	else{
-		$(".conversion").text('BEZEL_R = "0.000000"\nBEZEL_G = "0.000000"\nBEZEL_B = "0.000000"\nBEZEL_CON = "1.300000"').val('BEZEL_R = "0.000000"\nBEZEL_G = "0.000000"\nBEZEL_B = "0.000000"\nBEZEL_CON = "1.300000"');	
+		$(".text").text('BEZEL_R = "0.000000"\nBEZEL_G = "0.000000"\nBEZEL_B = "0.000000"\nBEZEL_CON = "1.300000"').val('BEZEL_R = "0.000000"\nBEZEL_G = "0.000000"\nBEZEL_B = "0.000000"\nBEZEL_CON = "1.300000"');	
 	}
-}
-
-function sideCopy(){
-	navigator.clipboard.writeText($(".side-text").text().trim());
 }
 
 function start(){
@@ -605,6 +696,13 @@ function start(){
 		colorVer = getCookie("colorVersion");
 	}
 	
+	if(getCookie("viewStyle") == ""){
+		view = "side-by-side";
+	}
+	else{
+		view = getCookie("viewStyle");
+	}
+	
 	if(colorFormat == "HEX"){
 		formatToggle(1);
 	}
@@ -649,6 +747,7 @@ function start(){
 	
 	colorReset();
 	colorVersion(colorVer);
+	changeView();
 }
 
 $(".dropper").on('change', function(){
@@ -757,6 +856,34 @@ $(".us, .world").on('click', function(){
 	}
 });
 
+$(".view").on('click', function(){
+	changeView();
+});
+
+dropText.ondrop = function(e) {
+  e.preventDefault();
+  var file = e.dataTransfer.files[0];
+  dropfile(file);
+};
+
+dropText2.ondrop = function(e) {
+  e.preventDefault();
+  var file = e.dataTransfer.files[0];
+  dropfile2(file);
+};
+
+dropText3.ondrop = function(e) {
+  e.preventDefault();
+  var file = e.dataTransfer.files[0];
+  dropfile3(file);
+};
+
+dropText4.ondrop = function(e) {
+  e.preventDefault();
+  var file = e.dataTransfer.files[0];
+  dropfile4(file);
+};
+
 $(document).ready(function () {
 	$('[data-toggle="tooltip"]').tooltip();
 	
@@ -765,7 +892,7 @@ $(document).ready(function () {
 		
 		var reader = new FileReader();
 		reader.onload = function (e) {
-			$(".conversion").val(e.target.result).text(e.target.result);
+			$(".text").val(e.target.result).text(e.target.result);
 		};
 		
 		reader.readAsText(geekss);
@@ -773,29 +900,42 @@ $(document).ready(function () {
 		$(this).blur();
 	});
 	
-	$('#side-load input[type="file"]').change(function (e) {
+	$('#load2 input[type="file"]').change(function (e) {
 		const geekss = e.target.files[0];
 		
 		var reader = new FileReader();
 		reader.onload = function (e) {
-			$(".side-text").val(e.target.result).text(e.target.result);
+			$(".text2").val(e.target.result).text(e.target.result);
 		};
 		
 		reader.readAsText(geekss);
-		$('#side-load input[type="file"]').val("");
+		$('#load2 input[type="file"]').val("");
 		$(this).blur();
 	});
 	
-	$('.custom input[type="file"]').change(function (e) {
+	$('#load3 input[type="file"]').change(function (e) {
 		const geekss = e.target.files[0];
 		
 		var reader = new FileReader();
 		reader.onload = function (e) {
-			$("textarea").val($("textarea").text()+"\n"+e.target.result).text($("textarea").text()+"\n"+e.target.result);
+			$(".text3").val(e.target.result).text(e.target.result);
 		};
 		
 		reader.readAsText(geekss);
-		$('.custom input[type="file"]').val("");
+		$('#load3 input[type="file"]').val("");
+		$(this).blur();
+	});
+	
+	$('#load4 input[type="file"]').change(function (e) {
+		const geekss = e.target.files[0];
+		
+		var reader = new FileReader();
+		reader.onload = function (e) {
+			$(".text4").val(e.target.result).text(e.target.result);
+		};
+		
+		reader.readAsText(geekss);
+		$('#load4 input[type="file"]').val("");
 		$(this).blur();
 	});
 
@@ -806,30 +946,30 @@ $(document).ready(function () {
 		if(bezelStyle == "mbz"){
 			switch($(".layer input").val()){
 				case "2":
-					$(".conversion").val(settings+'BackgroundImage = "pathtofile\\'+geekss+'"\n').text(settings+'BackgroundImage = "pathtofile\\'+geekss+'"\n');
+					$(".text").val(settings+'BackgroundImage = "pathtofile\\'+geekss+'"\n').text(settings+'BackgroundImage = "pathtofile\\'+geekss+'"\n');
 					break;
 				case "3":
-					$(".conversion").val(settings+'LEDImage = "pathtofile\\'+geekss+'"\n').text(settings+'LEDImage = "pathtofile\\'+geekss+'"\n');
+					$(".text").val(settings+'LEDImage = "pathtofile\\'+geekss+'"\n').text(settings+'LEDImage = "pathtofile\\'+geekss+'"\n');
 					break;
 				case "4":
-					$(".conversion").val(settings+'DeviceImage = "pathtofile\\'+geekss+'"\n').text(settings+'DeviceImage = "pathtofile\\'+geekss+'"\n');
+					$(".text").val(settings+'DeviceImage = "pathtofile\\'+geekss+'"\n').text(settings+'DeviceImage = "pathtofile\\'+geekss+'"\n');
 					break;
 				case "5":
-					$(".conversion").val(settings+'DeviceLEDImage = "pathtofile\\'+geekss+'"\n').text(settings+'DeviceLEDImage = "pathtofile\\'+geekss+'"\n');
+					$(".text").val(settings+'DeviceLEDImage = "pathtofile\\'+geekss+'"\n').text(settings+'DeviceLEDImage = "pathtofile\\'+geekss+'"\n');
 					break;
 				case "6":
-					$(".conversion").val(settings+'DecalImage = "pathtofile\\'+geekss+'"\n').text(settings+'DecalImage = "pathtofile\\'+geekss+'"\n');
+					$(".text").val(settings+'DecalImage = "pathtofile\\'+geekss+'"\n').text(settings+'DecalImage = "pathtofile\\'+geekss+'"\n');
 					break;
 				case "7":
-					$(".conversion").val(settings+'TopLayerImage = "pathtofile\\'+geekss+'"\n').text(settings+'TopLayerImage = "pathtofile\\'+geekss+'"\n');
+					$(".text").val(settings+'TopLayerImage = "pathtofile\\'+geekss+'"\n').text(settings+'TopLayerImage = "pathtofile\\'+geekss+'"\n');
 					break;
 				case "8":
-					$(".conversion").val(settings+'CabinetGlassImage = "pathtofile\\'+geekss+'"\n').text(settings+'CabinetGlassImage = "pathtofile\\'+geekss+'"\n');
+					$(".text").val(settings+'CabinetGlassImage = "pathtofile\\'+geekss+'"\n').text(settings+'CabinetGlassImage = "pathtofile\\'+geekss+'"\n');
 					break;
 			}
 		}
 		else{
-			$(".conversion").val(settings+'bg_under = "pathtofile\\'+geekss+'"\n').text(settings+'bg_under = "pathtofile\\'+geekss+'"\n');
+			$(".text").val(settings+'bg_under = "pathtofile\\'+geekss+'"\n').text(settings+'bg_under = "pathtofile\\'+geekss+'"\n');
 		}
 		
 		$('.image input[type="file"]').val("");
@@ -838,12 +978,12 @@ $(document).ready(function () {
 	
 	$('.shader input[type="file"]').change(function (e) {
 		if(bezelStyle == "mbz"){
-			const geekss = $(".conversion").val()+'#reference "pathtofile\\'+e.target.files[0].name+'"\n';
-			$(".conversion").val(geekss).text(geekss);
+			const geekss = $(".text").val()+'#reference "pathtofile\\'+e.target.files[0].name+'"\n';
+			$(".text").val(geekss).text(geekss);
 		}
 		else{
-			const geekss = $(".conversion").val()+'#reference "pathtofile\\'+e.target.files[0].name+'"\n';
-			$(".conversion").val(geekss).text(geekss);
+			const geekss = $(".text").val()+'#reference "pathtofile\\'+e.target.files[0].name+'"\n';
+			$(".text").val(geekss).text(geekss);
 		}
 		
 		$('.shader input[type="file"]').val("");
@@ -1054,7 +1194,7 @@ $(document).ready(function () {
 			$(".contrast input, .rgb input").blur();
 		}
 		
-		$(".conversion").val();
+		$(".text").val();
 		
 		if(bezelStyle == "mbz" && hexError == "false" && hslError == "false" && hsvError == "false" && rgbError == "false"){
 			preview();
@@ -1096,56 +1236,56 @@ $(document).ready(function () {
 			if(hold == "off"){
 				switch($(".layer input").val()){
 					case "1":
-						$(".conversion").val(bezel).text(bezel);
+						$(".text").val(bezel).text(bezel);
 						break;
 					case "2":
-						$(".conversion").val(bg).text(bg);
+						$(".text").val(bg).text(bg);
 						break;
 					case "3":
-						$(".conversion").val(led).text(led);
+						$(".text").val(led).text(led);
 						break;
 					case "4":
-						$(".conversion").val(device).text(device);
+						$(".text").val(device).text(device);
 						break;
 					case "5":
-						$(".conversion").val(deviceLED).text(deviceLED);
+						$(".text").val(deviceLED).text(deviceLED);
 						break;
 					case "6":
-						$(".conversion").val(decal).text(decal);
+						$(".text").val(decal).text(decal);
 						break;
 					case "7":
-						$(".conversion").val(topLayer).text(topLayer);
+						$(".text").val(topLayer).text(topLayer);
 						break;
 					case "8":
-						$(".conversion").val(cabGlass).text(cabGlass);
+						$(".text").val(cabGlass).text(cabGlass);
 						break;
 				}
 			}
 			else{
 				switch($(".layer input").val()){
 					case "1":
-						$(".conversion").val($(".conversion").text()+bezel).text($(".conversion").text()+bezel);
+						$(".text").val($(".text").text()+bezel).text($(".text").text()+bezel);
 						break;
 					case "2":
-						$(".conversion").val($(".conversion").text()+bg).text($(".conversion").text()+bg);
+						$(".text").val($(".text").text()+bg).text($(".text").text()+bg);
 						break;
 					case "3":
-						$(".conversion").val($(".conversion").text()+led).text($(".conversion").text()+led);
+						$(".text").val($(".text").text()+led).text($(".text").text()+led);
 						break;
 					case "4":
-						$(".conversion").val($(".conversion").text()+device).text($(".conversion").text()+device);
+						$(".text").val($(".text").text()+device).text($(".text").text()+device);
 						break;
 					case "5":
-						$(".conversion").val($(".conversion").text()+deviceLED).text($(".conversion").text()+deviceLED);
+						$(".text").val($(".text").text()+deviceLED).text($(".text").text()+deviceLED);
 						break;
 					case "6":
-						$(".conversion").val($(".conversion").text()+decal).text($(".conversion").text()+decal);
+						$(".text").val($(".text").text()+decal).text($(".text").text()+decal);
 						break;
 					case "7":
-						$(".conversion").val($(".conversion").text()+topLayer).text($(".conversion").text()+topLayer);
+						$(".text").val($(".text").text()+topLayer).text($(".text").text()+topLayer);
 						break;
 					case "8":
-						$(".conversion").val($(".conversion").text()+cabGlass).text($(".conversion").text()+cabGlass);
+						$(".text").val($(".text").text()+cabGlass).text($(".text").text()+cabGlass);
 						break;
 				}
 			}
@@ -1157,10 +1297,10 @@ $(document).ready(function () {
 			var preset = 'BEZEL_R = "'+rSetting+'"\nBEZEL_G = "'+gSetting+'"\nBEZEL_B = "'+bSetting+'"\nBEZEL_CON = "'+contrastSetting+'"\n';
 			
 			if(hold == "off"){
-				$(".conversion").val(preset).text(preset);
+				$(".text").val(preset).text(preset);
 			}
 			else{
-				$(".conversion").val($(".conversion").text()+preset).text($(".conversion").text()+preset);
+				$(".text").val($(".text").text()+preset).text($(".text").text()+preset);
 			}
 		}
 		
