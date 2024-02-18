@@ -1036,6 +1036,7 @@ $(document).ready(function () {
 	
 	$("form").submit(function (event) {
 		$(".info, .error").empty();
+		$(".color").removeClass("active");
 		hexError = hslError = hsvError = rgbError = "false";
 		$(".submit").blur();
 		
@@ -1083,6 +1084,12 @@ $(document).ready(function () {
 			else{
 				$(".error").empty();
 			}
+			
+			$(".color").each(function(){
+				if($(this).data("code") == "#"+hex){
+					$(this).addClass("active");
+				}
+			});
 			
 			$(".contrast input, .hex input").blur();
 		}
@@ -1136,6 +1143,12 @@ $(document).ready(function () {
 				$(".error").empty();
 			}
 			
+			$(".color").each(function(){
+				if($(this).data("code") == "hsb("+h+"deg, "+s+"%, "+v+"%)"){
+					$(this).addClass("active");
+				}
+			});
+			
 			$(".contrast input, .hsb input").blur();
 		}
 		else if(colorFormat == "HSL"){
@@ -1188,6 +1201,12 @@ $(document).ready(function () {
 				$(".error").empty();
 			}
 			
+			$(".color").each(function(){
+				if($(this).data("code") == "hsl("+h+", "+s+"%, "+l+"%)"){
+					$(this).addClass("active");
+				}
+			});
+			
 			$(".contrast input, .hsl input").blur();
 		}
 		else{
@@ -1234,6 +1253,12 @@ $(document).ready(function () {
 			else{
 				$(".error").empty();
 			}
+			
+			$(".color").each(function(){
+				if($(this).data("code") == "rgb("+r+", "+g+", "+b+")"){
+					$(this).addClass("active");
+				}
+			});
 			
 			$(".contrast input, .rgb input").blur();
 		}

@@ -263,7 +263,8 @@ span.square-title {
 .info {
 	font-weight: bold;
 	display: block;
-	text-align: center;
+	margin-top: 12px;
+	height: 19px;
 }
 
 .switch-panel {
