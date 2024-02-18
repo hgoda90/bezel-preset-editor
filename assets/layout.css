@@ -36,6 +36,13 @@ form {
     display: none;
 }
 
+.text-box .nav-tabs {
+    position: absolute;
+    top: -32px;
+    left: -1px;
+    border-color: transparent;
+}
+
 .text-wrap {
     margin-top: 118px;
     position: relative;
@@ -133,8 +140,8 @@ textarea:focus-visible {
     position: absolute;
     left: 0;
     right: 0;
-    bottom: -22;
-    top: -22;
+    bottom: 0;
+    top: 0;
     opacity: 0;
 }
 
@@ -190,6 +197,11 @@ input[type="text"], select {
 	width: 20px;
 	margin: 0 auto 12px;
 	position: relative;
+}
+
+.square input {
+    left:  -12;
+    top: -12;
 }
 
 .dropper {
@@ -568,7 +580,7 @@ span.square-title {
 	opacity: 0;
 }
 
-.button:hover, .switch-label:hover, .format-labels span:hover, .shader:hover {
+.button:hover, .switch-label:hover, .format-labels span:hover {
     cursor: pointer;
 }
 
@@ -820,4 +832,36 @@ footer .button {
 *, *::before, *::after {
 	transition: opacity .3s ease-in;
 	box-sizing: revert;
+}
+
+.nav-link {
+	color: #888;
+}
+
+.nav-link:hover .dot-divider, .nav-link:focus .dot-divider {background-color: #BBB;}
+
+.nav-tabs .nav-link.active {
+    background: unset;
+    border: none;
+    margin: 1px;
+}
+
+.nav-tabs .nav-link.active .dot-divider{
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #FFF;
+    border: 2px solid #DDD !important;
+}
+
+.nav .dot-divider {
+    width: 10px;
+    height: 10px;
+    background: #DDD;
+}
+
+.text-box .nav-link {
+    padding: 0;
+    margin: 5px 0px;
+    border: none;
 }

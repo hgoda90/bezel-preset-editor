@@ -100,7 +100,7 @@
 						<button class="shader button" type="button" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Add Preset File">
 							<input type="file" accept=".slangp, .params">
 						</button>
-						<div class="square jewel">
+						<div class="square jewel" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Color Vision">
 							<input type="color" class="dropper" name="dropper">
 						</div>
 						<button class="submit button" type="submit" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Add Color Setting"><span class="material-symbols-outlined">colors</span></button>
@@ -108,12 +108,45 @@
 							<input type="file" accept="image/*">
 							<span class="material-symbols-outlined">image</span>
 						</button>
-						<button class="view button" type="button" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Change View">
-							<span class="material-symbols-outlined">view_column_2</span>
+						<button class="pass button" type="button" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Pass Text">
+							<span class="material-symbols-outlined">arrow_forward</span>
 						</button>
 					</div>
 					<div class="text-box">
-						<textarea class="text2" id="dropText2" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
+						<ul class="nav nav-tabs" id="myTab" role="tablist">
+						  <li class="nav-item" role="presentation">
+							<button class="nav-link active" id="tab1" data-bs-toggle="tab" data-bs-target="#tab-pane1" type="button" role="tab" aria-controls="tab-pane1" aria-selected="true"><span class="dot-divider"></span></button>
+						  </li>
+						  <li class="nav-item" role="presentation">
+							<button class="nav-link" id="tab2" data-bs-toggle="tab" data-bs-target="#tab-pane2" type="button" role="tab" aria-controls="tab-pane2" aria-selected="false"><span class="dot-divider"></span></button>
+						  </li>
+						  <li class="nav-item" role="presentation">
+							<button class="nav-link" id="tab3" data-bs-toggle="tab" data-bs-target="#tab-pane3" type="button" role="tab" aria-controls="tab-pane3" aria-selected="false"><span class="dot-divider"></span></button>
+						  </li>
+						  <li class="nav-item" role="presentation">
+							<button class="nav-link" id="tab4" data-bs-toggle="tab" data-bs-target="#tab-pane4" type="button" role="tab" aria-controls="tab-pane4" aria-selected="false"><span class="dot-divider"></span></button>
+						  </li>
+						  <li class="nav-item" role="presentation">
+							<button class="nav-link" id="tab5" data-bs-toggle="tab" data-bs-target="#tab-pane5" type="button" role="tab" aria-controls="tab-pane5" aria-selected="false"><span class="dot-divider"></span></button>
+						  </li>
+						</ul>
+						<div class="tab-content" id="myTabContent">
+							<div class="tab-pane fade active show" id="tab-pane1" role="tabpanel" aria-labelledby="tab1" tabindex="0">
+								<textarea class="text2" id="dropText2" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
+							</div>
+							<div class="tab-pane fade" id="tab-pane2" role="tabpanel" aria-labelledby="tab2" tabindex="0">
+								<textarea class="text3" id="dropText3" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
+							</div>
+							<div class="tab-pane fade" id="tab-pane3" role="tabpanel" aria-labelledby="tab3" tabindex="0">
+								<textarea class="text4" id="dropText4" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
+							</div>
+							<div class="tab-pane fade" id="tab-pane4" role="tabpanel" aria-labelledby="tab4" tabindex="0">
+								<textarea class="text5" id="dropText5" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
+							</div>
+							<div class="tab-pane fade" id="tab-pane5" role="tabpanel" aria-labelledby="tab5" tabindex="0">
+								<textarea class="text6" id="dropText6" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
+							</div>
+						</div>
 						<label class="button" id="load2">Load
 							<input type="file" accept=".slangp, .params">
 						</label>
@@ -164,27 +197,6 @@
 						</select>
 					</div>
 					<div class="info"></div>
-				</div>
-				<div class="text-wrap extra">
-					<div class="text-box">
-						<textarea class="text3" id="dropText3" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
-						<label class="button" id="load3">Load
-							<input type="file" accept=".slangp, .params">
-						</label>
-						<span class="button" id="save3" onclick="savePreset(3);">Save</span>
-						<span class="button" id="copy3" onclick="copy(3);">Copy</span>
-						<span class="button" id="clear3" onclick="clearText(3);">Clear</span>
-					</div>
-					<div class="button-wrap"></div>
-					<div class="text-box">
-						<textarea class="text4" id="dropText4" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
-						<label class="button" id="load4">Load
-							<input type="file" accept=".slangp, .params">
-						</label>
-						<span class="button" id="save4" onclick="savePreset(4);">Save</span>
-						<span class="button" id="copy4" onclick="copy(4);">Copy</span>
-						<span class="button" id="clear4" onclick="clearText(4);">Clear</span>
-					</div>
 				</div>
 				<br>
 				<br>
@@ -259,7 +271,7 @@
 				</div>
 			</div>
 			<div class="right-foot">
-				<a class="button watermark" href="https://forums.libretro.com/t/hgoda90-bezel-preset-editor/44230"></a>
+				<a class="button watermark" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Libretro Topic" href="https://forums.libretro.com/t/hgoda90-bezel-preset-editor/44230"></a>
 				<div class="button location us" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Color"></div>
 				<div class="button location world" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Colour"></div>
 			</div>
@@ -273,6 +285,12 @@
 		<script>
 			const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
 			const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+			
+			const tabEl = document.querySelector('button[data-bs-toggle="tab"]')
+			tabEl.addEventListener('shown.bs.tab', event => {
+			  event.target // newly activated tab
+			  event.relatedTarget // previous active tab
+			})
 			
 			$('.owl-carousel').owlCarousel({
 				loop:false,
