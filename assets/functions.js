@@ -1100,7 +1100,7 @@ $(document).ready(function () {
 			else{
 				hsvError = "false";
 				
-				rgb = colorcolor("hsv("+h+", "+s+"%, "+v+"%)", 'rgb').replace("hsv(", "").replace(")", "").split(', ')
+				rgb = colorcolor("hsv("+h+", "+s+"%, "+v+"%)", 'rgb').replace("rgb(", "").replace(")", "").split(', ')
 				r = rgb[0],
 				g = rgb[1],
 				b = rgb[2];
@@ -1152,7 +1152,7 @@ $(document).ready(function () {
 			else{
 				hslError = "false";
 				
-				rgb = colorcolor("hsl("+h+", "+s+"%, "+l+"%)", 'rgb').replace("hsl(", "").replace(")", "").split(', ')
+				rgb = colorcolor("hsl("+h+", "+s+"%, "+l+"%)", 'rgb').replace("rgb(", "").replace(")", "").split(', ')
 				r = rgb[0],
 				g = rgb[1],
 				b = rgb[2];

@@ -32,6 +32,10 @@ form {
 	margin: 0px;
 }
 
+.text-box input {
+    display: none;
+}
+
 .text-wrap {
     margin-top: 118px;
     position: relative;
@@ -44,23 +48,6 @@ form {
     margin: 0px 0px 12px 0px;
     position: absolute;
     top: -32px;
-}
-
-.button {
-    border-radius: 34px;
-    background: rgba(255, 255, 255, 0.35);
-    padding: 4px 14px;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    color: #888;
-    font-size: 14px;
-    font-weight: bold;
-    box-shadow: 0 0 4px #8883;
-}
-
-.button:not(.us):not(.world):not(.watermark):not(.shader):hover, .button.active {
-    background: #DDD;
-    border-color: #d2d2d2;
-    color: #5A5A5A;
 }
 
 .text-box {
@@ -103,8 +90,78 @@ textarea:focus-visible {
     margin-top: 24px;
 }
 
-.hex, .contrast, .rgb, .hsb, .hsl {
+.button-wrap {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+}
+
+.button-wrap .button {
+    width: 46px;
+    height: 46px;
+    padding: 0px;
+    border: 0;
+    position: relative;
+    flex: 0 0 auto;
+    margin: 0 auto 12px;
+    overflow: hidden;
+}
+
+.button {
+    border-radius: 34px;
+    background: rgba(255, 255, 255, 0.35);
+    padding: 4px 14px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    color: #888;
+    font-size: 14px;
+    font-weight: bold;
+    box-shadow: 0 0 4px #8883;
+}
+
+.text-wrap .button:not(.shader):hover, footer .left-foot .button:hover, .button.active {
+    background: #DDD;
+    border-color: #d2d2d2;
+    color: #5A5A5A;
+}
+
+.button.active:hover {
+    background: rgba(255, 255, 255, 0.35);
+    color: #888;
+}
+
+.button-wrap input {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -22;
+    top: -22;
+    opacity: 0;
+}
+
+.shader {
+    background-image: url("images/retroarch.png");
+    background-size: contain;
+    background-position: center;
+}
+
+.image.button input:hover {
+    cursor: pointer;
+}
+
+.image input:hover {
+    cursor: pointer;
+}
+
+.hex, .hsb, .hsl, .rgb, .contrast {
 	display: inline-block;
+}
+
+.hex {
+    width: 244px;
+}
+
+.hsb, .hsl, .rgb {
+    width: 348px;
 }
 
 .hex input {
@@ -135,25 +192,62 @@ input[type="text"], select {
 	position: relative;
 }
 
+.dropper {
+    opacity: 0;
+    width: 44px;
+    height: 44px;
+    top: -12px;
+    left: -12px;
+    bottom: 0px;
+}
+
+.dropper:hover {
+    cursor: pointer;
+}
+
+.square.jewel {
+    border-top: 10px inset rgb(0 0 0 / 5%);
+    border-right: 10px inset rgb(255 255 255 / 15%);
+    border-bottom: 10px outset rgb(255 255 255 / 15%);
+    border-left: 10px outset rgb(0 0 0 / 5%);
+    outline: 1px solid #BBB;
+    border-radius: 5px;
+}
+
+.square.palette {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.square.palette .dropper {
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    top: -3px;
+    left: -3px;
+}
+
+.square.swatch {
+    border: 1px solid rgb(0 0 0 / 3%);
+    width: 26px;
+    height: 26px;
+}
+
+.square.swatch .dropper {
+    width: 28px;
+    height: 28px;
+    top: -1px;
+    left: -1px;
+}
+
 span.square-title {
     font-weight: bold;
     color: rgb(51 51 51 / 50%);
     display: block;
     text-align: center;
     width: 200px;
-}
-
-.dropper {
-    opacity: 0;
-    width: 44px;
-    height: 44px;
-    top: -12px !important;
-    left: -12px !important;
-    bottom: 0px !important;
-}
-
-.dropper:hover {
-    cursor: pointer;
 }
 
 .error {
@@ -456,6 +550,19 @@ span.square-title {
     cursor: default;
 }
 
+.koko-aio .layer-labels li {
+    width: 92px;
+    margin-right: 32px;
+}
+
+.koko-aio .layer {
+    width: 510px;
+}
+
+.koko-aio .layer input {
+    left: 298px;
+}
+
 #submit {
 	opacity: 0;
 }
@@ -472,8 +579,21 @@ span.square-title {
     right: 92px;
 }
 
+#edit, #load2, #load3, #load4 {
+    right: 164px;
+}
+
 #load, #save2, #save3, #save4 {
     right: 236px;
+}
+
+#save {
+    right: 308px;
+}
+
+.text-wrap.extra{
+    margin-top: 60px;
+	display: none;
 }
 
 .left-foot, .right-foot {
@@ -591,6 +711,10 @@ a:hover {
     height: 26px;
 }
 
+.color.active, .color:hover {
+    transform: scale(1.15);
+}
+
 .color:hover {
 	cursor: pointer;
 }
@@ -695,132 +819,4 @@ footer .button {
 *, *::before, *::after {
 	transition: opacity .3s ease-in;
 	box-sizing: revert;
-}
-
-.image.button input:hover {
-    cursor: pointer;
-}
-
-.image input:hover {
-    cursor: pointer;
-}
-
-.shader {
-    background-image: url("images/retroarch.png");
-    background-size: contain;
-    background-position: center;
-}
-
-#edit, #load2, #load3, #load4 {
-    right: 164px;
-}
-
-.button-wrap .button {
-    width: 46px;
-    height: 46px;
-    padding: 0px;
-    position: relative;
-    flex: 0 0 auto;
-    margin: 0 auto 12px;
-}
-
-.button-wrap {
-    display: flex;
-    flex-direction: column;
-    flex: 1 1 auto;
-}
-
-.button-wrap input {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: -22;
-    top: -22;
-    opacity: 0;
-    input[type="file"] {
-    display: none;
-};
-}
-
-.button-wrap button {
-    padding: 0;
-    border: 0;
-    margin-bottom: 8px;
-    position: relative;
-    overflow: hidden;
-}
-
-.button.active:hover {
-    background: rgba(255, 255, 255, 0.35) !important;
-    color: #888 !important;
-}
-
-#save {
-    right: 308px;
-}
-
-.text-box input {
-    display: none;
-}
-
-.square.jewel {
-    border-top: 10px inset rgb(0 0 0 / 5%);
-    border-right: 10px inset rgb(255 255 255 / 15%);
-    border-bottom: 10px outset rgb(255 255 255 / 15%);
-    border-left: 10px outset rgb(0 0 0 / 5%);
-    outline: 1px solid #BBB;
-    border-radius: 5px;
-}
-
-.square.palette {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    border: 2px solid rgba(0, 0, 0, 0.1);
-}
-
-.square.palette .dropper {
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    top: -3px !important;
-    left: -3px !important;
-}
-
-.square.swatch {
-    border: 1px solid rgb(0 0 0 / 3%);
-    width: 26px;
-    height: 26px;
-}
-
-.square.swatch .dropper {
-    width: 28px;
-    height: 28px;
-    top: -1px !important;
-    left: -1px !important;
-}
-
-.color.active, .color:hover {
-    transform: scale(1.15);
-}
-
-.color-vision + .text-wrap {
-    margin-top: 60px;
-}
-
-.text-wrap.extra{
-	display: none;
-}
-
-.koko-aio .layer-labels li {
-    width: 92px;
-    margin-right: 32px;
-}
-
-.koko-aio .layer {
-    width: 510px;
-}
-
-.koko-aio .layer input {
-    left: 298px;
 }
