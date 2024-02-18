@@ -225,11 +225,42 @@ function dropfile(file) {
 }
 
 function dropfile2(file) {
-  var reader = new FileReader();
-  reader.onload = function(e) {
-	dropText2.value = e.target.result;
-  };
-  reader.readAsText(file, "UTF-8");
+	if(file.length == 1){
+		 var reader = new FileReader();
+		 reader.onload = function(e) {
+			dropText2.value = e.target.result;
+		 };
+		 reader.readAsText(file[0], "UTF-8");
+	}
+	if(file.length == 2){
+		 var reader = new FileReader();
+		 reader.onload = function(e) {
+			dropText3.value = e.target.result;
+		 };
+		 reader.readAsText(file[1], "UTF-8");
+	}
+	if(file.length == 3){
+		 var reader = new FileReader();
+		 reader.onload = function(e) {
+			dropText4.value = e.target.result;
+		 };
+		 reader.readAsText(file[2], "UTF-8");
+	}
+	if(file.length == 4){
+		 var reader = new FileReader();
+		 reader.onload = function(e) {
+			dropText5.value = e.target.result;
+		 };
+		 reader.readAsText(file[3], "UTF-8");
+	}
+	if(file.length == 5){
+		 var reader = new FileReader();
+		 reader.onload = function(e) {
+			dropText6.value = e.target.result;
+		 };
+		 reader.readAsText(file[4], "UTF-8");
+	}
+ 
 }
 
 function dropfile3(file) {
@@ -886,8 +917,11 @@ dropText.ondrop = function(e) {
 
 dropText2.ondrop = function(e) {
   e.preventDefault();
-  var file = e.dataTransfer.files[0];
-  dropfile2(file);
+  const files = [];
+  for (var i=0; i< e.dataTransfer.files.length;i++){
+	    files[i] = e.dataTransfer.files[i];
+		dropfile2(files);
+   }
 };
 
 dropText3.ondrop = function(e) {
