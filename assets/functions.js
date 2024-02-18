@@ -999,19 +999,19 @@ $(document).ready(function () {
 		else{
 			switch($(".koko-aio .layer input").val()){
 				case "1":
-					$(".text").val(settings+'monitor_body_curved = "pathtofile\\'+geekss+'"\n').text(settings+'bg_under = "pathtofile\\'+geekss+'"\n');
+					$(".text").val(settings+'monitor_body_curved = "pathtofile\\'+geekss+'"\n').text(settings+'monitor_body_curved = "pathtofile\\'+geekss+'"\n');
 					break;
 				case "2":
-					$(".text").val(settings+'monitor_body_straight = "pathtofile\\'+geekss+'"\n').text(settings+'bg_under = "pathtofile\\'+geekss+'"\n');
+					$(".text").val(settings+'monitor_body_straight = "pathtofile\\'+geekss+'"\n').text(settings+'monitor_body_straight = "pathtofile\\'+geekss+'"\n');
 					break;
 				case "3":
 					$(".text").val(settings+'bg_under = "pathtofile\\'+geekss+'"\n').text(settings+'bg_under = "pathtofile\\'+geekss+'"\n');
 					break;
 				case "4":
-					$(".text").val(settings+'bg_over = "pathtofile\\'+geekss+'"\n').text(settings+'bg_under = "pathtofile\\'+geekss+'"\n');
+					$(".text").val(settings+'bg_over = "pathtofile\\'+geekss+'"\n').text(settings+'bg_over = "pathtofile\\'+geekss+'"\n');
 					break;
 				case "5":
-					$(".text").val(settings+'backdrop = "pathtofile\\'+geekss+'"\n').text(settings+'bg_under = "pathtofile\\'+geekss+'"\n');
+					$(".text").val(settings+'backdrop = "pathtofile\\'+geekss+'"\n').text(settings+'backdrop = "pathtofile\\'+geekss+'"\n');
 					break;
 			}
 		}
