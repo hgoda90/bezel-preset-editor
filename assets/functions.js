@@ -1394,7 +1394,7 @@ $(document).ready(function () {
 		var id = parseInt($(".nav-link.active").attr("id").replace("tab", ""));
 		
 		switch(keycode){
-			case 37:
+			case 33:
 				e.preventDefault();
 				if(id > 1){
 					$("#tab"+id).removeClass("active");
@@ -1403,7 +1403,7 @@ $(document).ready(function () {
 					$("#tab-pane"+(id-1)).addClass("active").addClass("show");
 				}
 				break;
-			case 39:
+			case 34:
 				e.preventDefault();
 				if(id < 5){
 					$("#tab"+id).removeClass("active");
