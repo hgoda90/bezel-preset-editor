@@ -246,9 +246,9 @@ function colorMessage(colors) {
 			case "D5DDED":
 				$(".info").text("PlayStation");
 				break;
-			case "118FDB":
+			case "09B2CF":
+			case "1C80B3":
 			case "212129":
-			case "2A5FA3":
 			case "2F4F98":
 				$(".info").text("PlayStation 2");
 				break;

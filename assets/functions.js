@@ -54,24 +54,27 @@ function bezelToggle(){
 function clearText(id){
 	if(id == 1){
 		$(".text").text("").val("");
+		$(".info").empty();
+		$(".error").empty();
+		colorReset();
 	}
 	else{
 		$(".text-box .tab-pane.active textarea").text("").val("");
+		$(".preset-title.show").empty();
 	}
-	$(".info").empty();
-	$(".error").empty();
 }
 
 function colorReset(){
-	$(".hex input").val("");
-	$(".rgb input").val("");
-	$(".hsb input").val("");
+	$(".hex input, .hsb input, .hsl input, .rgb input").val("");
+	$(".info").empty();
+	$(".color").removeClass("active");
 	
 	if(bezelStyle == "mbz"){
 		$(".contrast").css("opacity", 0);
 		$(".dropper").val("#1A1A1A");
 		
-		$(".square").css({"background": "#1A1A1A"});
+		$(".square").css("background", "#1A1A1A");
+		$(".submit").css("color", "#1A1A1A");
 		
 		if(hold == "off"){
 			settingReset();
@@ -102,7 +105,8 @@ function colorReset(){
 		$(".contrast option[value='1.30']").prop("selected", "selected");
 		$(".dropper").val("#808080");
 		
-		$(".square").css({"background": "#808080"});
+		$(".square").css("background", "#808080");
+		$(".submit").css("color", "#808080");
 	
 		if($(".format-labels .active").text() == "HEX"){
 			$(".hex input").attr("placeholder", "808080");
@@ -216,6 +220,12 @@ function copy(id){
 	}
 }
 
+function destroy(){
+	$(".preset-title").empty();
+	$("textarea").val("").text("");
+	colorReset();
+}
+
 function dropfile(file) {
   var reader = new FileReader();
   reader.onload = function(e) {
@@ -231,6 +241,7 @@ function dropfile2(file) {
 			dropText2.value = e.target.result;
 		 };
 		 reader.readAsText(file[0], "UTF-8");
+		 $("#preset1").text(file[0].name.replace(".params", "").replace(".slangp", ""));
 	}
 	if(file.length == 2){
 		 var reader = new FileReader();
@@ -238,6 +249,7 @@ function dropfile2(file) {
 			dropText3.value = e.target.result;
 		 };
 		 reader.readAsText(file[1], "UTF-8");
+		 $("#preset2").text(file[1].name.replace(".params", "").replace(".slangp", ""));
 	}
 	if(file.length == 3){
 		 var reader = new FileReader();
@@ -245,6 +257,7 @@ function dropfile2(file) {
 			dropText4.value = e.target.result;
 		 };
 		 reader.readAsText(file[2], "UTF-8");
+		 $("#preset3").text(file[2].name.replace(".params", "").replace(".slangp", ""));
 	}
 	if(file.length == 4){
 		 var reader = new FileReader();
@@ -252,6 +265,7 @@ function dropfile2(file) {
 			dropText5.value = e.target.result;
 		 };
 		 reader.readAsText(file[3], "UTF-8");
+		 $("#preset4").text(file[3].name.replace(".params", "").replace(".slangp", ""));
 	}
 	if(file.length == 5){
 		 var reader = new FileReader();
@@ -259,8 +273,48 @@ function dropfile2(file) {
 			dropText6.value = e.target.result;
 		 };
 		 reader.readAsText(file[4], "UTF-8");
+		 $("#preset5").text(file[4].name.replace(".params", "").replace(".slangp", ""));
 	}
- 
+	if(file.length == 6){
+		 var reader = new FileReader();
+		 reader.onload = function(e) {
+			dropText7.value = e.target.result;
+		 };
+		 reader.readAsText(file[5], "UTF-8");
+		 $("#preset6").text(file[5].name.replace(".params", "").replace(".slangp", ""));
+	}
+	if(file.length == 7){
+		 var reader = new FileReader();
+		 reader.onload = function(e) {
+			dropText8.value = e.target.result;
+		 };
+		 reader.readAsText(file[6], "UTF-8");
+		 $("#preset7").text(file[6].name.replace(".params", "").replace(".slangp", ""));
+	}
+	if(file.length == 8){
+		 var reader = new FileReader();
+		 reader.onload = function(e) {
+			dropText9.value = e.target.result;
+		 };
+		 reader.readAsText(file[7], "UTF-8");
+		 $("#preset8").text(file[7].name.replace(".params", "").replace(".slangp", ""));
+	}
+	if(file.length == 9){
+		 var reader = new FileReader();
+		 reader.onload = function(e) {
+			dropText10.value = e.target.result;
+		 };
+		 reader.readAsText(file[8], "UTF-8");
+		 $("#preset9").text(file[8].name.replace(".params", "").replace(".slangp", ""));
+	}
+	if(file.length == 10){
+		 var reader = new FileReader();
+		 reader.onload = function(e) {
+			dropText11.value = e.target.result;
+		 };
+		 reader.readAsText(file[9], "UTF-8");
+		 $("#preset10").text(file[9].name.replace(".params", "").replace(".slangp", ""));
+	}
 }
 
 function dropfile3(file) {
@@ -269,6 +323,7 @@ function dropfile3(file) {
 	dropText3.value = e.target.result;
   };
   reader.readAsText(file, "UTF-8");
+  $("#preset2").text(file.name.replace(".params", "").replace(".slangp", ""));
 }
 
 function dropfile4(file) {
@@ -277,6 +332,7 @@ function dropfile4(file) {
 	dropText4.value = e.target.result;
   };
   reader.readAsText(file, "UTF-8");
+  $("#preset3").text(file.name.replace(".params", "").replace(".slangp", ""));
 }
 
 function dropfile5(file) {
@@ -285,6 +341,7 @@ function dropfile5(file) {
 	dropText5.value = e.target.result;
   };
   reader.readAsText(file, "UTF-8");
+  $("#preset4").text(file.name.replace(".params", "").replace(".slangp", ""));
 }
 
 function dropfile6(file) {
@@ -293,6 +350,52 @@ function dropfile6(file) {
 	dropText6.value = e.target.result;
   };
   reader.readAsText(file, "UTF-8");
+  $("#preset5").text(file.name.replace(".params", "").replace(".slangp", ""));
+}
+
+function dropfile7(file) {
+  var reader = new FileReader();
+  reader.onload = function(e) {
+	dropText7.value = e.target.result;
+  };
+  reader.readAsText(file, "UTF-8");
+  $("#preset6").text(file.name.replace(".params", "").replace(".slangp", ""));
+}
+
+function dropfile8(file) {
+  var reader = new FileReader();
+  reader.onload = function(e) {
+	dropText8.value = e.target.result;
+  };
+  reader.readAsText(file, "UTF-8");
+  $("#preset7").text(file.name.replace(".params", "").replace(".slangp", ""));
+}
+
+function dropfile9(file) {
+  var reader = new FileReader();
+  reader.onload = function(e) {
+	dropText9.value = e.target.result;
+  };
+  reader.readAsText(file, "UTF-8");
+  $("#preset8").text(file.name.replace(".params", "").replace(".slangp", ""));
+}
+
+function dropfile10(file) {
+  var reader = new FileReader();
+  reader.onload = function(e) {
+	dropText10.value = e.target.result;
+  };
+  reader.readAsText(file, "UTF-8");
+  $("#preset9").text(file.name.replace(".params", "").replace(".slangp", ""));
+}
+
+function dropfile11(file) {
+  var reader = new FileReader();
+  reader.onload = function(e) {
+	dropText11.value = e.target.result;
+  };
+  reader.readAsText(file, "UTF-8");
+  $("#preset10").text(file.name.replace(".params", "").replace(".slangp", ""));
 }
 
 function edit(){
@@ -477,7 +580,14 @@ function layerToggle(imageLayers){
 }
 
 function passText(){
-	$(".text-box .tab-pane.active textarea").text($(".text").text()).val($(".text").text());
+	var txt = $(".text-box .tab-pane.active textarea").val();
+	
+	if(txt == ""){
+		$(".text-box .tab-pane.active textarea").text($(".text").text()).val($(".text").text());
+	}
+	else{
+		$(".text-box .tab-pane.active textarea").text(txt+"\n"+$(".text").text()).val(txt+"\n"+$(".text").text())
+	}
 }
 
 function presetCopy(){
@@ -499,21 +609,25 @@ function preview(){
 	if(colorFormat == "HEX"){
 		$(".square").css("background", "#"+hex);
 		$(".dropper").val("#"+hex);
+		$(".submit").css("color", "#"+hex);
 		colorMessage(hex);
 	}
 	else if(colorFormat == "HSB"){
 		$(".square").css("background", colorcolor("hsv("+h+", "+s+"%, "+v+"%)", 'hex'));
 		$(".dropper").val(colorcolor("hsv("+h+", "+s+"%, "+v+"%)", 'hex'));
+		$(".submit").css("color", colorcolor("hsv("+h+", "+s+"%, "+v+"%)", 'hex'));
 		colorMessage("hsb("+h+"deg, "+s+"%, "+v+"%)");
 	}
 	else if(colorFormat == "HSL"){
 		$(".square").css("background", colorcolor("hsl("+h2+", "+s2+"%, "+l+"%)", 'hex'));
 		$(".dropper").val(colorcolor("hsl("+h2+", "+s2+"%, "+l+"%)", 'hex'));
+		$(".submit").css("color", colorcolor("hsl("+h2+", "+s2+"%, "+l+"%)", 'hex'));
 		colorMessage("hsl("+h2+"deg, "+s2+"%, "+l+"%)");
 	}
 	else{
 		$(".square").css("background", "rgb("+r+", "+g+", "+b+")");
 		$(".dropper").val(colorcolor("rgb("+r+", "+g+", "+b+")", 'hex'));
+		$(".submit").css("color", colorcolor("rgb("+r+", "+g+", "+b+")", 'hex'));
 		colorMessage("rgb("+r+", "+g+", "+b+")");
 	}
 }
@@ -798,6 +912,12 @@ function start(){
 	colorVersion(colorVer);
 }
 
+$(".destroy").on('click', function(){
+	destroy();
+	
+	$(this).blur();
+});
+
 $(".dropper").on('change', function(){
 	colorVision();
 });
@@ -838,6 +958,12 @@ $(".left-foot .button").on('click', function(){
 	$(".colors").empty();
 	
 	samples();
+});
+
+$(".nav-item").on('click', function(){
+	var id = $(this).index();
+	$(".preset-title").removeClass("show");
+	$("#preset"+(id + 1)).addClass("show");
 });
 
 $(".pass").on('click', function(){
@@ -974,6 +1100,7 @@ $(document).ready(function () {
 		
 		reader.readAsText(geekss);
 		$('#load2 input[type="file"]').val("");
+		$(".preset-title.show").text(geekss.name.replace(".params", "").replace(".slangp", ""));
 		$(this).blur();
 	});
 
@@ -1399,17 +1526,21 @@ $(document).ready(function () {
 				if(id > 1){
 					$("#tab"+id).removeClass("active");
 					$("#tab-pane"+id).removeClass("active").removeClass("show");
+					$("#preset"+id).removeClass("show");
 					$("#tab"+(id-1)).addClass("active");
 					$("#tab-pane"+(id-1)).addClass("active").addClass("show");
+					$("#preset"+(id-1)).addClass("show");
 				}
 				break;
 			case 34:
 				e.preventDefault();
-				if(id < 5){
+				if(id < 10){
 					$("#tab"+id).removeClass("active");
 					$("#tab-pane"+id).removeClass("active").removeClass("show");
+					$("#preset"+id).removeClass("show");
 					$("#tab"+(id+1)).addClass("active");
 					$("#tab-pane"+(id+1)).addClass("active").addClass("show");
+					$("#preset"+(id+1)).addClass("show");
 				}
 				break;
 		}

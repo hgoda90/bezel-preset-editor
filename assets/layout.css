@@ -860,8 +860,30 @@ footer .button {
     background: #DDD;
 }
 
-.text-box .nav-link {
-    padding: 0;
+.text-wrap .nav-link {
+    padding: 10px;
     margin: 5px 0px;
     border: none;
+}
+
+.nav-tabs {
+    border: none;
+    position: absolute;
+    right: 7px;
+    bottom: -48px;
+}
+
+.preset-title {
+    position: absolute;
+    top: -32px;
+    left: 8px;
+    max-width: 200px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: none;
+}
+
+.preset-title.show {
+    display: block;
 }

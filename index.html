@@ -111,25 +111,11 @@
 						<button class="pass button" type="button" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Pass Text">
 							<span class="material-symbols-outlined">arrow_forward</span>
 						</button>
+						<button class="destroy button" type="button" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Clear All">
+							<span class="material-symbols-outlined">clear_all</span>
+						</button>
 					</div>
 					<div class="text-box">
-						<ul class="nav nav-tabs" id="myTab" role="tablist">
-						  <li class="nav-item" role="presentation">
-							<button class="nav-link active" id="tab1" data-bs-toggle="tab" data-bs-target="#tab-pane1" type="button" role="tab" aria-controls="tab-pane1" aria-selected="true"><span class="dot-divider"></span></button>
-						  </li>
-						  <li class="nav-item" role="presentation">
-							<button class="nav-link" id="tab2" data-bs-toggle="tab" data-bs-target="#tab-pane2" type="button" role="tab" aria-controls="tab-pane2" aria-selected="false"><span class="dot-divider"></span></button>
-						  </li>
-						  <li class="nav-item" role="presentation">
-							<button class="nav-link" id="tab3" data-bs-toggle="tab" data-bs-target="#tab-pane3" type="button" role="tab" aria-controls="tab-pane3" aria-selected="false"><span class="dot-divider"></span></button>
-						  </li>
-						  <li class="nav-item" role="presentation">
-							<button class="nav-link" id="tab4" data-bs-toggle="tab" data-bs-target="#tab-pane4" type="button" role="tab" aria-controls="tab-pane4" aria-selected="false"><span class="dot-divider"></span></button>
-						  </li>
-						  <li class="nav-item" role="presentation">
-							<button class="nav-link" id="tab5" data-bs-toggle="tab" data-bs-target="#tab-pane5" type="button" role="tab" aria-controls="tab-pane5" aria-selected="false"><span class="dot-divider"></span></button>
-						  </li>
-						</ul>
 						<div class="tab-content" id="myTabContent">
 							<div class="tab-pane fade active show" id="tab-pane1" role="tabpanel" aria-labelledby="tab1" tabindex="0">
 								<textarea class="text2" id="dropText2" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
@@ -146,14 +132,71 @@
 							<div class="tab-pane fade" id="tab-pane5" role="tabpanel" aria-labelledby="tab5" tabindex="0">
 								<textarea class="text6" id="dropText6" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
 							</div>
+							<div class="tab-pane fade" id="tab-pane6" role="tabpanel" aria-labelledby="tab6" tabindex="0">
+								<textarea class="text7" id="dropText7" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
+							</div>
+							<div class="tab-pane fade" id="tab-pane7" role="tabpanel" aria-labelledby="tab7" tabindex="0">
+								<textarea class="text8" id="dropText8" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
+							</div>
+							<div class="tab-pane fade" id="tab-pane8" role="tabpanel" aria-labelledby="tab8" tabindex="0">
+								<textarea class="text9" id="dropText9" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
+							</div>
+							<div class="tab-pane fade" id="tab-pane9" role="tabpanel" aria-labelledby="tab9" tabindex="0">
+								<textarea class="text10" id="dropText10" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
+							</div>
+							<div class="tab-pane fade" id="tab-pane10" role="tabpanel" aria-labelledby="tab10" tabindex="0">
+								<textarea class="text11" id="dropText11" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
+							</div>
 						</div>
+						<span class="preset-title show" id="preset1"></span>
+						<span class="preset-title" id="preset2"></span>
+						<span class="preset-title" id="preset3"></span>
+						<span class="preset-title" id="preset4"></span>
+						<span class="preset-title" id="preset5"></span>
+						<span class="preset-title" id="preset6"></span>
+						<span class="preset-title" id="preset7"></span>
+						<span class="preset-title" id="preset8"></span>
+						<span class="preset-title" id="preset9"></span>
+						<span class="preset-title" id="preset10"></span>
+						<span class="button" id="save2" onclick="savePreset(2);">Save</span>
 						<label class="button" id="load2">Load
 							<input type="file" accept=".slangp, .params">
 						</label>
-						<span class="button" id="save2" onclick="savePreset(2);">Save</span>
 						<span class="button" id="copy2" onclick="copy(2);">Copy</span>
 						<span class="button" id="clear2" onclick="clearText(2);">Clear</span>
 					</div>
+					<ul class="nav nav-tabs" id="myTab" role="tablist">
+					  <li class="nav-item" role="presentation">
+						<button class="nav-link active" id="tab1" data-bs-toggle="tab" data-bs-target="#tab-pane1" type="button" role="tab" aria-controls="tab-pane1" aria-selected="true"><span class="dot-divider"></span></button>
+					  </li>
+					  <li class="nav-item" role="presentation">
+						<button class="nav-link" id="tab2" data-bs-toggle="tab" data-bs-target="#tab-pane2" type="button" role="tab" aria-controls="tab-pane2" aria-selected="false"><span class="dot-divider"></span></button>
+					  </li>
+					  <li class="nav-item" role="presentation">
+						<button class="nav-link" id="tab3" data-bs-toggle="tab" data-bs-target="#tab-pane3" type="button" role="tab" aria-controls="tab-pane3" aria-selected="false"><span class="dot-divider"></span></button>
+					  </li>
+					  <li class="nav-item" role="presentation">
+						<button class="nav-link" id="tab4" data-bs-toggle="tab" data-bs-target="#tab-pane4" type="button" role="tab" aria-controls="tab-pane4" aria-selected="false"><span class="dot-divider"></span></button>
+					  </li>
+					  <li class="nav-item" role="presentation">
+						<button class="nav-link" id="tab5" data-bs-toggle="tab" data-bs-target="#tab-pane5" type="button" role="tab" aria-controls="tab-pane5" aria-selected="false"><span class="dot-divider"></span></button>
+					  </li>
+					  <li class="nav-item" role="presentation">
+						<button class="nav-link" id="tab6" data-bs-toggle="tab" data-bs-target="#tab-pane6" type="button" role="tab" aria-controls="tab-pane6" aria-selected="false"><span class="dot-divider"></span></button>
+					  </li>
+					  <li class="nav-item" role="presentation">
+						<button class="nav-link" id="tab7" data-bs-toggle="tab" data-bs-target="#tab-pane7" type="button" role="tab" aria-controls="tab-pane7" aria-selected="false"><span class="dot-divider"></span></button>
+					  </li>
+					  <li class="nav-item" role="presentation">
+						<button class="nav-link" id="tab8" data-bs-toggle="tab" data-bs-target="#tab-pane8" type="button" role="tab" aria-controls="tab-pane8" aria-selected="false"><span class="dot-divider"></span></button>
+					  </li>
+					  <li class="nav-item" role="presentation">
+						<button class="nav-link" id="tab9" data-bs-toggle="tab" data-bs-target="#tab-pane9" type="button" role="tab" aria-controls="tab-pane9" aria-selected="false"><span class="dot-divider"></span></button>
+					  </li>
+					  <li class="nav-item" role="presentation">
+						<button class="nav-link" id="tab10" data-bs-toggle="tab" data-bs-target="#tab-pane10" type="button" role="tab" aria-controls="tab-pane10" aria-selected="false"><span class="dot-divider"></span></button>
+					  </li>
+					</ul>
 				</div>
 				<div class="color-vision">
 					<div class="contrast">
