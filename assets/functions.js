@@ -226,6 +226,19 @@ function destroy(){
 	colorReset();
 }
 
+function dotHide(){
+	if($(".nav-tabs").hasClass("hide")){
+		setCookie("dots", "shown", 30);
+		$(".nav-tabs").removeClass("hide");
+		$(".dot-hide span").text("keyboard_double_arrow_up");
+	}
+	else{
+		setCookie("dots", "hidden", 30);
+		$(".nav-tabs").addClass("hide");
+		$(".dot-hide span").text("keyboard_double_arrow_down");
+	}
+}
+
 function dropfile(file) {
   var reader = new FileReader();
   reader.onload = function(e) {
@@ -861,6 +874,13 @@ function start(){
 		colorVer = getCookie("colorVersion");
 	}
 	
+	if(getCookie("dots") == ""){
+		dots = "shown";
+	}
+	else{
+		dots = getCookie("dots");
+	}
+	
 	if(colorFormat == "HEX"){
 		formatToggle(1);
 	}
@@ -916,6 +936,10 @@ $(".destroy").on('click', function(){
 	destroy();
 	
 	$(this).blur();
+});
+
+$(".dot-hide").on('click', function(){
+	dotHide();
 });
 
 $(".dropper").on('change', function(){

@@ -61,7 +61,7 @@ form {
     position: relative;
     width: 500px;
     height: 40vh;
-    background: rgba(255, 255, 255, 0.35);
+    background: #F8F8F8;
     border-radius: 12px;
     border: 1px solid rgba(0, 0, 0, 0.2);
     padding: 10px;
@@ -871,6 +871,8 @@ footer .button {
     position: absolute;
     right: 7px;
     bottom: -48px;
+    transition: transform .2s ease-in;
+    z-index: -1;
 }
 
 .preset-title {
@@ -886,4 +888,15 @@ footer .button {
 
 .preset-title.show {
     display: block;
+}
+
+.nav-tabs.hide {
+    transform: translateY(-58px);
+}
+
+.dot-hide {
+    position: absolute;
+    right: -32px;
+    bottom: 2px;
+    cursor: pointer;
 }
