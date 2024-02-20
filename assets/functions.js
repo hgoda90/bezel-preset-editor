@@ -61,7 +61,7 @@ function clearText(id){
 	else{
 		$(".text-box .tab-pane.active textarea").text("").val("");
 		$(".preset-title.show").empty();
-		$("#tab"+(id-1)).parents(".nav-item").addClass("empty");
+		$(".nav-link.active").parents(".nav-item").addClass("empty");
 	}
 }
 
@@ -1157,7 +1157,7 @@ dropText2.ondrop = function(e) {
 		event.target // newly activated tab
 		event.relatedTarget // previous active tab
 	});
-						
+	
 	$(".text-wrap .text-box:nth-child(4)").append('<div class="nav-hide"><span class="material-symbols-outlined">keyboard_double_arrow_up</span></div>');
 	$(".nav-tabs").append('<div class="remove nav-item" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Remove Tabs"><span class="material-symbols-outlined nav-link">close_small</span></div>');
 	
@@ -1180,66 +1180,77 @@ dropText3.ondrop = function(e) {
   e.preventDefault();
   var file = e.dataTransfer.files[0];
   dropfile3(file);
+  $(".nav-link.active").parents(".nav-item").removeClass("empty");
 };
 
 dropText4.ondrop = function(e) {
   e.preventDefault();
   var file = e.dataTransfer.files[0];
   dropfile4(file);
+  $(".nav-link.active").parents(".nav-item").removeClass("empty");
 };
 
 dropText5.ondrop = function(e) {
   e.preventDefault();
   var file = e.dataTransfer.files[0];
   dropfile5(file);
+  $(".nav-link.active").parents(".nav-item").removeClass("empty");
 };
 
 dropText6.ondrop = function(e) {
   e.preventDefault();
   var file = e.dataTransfer.files[0];
   dropfile6(file);
+  $(".nav-link.active").parents(".nav-item").removeClass("empty");
 };
 
 dropText7.ondrop = function(e) {
   e.preventDefault();
   var file = e.dataTransfer.files[0];
   dropfile7(file);
+  $(".nav-link.active").parents(".nav-item").removeClass("empty");
 };
 
 dropText8.ondrop = function(e) {
   e.preventDefault();
   var file = e.dataTransfer.files[0];
   dropfile8(file);
+  $(".nav-link.active").parents(".nav-item").removeClass("empty");
 };
 
 dropText9.ondrop = function(e) {
   e.preventDefault();
   var file = e.dataTransfer.files[0];
   dropfile9(file);
+  $(".nav-link.active").parents(".nav-item").removeClass("empty");
 };
 
 dropText10.ondrop = function(e) {
   e.preventDefault();
   var file = e.dataTransfer.files[0];
   dropfile10(file);
+  $(".nav-link.active").parents(".nav-item").removeClass("empty");
 };
 
 dropText11.ondrop = function(e) {
   e.preventDefault();
   var file = e.dataTransfer.files[0];
   dropfile11(file);
+  $(".nav-link.active").parents(".nav-item").removeClass("empty");
 };
 
 dropText12.ondrop = function(e) {
   e.preventDefault();
   var file = e.dataTransfer.files[0];
   dropfile12(file);
+  $(".nav-link.active").parents(".nav-item").removeClass("empty");
 };
 
 dropText13.ondrop = function(e) {
   e.preventDefault();
   var file = e.dataTransfer.files[0];
   dropfile13(file);
+  $(".nav-link.active").parents(".nav-item").removeClass("empty");
 };
 
 $(document).ready(function () {

@@ -929,3 +929,13 @@ footer .button {
     cursor: pointer;
     font-size: 28px;
 }
+
+.nav-tabs .nav-link:focus {
+    border: none;
+    color: #888;
+}
+
+.nav-link:focus-visible {
+    outline: 0;
+    box-shadow: none;
+}
