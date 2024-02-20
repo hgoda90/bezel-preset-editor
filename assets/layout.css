@@ -68,6 +68,7 @@ form {
     min-height: 200px;
     max-height: 480px;
     display: inline-block;
+    z-index: 1;
 }
 
 textarea {
@@ -87,8 +88,8 @@ textarea:focus-visible {
 
 .text-box .button {
     position: absolute;
-    top: -36px;
-    right: 12px;
+    top: -38px;
+    right: -48px;
 }
 
 .color-vision {
@@ -834,16 +835,22 @@ footer .button {
 	box-sizing: revert;
 }
 
+.nav-item{
+    display: table-cell;
+}
+
 .nav-link {
 	color: #888;
 }
 
 .nav-link:hover .dot-divider, .nav-link:focus .dot-divider {background-color: #BBB;}
 
-.nav-tabs .nav-link.active {
+.nav-tabs .nav-link.active, .nav-tabs .nav-link:hover {
     background: unset;
     border: none;
-    margin: 1px;
+    background: #E9E9E9;
+    border-radius: 50%;
+    color: #333;
 }
 
 .nav-tabs .nav-link.active .dot-divider{
@@ -861,18 +868,21 @@ footer .button {
 }
 
 .text-wrap .nav-link {
-    padding: 10px;
-    margin: 5px 0px;
+    padding: 6px;
+    margin: 5px;
     border: none;
+    text-align: center;
+    width: 34px;
+    height: 34px;
 }
 
 .nav-tabs {
     border: none;
     position: absolute;
-    right: 7px;
-    bottom: -48px;
+    right: -2px;
+    bottom: -50px;
     transition: transform .2s ease-in;
-    z-index: -1;
+    display: table;
 }
 
 .preset-title {
@@ -891,12 +901,26 @@ footer .button {
 }
 
 .nav-tabs.hide {
-    transform: translateY(-58px);
+    transform: translateY(-46px);
 }
 
 .dot-hide {
     position: absolute;
     right: -32px;
-    bottom: 2px;
+    bottom: -40px;
     cursor: pointer;
+    transition: transform .2s ease-in;
+}
+
+#clear, #clear2 {
+    right: 12px;
+}
+
+.remove {
+    color: #FF0000;
+    position: absolute;
+    bottom: 0px;
+    right: -32px;
+    cursor: pointer;
+    transition: transform .2s ease-in;
 }
