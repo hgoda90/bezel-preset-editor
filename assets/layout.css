@@ -845,7 +845,7 @@ footer .button {
 
 .nav-link:hover .dot-divider, .nav-link:focus .dot-divider {background-color: #BBB;}
 
-.nav-tabs .nav-link.active, .nav-tabs .nav-link:hover {
+.nav-tabs .nav-link.active, .nav-tabs .nav-link:hover, .nav-item.empty .nav-link.active, .nav-item.empty .nav-link:hover {
     background: unset;
     border: none;
     background: #E9E9E9;
@@ -904,7 +904,7 @@ footer .button {
     transform: translateY(-46px);
 }
 
-.dot-hide {
+.nav-hide {
     position: absolute;
     right: -32px;
     bottom: -40px;
@@ -923,4 +923,8 @@ footer .button {
     right: -32px;
     cursor: pointer;
     transition: transform .2s ease-in;
+}
+
+.nav-item.empty .nav-link {
+    color: #BBB;
 }
