@@ -869,7 +869,7 @@ footer .button {
 
 .text-wrap .nav-link {
     padding: 6px;
-    margin: 5px;
+    margin: 5px 3px;
     border: none;
     text-align: center;
     width: 34px;
@@ -916,15 +916,16 @@ footer .button {
     right: 12px;
 }
 
-.remove {
-    color: #FF0000;
-    position: absolute;
-    bottom: 0px;
-    right: -32px;
-    cursor: pointer;
-    transition: transform .2s ease-in;
-}
-
 .nav-item.empty .nav-link {
     color: #BBB;
+}
+
+.remove .material-symbols-outlined.nav-link {
+    width: 27px;
+    height: 27px;
+    vertical-align: middle;
+    line-height: 0.95;
+    color: red;
+    cursor: pointer;
+    font-size: 28px;
 }

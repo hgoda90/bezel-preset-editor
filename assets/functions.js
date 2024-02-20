@@ -234,14 +234,12 @@ function navHide(){
 		$(".nav-tabs").removeClass("hide");
 		$(".nav-hide span").text("keyboard_double_arrow_up");
 		$(".nav-hide").css("transform", "translateY(0px)");
-		$(".remove").css("transform", "translateY(-14px)");
 	}
 	else{
 		setCookie("dots", "hidden", 30);
 		$(".nav-tabs").addClass("hide");
 		$(".nav-hide span").text("keyboard_double_arrow_down");
 		$(".nav-hide").css("transform", "translateY(-46px)");
-		$(".remove").css("transform", "translateY(-30px)");
 	}
 }
 
@@ -979,7 +977,6 @@ function start(){
 		$(".nav-tabs").addClass("hide");
 		$(".nav-hide span").text("keyboard_double_arrow_down");
 		$(".nav-hide").css("transform", "translateY(-46px)");
-		$(".remove").css("transform", "translateY(-30px)");
 	}
 	
 	colorReset();
@@ -1115,6 +1112,7 @@ dropText2.ondrop = function(e) {
   $(".text-wrap .text-box:nth-child(4) textarea").text("").val("");
   $(".preset-title").empty();
   $(".nav-hide").remove();
+  $(".remove").remove();
   var tabs = $(".nav").children().length;
   if(e.dataTransfer.files.length <= 12){
 	  for (var i=0; i< e.dataTransfer.files.length;i++){
@@ -1154,14 +1152,14 @@ dropText2.ondrop = function(e) {
 	   }
   }
    
-   const tabEl = document.querySelector('button[data-bs-toggle="tab"]')
+	const tabEl = document.querySelector('button[data-bs-toggle="tab"]');
 	tabEl.addEventListener('shown.bs.tab', event => {
-	  event.target // newly activated tab
-	  event.relatedTarget // previous active tab
-	})
+		event.target // newly activated tab
+		event.relatedTarget // previous active tab
+	});
 						
 	$(".text-wrap .text-box:nth-child(4)").append('<div class="nav-hide"><span class="material-symbols-outlined">keyboard_double_arrow_up</span></div>');
-	$(".text-wrap .text-box:nth-child(4)").append('<div class="remove" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Remove Tabs"><span class="material-symbols-outlined">close_small</span></div>');
+	$(".nav-tabs").append('<div class="remove nav-item" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Remove Tabs"><span class="material-symbols-outlined nav-link">close_small</span></div>');
 	
 	$(".nav-hide").on('click', function(){
 		navHide();
