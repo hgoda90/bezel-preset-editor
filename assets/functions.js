@@ -239,7 +239,7 @@ function navHide(){
 		setCookie("dots", "hidden", 30);
 		$(".nav-tabs").addClass("hide");
 		$(".nav-hide span").text("keyboard_double_arrow_down");
-		$(".nav-hide").css("transform", "translateY(-50px)");
+		$(".nav-hide").css("transform", "translateY(-60px)");
 	}
 }
 
@@ -1159,11 +1159,14 @@ dropText2.ondrop = function(e) {
 		if(dots == "hidden"){
 			$(".nav-tabs").addClass("hide");
 			$(".nav-hide span").text("keyboard_double_arrow_down");
-			$(".nav-hide").css("transform", "translateY(-50px)");
+			$(".nav-hide").css("transform", "translateY(-60px)");
 		}
 		
 		$(".text-wrap .text-box:nth-child(4)").append('<div class="nav-hide"><span class="material-symbols-outlined">keyboard_double_arrow_up</span></div>');
 		$(".nav-tabs").append('<div class="remove nav-item" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Remove Tabs"><span class="material-symbols-outlined nav-link">close_small</span></div>');
+		
+		const exampleEl = $('.remove')
+		const tooltip = new bootstrap.Tooltip(exampleEl);
 		
 		$(".nav-hide").on('click', function(){
 			navHide();
@@ -1259,7 +1262,7 @@ dropText13.ondrop = function(e) {
 };
 
 $(document).ready(function () {
-	$('[data-toggle="tooltip"]').tooltip();
+	$('[data-bs-toggle="tooltip"]').tooltip();
 	
 	$('#load input[type="file"]').change(function (e) {
 		const geekss = e.target.files[0];
@@ -1339,6 +1342,11 @@ $(document).ready(function () {
 		
 		$('.image input[type="file"]').val("");
 		$(this).blur();
+	});
+	
+	$('.modal-link').on('click', function(e){
+		e.preventDefault();
+		$('#exampleModal').modal('show').find('.modal-content').load($(this).data('link'));
 	});
 	
 	$('.shader input[type="file"]').change(function (e) {
@@ -1720,7 +1728,7 @@ $(document).ready(function () {
 					break;
 				case 34:
 					e.preventDefault();
-					if(id < $(".nav").children().length){
+					if(id+1 < $(".nav").children().length){
 						$("#tab"+id).removeClass("active");
 						$("#tab-pane"+id).removeClass("active").removeClass("show");
 						$("#preset"+id).removeClass("show");

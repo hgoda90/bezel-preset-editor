@@ -5,6 +5,7 @@ body {
 	color: #333;
 	margin: 0;
 	line-height: unset;
+	position: relative;
 }
 
 .content {
@@ -13,7 +14,6 @@ body {
 	padding: 24px;
 	margin-top: 1%;
 	border-radius: 16px;
-	position: relative;
 }
 
 .title, footer {
@@ -949,4 +949,20 @@ footer .button {
 .nav-link:focus-visible {
     outline: 0;
     box-shadow: none;
+}
+
+.modal{
+	--bs-modal-width: 800px;
+}
+
+.modal-body{
+	line-height: 1.5;
+}
+
+fr{
+	float: right;
+}
+
+footer a+em {
+    cursor: pointer;
 }
