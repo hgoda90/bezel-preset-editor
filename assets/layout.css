@@ -872,17 +872,22 @@ footer .button {
     margin: 5px 3px;
     border: none;
     text-align: center;
-    width: 34px;
-    height: 34px;
+    width: 33px;
+    height: 33px;
 }
 
 .nav-tabs {
     border: none;
     position: absolute;
     right: -2px;
-    bottom: -50px;
+    bottom: -43px;
     transition: transform .2s ease-in;
     display: table;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    margin: 0 2.5px -8px;
+    border-radius: 0 0 12px 12px;
+    padding: 8px 3.5px 0;
+    background: #FFFB;
 }
 
 .preset-title {
@@ -901,7 +906,13 @@ footer .button {
 }
 
 .nav-tabs.hide {
-    transform: translateY(-46px);
+    transform: translateY(-51px);
+}
+
+.nav.empty{
+    border: none;
+    padding: unset;
+    margin: unset;
 }
 
 .nav-hide {
