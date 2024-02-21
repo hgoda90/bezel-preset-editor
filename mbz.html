@@ -4,15 +4,50 @@
 </div>
 <div class="modal-body">
 	<span>[ --- HSM MEGA BEZEL --- ] <fr>[Min, Max]; &nbsp;Inc</fr></span><br>
-	<span>&emsp;&emsp;&emsp;HSM_RESOLUTION_DEBUG_ON = "0.000000" <fr>[0.00, 1.00]; 1.00</fr></span><br>
+	<span title="Show Resolution Info">&emsp;&emsp;&emsp;HSM_RESOLUTION_DEBUG_ON = "0.000000" <fr>[0.00, 1.00]; 1.00</fr></span><br>
 	<br>
 	<span>[CRT BRIGHTNESS & GAMMA]</span><br>
-	<span>&emsp;&emsp;&emsp;GAMMA_INPUT = "2.400000" <fr>[0.10, 5.00]; 0.05</fr></span><br>
-	<span>&emsp;&emsp;&emsp;HSM_GAMMA_OUT_CRT = "2.400000" <fr>[0.10, 5.00]; 0.05</fr></span><br>
-	<span>&emsp;&emsp;&emsp;HSM_POST_CRT_BRIGHTNESS = "1.000000" <fr>[0.01, 5.00]; 0.01</fr></span><br>
-	<span>&emsp;&emsp;&emsp;HSM_POST_CRT_BRIGHTNESS_AFFECT_BLACK_LEVEL = "100.000000" <fr>[0.00, 100.00]; 0.10</fr></span><br>
+	<span title="Gamma In (Game Embedded Gamma)">&emsp;&emsp;&emsp;GAMMA_INPUT = "2.400000" <fr>[0.10, 5.00]; 0.05</fr></span><br>
+	<span title="Gamma Out (Electron Gun Gamma)">&emsp;&emsp;&emsp;HSM_GAMMA_OUT_CRT = "2.400000" <fr>[0.10, 5.00]; 0.05</fr></span><br>
+	<span title="Post CRT Brightness">&emsp;&emsp;&emsp;HSM_POST_CRT_BRIGHTNESS = "1.000000" <fr>[0.01, 5.00]; 0.01</fr></span><br>
+	<span title="Post CRT Brightness Affects Grade Black Level">&emsp;&emsp;&emsp;HSM_POST_CRT_BRIGHTNESS_AFFECT_BLACK_LEVEL = "100.000000" <fr>[0.00, 100.00]; 0.10</fr></span><br>
 	<br>
 	<span>[GRAPHICS GLOBAL BRIGHTNESS]</span><br>
-	<span>&emsp;&emsp;&emsp;HSM_GLOBAL_GRAPHICS_BRIGHTNESS = "100.000000" <fr>[0.00, 500.00]; 1.00</fr></span><br>
-	<span>&emsp;&emsp;&emsp;HSM_STATIC_LAYERS_GAMMA = "1.000000" <fr>[0.01, 5.00]; 0.01</fr></span><br>
+	<span title="Graphics Brightness">&emsp;&emsp;&emsp;HSM_GLOBAL_GRAPHICS_BRIGHTNESS = "100.000000" <fr>[0.00, 500.00]; 1.00</fr></span><br>
+	<span title="Graphics Gamma Adjust">&emsp;&emsp;&emsp;HSM_STATIC_LAYERS_GAMMA = "1.000000" <fr>[0.01, 5.00]; 0.01</fr></span><br>
+	<br>
+	<span>[AMBIENT LIGHTING]</span><br>
+	<span title="Ambient Global Opacity Multiplier">&emsp;&emsp;&emsp;HSM_AMBIENT_LIGHTING_OPACITY = "0.000000" <fr>[0.00, 100.00]; 1.00</fr></span><br>
+	<span title="Ambient 1st Image Opacity">&emsp;&emsp;&emsp;HSM_AMBIENT1_OPACITY = "100.000000" <fr>[0.00, 100.00]; 1.00</fr></span><br>
+	<span title="Ambient 2nd Image Opacity (Used for BG by Default)">&emsp;&emsp;&emsp;HSM_AMBIENT2_OPACITY = "100.000000" <fr>[0.00, 100.00]; 1.00</fr></span><br>
+	<span title="Which Images to Use: BOTH | 1 ONLY | 2 ONLY | SWAP">&emsp;&emsp;&emsp;HSM_AMBIENT_LIGHTING_SWAP_IMAGE_MODE = "0.000000" <fr>[0.00, 3.00]; 1.00</fr></span><br>
+	<br>
+	<span>[SINDEN LIGHTGUN BORDER]</span><br>
+	<span title="Show Border">&emsp;&emsp;&emsp;HSM_SINDEN_BORDER_ON = "0.000000" <fr>[0.00, 1.00]; 1.00</fr></span><br>
+	<span title="Brightness">&emsp;&emsp;&emsp;HSM_SINDEN_BORDER_BRIGHTNESS = "60.000000" <fr>[0.00, 200.00]; 5.00</fr></span><br>
+	<span title="Thickness">&emsp;&emsp;&emsp;HSM_SINDEN_BORDER_THICKNESS = "2.000000" <fr>[0.00, 30.00]; 0.50</fr></span><br>
+	<span title="Compensate Empty Tube">&emsp;&emsp;&emsp;HSM_SINDEN_BORDER_EMPTY_TUBE_COMPENSATION = "0.000000" <fr>[0.00, 1.00]; 1.00</fr></span><br>
+	<br>
+	<span>[VIEWPORT ZOOM]</span><br>
+	<span title="Viewport Zoom">&emsp;&emsp;&emsp;HSM_VIEWPORT_ZOOM = "100.000000" <fr>[10.00, 500.00]; 0.20</fr></span><br>
+	<span title="Zoom CRT Mask">&emsp;&emsp;&emsp;HSM_VIEWPORT_ZOOM_MASK = "0.000000" <fr>[0.00, 1.00]; 1.00</fr></span><br>
+	<span title="Viewport Position X">&emsp;&emsp;&emsp;HSM_VIEWPORT_POSITION_X = "0.000000" <fr>[-500.00, 500.00]; 1.00</fr></span><br>
+	<span title="Viewport Position Y">&emsp;&emsp;&emsp;HSM_VIEWPORT_POSITION_Y = "0.000000" <fr>[-500.00, 500.00]; 1.00</fr></span><br>
+	<br>
+	<span>[FLIP & ROTATE]</span><br>
+	<span title="Flip Viewport Vertical">&emsp;&emsp;&emsp;HSM_FLIP_VIEWPORT_VERTICAL = "0.000000" <fr>[0.00, 1.00]; 1.00</fr></span><br>
+	<span title="Flip Viewport Horizontal">&emsp;&emsp;&emsp;HSM_FLIP_VIEWPORT_HORIZONTAL = "0.000000" <fr>[0.00, 1.00]; 1.00</fr></span><br>
+	<span title="Flip Core Image Vertical">&emsp;&emsp;&emsp;HSM_FLIP_CORE_VERTICAL = "0.000000" <fr>[0.00, 1.00]; 1.00</fr></span><br>
+	<span title="Flip Core Image Horizontal">&emsp;&emsp;&emsp;HSM_FLIP_CORE_HORIZONTAL = "0.000000" <fr>[0.00, 1.00]; 1.00</fr></span><br>
+	<span title="Rotate CRT Tube --  -1:270 | 0 | 1:90">&emsp;&emsp;&emsp;HSM_ROTATE_CORE_IMAGE = "0.000000" <fr>[-1.00, 1.00]; 1.00</fr></span><br>
+	<br>
+	<span>[ASPECT RATIO]</span><br>
+	<span title="Orientation - Auto | Horizontal | Vertical">&emsp;&emsp;&emsp;HSM_ASPECT_RATIO_ORIENTATION = "0.000000" <fr>[0.00, 2.00]; 1.00</fr></span><br>
+	<span title="Type - Auto | Explicit | 4:3 | 3:2 | 16:9 | PAR | Full">&emsp;&emsp;&emsp;HSM_ASPECT_RATIO_MODE = "0.000000" <fr>[0.00, 6.00]; 1.00</fr></span><br>
+	<span title="Explicit Aspect Ratio (Also Auto Ratio Fallback)">&emsp;&emsp;&emsp;HSM_ASPECT_RATIO_EXPLICIT = "1.333300" <fr>[0.00, 8.00]; 0.002</fr></span><br>
 </div>
+<script>
+	$('.modal .modal-body span').on('click', function(){
+		navigator.clipboard.writeText($(this)[0].childNodes[0].data.trim());
+	});
+</script>
