@@ -3,26 +3,43 @@
 	<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
 <div class="modal-body">
-	<span>Read the documentation in docs-ng.md text file <fr>[Min, Max]; &nbsp;Inc</fr></span><br>
-	<span>============================================== </span><br>
-	<span title="&#9733; Color corrections enable?">DO_CCORRECTION = "0.000000" <fr>[0.00, 1.00]; &nbsp;1.00</fr></span><br>
-	<span title="Input signal gain">&emsp;&emsp;&emsp;IN_GLOW_POWER = "1.000000" <fr>[0.00, 5.00]; &nbsp;0.05</fr></span><br>
-	<span title="Luminance push (>1.0=clip)">&emsp;&emsp;&emsp;LUMINANCE = "0.000000" <fr>[0.00, 1.50]; &nbsp;0.05</fr></span><br>
-	<span title="Brightness in (0.0=off)">&emsp;&emsp;&emsp;BRIGHTNESS = "0.000000" <fr>[-1.00, 1.00]; &nbsp;0.01</fr></span><br>
-	<span title="Contrast in (0.0=off)">&emsp;&emsp;&emsp;CONTRAST = "0.000000" <fr>[-1.00, 1.00]; &nbsp;0.01</fr></span><br>
-	<span title="Adaptive black level range">&emsp;&emsp;&emsp;ADAPTIVE_BLACK = "0.000000" <fr>[0.00, 1.00]; &nbsp;0.01</fr></span><br>
-	<span title="Temperature in (6500=off)">&emsp;&emsp;&emsp;TEMPERATURE = "6500.000000" <fr>[3000.00, 14000.00]; 50.00</fr></span><br>
-	<span title="Gamma In (applied at the beginning)">&emsp;&emsp;&emsp;IN_GLOW_GAMMA = "1.000000" <fr>[1.00, 10.00]; &nbsp;0.10</fr></span><br>
-	<span title="Gamma out (applied at the end)">&emsp;&emsp;&emsp;GAMMA_OUT = "0.690000" <fr>[0.10, 4.00]; &nbsp;0.01</fr></span><br>
-	<span title="Monochrome screen colorization">&emsp;&emsp;&emsp;COLOR_MONO_COLORIZE = "0.000000" <fr>[0.00, 1.00]; &nbsp;0.10</fr></span><br>
-	<span title="Hue bright">&emsp;&emsp;&emsp;COLOR_MONO_HUE1 = "0.250000" <fr>[0.00, 1.00]; &nbsp;0.01</fr></span><br>
-	<span title="Hue dark">&emsp;&emsp;&emsp;COLOR_MONO_HUE2 = "0.300000" <fr>[0.00, 1.00]; &nbsp;0.01</fr></span><br>
-	<span title="Hue bright-dark bias">&emsp;&emsp;&emsp;COLOR_MONO_HUE_BIAS = "0.000000" <fr>[-2.00, 2.00]; &nbsp;0.01</fr></span><br>
-	<span title="Saturation in (1.0=off)">&emsp;&emsp;&emsp;SATURATION = "1.000000" <fr>[0.00, 2.00]; &nbsp;0.01</fr></span><br>
-	<span title="Vibrance in (0.0=off)">&emsp;&emsp;&emsp;VIBRANCE = "0.000000" <fr>[0.00, 5.00]; &nbsp;0.10</fr></span><br>
+	<pre>
+	
+<span>Read the documentation in docs-ng.md text file <fr>[Min, Max];  Inc</fr></span>
+<span>============================================== </span>
+<span title="&#9733; Color corrections enable?">DO_CCORRECTION = "0.000000" <fr>[0.00, 1.00];  1.00</fr></span>
+<span title="Input signal gain">    IN_GLOW_POWER = "1.000000" <fr>[0.00, 5.00];  0.05</fr></span>
+<span title="Luminance push (>1.0=clip)">    LUMINANCE = "0.000000" <fr>[0.00, 1.50];  0.05</fr></span>
+<span title="Brightness in (0.0=off)">    BRIGHTNESS = "0.000000" <fr>[-1.00, 1.00];  0.01</fr></span>
+<span title="Contrast in (0.0=off)">    CONTRAST = "0.000000" <fr>[-1.00, 1.00];  0.01</fr></span>
+<span title="Adaptive black level range">    ADAPTIVE_BLACK = "0.000000" <fr>[0.00, 1.00];  0.01</fr></span>
+<span title="Temperature in (6500=off)">    TEMPERATURE = "6500.000000" <fr>[3000.00, 14000.00]; 50.00</fr></span>
+<span title="Gamma In (applied at the beginning)">    IN_GLOW_GAMMA = "1.000000" <fr>[1.00, 10.00];  0.10</fr></span>
+<span title="Gamma out (applied at the end)">    GAMMA_OUT = "0.690000" <fr>[0.10, 4.00];  0.01</fr></span>
+<span title="Monochrome screen colorization">    COLOR_MONO_COLORIZE = "0.000000" <fr>[0.00, 1.00];  0.10</fr></span>
+<span title="Hue bright">        COLOR_MONO_HUE1 = "0.250000" <fr>[0.00, 1.00];  0.01</fr></span>
+<span title="Hue dark">        COLOR_MONO_HUE2 = "0.300000" <fr>[0.00, 1.00];  0.01</fr></span>
+<span title="Hue bright-dark bias">        COLOR_MONO_HUE_BIAS = "0.000000" <fr>[-2.00, 2.00];  0.01</fr></span>
+<span title="Saturation in (1.0=off)">    SATURATION = "1.000000" <fr>[0.00, 2.00];  0.01</fr></span>
+<span title="Vibrance in (0.0=off)">    VIBRANCE = "0.000000" <fr>[0.00, 5.00];  0.10</fr></span>
+	
+	</pre>
 </div>
 <script>
 	$('.modal .modal-body span').on('click', function(){
-		navigator.clipboard.writeText($(this)[0].childNodes[0].data.trim());
+		var setting = $(this)[0].childNodes[0].data.trim(),
+			text = $(".text").text();
+		
+		if(bezelStyle == "koko-aio"){
+			if(hold == "on" && text == ""){
+				$(".text").text(setting).val(setting);
+			}
+			else if(hold == "on" && text != ""){
+				$(".text").text(text + '\n' + setting).val(text + '\n' + setting);
+			}
+			else{
+				$(".text").text(setting).val(setting);
+			}
+		}
 	});
 </script>
