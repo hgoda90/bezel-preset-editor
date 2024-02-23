@@ -966,3 +966,11 @@ fr{
 footer a+em {
     cursor: pointer;
 }
+
+pre {
+    margin: 0;
+}
+
+.modal-header {
+    background-color: #F2F2F2;
+}

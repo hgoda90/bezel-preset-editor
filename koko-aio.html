@@ -5,24 +5,288 @@
 <div class="modal-body">
 	<pre>
 	
-<span>Read the documentation in docs-ng.md text file <fr>[Min, Max];  Inc</fr></span>
+<span>Read the documentation in docs-ng.md text file <fr>[Min, Max];   Inc</fr></span>
 <span>============================================== </span>
-<span title="&#9733; Color corrections enable?">DO_CCORRECTION = "0.000000" <fr>[0.00, 1.00];  1.00</fr></span>
-<span title="Input signal gain">    IN_GLOW_POWER = "1.000000" <fr>[0.00, 5.00];  0.05</fr></span>
-<span title="Luminance push (>1.0=clip)">    LUMINANCE = "0.000000" <fr>[0.00, 1.50];  0.05</fr></span>
-<span title="Brightness in (0.0=off)">    BRIGHTNESS = "0.000000" <fr>[-1.00, 1.00];  0.01</fr></span>
-<span title="Contrast in (0.0=off)">    CONTRAST = "0.000000" <fr>[-1.00, 1.00];  0.01</fr></span>
-<span title="Adaptive black level range">    ADAPTIVE_BLACK = "0.000000" <fr>[0.00, 1.00];  0.01</fr></span>
-<span title="Temperature in (6500=off)">    TEMPERATURE = "6500.000000" <fr>[3000.00, 14000.00]; 50.00</fr></span>
-<span title="Gamma In (applied at the beginning)">    IN_GLOW_GAMMA = "1.000000" <fr>[1.00, 10.00];  0.10</fr></span>
-<span title="Gamma out (applied at the end)">    GAMMA_OUT = "0.690000" <fr>[0.10, 4.00];  0.01</fr></span>
-<span title="Monochrome screen colorization">    COLOR_MONO_COLORIZE = "0.000000" <fr>[0.00, 1.00];  0.10</fr></span>
-<span title="Hue bright">        COLOR_MONO_HUE1 = "0.250000" <fr>[0.00, 1.00];  0.01</fr></span>
-<span title="Hue dark">        COLOR_MONO_HUE2 = "0.300000" <fr>[0.00, 1.00];  0.01</fr></span>
-<span title="Hue bright-dark bias">        COLOR_MONO_HUE_BIAS = "0.000000" <fr>[-2.00, 2.00];  0.01</fr></span>
-<span title="Saturation in (1.0=off)">    SATURATION = "1.000000" <fr>[0.00, 2.00];  0.01</fr></span>
-<span title="Vibrance in (0.0=off)">    VIBRANCE = "0.000000" <fr>[0.00, 5.00];  0.10</fr></span>
-	
+<span>&#9733; Color corrections</span>
+<span title="Enable">    DO_CCORRECTION = "0.000000" <fr>[0.00, 1.00];   1.00</fr></span>
+<span title="Input signal gain">    IN_GLOW_POWER = "1.000000" <fr>[0.00, 5.00];   0.05</fr></span>
+<span title="Luminance push (>1.0=clip)">    LUMINANCE = "0.000000" <fr>[0.00, 1.50];   0.05</fr></span>
+<span title="Brightness in (0.0=off)">    BRIGHTNESS = "0.000000" <fr>[-1.00, 1.00];   0.01</fr></span>
+<span title="Contrast in (0.0=off)">    CONTRAST = "0.000000" <fr>[-1.00, 1.00];   0.01</fr></span>
+<span title="Adaptive black level range">    ADAPTIVE_BLACK = "0.000000" <fr>[0.00, 1.00];   0.01</fr></span>
+<span title="Temperature in (6500=off)">    TEMPERATURE = "6500.000000" <fr>[3000.00, 14000.00];  50.00</fr></span>
+<span title="Gamma In (applied at the beginning)">    IN_GLOW_GAMMA = "1.000000" <fr>[1.00, 10.00];   0.10</fr></span>
+<span title="Gamma out (applied at the end)">    GAMMA_OUT = "0.690000" <fr>[0.10, 4.00];   0.01</fr></span>
+<span title="Monochrome screen colorization">    COLOR_MONO_COLORIZE = "0.000000" <fr>[0.00, 1.00];   0.10</fr></span>
+<span title="Hue bright">        COLOR_MONO_HUE1 = "0.250000" <fr>[0.00, 1.00];   0.01</fr></span>
+<span title="Hue dark">        COLOR_MONO_HUE2 = "0.300000" <fr>[0.00, 1.00];   0.01</fr></span>
+<span title="Hue bright-dark bias">        COLOR_MONO_HUE_BIAS = "0.000000" <fr>[-2.00, 2.00];   0.01</fr></span>
+<span title="Saturation in (1.0=off)">    SATURATION = "1.000000" <fr>[0.00, 2.00];   0.01</fr></span>
+<span title="Vibrance in (0.0=off)">    VIBRANCE = "0.000000" <fr>[0.00, 5.00];   0.10</fr></span>
+
+<span>&#9733; FXAA</span>
+<span title="Enable">    DO_FXAA = "0.000000" <fr>[0.00, 1.00];   1.00</fr></span>
+
+<span>&#9733; RF Noise</span>
+<span title="Enable">    DO_RF_NOISE = "0.000000" <fr>[0.00, 1.00];   1.00</fr></span>
+<span title="Strength">    RF_NOISE_STRENGTH = "0.050000" <fr>[0.00, 1.00];  0.005</fr></span>
+
+<span>&#9733; Dedither (not with NTSC artifacts)</span>
+<span title="Enable">    DO_DEDITHER = "0.000000" <fr>[0.00, 1.00];   1.00</fr></span>
+<span title="Sensitivity">    DEDITHER_TRESHMAX = "1.200000" <fr>[0.00, 3.00];   0.10</fr></span>
+<span title="Basic search strength">    DEDITHER_STRENGTH = "0.800000" <fr>[0.00, 1.00];   0.10</fr></span>
+<span title="Extensive search strength">    DEDITHER_STRENGTH2 = "0.000000" <fr>[0.00, 1.00];   0.10</fr></span>
+
+<span>&#9733; CVBS: NTSC color artifacts</span>
+<span title="Enable">    DO_NTSC_ARTIFACTS = "0.000000" <fr>[0.00, 1.00];   1.00</fr></span>
+<span title="Strength">    NTSC_MIX = "0.500000" <fr>[0.00, 3.00];   0.10</fr></span>
+<span title="Filter Width">    NTSC_FILTER_WIDTH = "17.000000" <fr>[5.00, 21.00];   4.00</fr></span>
+<span title="Subcarrier Frequency mul">    NTSC_FILTER_SCF = "4.570000" <fr>[1.00, 10.00];   0.01</fr></span>
+<span title="Frequency cutoff">    NTSC_FILTER_FC = "2.500000" <fr>[0.00, 10.00];   0.10</fr></span>
+<span title="Phase shift">    NTSC_PHASE_SHIFT = "0.000000" <fr>[0.00, 1.00];   1.00</fr></span>
+<span>    1 and 2 need Glow or Bandwidth Limited chroma</span>
+<span title="Consider artifacts above this treshold">        NTSC_ARTF_TRSH = "0.100000" <fr>[0.00, 1.00];   0.01</fr></span>
+<span title="Show the mask of selected artifacts (debug)">        NTSC_SHOW_ARTF_MASK = "0.000000" <fr>[0.00, 1.00];   1.00</fr></span>
+<span title="1* Under treshold: Cancel blur (Glow)">        NTSC_ARTF_NOBLUR = "0.000000" <fr>[0.00, 8.00];   0.01</fr></span>
+<span title="2* Under treshold: Cancel Bandwidth limited chroma">        NTSC_ARTF_NOBLEED = "0.000000" <fr>[0.00, 1.00];   0.01</fr></span>
+<span title="3* Under treshold: Cancel artifacts">        NTSC_ARTF_ZAP = "0.000000" <fr>[0.00, 1.00];   0.01</fr></span>
+
+<span>&#9733; CVBS: Bandwidth limited chroma</span>
+<span title="Enable">    DO_SAT_BLEED = "0.000000" <fr>[0.00, 1.00];   1.00</fr></span>
+<span title="Use PAL colorspace, not NTSC">    SAT_BLEED_PAL = "0.000000" <fr>[0.00, 1.00];   1.00</fr></span>
+<span title="Strength">    SAT_BLEED_STRENGTH = "1.000000" <fr>[0.00, 5.00];   0.01</fr></span>
+<span title="Size (capped to 5.0 in d3d)">    SAT_BLEED_SIZE = "5.000000" <fr>[1.00, 20.00];   1.00</fr></span>
+<span title="Falloff">    SAT_BLEED_FALLOFF = "1.700000" <fr>[1.00, 2.00];   0.01</fr></span>
+
+<span>&#9733; Persistence of phosphors</span>
+<span title="Enable">    DO_PPERSISTENCE = "0.000000" <fr>[0.00, 1.00];   1.00</fr></span>
+<span title="Early decay">    PPERSISTENCE_START = "0.900000" <fr>[0.00, 1.00];   0.05</fr></span>
+<span title="Late Persistence">    PPERSISTENCE_END = "0.500000" <fr>[0.00, 2.00];   0.05</fr></span>
+
+<span>&#9733; Deconvergence</span>
+<span title="Enable">    DO_SHIFT_RGB = "0.000000" <fr>[0.00, 1.00];   1.00</fr></span>
+<span title="Strength">    OFFSET_STRENGTH = "0.600000" <fr>[0.00, 1.00];   0.05</fr></span>
+<span title="Red offset">    SHIFT_R = "-40.000000" <fr>[-210.00, 189.00];   1.00</fr></span>
+<span title="Green offset">    SHIFT_G = "2.000000" <fr>[-210.00, 189.00];   1.00</fr></span>
+<span title="Blue offset">    SHIFT_B = "40.000000" <fr>[-210.00, 189.00];   1.00</fr></span>
+
+<span>&#9733; Glow/Blur</span>
+<span title="Enable">    DO_IN_GLOW = "0.000000" <fr>[0.00, 1.00];   1.00</fr></span>
+<span title="Glow to blur bias">    IN_GLOW_BIAS = "1.000000" <fr>[0.00, 1.00];   0.05</fr></span>
+<span title="Glow spread amount">    IN_GLOW_SPREAD = "0.600000" <fr>[0.00, 4.00];   0.05</fr></span>
+<span title="Sharp X (neg=use BOX unsharp)">    IN_GLOW_W = "2.500000" <fr>[-2.00, 7.00];   0.05</fr></span>
+<span title="Sharp Y (neg=use BOX unsharp)">    IN_GLOW_H = "2.500000" <fr>[-2.00, 7.00];   0.05</fr></span>
+
+<span>&#9733; Tate mode</span>
+<span title="(0:disabled 1:auto 2:forced)">    TATE = "1.000000" <fr>[0.00, 2.00];   1.00</fr></span>
+
+<span>&#9733; Vertical Resolution Switch Glitch</span>
+<span title="Enable">    RESSWITCH_GLITCH_SIZE = "0.100000" <fr>[0.00, 0.50];   0.05</fr></span>
+
+<span>&#9733; Hi-resolution scanlines handling</span>
+<span title="Consider Hi-Resolution above # lines (0=never)">    MIN_LINES_INTERLACED = "380.000000" <fr>[0.00, 5.00];   0.05</fr></span>
+<span title="Hi-Res scanlines type (read docs)">    PIXELGRID_INTR_DISABLE_Y = "-1.000000" <fr>[-2.00, 2.00];   1.00</fr></span>
+<span>    (-2: Faker-Interlaced, -1: Fake-Interlaced)</span>
+<span>    ( 0: Interlaced, 1: No scanlines, 2: Don't interlace)</span>
+<span title="Scanlines flicker (0=off,1=on,2=if Hi-Res)">    PIXELGRID_INTR_FLICK_MODE = "2.000000" <fr>[0.00, 2.00];   1.00</fr></span>
+<span title="Flicker power">        PIXELGRID_INTR_FLICK_POWR = "0.250000" <fr>[0.00, 8.00];   0.01</fr></span>
+
+<span>&#9733; Low level Phosphor grid</span>
+<span title="Enable">    DO_PIXELGRID = "0.000000" <fr>[0.00, 1.00];   1.00</fr></span>
+<span title="Overmask (1.0 = neutral)">    PIXELGRID_OVERMASK = "1.000000" <fr>[0.00, 2.00];   0.02</fr></span>
+
+<span>    &#9733; Scanlines (0 to disable)</span>
+<span title="Scalines Strength">        DO_PIXELGRID_H = "1.000000" <fr>[0.00, 1.25];   0.05</fr></span>
+<span title="Double-scan low input resolutions">        PIXELGRID_DOUBLESCAN = "0.000000" <fr>[0.00, 1.00];   1.00</fr></span>
+<span title="Fake integer scanlines (-1=auto)">        PIXELGRID_COREY_FAKE_SCAN = "-1.000000" <fr>[-1.00, 1.00];   1.00</fr></span>
+<span title="Phosphors height Min">        PIXELGRID_MIN_H = "0.200000" <fr>[0.00, 1.00];   0.05</fr></span>
+<span title="Phosphors height Max">        PIXELGRID_MAX_H = "0.600000" <fr>[0.00, 1.50];   0.05</fr></span>
+<span title="Phosphors height min->max gamma">        PIXELGRID_GAMMA_H = "4.200000" <fr>[1.00, 8.00];   0.10</fr></span>
+<span title="Inter line extra steepness">        PIXELGRID_NO_INTERBLEED_H = "0.000000" <fr>[0.00, 10.00];   0.10</fr></span>
+<span title="Anti-moire sweet spot (disables Y deconvergence)">        PIXELGRID_H_ANTIMOIRE = "0.000000" <fr>[0.00, 1.00];   0.01</fr></span>
+<span title="Slotmask(fake) offset (not with anti-moire)">        PIXELGRID_OFFSET_CORE = "0.000000" <fr>[0.00, 1.00];   0.01</fr></span>
+<span title="Deconvergence Y: R phosphor">        PIXELGRID_DECON_R_H = "0.000000" <fr>[-1.60, 1.60];   0.10</fr></span>
+<span title="Deconvergence Y: G phosphor">        PIXELGRID_DECON_G_H = "0.000000" <fr>[-1.60, 1.60];   0.10</fr></span>
+<span title="Deconvergence Y: B phosphor">        PIXELGRID_DECON_B_H = "0.000000" <fr>[-1.60, 1.60];   0.10</fr></span>
+<span title="Dedot mask between scanlines (use only if needed!)">        PIXELGRID_H_DEDOT = "0.000000" <fr>[0.00, 2.00];   0.10</fr></span>
+
+<span>    &#9733; Horizontal Mask (0 to disable)</span>
+<span title="Mask Strength">        DO_PIXELGRID_W = "1.000000" <fr>[0.00, 1.00];   0.05</fr></span>
+<span title="Resolution: (core or screen)">        PIXELGRID_SIZE_W = "1.000000" <fr>[0.00, 1.00];   1.00</fr></span>
+<span title="Cell size multiplier x (neg=divider)">        PIXELGRID_MUL_X = "1.000000" <fr>[-8.00, 8.00];  0.125</fr></span>
+<span title="Mask type preset (0: for manual)">        PIXELGRID_H_PRST = "3.000000" <fr>[0.00, 7.00];   1.00</fr></span>
+<span>        (1:gm 2:gmx 3:rgb 4:rgbx 5:rbg 6:rbgx 7:wx)</span>
+<span title="Phosphors+gap count (mask size)">            PIXELGRID_H_COUNT = "3.000000" <fr>[1.00, 4.00];   1.00</fr></span>
+<span title="R phospor position">            PIXELGRID_R_SHIFT = "0.000000" <fr>[0.00, 4.00];   0.10</fr></span>
+<span title="G phospor position">            PIXELGRID_G_SHIFT = "1.000000" <fr>[0.00, 4.00];   0.10</fr></span>
+<span title="B phospor position">            PIXELGRID_B_SHIFT = "2.000000" <fr>[0.00, 4.00];   0.10</fr></span>
+<span title="Phosphors width Min">        PIXELGRID_MIN_W = "0.250000" <fr>[0.05, 1.00];   0.01</fr></span>
+<span title="Phosphors width Max">        PIXELGRID_MAX_W = "0.250000" <fr>[0.05, 1.00];   0.01</fr></span>
+<span title="Phosphors width min->max gamma">        PIXELGRID_GAMMA_W = "4.200000" <fr>[1.00, 8.00];   0.10</fr></span>
+<span title="Black level of the unexcided phosphor grid">        PIXELGRID_BASAL_GRID = "0.000000" <fr>[0.00, 10.00];   0.01</fr></span>
+
+<span>    &#9733; Vertical Cell Mask (aperturegrille/slotmask)</span>
+<span title="Mask Strength">        PIXELGRID_Y_MASK = "0.500000" <fr>[0.00, 1.00];   0.05</fr></span>
+<span title="Resolution: (core or screen)">        PIXELGRID_Y_MASK_COORDS = "1.000000" <fr>[0.00, 1.00];   1.00</fr></span>
+<span title="Height divider (neg = multiplier)">        PIXELGRID_Y_MASK_HEIGHT = "0.500000" <fr>[-8.00, 8.00];  0.125</fr></span>
+<span title="Even/odd Y offset (slotmask)">        PIXELGRID_Y_MASK_OFFSET = "1.000000" <fr>[0.00, 1.00];   1.00</fr></span>
+<span title="Vertical shift (neg = auto)">        PIXELGRID_Y_MASK_SHIFT = "-0.010000" <fr>[-0.01, 1.00];   0.01</fr></span>
+<span title="Steepness">        PIXELGRID_Y_MASK_STEEP = "2.000000" <fr>[1.00, 30.00];   1.00</fr></span>
+<span title="Fadeout under light">        PIXELGRID_Y_MASK_ON_WHITE = "0.500000" <fr>[0.00, 2.00];   0.01</fr></span>
+<span title="Sparkling look punch">        PIXELGRID_Y_SPARK = "0.000000" <fr>[0.00, 8.00];   0.10</fr></span>
+
+<span>&#9733; Shadowmask</span>
+<span title="Enable">    PIXELGRID_DO_SHADOWMASK = "0.000000" <fr>[0.00, 1.00];   1.00</fr></span>
+<span title="X staggering">    PIXELGRID_SHADOWMASK_SHIFT = "1.000000" <fr>[0.50, 4.00];   0.50</fr></span>
+<span title="Phosphor height">    PIXELGRID_SHADOWMASK_H = "1.000000" <fr>[1.00, 10.00];   1.00</fr></span>
+
+<span>&#9733; Dot matrix emulation (NOT with scanlines!)</span>
+<span title="Enable">    DO_DOT_MATRIX = "0.000000" <fr>[0.00, 1.00];   1.00</fr></span>
+<span title="Grid strength">    DOT_M_G_STR = "0.000000" <fr>[0.00, 1.00];   0.01</fr></span>
+<span title="Paint on bright (<0 on black)">        DOT_M_G_TRESH = "1.100000" <fr>[-1.10, 1.10];   0.01</fr></span>
+<span title="Grid brightness">        DOT_M_G_BRT = "0.000000" <fr>[0.00, 1.00];   0.01</fr></span>
+<span title="Grid sharpness (0.0 for auto)">        DOT_M_G_SHARP = "0.000000" <fr>[0.00, 20.00];   0.25</fr></span>
+<span title="Refresh inertia">    DOT_M_MBLUR_STR = "0.450000" <fr>[0.00, 0.90];   0.05</fr></span>
+<span title="Inertia on: both, white, black">        DOT_M_MBLUR_MODE = "0.000000" <fr>[0.00, 2.00];   1.00</fr></span>
+<span title="Shadow strength (disables deconvergence)">    DOT_M_SHADOW_STR = "0.000000" <fr>[0.00, 1.00];   0.01</fr></span>
+<span title="Shadow offset">        DOT_M_SHADOW_OFF = "0.000000" <fr>[-1.00, 1.00];   0.01</fr></span>
+<span title="Multiply factor (debug)">    DOT_M_MULTIPLY = "1.000000" <fr>[1.00, 50.00];   1.00</fr></span>
+
+<span>&#9733; Halo</span>
+<span title="Enable">    DO_HALO = "0.000000" <fr>[0.00, 1.00];   1.00</fr></span>
+<span title="Pre-attenuate input signal gain to 1x">    HALO_NO_PREGAIN = "0.000000" <fr>[0.00, 1.00];   1.00</fr></span>
+<span title="Strength (negative = 10x precision)">    HALO_POWER = "0.900000" <fr>[-50.00, 5.00];   0.01</fr></span>
+<span title="Sharpness">    HALO_SHARPNESS = "3.000000" <fr>[0.05, 7.00];   0.05</fr></span>
+<span title="Gamma in, the higher, the less the halo on dark colors">    HALO_GAMMA = "2.000000" <fr>[1.00, 10.00];   0.05</fr></span>
+<span title="Gamma out">    HALO_GAMMA_OUT = "1.000000" <fr>[0.25, 4.00];   0.10</fr></span>
+<span title="Light up scanline gaps and dot grid gaps too">    HALO_VS_SCAN = "0.000000" <fr>[0.00, 1.00];   0.01</fr></span>
+
+<span>&#9733; Bloom</span>
+<span title="Enable">    DO_BLOOM = "0.000000" <fr>[0.00, 1.00];   1.00</fr></span>
+<span title="Final mix, (0.0=off)">    BLOOM_MIX = "0.450000" <fr>[0.00, 1.00];   0.01</fr></span>
+<span title="Radius">    BLOOM_SIZE = "4.000000" <fr>[0.25, 30.00];   0.25</fr></span>
+<span title="Quality: more is better but slower">    BLOOM_QUALITY = "1.000000" <fr>[1.00, 8.00];   1.00</fr></span>
+<span title="Gamma in (threshold)">    BLOOM_GAMMA = "8.000000" <fr>[1.00, 10.00];   0.50</fr></span>
+<span title="Gamma out (contour smoothness)">    BLOOM_GAMMA_OUT = "1.000000" <fr>[0.10, 10.00];   0.10</fr></span>
+<span title="Power multiplier">    BLOOM_POWER = "1.200000" <fr>[1.00, 20.00];   0.05</fr></span>
+<span title="Modulate: Local exposure eye adaption strength">    BLOOM_EYE_ADPT_SRT = "0.450000" <fr>[0.00, 10.00];   0.05</fr></span>
+<span title="Modulate: Time before eye adaption starts">    BLOOM_EYE_INERTIA = "1500.000000" <fr>[10.00, 10000.00];  50.00</fr></span>
+<span title="Modulate: Strength on bright areas (0 = aura)">    BLOOM_OVER_WHITE = "0.500000" <fr>[0.00, 1.00];   0.05</fr></span>
+<span title="Bypass/Solo (1=Unmodulated, 2=Modulated)">    BLOOM_BYPASS = "0.000000" <fr>[0.00, 2.00];   1.00</fr></span>
+
+<span>&#9733; Curvature/Border</span>
+<span title="Enable">    DO_CURVATURE = "0.000000" <fr>[0.00, 1.00];   1.00</fr></span>
+<span title="Warp X">    GEOM_WARP_X = "0.280000" <fr>[0.00, 6.00];   0.01</fr></span>
+<span title="Warp Y">    GEOM_WARP_Y = "0.320000" <fr>[0.00, 6.00];   0.01</fr></span>
+<span title="Corner radius">    GEOM_CORNER_SIZE = "0.005000" <fr>[0.005, 0.10];  0.001</fr></span>
+<span title="Corner sharpness">    GEOM_CORNER_SMOOTH = "350.000000" <fr>[15.00, 1000.00];   1.00</fr></span>
+
+<span>&#9733; Bezel</span>
+<span title="Enable">    DO_BEZEL = "0.000000" <fr>[0.00, 1.00];   1.00</fr></span>
+<span title="Straight">    BEZEL_USE_STRAIGHT = "0.000000" <fr>[0.00, 1.00];   1.00</fr></span>
+<span title="Inner zoom (ignored if integer scaled)">    BEZEL_INNER_ZOOM = "-0.180000" <fr>[-1.50, 0.50];  0.001</fr></span>
+<span title="Frame zoom">    BEZEL_FRAME_ZOOM = "0.000000" <fr>[-1.50, 0.50];  0.001</fr></span>
+<span title="Color: Red">    BEZEL_R = "-0.300000" <fr>[-1.00, 1.00];  0.005</fr></span>
+<span title="Color: Green">    BEZEL_G = "-0.300000" <fr>[-1.00, 1.00];  0.005</fr></span>
+<span title="Color: Blue">    BEZEL_B = "-0.300000" <fr>[-1.00, 1.00];  0.005</fr></span>
+<span title="Contrast">    BEZEL_CON = "1.300000" <fr>[0.00, 10.00];   0.01</fr></span>
+<span title="Reflections zoom">    BEZEL_RFL_ZOOM = "0.000000" <fr>[-1.50, 0.50];  0.005</fr></span>
+<span title="Reflections strength">    BEZEL_REFL_STRENGTH = "0.650000" <fr>[0.00, 2.00];   0.01</fr></span>
+<span title="Reflections sharpness">    BEZEL_RFL_BLR_SHD = "-0.200000" <fr>[-0.70, 0.80];   0.01</fr></span>
+<span title="Reflections roughness">    BEZEL_ROUGHNESS = "1.000000" <fr>[0.00, 5.00];   0.10</fr></span>
+<span title="Diffusion strength">    BEZEL_DIFFUSION_STR = "0.000000" <fr>[0.00, 1.00];   0.01</fr></span>
+<span title="Specularity strength">    BEZEL_SPCL_STRENGTH = "0.500000" <fr>[0.00, 3.00];   0.05</fr></span>
+<span title="Darken corners">    BEZEL_CORNER_DARK = "0.800000" <fr>[0.00, 1.00];   0.05</fr></span>
+
+<span>&#9733; Back/Foreground image</span>
+<span title="Enable">    DO_BG_IMAGE = "0.000000" <fr>[0.00, 1.00];   1.00</fr></span>
+<span>    !! RetroArch aspect needs to be set to Full</span>
+<span title="Image over content (alpha channel driven)">    BG_IMAGE_OVER = "0.000000" <fr>[0.00, 1.00];   1.00</fr></span>
+<span title="Shift Image over X axis">    BG_IMAGE_OFFX = "0.000000" <fr>[-1.00, 1.00]; 0.0005</fr></span>
+<span title="Shift Image over Y axis">    BG_IMAGE_OFFY = "0.000000" <fr>[-1.00, 1.00]; 0.0005</fr></span>
+<span title="Zoom Image">    BG_IMAGE_ZOOM = "1.000000" <fr>[-1.00, 3.00]; 0.0005</fr></span>
+<span title="Rotate/flip (0=auto,1/-1=no change,<0 for rotated games)">    BG_IMAGE_ROTATION = "0.000000" <fr>[-8.00, 8.00];   1.00</fr></span>
+<span title="Nightify image">    BG_IMAGE_NIGHTIFY = "0.000000" <fr>[0.00, 1.00];   0.10</fr></span>
+<span title="Wrap mode: default, clamp to border, edge, repeat">    BG_IMAGE_WRAP_MODE = "0.000000" <fr>[0.00, 3.00];   1.00</fr></span>
+
+<span>&#9733; Backdrop mirrored image</span>
+<span title="Enable">    DO_BACKDROP = "0.000000" <fr>[0.00, 1.00];   1.00</fr></span>
+<span title="Shift backdrop over X axis">    BACKDROP_OFFX = "0.000000" <fr>[-1.00, 1.00]; 0.0005</fr></span>
+<span title="Shift backdrop over Y axis">    BACKDROP_OFFY = "0.000000" <fr>[-1.00, 1.00]; 0.0005</fr></span>
+<span title="Zoom backdrop">    BACKDROP_ZOOM = "1.000000" <fr>[-1.00, 3.00]; 0.0005</fr></span>
+
+<span>&#9733; Ambient light leds</span>
+<span title="Enable">    DO_AMBILIGHT = "1.000000" <fr>[0.00, 1.00];   1.00</fr></span>
+<span>    !! RetroArch aspect needs to be set to Full</span>
+<span title="Slowness">    AMBI_STEPS = "60.000000" <fr>[5.00, 1000.00];   5.00</fr></span>
+<span title="Led power/falloff">    AMBI_FALLOFF = "0.400000" <fr>[0.10, 3.00];   0.01</fr></span>
+<span title="Led Saturation">    AMBI_POWER = "1.800000" <fr>[0.00, 100.00];   0.05</fr></span>
+<span title="Led internalness">    AMBI_INT_OFFSET = "0.070000" <fr>[-1.00, 1.00];   0.01</fr></span>
+<span title="Widen lights (horizontal games)">    AMBI_STRETCH = "0.000000" <fr>[0.00, 1.00];   0.01</fr></span>
+<span title="Widen lights (vertical games)">    AMBI_STRETCH_VERTICAL = "0.500000" <fr>[0.00, 1.00];   0.01</fr></span>
+<span title="Output Gamma">    AMBI_GAMMA = "1.300000" <fr>[0.10, 8.00];   0.10</fr></span>
+<span title="Bezel Colorization intensity">    AMBI_OVER_BEZEL = "0.200000" <fr>[0.00, 5.00];   0.05</fr></span>
+<span title="Bezel Colorization size">    AMBI_OVER_BEZEL_SIZE = "0.150000" <fr>[0.001, 0.50];  0.001</fr></span>
+<span title="Back/Foreground image alpha blend (0=mix, 1=add)">    AMBI_BG_IMAGE_BLEND_MODE = "0.000000" <fr>[0.00, 1.00];   1.00</fr></span>
+<span title="Foggy (power on dark colors, add mode only)">    AMBI_ADD_ON_BLACK = "1.000000" <fr>[0.00, 1.00];   0.05</fr></span>
+<span title="Always colorize Back/Foreground image (add mode only)">    AMBI_BG_IMAGE_FORCE = "0.000000" <fr>[0.00, 1.00];   0.10</fr></span>
+
+<span>&#9733; Vignette</span>
+<span title="Enable">    DO_VIGNETTE = "0.000000" <fr>[0.00, 1.00];   1.00</fr></span>
+<span title="Size">    V_SIZE = "0.700000" <fr>[0.30, 2.00];   0.02</fr></span>
+<span title="Power">    V_POWER = "1.000000" <fr>[0.05, 1.00];   0.01</fr></span>
+
+<span>&#9733; Spot</span>
+<span title="Enable">    DO_SPOT = "0.000000" <fr>[0.00, 1.00];   1.00</fr></span>
+<span title="X Position">    S_POSITION_X = "-0.500000" <fr>[-2.00, 2.00];   0.05</fr></span>
+<span title="Y Position">    S_POSITION_Y = "0.500000" <fr>[-2.00, 2.00];   0.05</fr></span>
+<span title="Size">    S_SIZE = "0.400000" <fr>[0.00, 1.00];   0.01</fr></span>
+<span title="Power">    S_POWER = "0.100000" <fr>[0.05, 2.00];   0.01</fr></span>
+
+<span>&#9733; Global shift/zoom</span>
+<span title="Enable">    DO_GLOBAL_SHZO = "0.000000" <fr>[0.00, 1.00];   1.00</fr></span>
+<span title="X axis shift">    GLOBAL_OFFX = "0.000000" <fr>[-1.00, 1.00]; 0.0005</fr></span>
+<span title="Y axis shift">    GLOBAL_OFFY = "0.000000" <fr>[-1.00, 1.00]; 0.0005</fr></span>
+<span title="Zoom">    GLOBAL_ZOOM = "2.000000" <fr>[0.00, 3.00]; 0.0005</fr></span>
+
+<span>&#9733; Aspect Ratio</span>
+<span title="Aspect Ratio Numerator (<=0 for a preset)">    ASPECT_X = "0.000000" <fr>[-6.00, 256.00];   1.00</fr></span>
+<span title="Aspect Ratio Denominator">    ASPECT_Y = "3.000000" <fr>[0.00, 256.00];   1.00</fr></span>
+<span>    Presets reference list:</span>
+<span>        (0 =  MAME 1.33)</span>
+<span>        (-1 =  NTSC 1.5)</span>
+<span>        (-2 = PAL 1.25)</span>
+<span>        (-3 = Snes 8/7)</span>
+<span>        (-4 = Megadrive 10/7)</span>
+<span>        (-5 = Uncorrected)</span>
+<span>        (-6 = MAME rotated/TATE 0.75)</span>
+
+<span>&#9733; Luminosity tied zoom (!!OBSTRUCTS integer scale!!)</span>
+<span title="Enable">    DO_DYNZOOM = "0.015000" <fr>[0.00, 1.00];  0.005</fr></span>
+
+<span>&#9733; Override content geometry</span>
+<span title="Enable">    DO_GAME_GEOM_OVERRIDE = "0.000000" <fr>[0.00, 1.00];   1.00</fr></span>
+<span title="Integer scale (disables inner zoom) 2=No keep aspect">    GAME_GEOM_INT_SCALE = "0.000000" <fr>[0.00, 2.00];   1.00</fr></span>
+<span title="Maximum integer scale">        GAME_GEOM_INT_SCALE_MAX = "10.000000" <fr>[1.00, 100.00];   1.00</fr></span>
+<span title="Permit integer overscale by">        GAME_GEOM_INT_SCALE_OVR = "1.040000" <fr>[1.00, 1.10];   0.01</fr></span>
+<span>    !! Switch off luminosity tied zoom to use integer scaling</span>
+<span>    !! The following will override integer scale</span>
+<span title="Aspect (0 = unchanged)">    GAME_GEOM_ASPECT = "0.000000" <fr>[0.00, 3.00];  0.005</fr></span>
+<span title="Vertical position">    GAME_GEOM_VSHIFT = "0.000000" <fr>[-10.00, 10.00];   0.01</fr></span>
+<span title="Horizontal position">    GAME_GEOM_HSHIFT = "0.000000" <fr>[-10.00, 10.00];   0.01</fr></span>
+<span title="Zoom">    GAME_GEOM_ZOOM = "1.000000" <fr>[0.00, 2.00];   0.01</fr></span>
+<span title="Sharp hack through offset (0.0=disable)">    GAME_GEOM_OFF_FIX = "0.000000" <fr>[0.00, 100.00];   1.00</fr></span>
+
+<span>&#9733; Tilt</span>
+<span title="Enable">    DO_TILT = "0.000000" <fr>[0.00, 1.00];   1.00</fr></span>
+<span title="Tilt along X axis">    TILT_X = "0.000000" <fr>[-0.50, 0.50];   0.01</fr></span>
+<span title="Fov">    TILT_FOV = "0.700000" <fr>[0.10, 1.50];   0.05</fr></span>
+<span title="Bezel multiplier">    TILT_BEZEL_K = "1.000000" <fr>[0.00, 1.50];   0.01</fr></span>
+
+<span>!THE FOLLOWING FEATURES ARE STATIC, SEE docs-ng.md TO ENABLE</span>
+<span>    &#9733; Delta Render</span>
+<span title="Refresh interval">        DELTA_RENDER_FORCE_REFRESH = "4.000000" <fr>[1.00, 3600.00];   1.00</fr></span>
+<span title="Area size">        DELTA_RENDER_CHECK_AREA = "1.000000" <fr>[0.00, 10.00];   1.00</fr></span>
 	</pre>
 </div>
 <script>
