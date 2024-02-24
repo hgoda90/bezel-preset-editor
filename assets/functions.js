@@ -1264,6 +1264,10 @@ dropText13.ondrop = function(e) {
 $(document).ready(function () {
 	$('[data-bs-toggle="tooltip"]').tooltip();
 	
+	$(document).bind("contextmenu", function(e) {
+		return false;
+	});
+	
 	$('#load input[type="file"]').change(function (e) {
 		const geekss = e.target.files[0];
 		
@@ -1344,9 +1348,16 @@ $(document).ready(function () {
 		$(this).blur();
 	});
 	
-	$('.modal-link').on('click', function(e){
-		e.preventDefault();
-		$('#exampleModal').modal('show').find('.modal-content').load($(this).data('link'));
+	$('.modal-link').mousedown(function(e) {
+    switch (e.which) {
+        case 1:
+            e.preventDefault();
+			$('#exampleModal').modal('show').find('.modal-content').load($(this).data('link'));
+            break;
+        case 3:
+			$('#exampleModal').modal('show').find('.modal-content').load($(this).data('link').replace(".html", "")+"_alt.html");
+            break;
+	}
 	});
 	
 	$('.shader input[type="file"]').change(function (e) {
