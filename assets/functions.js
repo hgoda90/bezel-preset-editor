@@ -690,6 +690,7 @@ function removeTabs(){
 	$(".nav-hide").remove();
 	$(".tab-content textarea").text("").val("");
 	$(".remove").remove();
+	$(".tooltip").remove();
 	$(".nav").addClass("empty");
 	$(".tab-pane").removeClass("active").removeClass("show");
 	$(".text2").parents(".tab-pane").addClass("active").addClass("show");
@@ -1264,10 +1265,6 @@ dropText13.ondrop = function(e) {
 $(document).ready(function () {
 	$('[data-bs-toggle="tooltip"]').tooltip();
 	
-	$(document).bind("contextmenu", function(e) {
-		return false;
-	});
-	
 	$('#load input[type="file"]').change(function (e) {
 		const geekss = e.target.files[0];
 		
@@ -1348,16 +1345,8 @@ $(document).ready(function () {
 		$(this).blur();
 	});
 	
-	$('.modal-link').mousedown(function(e) {
-    switch (e.which) {
-        case 1:
-            e.preventDefault();
-			$('#exampleModal').modal('show').find('.modal-content').load($(this).data('link'));
-            break;
-        case 3:
-			$('#exampleModal').modal('show').find('.modal-content').load($(this).data('link').replace(".html", "")+"_alt.html");
-            break;
-	}
+	$('.modal-link').on('click', function(){
+		$('#exampleModal').modal('show').find('.modal-content').load($(this).data('link'));
 	});
 	
 	$('.shader input[type="file"]').change(function (e) {
@@ -1719,8 +1708,28 @@ $(document).ready(function () {
 	
 	start();
 	
+	var c = 0;
+	
 	$(document).on('keydown', function(e){
 		keycode = e.keyCode ? e.keyCode : e.which;
+		
+		if(keycode == 18 && c == 0){
+			modalVar = "alt"
+			c++;
+		}
+		else if(keycode == 18 && c == 1){
+			modalVar = "standard";
+			c--;
+		};
+		
+		$('.modal-link').on('click', function(){
+			if(modalVar == "alt"){
+				$('#exampleModal').modal('show').find('.modal-content').load($(this).data('link').replace(".html", "")+"_alt.html");
+			}
+			else{
+				$('#exampleModal').modal('show').find('.modal-content').load($(this).data('link'));
+			}
+		});
 		
 		if($(".nav").children().length > 1){
 			var id = parseInt($(".nav-link.active").attr("id").replace("tab", ""));
