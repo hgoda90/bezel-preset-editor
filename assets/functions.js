@@ -1120,7 +1120,7 @@ dropText2.ondrop = function(e) {
 	var tabs = $(".nav").children().length;
   
 	if(e.dataTransfer.files.length > 1 && $(".nav").children().length == 0){
-		$(".text-wrap").append('<ul class="nav nav-tabs empty" id="myTab" role="tablist"></ul>');
+		$(".text-wrap").append('<ul class="nav nav-tabs" id="myTab" role="tablist"></ul>');
 	}
   
 	if(e.dataTransfer.files.length <= 12){
@@ -1287,16 +1287,182 @@ $(document).ready(function () {
 	});
 	
 	$('#load2 input[type="file"]').change(function (e) {
-		const geekss = e.target.files[0];
+		const presets = e.target.files;
+		$(".preset-title").empty();
+		$(".text-wrap .text-box:nth-child(4) textarea").text("").val("");
+		$(".nav-hide").remove();
+		$(".remove").remove();
+		$("#preset1").addClass("show");
+		var tabs = $(".nav").children().length;
 		
-		var reader = new FileReader();
-		reader.onload = function (e) {
-			$(".text-box .tab-pane.active textarea").val(e.target.result).text(e.target.result);
-		};
+		if(presets.length >= 1){
+			 var reader = new FileReader();
+			 reader.onload = function(e) {
+				$(".text2").val(e.target.result).text(e.target.result);
+			 };
+			 reader.readAsText(presets[0], "UTF-8");
+			 $("#preset1").text(presets[0].name.replace(".params", "").replace(".slangp", ""));
+		}
+		if(presets.length >= 2){
+			 var reader = new FileReader();
+			 reader.onload = function(e) {
+				$(".text3").val(e.target.result).text(e.target.result);
+			 };
+			 reader.readAsText(presets[1], "UTF-8");
+			 $("#preset2").text(presets[1].name.replace(".params", "").replace(".slangp", ""));
+		}
+		if(presets.length >= 3){
+			 var reader = new FileReader();
+			 reader.onload = function(e) {
+				$(".text4").val(e.target.result).text(e.target.result);
+			 };
+			 reader.readAsText(presets[2], "UTF-8");
+			 $("#preset3").text(presets[2].name.replace(".params", "").replace(".slangp", ""));
+		}
+		if(presets.length >= 4){
+			 var reader = new FileReader();
+			 reader.onload = function(e) {
+				$(".text5").val(e.target.result).text(e.target.result);
+			 };
+			 reader.readAsText(presets[3], "UTF-8");
+			 $("#preset4").text(presets[3].name.replace(".params", "").replace(".slangp", ""));
+		}
+		if(presets.length >= 5){
+			 var reader = new FileReader();
+			 reader.onload = function(e) {
+				$(".text6").val(e.target.result).text(e.target.result);
+			 };
+			 reader.readAsText(presets[4], "UTF-8");
+			 $("#preset5").text(presets[4].name.replace(".params", "").replace(".slangp", ""));
+		}
+		if(presets.length >= 6){
+			 var reader = new FileReader();
+			 reader.onload = function(e) {
+				$(".text7").val(e.target.result).text(e.target.result);
+			 };
+			 reader.readAsText(presets[5], "UTF-8");
+			 $("#preset6").text(presets[5].name.replace(".params", "").replace(".slangp", ""));
+		}
+		if(presets.length >= 7){
+			 var reader = new FileReader();
+			 reader.onload = function(e) {
+				$(".text8").val(e.target.result).text(e.target.result);
+			 };
+			 reader.readAsText(presets[6], "UTF-8");
+			 $("#preset7").text(presets[6].name.replace(".params", "").replace(".slangp", ""));
+		}
+		if(presets.length >= 8){
+			 var reader = new FileReader();
+			 reader.onload = function(e) {
+				$(".text9").val(e.target.result).text(e.target.result);
+			 };
+			 reader.readAsText(presets[7], "UTF-8");
+			 $("#preset8").text(presets[7].name.replace(".params", "").replace(".slangp", ""));
+		}
+		if(presets.length >= 9){
+			 var reader = new FileReader();
+			 reader.onload = function(e) {
+				$(".text10").val(e.target.result).text(e.target.result);
+			 };
+			 reader.readAsText(presets[8], "UTF-8");
+			 $("#preset9").text(presets[8].name.replace(".params", "").replace(".slangp", ""));
+		}
+		if(presets.length >= 10){
+			 var reader = new FileReader();
+			 reader.onload = function(e) {
+				$(".text11").val(e.target.result).text(e.target.result);
+			 };
+			 reader.readAsText(presets[9], "UTF-8");
+			 $("#preset10").text(presets[9].name.replace(".params", "").replace(".slangp", ""));
+		}
+		if(presets.length >= 11){
+			 var reader = new FileReader();
+			 reader.onload = function(e) {
+				$(".text12").val(e.target.result).text(e.target.result);
+			 };
+			 reader.readAsText(presets[10], "UTF-8");
+			 $("#preset11").text(presets[10].name.replace(".params", "").replace(".slangp", ""));
+		}
+		if(presets.length >= 12){
+			 var reader = new FileReader();
+			 reader.onload = function(e) {
+				$(".text13").val(e.target.result).text(e.target.result);
+			 };
+			 reader.readAsText(presets[11], "UTF-8");
+			 $("#preset12").text(presets[11].name.replace(".params", "").replace(".slangp", ""));
+		}
 		
-		reader.readAsText(geekss);
-		$('#load2 input[type="file"]').val("");
-		$(".preset-title.show").text(geekss.name.replace(".params", "").replace(".slangp", ""));
+		if(presets.length > 1 && $(".nav").children().length == 0){
+			$(".text-wrap").append('<ul class="nav nav-tabs" id="myTab" role="tablist"></ul>');
+		}
+	  
+		if(presets.length <= 12){
+			for (var i=0; i< presets.length;i++){
+				if(presets.length > 1){
+					if($(".nav").children().length < presets.length){
+						if(i == 0 && $(".nav").children().length == 0){
+							$(".nav.nav-tabs").append('<li class="nav-item" role="presentation"><button class="nav-link active" id="tab1" data-bs-toggle="tab" data-bs-target="#tab-pane1" type="button" role="tab" aria-controls="tab-pane1" aria-selected="true">1</button></li>');
+						}
+						else if(presets.length == 12){
+							$(".nav.nav-tabs").append('<li class="nav-item" role="presentation"><button class="nav-link" id="tab'+(tabs+(i+1))+'" data-bs-toggle="tab" data-bs-target="#tab-pane'+(tabs+(i+1))+'" type="button" role="tab" aria-controls="tab-pane'+(tabs+(i+1))+'" aria-selected="true">'+(tabs+(i+1))+'</button></li>');
+							$(".nav-item").removeClass("empty");
+						}
+						else{
+							$(".nav.nav-tabs").append('<li class="nav-item" role="presentation"><button class="nav-link" id="tab'+(tabs+(i+1))+'" data-bs-toggle="tab" data-bs-target="#tab-pane'+(tabs+(i+1))+'" type="button" role="tab" aria-controls="tab-pane'+(tabs+(i+1))+'" aria-selected="true">'+(tabs+(i+1))+'</button></li>');
+							$(".nav-tabs #tab"+(i+1)).parents(".nav-item").removeClass("empty");
+						}
+					}
+					else{
+						$(".nav-tabs #tab"+(i+1)).parents(".nav-item").removeClass("empty");
+						$(".nav-tabs #tab"+(i+1)).parents(".nav-item").nextAll().addClass("empty");
+					}
+				}
+			}
+		}
+		else if(presets.length > 12){
+			for (var i=0; i<12;i++){
+				files[i] = presets[i];
+				dropfile2(files);
+				$(".nav-item").removeClass("empty");
+				if($(".nav").children().length < 12){
+					if(i == 0 && $(".nav").children().length == 0){
+						$(".nav.nav-tabs").append('<li class="nav-item" role="presentation"><button class="nav-link active" id="tab1" data-bs-toggle="tab" data-bs-target="#tab-pane1" type="button" role="tab" aria-controls="tab-pane1" aria-selected="true">1</button></li>');
+					}
+					else{
+						$(".nav.nav-tabs").append('<li class="nav-item" role="presentation"><button class="nav-link" id="tab'+(i+1)+'" data-bs-toggle="tab" data-bs-target="#tab-pane'+(i+1)+'" type="button" role="tab" aria-controls="tab-pane'+(i+1)+'" aria-selected="true">'+(i+1)+'</button></li>');
+					}
+				}
+			}
+		}
+		
+		if(presets.length > 1 || $(".nav").children().length > 0){
+			if(dots == "hidden"){
+				$(".nav-tabs").addClass("hide");
+				$(".nav-hide span").text("keyboard_double_arrow_down");
+				$(".nav-hide").css("transform", "translateY(-60px)");
+			}
+			
+			$(".text-wrap .text-box:nth-child(4)").append('<div class="nav-hide"><span class="material-symbols-outlined">keyboard_double_arrow_up</span></div>');
+			$(".nav-tabs").append('<div class="remove nav-item" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Remove Tabs"><span class="material-symbols-outlined nav-link">close_small</span></div>');
+			
+			const exampleEl = $('.remove')
+			const tooltip = new bootstrap.Tooltip(exampleEl);
+			
+			$(".nav-hide").on('click', function(){
+				navHide();
+			});
+			
+			$(".nav-link").on('click', function(){
+				var id = $(this).parents(".nav-item").index();
+				$(".preset-title").removeClass("show");
+				$("#preset"+(id+1)).addClass("show");
+			});
+			
+			$(".remove").on('click', function(){
+				removeTabs();
+			});
+		}
+		
 		$(this).blur();
 	});
 
@@ -1355,6 +1521,17 @@ $(document).ready(function () {
 	
 	$('.modal-link').on('click', function(){
 		$('#exampleModal').modal('show').find('.modal-content').load($(this).data('link'));
+	});
+	
+	$('.power').click(function(){
+	  if ($(this).hasClass('on')){
+		$(this).removeClass('on');
+		$(".text1, .text-box").removeClass('on');
+	  }
+	  else {
+		$(this).addClass('on');
+		$(".text1, .text-box").addClass('on');
+	  }
 	});
 	
 	$('.shader input[type="file"]').change(function (e) {

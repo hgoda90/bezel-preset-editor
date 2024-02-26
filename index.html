@@ -114,6 +114,9 @@
 						<button class="destroy button" type="button" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Clear All">
 							<span class="material-symbols-outlined">delete</span>
 						</button>
+						<button class="power button" type="button">
+							<span class="material-symbols-outlined">power_settings_new</span>
+						</button>
 					</div>
 					<div class="text-box">
 						<div class="tab-content" id="myTabContent">
@@ -168,7 +171,7 @@
 						<span class="preset-title" id="preset12"></span>
 						<span class="button" id="save2" onclick="savePreset(2);">Save</span>
 						<label class="button" id="load2">Load
-							<input type="file" accept=".slangp, .params">
+							<input type="file" accept=".slangp, .params" multiple>
 						</label>
 						<span class="button" id="copy2" onclick="copy(2);">Copy</span>
 						<span class="button" id="clear2" onclick="clearText(2);">Clear</span>

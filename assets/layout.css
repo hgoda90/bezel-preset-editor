@@ -974,3 +974,16 @@ pre {
 .modal-header {
     background-color: #F2F2F2;
 }
+
+.text-box.on{
+	background: #444;
+}
+
+.on textarea{
+	color: #f0fff8;
+    text-shadow: 0 0 2px #80ffc0, 0 0 6px #00ff66, 0 0 10px #00ff66, 0 0 16px #00ff66;
+}
+
+.power.on span {
+    color: #01d21c;
+}
