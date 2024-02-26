@@ -1119,7 +1119,7 @@ dropText2.ondrop = function(e) {
 	$("#preset1").addClass("show");
 	var tabs = $(".nav").children().length;
   
-	if(e.dataTransfer.files.length > 1){
+	if(e.dataTransfer.files.length > 1 && $(".nav").children().length == 0){
 		$(".text-wrap").append('<ul class="nav nav-tabs empty" id="myTab" role="tablist"></ul>');
 	}
   
@@ -1143,6 +1143,7 @@ dropText2.ondrop = function(e) {
 				}
 				else{
 					$(".nav-tabs #tab"+(i+1)).parents(".nav-item").removeClass("empty");
+					$(".nav-tabs #tab"+(i+1)).parents(".nav-item").nextAll().addClass("empty");
 				}
 			}
 		}
