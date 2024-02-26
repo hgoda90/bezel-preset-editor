@@ -81,6 +81,7 @@ textarea {
 	display: block;
 	background: transparent;
 	white-space: pre;
+	transition: all .3s ease-in-out;
 }
 
 textarea:focus-visible {
@@ -982,15 +983,15 @@ pre {
 
 .on textarea{
 	color: #f0fff8;
-    text-shadow: 0 0 2px #80ffc0, 0 0 6px #00ff66, 0 0 10px #00ff66, 0 0 16px #00ff66;
+    text-shadow: 0 0 2px #00ff66, 0 0 4px #00ff66, 0 0 6px #00ff66;
 }
 
-::placeholder {
+.text-box.on ::placeholder {
   color: #f0fff8;
   opacity: 1;
 }
 
-::-ms-input-placeholder {
+.text-box.on ::-ms-input-placeholder {
   color: #f0fff8;
 }
 
@@ -1004,7 +1005,6 @@ pre {
   display: grid;
   place-items: center;
   margin: 0px auto;
-  transition: all 3s ease-in-out;
   background: rgba(255, 255, 255, 0.35);
 }
 
@@ -1039,4 +1039,26 @@ pre {
 
 .power.on::before {
   border-color: lightgreen;
+}
+
+.on.amber textarea{
+	color: #ffb700;
+    text-shadow: 0 0 2px #ffb700, 0 0 4px #ffb700, 0 0 6px #ffb700;
+}
+
+.power.on.amber .light {
+	background: orange;
+}
+
+.power.on.amber::before {
+	border-color: orange;
+}
+
+.text-box.on.amber ::placeholder {
+  color: #ffb700;
+  opacity: 1;
+}
+
+.text-box.on.amber ::-ms-input-placeholder {
+  color: #ffb700;
 }

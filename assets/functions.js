@@ -1523,10 +1523,15 @@ $(document).ready(function () {
 		$('#exampleModal').modal('show').find('.modal-content').load($(this).data('link'));
 	});
 	
-	$('.power').click(function(){
-	  if ($(this).hasClass('on')){
-		$(this).removeClass('on');
-		$(".text1, .text-box").removeClass('on');
+	$('.power').click(function(e){
+	  if ($(this).hasClass('on') && $(this).hasClass('amber')){
+		$(this).removeClass('on').removeClass('amber');
+		$(".text1, .text-box").removeClass('on').removeClass('amber');
+	  }
+	  else if($(this).hasClass('on')){
+		  e.preventDefault();
+		  $(this).addClass('amber');
+		  $(".text1, .text-box").addClass('amber');
 	  }
 	  else {
 		$(this).addClass('on');
