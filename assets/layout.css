@@ -999,18 +999,19 @@ pre {
   height: 46px;
   border-radius: 50%;
   border: 1px solid #ddd;
-  box-shadow: 0 0 3px 0px #888;
+  box-shadow: 0 0 3px 0px #AAA;
   position: relative;
   display: grid;
   place-items: center;
   margin: 0px auto;
   transition: all 3s ease-in-out;
+  background: rgba(255, 255, 255, 0.35);
 }
 
 .power::before {
   content: "";
-  width: 50%;
-  height: 50%;
+  width: 45%;
+  height: 45%;
   border: 3px solid #AAA;
   border-radius: 50%;
   position: absolute;
@@ -1018,12 +1019,12 @@ pre {
 }
 
 .light {
-  height: 30%;
+  height: 28%;
   width: 4px;
   background: #eee;
   border-radius: 10px;
   position: absolute;
-  top: 4px;
+  top: 5px;
   background: #AAA;
   transition: all .4s ease-in-out;
 }
