@@ -1920,6 +1920,14 @@ $(document).ready(function () {
 			c--;
 		};
 		
+		if(keycode == 113){
+			savePreset(2);
+		}
+		
+		if(keycode == 115){
+			$('#load2 input[type="file"]').click();
+		}
+		
 		$('.modal-link').on('click', function(){
 			if(modalVar == "alt"){
 				$('#exampleModal').modal('show').find('.modal-content').load($(this).data('link').replace(".html", "")+"_alt.html");
@@ -1954,12 +1962,6 @@ $(document).ready(function () {
 						$("#tab-pane"+(id+1)).addClass("active").addClass("show");
 						$("#preset"+(id+1)).addClass("show");
 					}
-					break;
-				case 113:
-					savePreset(2);
-					break;
-				case 115:
-					$('#load2 input[type="file"]').click();
 					break;
 			}
 		}

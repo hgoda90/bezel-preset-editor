@@ -849,7 +849,7 @@ footer .button {
 .nav-tabs .nav-link.active, .nav-tabs .nav-link:hover, .nav-item.empty .nav-link.active, .nav-item.empty .nav-link:hover {
     background: unset;
     border: none;
-    background: #E9E9E9;
+    background: rgb(0 0 0 / 10%);
     border-radius: 50%;
     color: #333;
 }
@@ -884,11 +884,11 @@ footer .button {
     bottom: -43px;
     transition: transform .2s ease-in;
     display: table;
-    border: 2px solid rgba(0, 0, 0, 0.2);
+    /* border: 2px solid rgba(0, 0, 0, 0.2); */
     margin: 0 2.5px -8px;
     border-radius: 0 0 12px 12px;
     padding: 8px 3.5px 0;
-    background: #FFFB;
+    /* background: #FFFB; */
 }
 
 .preset-title {
@@ -1035,6 +1035,7 @@ pre {
   cursor: pointer;
   background: radial-gradient(rgba(250, 250, 250, 1) 40%, rgba(255, 255, 255, 1) 0%, rgba(210, 210, 210, 1) 100%);
   border: 2px solid #CCC;
+  box-shadow: none;
 }
 
 .text-box.on.amber ::-ms-input-placeholder {
@@ -1045,15 +1046,6 @@ pre {
   background-color: #ABFF00;
   box-shadow: rgba(0, 0, 0, 0.2) 0 0px 5px 1px, inset #304701 0 0px 2px, #89FF00 0 1px 4px;
   transition: unset;
-}
-
-.on + .nav-tabs {
-    background: #ebe6c9;
-}
-
-.on + .nav-tabs .active, .on + .nav-tabs .nav-link:hover, .on + .nav-tabs .nav-item.empty .nav-link.active, .on + .nav-tabs .nav-item.empty .nav-link:hover {
-    background: rgb(0 0 0 / 10%);
-    color: #333;
 }
 
 .led {
