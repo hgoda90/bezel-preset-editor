@@ -60,16 +60,15 @@ form {
 .text-box {
     position: relative;
     width: 500px;
-    height: 40vh;
+    height: 500px;
     background: #F8F8F8;
     border-radius: 12px;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    padding: 10px;
-    min-height: 200px;
-    max-height: 480px;
+    border: 2px solid rgba(0, 0, 0, 0.2);
+    padding: 14px;
     display: inline-block;
     z-index: 1;
     transition: all .4s ease-in-out;
+    margin: 0px -10px;
 }
 
 textarea {
@@ -881,7 +880,7 @@ footer .button {
 .nav-tabs {
     border: none;
     position: absolute;
-    right: -2px;
+    right: -11px;
     bottom: -43px;
     transition: transform .2s ease-in;
     display: table;
@@ -978,10 +977,14 @@ pre {
 }
 
 .text-box.on{
-	background: #444;
+	background: #ebe6c9;
+	outline: 1px solid rgb(0 0 0 / 20%);
 }
 
 .on textarea{
+	background: #444;
+    padding: 8px;
+	border: 2px solid rgb(0 0 0 / 20%);
 	color: #f0fff8;
     text-shadow: 0 0 2px #00ff66, 0 0 4px #00ff66, 0 0 6px #00ff66;
 }
@@ -1004,61 +1007,78 @@ pre {
   position: relative;
   display: grid;
   place-items: center;
-  margin: 0px auto;
-  background: rgba(255, 255, 255, 0.35);
+  margin: 0px auto 0;
+  background: radial-gradient(rgba(250, 250, 250, 1) 30%, rgba(255, 255, 255, 1) 0%, rgba(230, 230, 230, 1) 100%);
 }
 
 .power::before {
   content: "";
-  width: 45%;
-  height: 45%;
-  border: 3px solid #AAA;
+  width: 40%;
+  height: 40%;
+  border: 3px solid #CCC;
   border-radius: 50%;
   position: absolute;
-  transition: all .4s ease-in-out;
 }
 
 .light {
-  height: 28%;
+  height: 24%;
   width: 4px;
-  background: #eee;
+  background: #CCC;
   border-radius: 10px;
   position: absolute;
-  top: 5px;
-  background: #AAA;
-  transition: all .4s ease-in-out;
+  top: 7px;
 }
 
-.power:hover {
+.power:hover, .power.on {
   cursor: pointer;
-}
-
-.power.on .light {
-  background: lightgreen;
-}
-
-.power.on::before {
-  border-color: lightgreen;
-}
-
-.on.amber textarea{
-	color: #ffb700;
-    text-shadow: 0 0 2px #ffb700, 0 0 4px #ffb700, 0 0 6px #ffb700;
-}
-
-.power.on.amber .light {
-	background: orange;
-}
-
-.power.on.amber::before {
-	border-color: orange;
-}
-
-.text-box.on.amber ::placeholder {
-  color: #ffb700;
-  opacity: 1;
+  background: radial-gradient(rgba(250, 250, 250, 1) 40%, rgba(255, 255, 255, 1) 0%, rgba(210, 210, 210, 1) 100%);
+  border: 2px solid #CCC;
 }
 
 .text-box.on.amber ::-ms-input-placeholder {
   color: #ffb700;
+}
+
+.on + .led {
+  background-color: #ABFF00;
+  box-shadow: rgba(0, 0, 0, 0.2) 0 0px 5px 1px, inset #304701 0 0px 2px, #89FF00 0 1px 4px;
+  transition: unset;
+}
+
+.on + .nav-tabs {
+    background: #ebe6c9;
+}
+
+.on + .nav-tabs .active, .on + .nav-tabs .nav-link:hover, .on + .nav-tabs .nav-item.empty .nav-link.active, .on + .nav-tabs .nav-item.empty .nav-link:hover {
+    background: #DDD;
+}
+
+.led {
+  margin: 0 auto;
+  width: 8px;
+  height: 8px;
+  background-color: #DDD;
+  border-radius: 50%;
+  box-shadow: rgba(0, 0, 0, 0.2) 0 0px 5px 1px, inset #555 0 0px 2px, #AAA 0 1px 4px;
+  position: absolute;
+  bottom: -16px;
+  right: 52px;
+  transition: all .4s ease-in-out;
+}
+
+.power:hover .light {
+    background: #CCC;
+}
+
+.power:hover::before {
+    border-color: #CCC;
+}
+
+.power:hover::before, .power.on::before {
+    width: 42%;
+    height: 42%;
+}
+
+.power-button {
+    position: relative;
 }

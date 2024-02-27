@@ -1524,16 +1524,11 @@ $(document).ready(function () {
 	});
 	
 	$('.power').click(function(e){
-	  if ($(this).hasClass('on') && $(this).hasClass('amber')){
-		$(this).removeClass('on').removeClass('amber');
-		$(".text1, .text-box").removeClass('on').removeClass('amber');
+	  if ($(this).hasClass('on')){
+		$(this).removeClass('on');
+		$(".text1, .text-box").removeClass('on');
 	  }
-	  else if($(this).hasClass('on')){
-		  e.preventDefault();
-		  $(this).addClass('amber');
-		  $(".text1, .text-box").addClass('amber');
-	  }
-	  else {
+	  else{
 		$(this).addClass('on');
 		$(".text1, .text-box").addClass('on');
 	  }
