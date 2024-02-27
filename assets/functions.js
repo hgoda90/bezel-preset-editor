@@ -935,6 +935,13 @@ function start(){
 		dots = getCookie("dots");
 	}
 	
+	if(getCookie("power") == ""){
+		power = "off";
+	}
+	else{
+		power = getCookie("power");
+	}
+	
 	if(colorFormat == "HEX"){
 		formatToggle(1);
 	}
@@ -980,6 +987,10 @@ function start(){
 	}
 	else{
 		$(".imageType .switch-label:nth-child(1)").addClass("active");
+	}
+	
+	if(power == "on"){
+		$(".power, .text1, .text-box").addClass('on');
 	}
 	
 	colorReset();
@@ -1525,10 +1536,12 @@ $(document).ready(function () {
 	
 	$('.power').click(function(e){
 	  if ($(this).hasClass('on')){
+		setCookie("power", "off", 30);
 		$(this).removeClass('on');
 		$(".text1, .text-box").removeClass('on');
 	  }
 	  else{
+		setCookie("power", "on", 30);
 		$(this).addClass('on');
 		$(".text1, .text-box").addClass('on');
 	  }
@@ -1941,6 +1954,12 @@ $(document).ready(function () {
 						$("#tab-pane"+(id+1)).addClass("active").addClass("show");
 						$("#preset"+(id+1)).addClass("show");
 					}
+					break;
+				case 113:
+					savePreset(2);
+					break;
+				case 115:
+					$('#load2 input[type="file"]').click();
 					break;
 			}
 		}
