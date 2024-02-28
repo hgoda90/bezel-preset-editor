@@ -10,7 +10,7 @@ body {
 
 .content {
 	margin: 0 auto;
-	width: 1140px;
+	width: 1280px;
 	padding: 24px;
 	margin-top: 1%;
 	border-radius: 16px;
@@ -22,9 +22,9 @@ body {
 }
 
 .title {
+	margin: -18px 0 8.5%;
 	padding: 14px;
 	border-radius: 14px 14px 0px 0px;
-	margin-bottom: 8.5%;
 	font-weight: 300;
 }
 
@@ -59,14 +59,13 @@ form {
 
 .text-box {
     position: relative;
-    width: 500px;
-    height: 500px;
+    width: 572px;
+    height: 572px;
     background: #F8F8F8;
     border-radius: 10px;
     border: 1px solid rgba(0, 0, 0, 0.2);
     display: inline-block;
     z-index: 1;
-    transition: all .4s ease-in-out;
 }
 
 textarea {
@@ -462,7 +461,7 @@ span.square-title {
 	width: 100%;
 	position: absolute;
 	top: 32px;
-	left: 196px;
+	left: 266px;
 	height: 0;
 	-webkit-appearance: none;
 }
@@ -654,7 +653,7 @@ a:hover {
 }
 
 .owl-wrapper {
-	width: 1044px;
+	width: 1200px;
 	margin: 0 auto;
 }
 
@@ -767,10 +766,10 @@ footer {
     border-top: 1px solid #DDD;
     border-radius: 0px 0px 14px 14px;
     text-align: right;
-    width: 1140px;
-    margin: 24px auto 24px;
+    margin: 24px auto;
     display: flex;
     flex-direction: row;
+    width: 1280px;
 }
 
 .foot-wrapper {
@@ -918,7 +917,7 @@ footer .button {
 .preset-title {
     position: absolute;
     top: -32px;
-    left: 8px;
+    left: 24px;
     max-width: 192px;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -1004,10 +1003,11 @@ pre {
 	background: #ebe6c9;
 	outline: 1px solid rgb(0 0 0 / 20%);
 	border-radius: 4px;
-	width: 480px;
-	height: 480px;
+	width: 560px;
+	height: 560px;
 	padding: 20px;
 	margin: 0px -16px;
+	transition: padding .3s ease-in;
 }
 
 .on textarea{
@@ -1075,7 +1075,7 @@ pre {
   background-color: #ABFF00;
   box-shadow: rgba(0, 0, 0, 0.2) 0 0px 5px 1px, inset #304701 0 0px 2px, #89FF00 0 1px 4px;
   transition: unset;
-  right: 74px;
+  right: 64px;
 }
 
 .led {
@@ -1147,11 +1147,13 @@ pre {
     border: 2px solid rgb(0 0 0 / 20%);
     outline: 6px solid rgb(0 0 0 / 15%);
     background: #444;
+    transition: all .3s ease-in;
 }
 
 .on.amber textarea{
 	color: #ffb700;
     text-shadow: 0 0 2px #ffb700, 0 0 4px #ffb700, 0 0 6px #ffb700;
+	caret-color: #FFB700;
 }
 
 .text-box.on.amber ::placeholder {
@@ -1161,4 +1163,34 @@ pre {
 
 .text-box.on.amber ::-ms-input-placeholder {
   color: #ffb700;
+}
+
+.extra {
+    position: absolute;
+    left: -24px;
+    bottom: 0;
+    cursor: pointer;
+}
+
+.large.text-wrap .text-box:nth-child(2) {
+    height: 200px;
+    top: 600px;
+    max-width: 384px;
+}
+
+.large.text-wrap .text-box {
+    width: 760px;
+    height: 800px;
+}
+
+.large .hold {
+    top: 530px;
+}
+
+.large .led {
+    left: 62px;
+}
+
+.large .on + .led {
+    left: 56px;
 }

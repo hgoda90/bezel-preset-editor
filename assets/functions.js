@@ -508,6 +508,17 @@ function edit(){
 	}
 }
 
+function extra(){
+	$(".text-wrap").toggleClass("large");
+	
+	if($(".extra").text() == "keyboard_arrow_down"){
+		$(".extra").text("keyboard_arrow_up");
+	}
+	else{
+		$(".extra").text("keyboard_arrow_down");
+	}
+}
+
 function formatToggle(value){
 	  value = parseInt(value, 10);
 	  $(".format-labels span").removeClass("active");
@@ -686,6 +697,8 @@ function passText(){
 	else{
 		$(".text-box .tab-pane.active textarea").text(txt+"\n"+$(".text").text()).val(txt+"\n"+$(".text").text())
 	}
+	
+	updateCode2();
 }
 
 function presetCopy(){
@@ -1057,6 +1070,10 @@ $(".destroy").on('click', function(){
 
 $(".dropper").on('change', function(){
 	colorVision();
+});
+
+$(".extra").on('click', function(){
+	extra();
 });
 
 $(".hold input").on('click', function(){
@@ -1961,6 +1978,8 @@ $(document).ready(function () {
 						break;
 				}
 			}
+			
+			updateCode();
 		}
 		
 		else if(bezelStyle == "koko-aio" && hexError == "false" && hslError == "false" && hsvError == "false" && rgbError == "false"){
@@ -1974,6 +1993,8 @@ $(document).ready(function () {
 			else{
 				$(".text").val($(".text").text()+preset).text($(".text").text()+preset);
 			}
+			
+			updateCode();
 		}
 		
 		event.preventDefault();
