@@ -1011,10 +1011,8 @@ pre {
 }
 
 .on textarea{
-	background: #444;
+	border: none;
 	padding: 8px;
-	border: 2px solid rgb(0 0 0 / 20%);
-	outline: 6px solid rgb(0 0 0 / 15%);
 	color: #f0fff8;
 	text-shadow: 0 0 2px #00ff66, 0 0 4px #00ff66, 0 0 6px #00ff66;
 	box-shadow: 0 0 6px 3px #444;
@@ -1117,6 +1115,7 @@ pre {
 	border: 1px solid #a5a5a5;
 	position: relative;
 	border-radius: 10px;
+	background: #555;
 }
 
 #preCode {
@@ -1128,7 +1127,6 @@ pre {
 	overflow: hidden;
 	padding: 0;
 	margin: 0;
-	background: #1b1b1b;
 }
 
 #preCode code {
@@ -1144,7 +1142,11 @@ pre {
 }
 
 .on #divCodeWrapper {
-    border-radius: 4px;
+    border-radius: 1px;
+    box-shadow: 0 0 6px 2px #444;
+    border: 2px solid rgb(0 0 0 / 20%);
+    outline: 6px solid rgb(0 0 0 / 15%);
+    background: #444;
 }
 
 .on.amber textarea{

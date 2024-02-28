@@ -1036,6 +1036,7 @@ function start(){
 	
 	if(power == "on"){
 		$(".power, .text1, .text-box").addClass('on');
+		$("code").css("display", "none");
 	}
 	
 	colorReset();
@@ -1612,11 +1613,13 @@ $(document).ready(function () {
 		setCookie("power", "off", 30);
 		$(this).removeClass('on');
 		$(".text1, .text-box").removeClass('on');
+		$("code").css("display", "block");
 	  }
 	  else{
 		setCookie("power", "on", 30);
 		$(this).addClass('on');
 		$(".text1, .text-box").addClass('on');
+		$("code").css("display", "none");
 	  }
 	});
 	
