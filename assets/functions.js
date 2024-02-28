@@ -51,15 +51,34 @@ function bezelToggle(){
 	colorReset();
 };
 
+function brightness(){
+	if($(".text-box").hasClass("on amber") || $(".text-box").hasClass("amber on")){
+		$(".text-box").removeClass("amber");
+	}
+	else if($(".text-box").hasClass("on")){
+		$(".text-box").addClass("amber");
+	}
+	else if($("#highlight").data("theme") == "dark"){
+		$("#highlight").attr("href", "assets/highlight/styles/a11y-light.css");
+		$("#highlight").data("theme", "light");
+	}
+	else if($("#highlight").data("theme") == "light"){
+		$("#highlight").attr("href", "assets/highlight/styles/a11y-dark.css");
+		$("#highlight").data("theme", "dark");
+	}
+}
+
 function clearText(id){
 	if(id == 1){
 		$(".text").text("").val("");
 		$(".info").empty();
 		$(".error").empty();
+		$("#codeBlock1").empty();
 		colorReset();
 	}
 	else{
 		$(".text-box .tab-pane.active textarea").text("").val("");
+		$("#codeBlock"+id).empty();
 		$(".preset-title.show").empty();
 		$(".nav-link.active").parents(".nav-item").addClass("empty");
 	}
@@ -225,6 +244,7 @@ function destroy(){
 	$(".preset-title").empty();
 	$("textarea").val("").text("");
 	$(".nav-item").addClass("empty");
+	$("code").empty();
 	colorReset();
 }
 
@@ -247,6 +267,7 @@ function dropfile(file) {
   var reader = new FileReader();
   reader.onload = function(e) {
 	dropText.value = e.target.result;
+	updateCode();
   };
   reader.readAsText(file, "UTF-8");
 }
@@ -256,6 +277,8 @@ function dropfile2(file) {
 		 var reader = new FileReader();
 		 reader.onload = function(e) {
 			dropText2.value = e.target.result;
+			updateCode();
+			updateCode2();
 		 };
 		 reader.readAsText(file[0], "UTF-8");
 		 $("#preset1").text(file[0].name.replace(".params", "").replace(".slangp", ""));
@@ -264,6 +287,7 @@ function dropfile2(file) {
 		 var reader = new FileReader();
 		 reader.onload = function(e) {
 			dropText3.value = e.target.result;
+			updateCode3();
 		 };
 		 reader.readAsText(file[1], "UTF-8");
 		 $("#preset2").text(file[1].name.replace(".params", "").replace(".slangp", ""));
@@ -272,6 +296,7 @@ function dropfile2(file) {
 		 var reader = new FileReader();
 		 reader.onload = function(e) {
 			dropText4.value = e.target.result;
+			updateCode4();
 		 };
 		 reader.readAsText(file[2], "UTF-8");
 		 $("#preset3").text(file[2].name.replace(".params", "").replace(".slangp", ""));
@@ -280,6 +305,7 @@ function dropfile2(file) {
 		 var reader = new FileReader();
 		 reader.onload = function(e) {
 			dropText5.value = e.target.result;
+			updateCode5();
 		 };
 		 reader.readAsText(file[3], "UTF-8");
 		 $("#preset4").text(file[3].name.replace(".params", "").replace(".slangp", ""));
@@ -288,6 +314,7 @@ function dropfile2(file) {
 		 var reader = new FileReader();
 		 reader.onload = function(e) {
 			dropText6.value = e.target.result;
+			updateCode6();
 		 };
 		 reader.readAsText(file[4], "UTF-8");
 		 $("#preset5").text(file[4].name.replace(".params", "").replace(".slangp", ""));
@@ -296,6 +323,7 @@ function dropfile2(file) {
 		 var reader = new FileReader();
 		 reader.onload = function(e) {
 			dropText7.value = e.target.result;
+			updateCode7();
 		 };
 		 reader.readAsText(file[5], "UTF-8");
 		 $("#preset6").text(file[5].name.replace(".params", "").replace(".slangp", ""));
@@ -304,6 +332,7 @@ function dropfile2(file) {
 		 var reader = new FileReader();
 		 reader.onload = function(e) {
 			dropText8.value = e.target.result;
+			updateCode8();
 		 };
 		 reader.readAsText(file[6], "UTF-8");
 		 $("#preset7").text(file[6].name.replace(".params", "").replace(".slangp", ""));
@@ -312,6 +341,7 @@ function dropfile2(file) {
 		 var reader = new FileReader();
 		 reader.onload = function(e) {
 			dropText9.value = e.target.result;
+			updateCode9();
 		 };
 		 reader.readAsText(file[7], "UTF-8");
 		 $("#preset8").text(file[7].name.replace(".params", "").replace(".slangp", ""));
@@ -320,6 +350,7 @@ function dropfile2(file) {
 		 var reader = new FileReader();
 		 reader.onload = function(e) {
 			dropText10.value = e.target.result;
+			updateCode10();
 		 };
 		 reader.readAsText(file[8], "UTF-8");
 		 $("#preset9").text(file[8].name.replace(".params", "").replace(".slangp", ""));
@@ -328,6 +359,7 @@ function dropfile2(file) {
 		 var reader = new FileReader();
 		 reader.onload = function(e) {
 			dropText11.value = e.target.result;
+			updateCode11();
 		 };
 		 reader.readAsText(file[9], "UTF-8");
 		 $("#preset10").text(file[9].name.replace(".params", "").replace(".slangp", ""));
@@ -336,6 +368,7 @@ function dropfile2(file) {
 		 var reader = new FileReader();
 		 reader.onload = function(e) {
 			dropText12.value = e.target.result;
+			updateCode12();
 		 };
 		 reader.readAsText(file[10], "UTF-8");
 		 $("#preset11").text(file[10].name.replace(".params", "").replace(".slangp", ""));
@@ -344,6 +377,7 @@ function dropfile2(file) {
 		 var reader = new FileReader();
 		 reader.onload = function(e) {
 			dropText13.value = e.target.result;
+			updateCode13();
 		 };
 		 reader.readAsText(file[11], "UTF-8");
 		 $("#preset12").text(file[11].name.replace(".params", "").replace(".slangp", ""));
@@ -356,6 +390,7 @@ function dropfile3(file) {
   var reader = new FileReader();
   reader.onload = function(e) {
 	dropText3.value = e.target.result;
+    updateCode3();
   };
   reader.readAsText(file, "UTF-8");
   $("#preset2").text(file.name.replace(".params", "").replace(".slangp", ""));
@@ -365,6 +400,7 @@ function dropfile4(file) {
   var reader = new FileReader();
   reader.onload = function(e) {
 	dropText4.value = e.target.result;
+	updateCode4();
   };
   reader.readAsText(file, "UTF-8");
   $("#preset3").text(file.name.replace(".params", "").replace(".slangp", ""));
@@ -374,6 +410,7 @@ function dropfile5(file) {
   var reader = new FileReader();
   reader.onload = function(e) {
 	dropText5.value = e.target.result;
+	updateCode5();
   };
   reader.readAsText(file, "UTF-8");
   $("#preset4").text(file.name.replace(".params", "").replace(".slangp", ""));
@@ -383,6 +420,7 @@ function dropfile6(file) {
   var reader = new FileReader();
   reader.onload = function(e) {
 	dropText6.value = e.target.result;
+	updateCode6();
   };
   reader.readAsText(file, "UTF-8");
   $("#preset5").text(file.name.replace(".params", "").replace(".slangp", ""));
@@ -392,6 +430,7 @@ function dropfile7(file) {
   var reader = new FileReader();
   reader.onload = function(e) {
 	dropText7.value = e.target.result;
+	updateCode7();
   };
   reader.readAsText(file, "UTF-8");
   $("#preset6").text(file.name.replace(".params", "").replace(".slangp", ""));
@@ -401,6 +440,7 @@ function dropfile8(file) {
   var reader = new FileReader();
   reader.onload = function(e) {
 	dropText8.value = e.target.result;
+	updateCode8();
   };
   reader.readAsText(file, "UTF-8");
   $("#preset7").text(file.name.replace(".params", "").replace(".slangp", ""));
@@ -410,6 +450,7 @@ function dropfile9(file) {
   var reader = new FileReader();
   reader.onload = function(e) {
 	dropText9.value = e.target.result;
+	updateCode9();
   };
   reader.readAsText(file, "UTF-8");
   $("#preset8").text(file.name.replace(".params", "").replace(".slangp", ""));
@@ -419,6 +460,7 @@ function dropfile10(file) {
   var reader = new FileReader();
   reader.onload = function(e) {
 	dropText10.value = e.target.result;
+	updateCode10();
   };
   reader.readAsText(file, "UTF-8");
   $("#preset9").text(file.name.replace(".params", "").replace(".slangp", ""));
@@ -428,6 +470,7 @@ function dropfile11(file) {
   var reader = new FileReader();
   reader.onload = function(e) {
 	dropText11.value = e.target.result;
+	updateCode11();
   };
   reader.readAsText(file, "UTF-8");
   $("#preset10").text(file.name.replace(".params", "").replace(".slangp", ""));
@@ -437,6 +480,7 @@ function dropfile12(file) {
   var reader = new FileReader();
   reader.onload = function(e) {
 	dropText12.value = e.target.result;
+	updateCode12();
   };
   reader.readAsText(file, "UTF-8");
   $("#preset11").text(file.name.replace(".params", "").replace(".slangp", ""));
@@ -446,6 +490,7 @@ function dropfile13(file) {
   var reader = new FileReader();
   reader.onload = function(e) {
 	dropText13.value = e.target.result;
+	updateCode13();
   };
   reader.readAsText(file, "UTF-8");
   $("#preset12").text(file.name.replace(".params", "").replace(".slangp", ""));
@@ -997,6 +1042,12 @@ function start(){
 	colorVersion(colorVer);
 }
 
+$(".brightness").on('click', function(){
+	brightness();
+	
+	$(this).blur();
+});
+
 $(".destroy").on('click', function(){
 	destroy();
 	
@@ -1128,6 +1179,7 @@ dropText2.ondrop = function(e) {
 	$(".nav-hide").remove();
 	$(".remove").remove();
 	$("#preset1").addClass("show");
+	$("code").empty();
 	var tabs = $(".nav").children().length;
   
 	if(e.dataTransfer.files.length > 1 && $(".nav").children().length == 0){
@@ -1293,6 +1345,7 @@ $(document).ready(function () {
 		var reader = new FileReader();
 		reader.onload = function (e) {
 			$(".text").val(e.target.result).text(e.target.result);
+			updateCode();
 		};
 		
 		reader.readAsText(geekss);
@@ -1308,11 +1361,14 @@ $(document).ready(function () {
 		$(".remove").remove();
 		$("#preset1").addClass("show");
 		var tabs = $(".nav").children().length;
+		var files = [];
 		
 		if(presets.length >= 1){
 			 var reader = new FileReader();
 			 reader.onload = function(e) {
 				$(".text2").val(e.target.result).text(e.target.result);
+				updateCode();
+				updateCode2();
 			 };
 			 reader.readAsText(presets[0], "UTF-8");
 			 $("#preset1").text(presets[0].name.replace(".params", "").replace(".slangp", ""));
@@ -1321,6 +1377,7 @@ $(document).ready(function () {
 			 var reader = new FileReader();
 			 reader.onload = function(e) {
 				$(".text3").val(e.target.result).text(e.target.result);
+				updateCode3();
 			 };
 			 reader.readAsText(presets[1], "UTF-8");
 			 $("#preset2").text(presets[1].name.replace(".params", "").replace(".slangp", ""));
@@ -1329,6 +1386,7 @@ $(document).ready(function () {
 			 var reader = new FileReader();
 			 reader.onload = function(e) {
 				$(".text4").val(e.target.result).text(e.target.result);
+				updateCode4();
 			 };
 			 reader.readAsText(presets[2], "UTF-8");
 			 $("#preset3").text(presets[2].name.replace(".params", "").replace(".slangp", ""));
@@ -1337,6 +1395,7 @@ $(document).ready(function () {
 			 var reader = new FileReader();
 			 reader.onload = function(e) {
 				$(".text5").val(e.target.result).text(e.target.result);
+				updateCode5();
 			 };
 			 reader.readAsText(presets[3], "UTF-8");
 			 $("#preset4").text(presets[3].name.replace(".params", "").replace(".slangp", ""));
@@ -1345,6 +1404,7 @@ $(document).ready(function () {
 			 var reader = new FileReader();
 			 reader.onload = function(e) {
 				$(".text6").val(e.target.result).text(e.target.result);
+				updateCode6();
 			 };
 			 reader.readAsText(presets[4], "UTF-8");
 			 $("#preset5").text(presets[4].name.replace(".params", "").replace(".slangp", ""));
@@ -1353,6 +1413,7 @@ $(document).ready(function () {
 			 var reader = new FileReader();
 			 reader.onload = function(e) {
 				$(".text7").val(e.target.result).text(e.target.result);
+				updateCode7();
 			 };
 			 reader.readAsText(presets[5], "UTF-8");
 			 $("#preset6").text(presets[5].name.replace(".params", "").replace(".slangp", ""));
@@ -1361,6 +1422,7 @@ $(document).ready(function () {
 			 var reader = new FileReader();
 			 reader.onload = function(e) {
 				$(".text8").val(e.target.result).text(e.target.result);
+				updateCode8();
 			 };
 			 reader.readAsText(presets[6], "UTF-8");
 			 $("#preset7").text(presets[6].name.replace(".params", "").replace(".slangp", ""));
@@ -1369,6 +1431,7 @@ $(document).ready(function () {
 			 var reader = new FileReader();
 			 reader.onload = function(e) {
 				$(".text9").val(e.target.result).text(e.target.result);
+				updateCode9();
 			 };
 			 reader.readAsText(presets[7], "UTF-8");
 			 $("#preset8").text(presets[7].name.replace(".params", "").replace(".slangp", ""));
@@ -1377,6 +1440,7 @@ $(document).ready(function () {
 			 var reader = new FileReader();
 			 reader.onload = function(e) {
 				$(".text10").val(e.target.result).text(e.target.result);
+				updateCode10();
 			 };
 			 reader.readAsText(presets[8], "UTF-8");
 			 $("#preset9").text(presets[8].name.replace(".params", "").replace(".slangp", ""));
@@ -1385,6 +1449,7 @@ $(document).ready(function () {
 			 var reader = new FileReader();
 			 reader.onload = function(e) {
 				$(".text11").val(e.target.result).text(e.target.result);
+				updateCode11();
 			 };
 			 reader.readAsText(presets[9], "UTF-8");
 			 $("#preset10").text(presets[9].name.replace(".params", "").replace(".slangp", ""));
@@ -1393,6 +1458,7 @@ $(document).ready(function () {
 			 var reader = new FileReader();
 			 reader.onload = function(e) {
 				$(".text12").val(e.target.result).text(e.target.result);
+				updateCode12();
 			 };
 			 reader.readAsText(presets[10], "UTF-8");
 			 $("#preset11").text(presets[10].name.replace(".params", "").replace(".slangp", ""));
@@ -1401,6 +1467,7 @@ $(document).ready(function () {
 			 var reader = new FileReader();
 			 reader.onload = function(e) {
 				$(".text13").val(e.target.result).text(e.target.result);
+				updateCode13();
 			 };
 			 reader.readAsText(presets[11], "UTF-8");
 			 $("#preset12").text(presets[11].name.replace(".params", "").replace(".slangp", ""));

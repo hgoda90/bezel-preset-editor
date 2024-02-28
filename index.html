@@ -5,6 +5,7 @@
 		<link rel="stylesheet" href="assets/OwlCarousel/owl.carousel.css">
 		<link rel="stylesheet" href="assets/OwlCarousel/owl.theme.default.css">
 		<link rel="stylesheet" href="assets/bootstrap/bootstrap.css">
+		<link rel="stylesheet" href="assets/highlight/styles/a11y-dark.css" id="highlight" data-theme="dark">
 		<link rel="stylesheet" href="assets/layout.css">
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -86,7 +87,10 @@
 						<span class="switch-label">Hold</span>
 					</div>
 					<div class="text-box">
-						<textarea class="text" id="dropText" rows="7" cols="36" readonly></textarea>
+						<div id="divCodeWrapper">
+							<pre id="preCode"><code id="codeBlock1" class="language-csharp"></code></pre>
+							<textarea class="text" id="dropText" rows="7" cols="36" readonly></textarea>
+						</div>
 						<label class="button" id="load">Load
 							<input type="file" accept=".slangp, .params">
 						</label>
@@ -114,6 +118,9 @@
 						<button class="destroy button" type="button" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Clear All">
 							<span class="material-symbols-outlined">delete</span>
 						</button>
+						<button class="brightness button" type="button" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Brightness">
+							<span class="material-symbols-outlined">light_mode</span>
+						</button>
 						<div class="power-button">
 							<button class="power" type="button">
 								<div class="light"></div>
@@ -124,40 +131,76 @@
 					<div class="text-box">
 						<div class="tab-content" id="myTabContent">
 							<div class="tab-pane fade active show" id="tab-pane1" role="tabpanel" aria-labelledby="tab1" tabindex="0">
-								<textarea class="text2" id="dropText2" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
+								<div id="divCodeWrapper">
+									<pre id="preCode"><code id="codeBlock2" class="language-csharp"></code></pre>
+									<textarea class="text2" id="dropText2" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
+								</div>
 							</div>
 							<div class="tab-pane fade" id="tab-pane2" role="tabpanel" aria-labelledby="tab2" tabindex="0">
-								<textarea class="text3" id="dropText3" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
+								<div id="divCodeWrapper">
+									<pre id="preCode"><code id="codeBlock3" class="language-csharp"></code></pre>
+									<textarea class="text3" id="dropText3" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
+								</div>
 							</div>
 							<div class="tab-pane fade" id="tab-pane3" role="tabpanel" aria-labelledby="tab3" tabindex="0">
-								<textarea class="text4" id="dropText4" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
+								<div id="divCodeWrapper">
+									<pre id="preCode"><code id="codeBlock4" class="language-csharp"></code></pre>
+									<textarea class="text4" id="dropText4" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
+								</div>
 							</div>
 							<div class="tab-pane fade" id="tab-pane4" role="tabpanel" aria-labelledby="tab4" tabindex="0">
-								<textarea class="text5" id="dropText5" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
+								<div id="divCodeWrapper">
+									<pre id="preCode"><code id="codeBlock5" class="language-csharp"></code></pre>
+									<textarea class="text5" id="dropText5" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
+								</div>
 							</div>
 							<div class="tab-pane fade" id="tab-pane5" role="tabpanel" aria-labelledby="tab5" tabindex="0">
-								<textarea class="text6" id="dropText6" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
+								<div id="divCodeWrapper">
+									<pre id="preCode"><code id="codeBlock6" class="language-csharp"></code></pre>
+									<textarea class="text6" id="dropText6" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
+								</div>
 							</div>
 							<div class="tab-pane fade" id="tab-pane6" role="tabpanel" aria-labelledby="tab6" tabindex="0">
-								<textarea class="text7" id="dropText7" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
+								<div id="divCodeWrapper">
+									<pre id="preCode"><code id="codeBlock7" class="language-csharp"></code></pre>
+									<textarea class="text7" id="dropText7" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
+								</div>
 							</div>
 							<div class="tab-pane fade" id="tab-pane7" role="tabpanel" aria-labelledby="tab7" tabindex="0">
-								<textarea class="text8" id="dropText8" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
+								<div id="divCodeWrapper">
+									<pre id="preCode"><code id="codeBlock8" class="language-csharp"></code></pre>
+									<textarea class="text8" id="dropText8" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
+								</div>
 							</div>
 							<div class="tab-pane fade" id="tab-pane8" role="tabpanel" aria-labelledby="tab8" tabindex="0">
-								<textarea class="text9" id="dropText9" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
+								<div id="divCodeWrapper">
+									<pre id="preCode"><code id="codeBlock9" class="language-csharp"></code></pre>
+									<textarea class="text9" id="dropText9" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
+								</div>
 							</div>
 							<div class="tab-pane fade" id="tab-pane9" role="tabpanel" aria-labelledby="tab9" tabindex="0">
-								<textarea class="text10" id="dropText10" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
+								<div id="divCodeWrapper">
+									<pre id="preCode"><code id="codeBlock10" class="language-csharp"></code></pre>
+									<textarea class="text10" id="dropText10" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
+								</div>
 							</div>
 							<div class="tab-pane fade" id="tab-pane10" role="tabpanel" aria-labelledby="tab10" tabindex="0">
-								<textarea class="text11" id="dropText11" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
+								<div id="divCodeWrapper">
+									<pre id="preCode"><code id="codeBlock11" class="language-csharp"></code></pre>
+									<textarea class="text11" id="dropText11" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
+								</div>
 							</div>
 							<div class="tab-pane fade" id="tab-pane11" role="tabpanel" aria-labelledby="tab11" tabindex="0">
-								<textarea class="text12" id="dropText12" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
+								<div id="divCodeWrapper">
+									<pre id="preCode"><code id="codeBlock12" class="language-csharp"></code></pre>
+									<textarea class="text12" id="dropText12" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
+								</div>
 							</div>
 							<div class="tab-pane fade" id="tab-pane12" role="tabpanel" aria-labelledby="tab12" tabindex="0">
-								<textarea class="text13" id="dropText13" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
+								<div id="divCodeWrapper">
+									<pre id="preCode"><code id="codeBlock13" class="language-csharp"></code></pre>
+									<textarea class="text13" id="dropText13" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
+								</div>
 							</div>
 						</div>
 						<span class="preset-title show" id="preset1"></span>
@@ -312,7 +355,9 @@
 		<script src="assets/colorcolor/colorcolor.js"></script>
 		<script src="assets/bootstrap/popper.min.js"></script>
 		<script src="assets/bootstrap/bootstrap.bundle.js"></script>
+		<script src="assets/highlight/highlight.js"></script>
 		<script src="assets/OwlCarousel/owl.carousel.js"></script>
+		<script src="assets/text-syntax-highlight.js"></script>
 		<script>
 			const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
 			const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
