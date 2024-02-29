@@ -593,17 +593,6 @@ function edit(){
 	}
 }
 
-function extra(){
-	$(".text-wrap").toggleClass("large");
-	
-	if($(".extra").text() == "keyboard_arrow_down"){
-		$(".extra").text("keyboard_arrow_up");
-	}
-	else{
-		$(".extra").text("keyboard_arrow_down");
-	}
-}
-
 function formatToggle(value){
 	  value = parseInt(value, 10);
 	  $(".format-labels span").removeClass("active");
@@ -1318,8 +1307,6 @@ dropText2.ondrop = function(e) {
 	else if(e.dataTransfer.files.length > 24){
 		if($(".nav").children().length == 0){
 			for (var i=0; i<24;i++){
-				files[i] = e.dataTransfer.files[i];
-				dropfile2(files);
 				$(".nav-item").removeClass("empty");
 				if(i == 0 && $(".nav").children().length == 0){
 					$(".nav.nav-tabs").append('<li class="nav-item" role="presentation"><button class="nav-link active" id="tab1" data-bs-toggle="tab" data-bs-target="#tab-pane1" type="button" role="tab" aria-controls="tab-pane1" aria-selected="true">1</button></li>');
@@ -1331,11 +1318,14 @@ dropText2.ondrop = function(e) {
 		}
 		else{
 			for (var i=0; i<(24 - tabs);i++){
-				files[i] = e.dataTransfer.files[i];
-				dropfile2(files);
 				$(".nav-item").removeClass("empty");
 				$(".nav.nav-tabs").append('<li class="nav-item" role="presentation"><button class="nav-link" id="tab'+parseInt(tabs+(i+1))+'" data-bs-toggle="tab" data-bs-target="#tab-pane'+parseInt(tabs+(i+1))+'" type="button" role="tab" aria-controls="tab-pane'+parseInt(tabs+(i+1))+'" aria-selected="true">'+parseInt(tabs+(i+1))+'</button></li>');
 			}
+		}
+		
+		for (var i=0; i<24;i++){
+			files[i] = e.dataTransfer.files[i];
+			dropfile2(files);
 		}
 	}
 	
@@ -1594,8 +1584,6 @@ $(document).ready(function () {
 		else if(presets.length > 24){
 			if($(".nav").children().length == 0){
 				for (var i=0; i<24;i++){
-					files[i] = presets[i];
-					dropfile2(files);
 					$(".nav-item").removeClass("empty");
 					if(i == 0 && $(".nav").children().length == 0){
 						$(".nav.nav-tabs").append('<li class="nav-item" role="presentation"><button class="nav-link active" id="tab1" data-bs-toggle="tab" data-bs-target="#tab-pane1" type="button" role="tab" aria-controls="tab-pane1" aria-selected="true">1</button></li>');
@@ -1607,11 +1595,14 @@ $(document).ready(function () {
 			}
 			else{
 				for (var i=0; i<(24 - tabs);i++){
-					files[i] = presets[i];
-					dropfile2(files);
 					$(".nav-item").removeClass("empty");
 					$(".nav.nav-tabs").append('<li class="nav-item" role="presentation"><button class="nav-link" id="tab'+parseInt(tabs+(i+1))+'" data-bs-toggle="tab" data-bs-target="#tab-pane'+parseInt(tabs+(i+1))+'" type="button" role="tab" aria-controls="tab-pane'+parseInt(tabs+(i+1))+'" aria-selected="true">'+parseInt(tabs+(i+1))+'</button></li>');
 				}
+			}
+			
+			for (var i=0; i<24;i++){
+				files[i] = presets[i];
+				dropfile2(files);
 			}
 		}
 		
