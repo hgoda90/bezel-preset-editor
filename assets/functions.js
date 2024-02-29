@@ -87,7 +87,9 @@ function clearText(id){
 function colorReset(){
 	$(".hex input, .hsb input, .hsl input, .rgb input").val("");
 	$(".info").empty();
+	$(".info").css("display", "none");
 	$(".color").removeClass("active");
+	$(".color-vision").css("top", "-92px");
 	
 	if(bezelStyle == "mbz"){
 		$(".contrast").css("opacity", 0);
@@ -265,122 +267,154 @@ function navHide(){
 
 function dropfile(file) {
   var reader = new FileReader();
-  reader.onload = function(e) {
-	dropText.value = e.target.result;
-	updateCode();
-  };
+  reader.onload = function(e) {dropText.value = e.target.result;updateCode();};
   reader.readAsText(file, "UTF-8");
 }
 
 function dropfile2(file) {
 	if(file.length == 1){
 		 var reader = new FileReader();
-		 reader.onload = function(e) {
-			dropText2.value = e.target.result;
-			updateCode();
-			updateCode2();
-		 };
+		 reader.onload = function(e) {dropText2.value = e.target.result;updateCode();updateCode2();};
 		 reader.readAsText(file[0], "UTF-8");
 		 $("#preset1").text(file[0].name.replace(".params", "").replace(".slangp", ""));
 	}
 	if(file.length == 2){
 		 var reader = new FileReader();
-		 reader.onload = function(e) {
-			dropText3.value = e.target.result;
-			updateCode3();
-		 };
+		 reader.onload = function(e) {dropText3.value = e.target.result;updateCode3();};
 		 reader.readAsText(file[1], "UTF-8");
 		 $("#preset2").text(file[1].name.replace(".params", "").replace(".slangp", ""));
 	}
 	if(file.length == 3){
 		 var reader = new FileReader();
-		 reader.onload = function(e) {
-			dropText4.value = e.target.result;
-			updateCode4();
-		 };
+		 reader.onload = function(e) {dropText4.value = e.target.result;updateCode4();};
 		 reader.readAsText(file[2], "UTF-8");
 		 $("#preset3").text(file[2].name.replace(".params", "").replace(".slangp", ""));
 	}
 	if(file.length == 4){
 		 var reader = new FileReader();
-		 reader.onload = function(e) {
-			dropText5.value = e.target.result;
-			updateCode5();
-		 };
+		 reader.onload = function(e) {dropText5.value = e.target.result;updateCode5();};
 		 reader.readAsText(file[3], "UTF-8");
 		 $("#preset4").text(file[3].name.replace(".params", "").replace(".slangp", ""));
 	}
 	if(file.length == 5){
 		 var reader = new FileReader();
-		 reader.onload = function(e) {
-			dropText6.value = e.target.result;
-			updateCode6();
-		 };
+		 reader.onload = function(e) {dropText6.value = e.target.result;updateCode6();};
 		 reader.readAsText(file[4], "UTF-8");
 		 $("#preset5").text(file[4].name.replace(".params", "").replace(".slangp", ""));
 	}
 	if(file.length == 6){
 		 var reader = new FileReader();
-		 reader.onload = function(e) {
-			dropText7.value = e.target.result;
-			updateCode7();
-		 };
+		 reader.onload = function(e) {dropText7.value = e.target.result;updateCode7();};
 		 reader.readAsText(file[5], "UTF-8");
 		 $("#preset6").text(file[5].name.replace(".params", "").replace(".slangp", ""));
 	}
 	if(file.length == 7){
 		 var reader = new FileReader();
-		 reader.onload = function(e) {
-			dropText8.value = e.target.result;
-			updateCode8();
-		 };
+		 reader.onload = function(e) {dropText8.value = e.target.result;updateCode8();};
 		 reader.readAsText(file[6], "UTF-8");
 		 $("#preset7").text(file[6].name.replace(".params", "").replace(".slangp", ""));
 	}
 	if(file.length == 8){
 		 var reader = new FileReader();
-		 reader.onload = function(e) {
-			dropText9.value = e.target.result;
-			updateCode9();
-		 };
+		 reader.onload = function(e) {dropText9.value = e.target.result;updateCode9();};
 		 reader.readAsText(file[7], "UTF-8");
 		 $("#preset8").text(file[7].name.replace(".params", "").replace(".slangp", ""));
 	}
 	if(file.length == 9){
 		 var reader = new FileReader();
-		 reader.onload = function(e) {
-			dropText10.value = e.target.result;
-			updateCode10();
-		 };
+		 reader.onload = function(e) {dropText10.value = e.target.result;updateCode10();};
 		 reader.readAsText(file[8], "UTF-8");
 		 $("#preset9").text(file[8].name.replace(".params", "").replace(".slangp", ""));
 	}
 	if(file.length == 10){
 		 var reader = new FileReader();
-		 reader.onload = function(e) {
-			dropText11.value = e.target.result;
-			updateCode11();
-		 };
+		 reader.onload = function(e) {dropText11.value = e.target.result;updateCode11();};
 		 reader.readAsText(file[9], "UTF-8");
 		 $("#preset10").text(file[9].name.replace(".params", "").replace(".slangp", ""));
 	}
 	if(file.length == 11){
 		 var reader = new FileReader();
-		 reader.onload = function(e) {
-			dropText12.value = e.target.result;
-			updateCode12();
-		 };
+		 reader.onload = function(e) {dropText12.value = e.target.result;updateCode12();};
 		 reader.readAsText(file[10], "UTF-8");
 		 $("#preset11").text(file[10].name.replace(".params", "").replace(".slangp", ""));
 	}
 	if(file.length == 12){
 		 var reader = new FileReader();
-		 reader.onload = function(e) {
-			dropText13.value = e.target.result;
-			updateCode13();
-		 };
+		 reader.onload = function(e) {dropText13.value = e.target.result;updateCode13();};
 		 reader.readAsText(file[11], "UTF-8");
 		 $("#preset12").text(file[11].name.replace(".params", "").replace(".slangp", ""));
+	}
+	if(file.length == 13){
+		 var reader = new FileReader();
+		 reader.onload = function(e) {dropText14.value = e.target.result;updateCode14();};
+		 reader.readAsText(file[12], "UTF-8");
+		 $("#preset13").text(file[12].name.replace(".params", "").replace(".slangp", ""));
+	}
+	if(file.length == 14){
+		 var reader = new FileReader();
+		 reader.onload = function(e) {dropText15.value = e.target.result;updateCode15();};
+		 reader.readAsText(file[13], "UTF-8");
+		 $("#preset14").text(file[13].name.replace(".params", "").replace(".slangp", ""));
+	}
+	if(file.length == 15){
+		 var reader = new FileReader();
+		 reader.onload = function(e) {dropText16.value = e.target.result;updateCode16();};
+		 reader.readAsText(file[14], "UTF-8");
+		 $("#preset15").text(file[14].name.replace(".params", "").replace(".slangp", ""));
+	}
+	if(file.length == 16){
+		 var reader = new FileReader();
+		 reader.onload = function(e) {dropText17.value = e.target.result;updateCode17();};
+		 reader.readAsText(file[15], "UTF-8");
+		 $("#preset16").text(file[15].name.replace(".params", "").replace(".slangp", ""));
+	}
+	if(file.length == 17){
+		 var reader = new FileReader();
+		 reader.onload = function(e) {dropText18.value = e.target.result;updateCode18();};
+		 reader.readAsText(file[16], "UTF-8");
+		 $("#preset17").text(file[16].name.replace(".params", "").replace(".slangp", ""));
+	}
+	if(file.length == 18){
+		 var reader = new FileReader();
+		 reader.onload = function(e) {dropText19.value = e.target.result;updateCode19();};
+		 reader.readAsText(file[17], "UTF-8");
+		 $("#preset18").text(file[17].name.replace(".params", "").replace(".slangp", ""));
+	}
+	if(file.length == 19){
+		 var reader = new FileReader();
+		 reader.onload = function(e) {dropText20.value = e.target.result;updateCode20();};
+		 reader.readAsText(file[18], "UTF-8");
+		 $("#preset19").text(file[18].name.replace(".params", "").replace(".slangp", ""));
+	}
+	if(file.length == 20){
+		 var reader = new FileReader();
+		 reader.onload = function(e) {dropText21.value = e.target.result;updateCode21();};
+		 reader.readAsText(file[19], "UTF-8");
+		 $("#preset20").text(file[19].name.replace(".params", "").replace(".slangp", ""));
+	}
+	if(file.length == 21){
+		 var reader = new FileReader();
+		 reader.onload = function(e) {dropText22.value = e.target.result;updateCode22();};
+		 reader.readAsText(file[20], "UTF-8");
+		 $("#preset21").text(file[20].name.replace(".params", "").replace(".slangp", ""));
+	}
+	if(file.length == 22){
+		 var reader = new FileReader();
+		 reader.onload = function(e) {dropText23.value = e.target.result;updateCode23();};
+		 reader.readAsText(file[21], "UTF-8");
+		 $("#preset22").text(file[21].name.replace(".params", "").replace(".slangp", ""));
+	}
+	if(file.length == 23){
+		 var reader = new FileReader();
+		 reader.onload = function(e) {dropText24.value = e.target.result;updateCode24();};
+		 reader.readAsText(file[22], "UTF-8");
+		 $("#preset23").text(file[22].name.replace(".params", "").replace(".slangp", ""));
+	}
+	if(file.length == 24){
+		 var reader = new FileReader();
+		 reader.onload = function(e) {dropText25.value = e.target.result;updateCode25();};
+		 reader.readAsText(file[23], "UTF-8");
+		 $("#preset24").text(file[23].name.replace(".params", "").replace(".slangp", ""));
 	}
 	
 	$(".nav").removeClass("empty");
@@ -388,112 +422,163 @@ function dropfile2(file) {
 
 function dropfile3(file) {
   var reader = new FileReader();
-  reader.onload = function(e) {
-	dropText3.value = e.target.result;
-    updateCode3();
-  };
+  reader.onload = function(e) {dropText3.value = e.target.result;updateCode3();};
   reader.readAsText(file, "UTF-8");
   $("#preset2").text(file.name.replace(".params", "").replace(".slangp", ""));
 }
 
 function dropfile4(file) {
   var reader = new FileReader();
-  reader.onload = function(e) {
-	dropText4.value = e.target.result;
-	updateCode4();
-  };
+  reader.onload = function(e) {dropText4.value = e.target.result;updateCode4();};
   reader.readAsText(file, "UTF-8");
   $("#preset3").text(file.name.replace(".params", "").replace(".slangp", ""));
 }
 
 function dropfile5(file) {
   var reader = new FileReader();
-  reader.onload = function(e) {
-	dropText5.value = e.target.result;
-	updateCode5();
-  };
+  reader.onload = function(e) {dropText5.value = e.target.result;updateCode5();};
   reader.readAsText(file, "UTF-8");
   $("#preset4").text(file.name.replace(".params", "").replace(".slangp", ""));
 }
 
 function dropfile6(file) {
   var reader = new FileReader();
-  reader.onload = function(e) {
-	dropText6.value = e.target.result;
-	updateCode6();
-  };
+  reader.onload = function(e) {dropText6.value = e.target.result;updateCode6();};
   reader.readAsText(file, "UTF-8");
   $("#preset5").text(file.name.replace(".params", "").replace(".slangp", ""));
 }
 
 function dropfile7(file) {
   var reader = new FileReader();
-  reader.onload = function(e) {
-	dropText7.value = e.target.result;
-	updateCode7();
-  };
+  reader.onload = function(e) {dropText7.value = e.target.result;updateCode7();};
   reader.readAsText(file, "UTF-8");
   $("#preset6").text(file.name.replace(".params", "").replace(".slangp", ""));
 }
 
 function dropfile8(file) {
   var reader = new FileReader();
-  reader.onload = function(e) {
-	dropText8.value = e.target.result;
-	updateCode8();
-  };
+  reader.onload = function(e) {dropText8.value = e.target.result;updateCode8();};
   reader.readAsText(file, "UTF-8");
   $("#preset7").text(file.name.replace(".params", "").replace(".slangp", ""));
 }
 
 function dropfile9(file) {
   var reader = new FileReader();
-  reader.onload = function(e) {
-	dropText9.value = e.target.result;
-	updateCode9();
-  };
+  reader.onload = function(e) {dropText9.value = e.target.result;updateCode9();};
   reader.readAsText(file, "UTF-8");
   $("#preset8").text(file.name.replace(".params", "").replace(".slangp", ""));
 }
 
 function dropfile10(file) {
   var reader = new FileReader();
-  reader.onload = function(e) {
-	dropText10.value = e.target.result;
-	updateCode10();
-  };
+  reader.onload = function(e) {dropText10.value = e.target.result;updateCode10();};
   reader.readAsText(file, "UTF-8");
   $("#preset9").text(file.name.replace(".params", "").replace(".slangp", ""));
 }
 
 function dropfile11(file) {
   var reader = new FileReader();
-  reader.onload = function(e) {
-	dropText11.value = e.target.result;
-	updateCode11();
-  };
+  reader.onload = function(e) {dropText11.value = e.target.result;updateCode11();};
   reader.readAsText(file, "UTF-8");
   $("#preset10").text(file.name.replace(".params", "").replace(".slangp", ""));
 }
 
 function dropfile12(file) {
   var reader = new FileReader();
-  reader.onload = function(e) {
-	dropText12.value = e.target.result;
-	updateCode12();
-  };
+  reader.onload = function(e) {dropText12.value = e.target.result;updateCode12();};
   reader.readAsText(file, "UTF-8");
   $("#preset11").text(file.name.replace(".params", "").replace(".slangp", ""));
 }
 
 function dropfile13(file) {
   var reader = new FileReader();
-  reader.onload = function(e) {
-	dropText13.value = e.target.result;
-	updateCode13();
-  };
+  reader.onload = function(e) {dropText13.value = e.target.result;updateCode13();};
   reader.readAsText(file, "UTF-8");
   $("#preset12").text(file.name.replace(".params", "").replace(".slangp", ""));
+}
+
+function dropfile14(file) {
+  var reader = new FileReader();
+  reader.onload = function(e) {dropText14.value = e.target.result;updateCode14();};
+  reader.readAsText(file, "UTF-8");
+  $("#preset13").text(file.name.replace(".params", "").replace(".slangp", ""));
+}
+
+function dropfile15(file) {
+  var reader = new FileReader();
+  reader.onload = function(e) {dropText15.value = e.target.result;updateCode15();};
+  reader.readAsText(file, "UTF-8");
+  $("#preset14").text(file.name.replace(".params", "").replace(".slangp", ""));
+}
+
+function dropfile16(file) {
+  var reader = new FileReader();
+  reader.onload = function(e) {dropText16.value = e.target.result;updateCode16();};
+  reader.readAsText(file, "UTF-8");
+  $("#preset15").text(file.name.replace(".params", "").replace(".slangp", ""));
+}
+
+function dropfile17(file) {
+  var reader = new FileReader();
+  reader.onload = function(e) {dropText17.value = e.target.result;updateCode17();};
+  reader.readAsText(file, "UTF-8");
+  $("#preset16").text(file.name.replace(".params", "").replace(".slangp", ""));
+}
+
+function dropfile18(file) {
+  var reader = new FileReader();
+  reader.onload = function(e) {dropText18.value = e.target.result;updateCode18();};
+  reader.readAsText(file, "UTF-8");
+  $("#preset17").text(file.name.replace(".params", "").replace(".slangp", ""));
+}
+
+function dropfile19(file) {
+  var reader = new FileReader();
+  reader.onload = function(e) {dropText19.value = e.target.result;updateCode19();};
+  reader.readAsText(file, "UTF-8");
+  $("#preset18").text(file.name.replace(".params", "").replace(".slangp", ""));
+}
+
+function dropfile20(file) {
+  var reader = new FileReader();
+  reader.onload = function(e) {dropText20.value = e.target.result;updateCode20();};
+  reader.readAsText(file, "UTF-8");
+  $("#preset19").text(file.name.replace(".params", "").replace(".slangp", ""));
+}
+
+function dropfile21(file) {
+  var reader = new FileReader();
+  reader.onload = function(e) {dropText21.value = e.target.result;updateCode21();};
+  reader.readAsText(file, "UTF-8");
+  $("#preset20").text(file.name.replace(".params", "").replace(".slangp", ""));
+}
+
+function dropfile22(file) {
+  var reader = new FileReader();
+  reader.onload = function(e) {dropText22.value = e.target.result;updateCode22();};
+  reader.readAsText(file, "UTF-8");
+  $("#preset21").text(file.name.replace(".params", "").replace(".slangp", ""));
+}
+
+function dropfile23(file) {
+  var reader = new FileReader();
+  reader.onload = function(e) {dropText23.value = e.target.result;updateCode23();};
+  reader.readAsText(file, "UTF-8");
+  $("#preset22").text(file.name.replace(".params", "").replace(".slangp", ""));
+}
+
+function dropfile24(file) {
+  var reader = new FileReader();
+  reader.onload = function(e) {dropText24.value = e.target.result;updateCode24();};
+  reader.readAsText(file, "UTF-8");
+  $("#preset23").text(file.name.replace(".params", "").replace(".slangp", ""));
+}
+
+function dropfile25(file) {
+  var reader = new FileReader();
+  reader.onload = function(e) {dropText25.value = e.target.result;updateCode25();};
+  reader.readAsText(file, "UTF-8");
+  $("#preset24").text(file.name.replace(".params", "").replace(".slangp", ""));
 }
 
 function edit(){
@@ -550,22 +635,22 @@ function formatToggle(value){
 	if(value == 1){
 		setCookie("colorFormat", "HEX", 30);
 		colorFormat = "HEX";
-		$(".color-vision").prepend('<div class="hex">HEX: # <input type="text" name="hex" size=6 maxlength=6></div>');
+		$(".color-vision .contrast").after('<div class="hex">HEX: # <input type="text" name="hex" size=6 maxlength=6></div>');
 	}
 	else if(value == 2){
 		setCookie("colorFormat", "HSB", 30);
 		colorFormat = "HSB";
-		$(".color-vision").prepend('<div class="hsb">hsb(<input type="text" name="hue" size=3 maxLength=3>deg, <input type="text" name="saturation" size=3 maxLength=3>%, <input type="text" name="brightness" size=3 maxLength=3>%)</div>');
+		$(".color-vision .contrast").after('<div class="hsb">hsb(<input type="text" name="hue" size=3 maxLength=3>deg, <input type="text" name="saturation" size=3 maxLength=3>%, <input type="text" name="brightness" size=3 maxLength=3>%)</div>');
 	}
 	else if(value == 3){
 		setCookie("colorFormat", "HSL", 30);
 		colorFormat = "HSL";
-		$(".color-vision").prepend('<div class="hsl">hsl(<input type="text" name="hue" size=3 maxLength=3>deg, <input type="text" name="saturation" size=3 maxLength=3>%, <input type="text" name="lightness" size=3 maxLength=3>%)</div>');
+		$(".color-vision .contrast").after('<div class="hsl">hsl(<input type="text" name="hue" size=3 maxLength=3>deg, <input type="text" name="saturation" size=3 maxLength=3>%, <input type="text" name="lightness" size=3 maxLength=3>%)</div>');
 	}
 	else if(value == 4){
 		setCookie("colorFormat", "RGB", 30);
 		colorFormat = "RGB";
-		$(".color-vision").prepend('<div class="rgb">rgb(<input type="text" name="red" size=3 maxLength=3>, <input type="text" name="green" size=3 maxLength=3>, <input type="text" name="blue" size=3 maxLength=3>)</div>');
+		$(".color-vision .contrast").after('<div class="rgb">rgb(<input type="text" name="red" size=3 maxLength=3>, <input type="text" name="green" size=3 maxLength=3>, <input type="text" name="blue" size=3 maxLength=3>)</div>');
 	}
 	
 	$(".info").empty();
@@ -1048,7 +1133,7 @@ function start(){
 	}
 	
 	if(power == "on"){
-		$(".power, .text1, .text-box").addClass('on');
+		$(".power, .text1, .text-box, .mini").addClass('on');
 		$("code").css("display", "none");
 	}
 	
@@ -1183,11 +1268,7 @@ $(".us, .world").on('click', function(){
 	}
 });
 
-dropText.ondrop = function(e) {
-  e.preventDefault();
-  var file = e.dataTransfer.files[0];
-  dropfile(file);
-};
+dropText.ondrop = function(e) {e.preventDefault();var file = e.dataTransfer.files[0];dropfile(file);};
 
 dropText2.ondrop = function(e) {
 	e.preventDefault();
@@ -1204,7 +1285,7 @@ dropText2.ondrop = function(e) {
 		$(".text-wrap").append('<ul class="nav nav-tabs" id="myTab" role="tablist"></ul>');
 	}
   
-	if(e.dataTransfer.files.length <= 12){
+	if(e.dataTransfer.files.length <= 24){
 		for (var i=0; i< e.dataTransfer.files.length;i++){
 			files[i] = e.dataTransfer.files[i];
 			dropfile2(files);
@@ -1213,7 +1294,7 @@ dropText2.ondrop = function(e) {
 					if(i == 0 && $(".nav").children().length == 0){
 						$(".nav.nav-tabs").append('<li class="nav-item" role="presentation"><button class="nav-link active" id="tab1" data-bs-toggle="tab" data-bs-target="#tab-pane1" type="button" role="tab" aria-controls="tab-pane1" aria-selected="true">1</button></li>');
 					}
-					else if(e.dataTransfer.files.length == 12){
+					else if(e.dataTransfer.files.length == 24){
 						$(".nav.nav-tabs").append('<li class="nav-item" role="presentation"><button class="nav-link" id="tab'+(tabs+(i+1))+'" data-bs-toggle="tab" data-bs-target="#tab-pane'+(tabs+(i+1))+'" type="button" role="tab" aria-controls="tab-pane'+(tabs+(i+1))+'" aria-selected="true">'+(tabs+(i+1))+'</button></li>');
 						$(".nav-item").removeClass("empty");
 					}
@@ -1232,18 +1313,26 @@ dropText2.ondrop = function(e) {
 			}
 		}
 	}
-	else if(e.dataTransfer.files.length > 12){
-		for (var i=0; i<12;i++){
-			files[i] = e.dataTransfer.files[i];
-			dropfile2(files);
-			$(".nav-item").removeClass("empty");
-			if($(".nav").children().length < 12){
+	else if(e.dataTransfer.files.length > 24){
+		if($(".nav").children().length == 0){
+			for (var i=0; i<24;i++){
+				files[i] = e.dataTransfer.files[i];
+				dropfile2(files);
+				$(".nav-item").removeClass("empty");
 				if(i == 0 && $(".nav").children().length == 0){
 					$(".nav.nav-tabs").append('<li class="nav-item" role="presentation"><button class="nav-link active" id="tab1" data-bs-toggle="tab" data-bs-target="#tab-pane1" type="button" role="tab" aria-controls="tab-pane1" aria-selected="true">1</button></li>');
 				}
 				else{
 					$(".nav.nav-tabs").append('<li class="nav-item" role="presentation"><button class="nav-link" id="tab'+(i+1)+'" data-bs-toggle="tab" data-bs-target="#tab-pane'+(i+1)+'" type="button" role="tab" aria-controls="tab-pane'+(i+1)+'" aria-selected="true">'+(i+1)+'</button></li>');
 				}
+			}
+		}
+		else{
+			for (var i=0; i<(24 - tabs);i++){
+				files[i] = e.dataTransfer.files[i];
+				dropfile2(files);
+				$(".nav-item").removeClass("empty");
+				$(".nav.nav-tabs").append('<li class="nav-item" role="presentation"><button class="nav-link" id="tab'+parseInt(tabs+(i+1))+'" data-bs-toggle="tab" data-bs-target="#tab-pane'+parseInt(tabs+(i+1))+'" type="button" role="tab" aria-controls="tab-pane'+parseInt(tabs+(i+1))+'" aria-selected="true">'+parseInt(tabs+(i+1))+'</button></li>');
 			}
 		}
 	}
@@ -1277,82 +1366,29 @@ dropText2.ondrop = function(e) {
 	}
 };
 
-dropText3.ondrop = function(e) {
-  e.preventDefault();
-  var file = e.dataTransfer.files[0];
-  dropfile3(file);
-  $(".nav-link.active").parents(".nav-item").removeClass("empty");
-};
-
-dropText4.ondrop = function(e) {
-  e.preventDefault();
-  var file = e.dataTransfer.files[0];
-  dropfile4(file);
-  $(".nav-link.active").parents(".nav-item").removeClass("empty");
-};
-
-dropText5.ondrop = function(e) {
-  e.preventDefault();
-  var file = e.dataTransfer.files[0];
-  dropfile5(file);
-  $(".nav-link.active").parents(".nav-item").removeClass("empty");
-};
-
-dropText6.ondrop = function(e) {
-  e.preventDefault();
-  var file = e.dataTransfer.files[0];
-  dropfile6(file);
-  $(".nav-link.active").parents(".nav-item").removeClass("empty");
-};
-
-dropText7.ondrop = function(e) {
-  e.preventDefault();
-  var file = e.dataTransfer.files[0];
-  dropfile7(file);
-  $(".nav-link.active").parents(".nav-item").removeClass("empty");
-};
-
-dropText8.ondrop = function(e) {
-  e.preventDefault();
-  var file = e.dataTransfer.files[0];
-  dropfile8(file);
-  $(".nav-link.active").parents(".nav-item").removeClass("empty");
-};
-
-dropText9.ondrop = function(e) {
-  e.preventDefault();
-  var file = e.dataTransfer.files[0];
-  dropfile9(file);
-  $(".nav-link.active").parents(".nav-item").removeClass("empty");
-};
-
-dropText10.ondrop = function(e) {
-  e.preventDefault();
-  var file = e.dataTransfer.files[0];
-  dropfile10(file);
-  $(".nav-link.active").parents(".nav-item").removeClass("empty");
-};
-
-dropText11.ondrop = function(e) {
-  e.preventDefault();
-  var file = e.dataTransfer.files[0];
-  dropfile11(file);
-  $(".nav-link.active").parents(".nav-item").removeClass("empty");
-};
-
-dropText12.ondrop = function(e) {
-  e.preventDefault();
-  var file = e.dataTransfer.files[0];
-  dropfile12(file);
-  $(".nav-link.active").parents(".nav-item").removeClass("empty");
-};
-
-dropText13.ondrop = function(e) {
-  e.preventDefault();
-  var file = e.dataTransfer.files[0];
-  dropfile13(file);
-  $(".nav-link.active").parents(".nav-item").removeClass("empty");
-};
+dropText3.ondrop = function(e) {e.preventDefault();var file = e.dataTransfer.files[0];dropfile3(file);$(".nav-link.active").parents(".nav-item").removeClass("empty");};
+dropText4.ondrop = function(e) {e.preventDefault();var file = e.dataTransfer.files[0];dropfile4(file);$(".nav-link.active").parents(".nav-item").removeClass("empty");};
+dropText5.ondrop = function(e) {e.preventDefault();var file = e.dataTransfer.files[0];dropfile5(file);$(".nav-link.active").parents(".nav-item").removeClass("empty");};
+dropText6.ondrop = function(e) {e.preventDefault();var file = e.dataTransfer.files[0];dropfile6(file);$(".nav-link.active").parents(".nav-item").removeClass("empty");};
+dropText7.ondrop = function(e) {e.preventDefault();var file = e.dataTransfer.files[0];dropfile7(file);$(".nav-link.active").parents(".nav-item").removeClass("empty");};
+dropText8.ondrop = function(e) {e.preventDefault();var file = e.dataTransfer.files[0];dropfile8(file);$(".nav-link.active").parents(".nav-item").removeClass("empty");};
+dropText9.ondrop = function(e) {e.preventDefault();var file = e.dataTransfer.files[0];dropfile9(file);$(".nav-link.active").parents(".nav-item").removeClass("empty");};
+dropText10.ondrop = function(e) {e.preventDefault();var file = e.dataTransfer.files[0];dropfile10(file);$(".nav-link.active").parents(".nav-item").removeClass("empty");};
+dropText11.ondrop = function(e) {e.preventDefault();var file = e.dataTransfer.files[0];dropfile11(file);$(".nav-link.active").parents(".nav-item").removeClass("empty");};
+dropText12.ondrop = function(e) {e.preventDefault();var file = e.dataTransfer.files[0];dropfile12(file);$(".nav-link.active").parents(".nav-item").removeClass("empty");};
+dropText13.ondrop = function(e) {e.preventDefault();var file = e.dataTransfer.files[0];dropfile13(file);$(".nav-link.active").parents(".nav-item").removeClass("empty");};
+dropText14.ondrop = function(e) {e.preventDefault();var file = e.dataTransfer.files[0];dropfile14(file);$(".nav-link.active").parents(".nav-item").removeClass("empty");};
+dropText15.ondrop = function(e) {e.preventDefault();var file = e.dataTransfer.files[0];dropfile15(file);$(".nav-link.active").parents(".nav-item").removeClass("empty");};
+dropText16.ondrop = function(e) {e.preventDefault();var file = e.dataTransfer.files[0];dropfile16(file);$(".nav-link.active").parents(".nav-item").removeClass("empty");};
+dropText17.ondrop = function(e) {e.preventDefault();var file = e.dataTransfer.files[0];dropfile17(file);$(".nav-link.active").parents(".nav-item").removeClass("empty");};
+dropText18.ondrop = function(e) {e.preventDefault();var file = e.dataTransfer.files[0];dropfile18(file);$(".nav-link.active").parents(".nav-item").removeClass("empty");};
+dropText19.ondrop = function(e) {e.preventDefault();var file = e.dataTransfer.files[0];dropfile19(file);$(".nav-link.active").parents(".nav-item").removeClass("empty");};
+dropText20.ondrop = function(e) {e.preventDefault();var file = e.dataTransfer.files[0];dropfile20(file);$(".nav-link.active").parents(".nav-item").removeClass("empty");};
+dropText21.ondrop = function(e) {e.preventDefault();var file = e.dataTransfer.files[0];dropfile21(file);$(".nav-link.active").parents(".nav-item").removeClass("empty");};
+dropText22.ondrop = function(e) {e.preventDefault();var file = e.dataTransfer.files[0];dropfile22(file);$(".nav-link.active").parents(".nav-item").removeClass("empty");};
+dropText23.ondrop = function(e) {e.preventDefault();var file = e.dataTransfer.files[0];dropfile23(file);$(".nav-link.active").parents(".nav-item").removeClass("empty");};
+dropText24.ondrop = function(e) {e.preventDefault();var file = e.dataTransfer.files[0];dropfile24(file);$(".nav-link.active").parents(".nav-item").removeClass("empty");};
+dropText25.ondrop = function(e) {e.preventDefault();var file = e.dataTransfer.files[0];dropfile25(file);$(".nav-link.active").parents(".nav-item").removeClass("empty");};
 
 $(document).ready(function () {
 	$('[data-bs-toggle="tooltip"]').tooltip();
@@ -1361,10 +1397,7 @@ $(document).ready(function () {
 		const geekss = e.target.files[0];
 		
 		var reader = new FileReader();
-		reader.onload = function (e) {
-			$(".text").val(e.target.result).text(e.target.result);
-			updateCode();
-		};
+		reader.onload = function (e) {$(".text").val(e.target.result).text(e.target.result);updateCode();};
 		
 		reader.readAsText(geekss);
 		$('#load input[type="file"]').val("");
@@ -1383,126 +1416,161 @@ $(document).ready(function () {
 		
 		if(presets.length >= 1){
 			 var reader = new FileReader();
-			 reader.onload = function(e) {
-				$(".text2").val(e.target.result).text(e.target.result);
-				updateCode();
-				updateCode2();
-			 };
+			 reader.onload = function(e) {$(".text2").val(e.target.result).text(e.target.result);updateCode();updateCode2();};
 			 reader.readAsText(presets[0], "UTF-8");
 			 $("#preset1").text(presets[0].name.replace(".params", "").replace(".slangp", ""));
 		}
 		if(presets.length >= 2){
 			 var reader = new FileReader();
-			 reader.onload = function(e) {
-				$(".text3").val(e.target.result).text(e.target.result);
-				updateCode3();
-			 };
+			 reader.onload = function(e) {$(".text3").val(e.target.result).text(e.target.result);updateCode3();};
 			 reader.readAsText(presets[1], "UTF-8");
 			 $("#preset2").text(presets[1].name.replace(".params", "").replace(".slangp", ""));
 		}
 		if(presets.length >= 3){
 			 var reader = new FileReader();
-			 reader.onload = function(e) {
-				$(".text4").val(e.target.result).text(e.target.result);
-				updateCode4();
-			 };
+			 reader.onload = function(e) {$(".text4").val(e.target.result).text(e.target.result);updateCode4();};
 			 reader.readAsText(presets[2], "UTF-8");
 			 $("#preset3").text(presets[2].name.replace(".params", "").replace(".slangp", ""));
 		}
 		if(presets.length >= 4){
 			 var reader = new FileReader();
-			 reader.onload = function(e) {
-				$(".text5").val(e.target.result).text(e.target.result);
-				updateCode5();
-			 };
+			 reader.onload = function(e) {$(".text5").val(e.target.result).text(e.target.result);updateCode5();};
 			 reader.readAsText(presets[3], "UTF-8");
 			 $("#preset4").text(presets[3].name.replace(".params", "").replace(".slangp", ""));
 		}
 		if(presets.length >= 5){
 			 var reader = new FileReader();
-			 reader.onload = function(e) {
-				$(".text6").val(e.target.result).text(e.target.result);
-				updateCode6();
-			 };
+			 reader.onload = function(e) {$(".text6").val(e.target.result).text(e.target.result);updateCode6();};
 			 reader.readAsText(presets[4], "UTF-8");
 			 $("#preset5").text(presets[4].name.replace(".params", "").replace(".slangp", ""));
 		}
 		if(presets.length >= 6){
 			 var reader = new FileReader();
-			 reader.onload = function(e) {
-				$(".text7").val(e.target.result).text(e.target.result);
-				updateCode7();
-			 };
+			 reader.onload = function(e) {$(".text7").val(e.target.result).text(e.target.result);updateCode7();};
 			 reader.readAsText(presets[5], "UTF-8");
 			 $("#preset6").text(presets[5].name.replace(".params", "").replace(".slangp", ""));
 		}
 		if(presets.length >= 7){
 			 var reader = new FileReader();
-			 reader.onload = function(e) {
-				$(".text8").val(e.target.result).text(e.target.result);
-				updateCode8();
-			 };
+			 reader.onload = function(e) {$(".text8").val(e.target.result).text(e.target.result);updateCode8();};
 			 reader.readAsText(presets[6], "UTF-8");
 			 $("#preset7").text(presets[6].name.replace(".params", "").replace(".slangp", ""));
 		}
 		if(presets.length >= 8){
 			 var reader = new FileReader();
-			 reader.onload = function(e) {
-				$(".text9").val(e.target.result).text(e.target.result);
-				updateCode9();
-			 };
+			 reader.onload = function(e) {$(".text9").val(e.target.result).text(e.target.result);updateCode9();};
 			 reader.readAsText(presets[7], "UTF-8");
 			 $("#preset8").text(presets[7].name.replace(".params", "").replace(".slangp", ""));
 		}
 		if(presets.length >= 9){
 			 var reader = new FileReader();
-			 reader.onload = function(e) {
-				$(".text10").val(e.target.result).text(e.target.result);
-				updateCode10();
-			 };
+			 reader.onload = function(e) {$(".text10").val(e.target.result).text(e.target.result);updateCode10();};
 			 reader.readAsText(presets[8], "UTF-8");
 			 $("#preset9").text(presets[8].name.replace(".params", "").replace(".slangp", ""));
 		}
 		if(presets.length >= 10){
 			 var reader = new FileReader();
-			 reader.onload = function(e) {
-				$(".text11").val(e.target.result).text(e.target.result);
-				updateCode11();
-			 };
+			 reader.onload = function(e) {$(".text11").val(e.target.result).text(e.target.result);updateCode11();};
 			 reader.readAsText(presets[9], "UTF-8");
 			 $("#preset10").text(presets[9].name.replace(".params", "").replace(".slangp", ""));
 		}
 		if(presets.length >= 11){
 			 var reader = new FileReader();
-			 reader.onload = function(e) {
-				$(".text12").val(e.target.result).text(e.target.result);
-				updateCode12();
-			 };
+			 reader.onload = function(e) {$(".text12").val(e.target.result).text(e.target.result);updateCode12();};
 			 reader.readAsText(presets[10], "UTF-8");
 			 $("#preset11").text(presets[10].name.replace(".params", "").replace(".slangp", ""));
 		}
 		if(presets.length >= 12){
 			 var reader = new FileReader();
-			 reader.onload = function(e) {
-				$(".text13").val(e.target.result).text(e.target.result);
-				updateCode13();
-			 };
+			 reader.onload = function(e) {$(".text13").val(e.target.result).text(e.target.result);updateCode13();};
 			 reader.readAsText(presets[11], "UTF-8");
 			 $("#preset12").text(presets[11].name.replace(".params", "").replace(".slangp", ""));
+		}
+		if(presets.length >= 13){
+			 var reader = new FileReader();
+			 reader.onload = function(e) {$(".text14").val(e.target.result).text(e.target.result);updateCode14();};
+			 reader.readAsText(presets[12], "UTF-8");
+			 $("#preset13").text(presets[12].name.replace(".params", "").replace(".slangp", ""));
+		}
+		if(presets.length >= 14){
+			 var reader = new FileReader();
+			 reader.onload = function(e) {$(".text15").val(e.target.result).text(e.target.result);updateCode15();};
+			 reader.readAsText(presets[13], "UTF-8");
+			 $("#preset14").text(presets[13].name.replace(".params", "").replace(".slangp", ""));
+		}
+		if(presets.length >= 15){
+			 var reader = new FileReader();
+			 reader.onload = function(e) {$(".text16").val(e.target.result).text(e.target.result);updateCode16();};
+			 reader.readAsText(presets[14], "UTF-8");
+			 $("#preset15").text(presets[14].name.replace(".params", "").replace(".slangp", ""));
+		}
+		if(presets.length >= 16){
+			 var reader = new FileReader();
+			 reader.onload = function(e) {$(".text17").val(e.target.result).text(e.target.result);updateCode17();};
+			 reader.readAsText(presets[15], "UTF-8");
+			 $("#preset16").text(presets[15].name.replace(".params", "").replace(".slangp", ""));
+		}
+		if(presets.length >= 17){
+			 var reader = new FileReader();
+			 reader.onload = function(e) {$(".text18").val(e.target.result).text(e.target.result);updateCode18();};
+			 reader.readAsText(presets[16], "UTF-8");
+			 $("#preset17").text(presets[16].name.replace(".params", "").replace(".slangp", ""));
+		}
+		if(presets.length >= 18){
+			 var reader = new FileReader();
+			 reader.onload = function(e) {$(".text19").val(e.target.result).text(e.target.result);updateCode19();};
+			 reader.readAsText(presets[17], "UTF-8");
+			 $("#preset18").text(presets[17].name.replace(".params", "").replace(".slangp", ""));
+		}
+		if(presets.length >= 19){
+			 var reader = new FileReader();
+			 reader.onload = function(e) {$(".text20").val(e.target.result).text(e.target.result);updateCode20();};
+			 reader.readAsText(presets[18], "UTF-8");
+			 $("#preset19").text(presets[18].name.replace(".params", "").replace(".slangp", ""));
+		}
+		if(presets.length >= 20){
+			 var reader = new FileReader();
+			 reader.onload = function(e) {$(".text21").val(e.target.result).text(e.target.result);updateCode21();};
+			 reader.readAsText(presets[19], "UTF-8");
+			 $("#preset20").text(presets[19].name.replace(".params", "").replace(".slangp", ""));
+		}
+		if(presets.length >= 21){
+			 var reader = new FileReader();
+			 reader.onload = function(e) {$(".text22").val(e.target.result).text(e.target.result);updateCode22();};
+			 reader.readAsText(presets[20], "UTF-8");
+			 $("#preset21").text(presets[20].name.replace(".params", "").replace(".slangp", ""));
+		}
+		if(presets.length >= 22){
+			 var reader = new FileReader();
+			 reader.onload = function(e) {$(".text23").val(e.target.result).text(e.target.result);updateCode23();};
+			 reader.readAsText(presets[21], "UTF-8");
+			 $("#preset22").text(presets[21].name.replace(".params", "").replace(".slangp", ""));
+		}
+		if(presets.length >= 23){
+			 var reader = new FileReader();
+			 reader.onload = function(e) {$(".text24").val(e.target.result).text(e.target.result);updateCode24();};
+			 reader.readAsText(presets[22], "UTF-8");
+			 $("#preset23").text(presets[22].name.replace(".params", "").replace(".slangp", ""));
+		}
+		if(presets.length >= 24){
+			 var reader = new FileReader();
+			 reader.onload = function(e) {$(".text25").val(e.target.result).text(e.target.result);updateCode25();};
+			 reader.readAsText(presets[23], "UTF-8");
+			 $("#preset24").text(presets[23].name.replace(".params", "").replace(".slangp", ""));
 		}
 		
 		if(presets.length > 1 && $(".nav").children().length == 0){
 			$(".text-wrap").append('<ul class="nav nav-tabs" id="myTab" role="tablist"></ul>');
 		}
 	  
-		if(presets.length <= 12){
+		if(presets.length <= 24){
 			for (var i=0; i< presets.length;i++){
 				if(presets.length > 1){
 					if($(".nav").children().length < presets.length){
 						if(i == 0 && $(".nav").children().length == 0){
 							$(".nav.nav-tabs").append('<li class="nav-item" role="presentation"><button class="nav-link active" id="tab1" data-bs-toggle="tab" data-bs-target="#tab-pane1" type="button" role="tab" aria-controls="tab-pane1" aria-selected="true">1</button></li>');
 						}
-						else if(presets.length == 12){
+						else if(presets.length == 24){
 							$(".nav.nav-tabs").append('<li class="nav-item" role="presentation"><button class="nav-link" id="tab'+(tabs+(i+1))+'" data-bs-toggle="tab" data-bs-target="#tab-pane'+(tabs+(i+1))+'" type="button" role="tab" aria-controls="tab-pane'+(tabs+(i+1))+'" aria-selected="true">'+(tabs+(i+1))+'</button></li>');
 							$(".nav-item").removeClass("empty");
 						}
@@ -1521,18 +1589,26 @@ $(document).ready(function () {
 				}
 			}
 		}
-		else if(presets.length > 12){
-			for (var i=0; i<12;i++){
-				files[i] = presets[i];
-				dropfile2(files);
-				$(".nav-item").removeClass("empty");
-				if($(".nav").children().length < 12){
+		else if(presets.length > 24){
+			if($(".nav").children().length == 0){
+				for (var i=0; i<24;i++){
+					files[i] = presets[i];
+					dropfile2(files);
+					$(".nav-item").removeClass("empty");
 					if(i == 0 && $(".nav").children().length == 0){
 						$(".nav.nav-tabs").append('<li class="nav-item" role="presentation"><button class="nav-link active" id="tab1" data-bs-toggle="tab" data-bs-target="#tab-pane1" type="button" role="tab" aria-controls="tab-pane1" aria-selected="true">1</button></li>');
 					}
 					else{
 						$(".nav.nav-tabs").append('<li class="nav-item" role="presentation"><button class="nav-link" id="tab'+(i+1)+'" data-bs-toggle="tab" data-bs-target="#tab-pane'+(i+1)+'" type="button" role="tab" aria-controls="tab-pane'+(i+1)+'" aria-selected="true">'+(i+1)+'</button></li>');
 					}
+				}
+			}
+			else{
+				for (var i=0; i<(24 - tabs);i++){
+					files[i] = presets[i];
+					dropfile2(files);
+					$(".nav-item").removeClass("empty");
+					$(".nav.nav-tabs").append('<li class="nav-item" role="presentation"><button class="nav-link" id="tab'+parseInt(tabs+(i+1))+'" data-bs-toggle="tab" data-bs-target="#tab-pane'+parseInt(tabs+(i+1))+'" type="button" role="tab" aria-controls="tab-pane'+parseInt(tabs+(i+1))+'" aria-selected="true">'+parseInt(tabs+(i+1))+'</button></li>');
 				}
 			}
 		}
@@ -1629,13 +1705,13 @@ $(document).ready(function () {
 	  if ($(this).hasClass('on')){
 		setCookie("power", "off", 30);
 		$(this).removeClass('on');
-		$(".text1, .text-box").removeClass('on');
+		$(".text1, .text-box, .mini").removeClass('on');
 		$("code").css("display", "block");
 	  }
 	  else{
 		setCookie("power", "on", 30);
 		$(this).addClass('on');
-		$(".text1, .text-box").addClass('on');
+		$(".text1, .text-box, .mini").addClass('on');
 		$("code").css("display", "none");
 	  }
 	});

@@ -9,8 +9,8 @@ body {
 }
 
 .content {
-	margin: 0 auto;
-	width: 1280px;
+	margin: 0 calc(50vw - 794px);
+	width: 1140px;
 	padding: 24px;
 	margin-top: 1%;
 	border-radius: 16px;
@@ -32,7 +32,7 @@ form {
 	margin: 0px;
 }
 
-.text-box input {
+.text-box input, .mini #load input {
     display: none;
 }
 
@@ -55,12 +55,13 @@ form {
     margin: 0px 0px 12px 0px;
     position: absolute;
     top: -32px;
+    left: -24px;
 }
 
 .text-box {
     position: relative;
-    width: 572px;
-    height: 572px;
+    width: 1140px;
+    height: 840px;
     background: #F8F8F8;
     border-radius: 10px;
     border: 1px solid rgba(0, 0, 0, 0.2);
@@ -101,14 +102,18 @@ textarea:focus-visible {
 
 .color-vision {
     display: inline-block;
-    width: 520px;
-    margin-top: 24px;
+    width: 376px;
+    position: absolute;
+    top: -92px;
+    left: 0;
 }
 
 .button-wrap {
     display: flex;
     flex-direction: column;
     flex: 1 1 auto;
+    position: absolute;
+    left: -84px;
 }
 
 .button-wrap .button {
@@ -168,7 +173,7 @@ textarea:focus-visible {
 }
 
 .hex, .hsb, .hsl, .rgb, .contrast {
-	display: inline-block;
+	/* display: inline-block; */
 }
 
 .hex {
@@ -282,9 +287,9 @@ span.square-title {
 
 .info {
 	font-weight: bold;
-	display: block;
 	margin-top: 12px;
 	height: 19px;
+	display: none;
 }
 
 .switch-panel {
@@ -461,7 +466,7 @@ span.square-title {
 	width: 100%;
 	position: absolute;
 	top: 32px;
-	left: 266px;
+	left: 196px;
 	height: 0;
 	-webkit-appearance: none;
 }
@@ -653,8 +658,7 @@ a:hover {
 }
 
 .owl-wrapper {
-	width: 1200px;
-	margin: 0 auto;
+	margin-top: 24px;
 }
 
 .owl-wrapper h3 {
@@ -766,10 +770,10 @@ footer {
     border-top: 1px solid #DDD;
     border-radius: 0px 0px 14px 14px;
     text-align: right;
-    margin: 24px auto;
+    margin: 24px 0 0;
     display: flex;
     flex-direction: row;
-    width: 1280px;
+    width: 100%;
 }
 
 .foot-wrapper {
@@ -895,7 +899,7 @@ footer .button {
 
 .text-wrap .nav-link {
     padding: 6px;
-    margin: 5px 3px;
+    margin: 5px 2px;
     border: none;
     text-align: center;
     width: 33px;
@@ -917,8 +921,8 @@ footer .button {
 .preset-title {
     position: absolute;
     top: -32px;
-    left: 24px;
-    max-width: 192px;
+    left: 8px;
+    max-width: 720px;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -1000,13 +1004,12 @@ pre {
 }
 
 .text-box.on{
+	width: 1100px;
+	height: 800px;
 	background: #ebe6c9;
 	outline: 1px solid rgb(0 0 0 / 20%);
 	border-radius: 4px;
-	width: 560px;
-	height: 560px;
-	padding: 20px;
-	margin: 0px -16px;
+	padding: 26px 30px 30px 26px;
 	transition: padding .3s ease-in;
 }
 
@@ -1075,7 +1078,7 @@ pre {
   background-color: #ABFF00;
   box-shadow: rgba(0, 0, 0, 0.2) 0 0px 5px 1px, inset #304701 0 0px 2px, #89FF00 0 1px 4px;
   transition: unset;
-  right: 64px;
+  right: 18px;
 }
 
 .led {
@@ -1087,7 +1090,7 @@ pre {
   box-shadow: rgba(0, 0, 0, 0.2) 0 0px 5px 1px, inset #555 0 0px 2px, #AAA 0 1px 4px;
   position: absolute;
   bottom: -16px;
-  right: 62px;
+  right: 18px;
   transition: all .4s ease-in-out;
 }
 
@@ -1172,25 +1175,25 @@ pre {
     cursor: pointer;
 }
 
-.large.text-wrap .text-box:nth-child(2) {
+.mini {
+    bottom: 48px;
+    right: 16px;
+    width: 374px;
     height: 200px;
-    top: 600px;
-    max-width: 384px;
+    background: #444;
+    position: fixed;
+    border-radius: 10px;
+    z-index: 2;
 }
 
-.large.text-wrap .text-box {
-    width: 760px;
-    height: 800px;
+.mini.on {
+    padding: 16px 20px 20px 16px;
+    background: #ebe6c9;
+    outline: 1px solid rgb(0 0 0 / 20%);
+    border-radius: 4px;
 }
 
-.large .hold {
-    top: 530px;
-}
-
-.large .led {
-    left: 62px;
-}
-
-.large .on + .led {
-    left: 56px;
+.mini .button {
+    position: absolute;
+    bottom: -38px;
 }

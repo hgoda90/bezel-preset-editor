@@ -409,4 +409,13 @@ function colorMessage(colors) {
 				break;
 		}
 	}
+	
+	if($(".info").text() != ""){
+		$(".info").css("display", "block");
+		$(".color-vision").css("top", "-124px");
+	}
+	else{
+		$(".info").css("display", "none");
+		$(".color-vision").css("top", "-92px");
+	}
 }
