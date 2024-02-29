@@ -89,12 +89,11 @@ function colorReset(){
 	$(".info").empty();
 	$(".info").css("display", "none");
 	$(".color").removeClass("active");
-	$(".color-vision").css("top", "-92px");
 	
 	if(bezelStyle == "mbz"){
-		$(".contrast").css("opacity", 0);
+		$(".contrast").css("display", "none");
 		$(".dropper").val("#1A1A1A");
-		
+		$(".color-vision").css("top", "-63px");
 		$(".square").css("background", "#1A1A1A");
 		$(".submit").css("color", "#1A1A1A");
 		
@@ -122,11 +121,11 @@ function colorReset(){
 		}
 	}
 	else{
-		$(".contrast").css("opacity", 1);
+		$(".contrast").css("display", "block");
 		$(".contrast option").prop("selected", false);
 		$(".contrast option[value='1.30']").prop("selected", "selected");
 		$(".dropper").val("#808080");
-		
+		$(".color-vision").css("top", "-116px");
 		$(".square").css("background", "#808080");
 		$(".submit").css("color", "#808080");
 	
@@ -2082,7 +2081,7 @@ $(document).ready(function () {
 		keycode = e.keyCode ? e.keyCode : e.which;
 		
 		if(keycode == 18 && c == 0){
-			modalVar = "alt"
+			modalVar = "alt";
 			c++;
 		}
 		else if(keycode == 18 && c == 1){
