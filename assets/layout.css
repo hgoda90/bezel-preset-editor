@@ -1197,3 +1197,17 @@ pre {
     position: absolute;
     bottom: -38px;
 }
+
+.mini #hide {
+    top: -48px;
+    bottom: unset;
+    right: 0;
+}
+
+.mini.hide {
+    transform: translateY(288px);
+}
+
+.mini.hide .color-vision {
+    display: none;
+}
