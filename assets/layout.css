@@ -1204,8 +1204,12 @@ pre {
     right: 0;
 }
 
-.mini.hide {
+.mini.on.hide {
     transform: translateY(288px);
+}
+
+.mini.hide {
+    transform: translateY(250px);
 }
 
 .mini.hide .color-vision {
