@@ -907,6 +907,8 @@ function samples(){
 		preview();
 	});
 	
+	updateCode();
+	
 	$(".sample .color").on('mouseover', function(){
 		$(this).parents(".colors").siblings(".color-code").text($(this).data("code"));
 	});

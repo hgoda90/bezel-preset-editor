@@ -4,16 +4,16 @@ const textarea1 = $("#dropText"), textarea2 = $("#dropText2"), textarea3 = $("#d
 	textarea16 = $("#dropText16"), textarea17 = $("#dropText17"), textarea18 = $("#dropText18"), textarea19 = $("#dropText19"),  textarea20 = $("#dropText20"), 
 	textarea21 = $("#dropText21"), textarea22 = $("#dropText22"), textarea23 = $("#dropText23"), textarea24 = $("#dropText24"), textarea25 = $("#dropText25");
 
-const codeBlock1 = $("#codeBlock"),  codeBlock2 = $("#codeBlock2"), codeBlock3 = $("#codeBlock3"), codeBlock4 = $("#codeBlock4"), codeBlock5 = $("#codeBlock5"),
+const codeBlock1 = $("#codeBlock1"),  codeBlock2 = $("#codeBlock2"), codeBlock3 = $("#codeBlock3"), codeBlock4 = $("#codeBlock4"), codeBlock5 = $("#codeBlock5"),
 	 codeBlock6 = $("#codeBlock6"), codeBlock7 = $("#codeBlock7"), codeBlock8 = $("#codeBlock8"), codeBlock9 = $("#codeBlock9"), codeBlock10 = $("#codeBlock10"),
 	 codeBlock11 = $("#codeBlock11"), codeBlock12 = $("#codeBlock12"), codeBlock13 = $("#codeBlock13"), codeBlock14 = $("#codeBlock14"), codeBlock15 = $("#codeBlock15"),
 	 codeBlock16 = $("#codeBlock16"), codeBlock17 = $("#codeBlock17"), codeBlock18 = $("#codeBlock18"), codeBlock19 = $("#codeBlock19"), codeBlock20 = $("#codeBlock20"),
 	 codeBlock21 = $("#codeBlock21"), codeBlock22 = $("#codeBlock22"), codeBlock23 = $("#codeBlock23"), codeBlock24 = $("#codeBlock24"), codeBlock25 = $("#codeBlock25");
 
 function highlightJS() {
-	document.querySelectorAll('pre code').forEach((el) => {
-		hljs.highlightElement(el);
-	});
+	$('pre code').each(function() {
+        hljs.highlightBlock(this);
+    });
 }
 
 function updateCode() {let content = textarea1.val();content = content.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');codeBlock1.html(content);codeBlock1.removeAttr('data-highlighted');highlightJS();}
@@ -43,52 +43,52 @@ function updateCode24() {let content = textarea24.val();content = content.replac
 function updateCode25() {let content = textarea25.val();content = content.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');codeBlock25.html(content);codeBlock25.removeAttr('data-highlighted');highlightJS();}
 
 textarea1.on("input", () => {updateCode()});
-textarea1.on("scroll", () => {codeBlock1.scrollTop = textarea1.scrollTop;codeBlock1.scrollLeft = textarea1.scrollLeft;});
+textarea1.scroll(function(){codeBlock1.scrollTop(textarea1.scrollTop());codeBlock1.scrollLeft(textarea1.scrollLeft());});
 textarea2.on("input", () => {updateCode2()});
-textarea2.on("scroll", () => {codeBlock2.scrollTop = textarea2.scrollTop;codeBlock2.scrollLeft = textarea2.scrollLeft;});
+textarea2.scroll(function(){codeBlock2.scrollTop(textarea2.scrollTop());codeBlock2.scrollLeft(textarea2.scrollLeft());});
 textarea3.on("input", () => {updateCode3()});
-textarea3.on("scroll", () => {codeBlock3.scrollTop = textarea3.scrollTop;codeBlock3.scrollLeft = textarea3.scrollLeft;});
+textarea3.scroll(function(){codeBlock3.scrollTop(textarea3.scrollTop());codeBlock3.scrollLeft(textarea3.scrollLeft());});
 textarea4.on("input", () => {updateCode4()});
-textarea4.on("scroll", () => {codeBlock4.scrollTop = textarea4.scrollTop;codeBlock4.scrollLeft = textarea4.scrollLeft;});
+textarea4.scroll(function(){codeBlock4.scrollTop(textarea4.scrollTop());codeBlock4.scrollLeft(textarea4.scrollLeft());});
 textarea5.on("input", () => {updateCode5()});
-textarea5.on("scroll", () => {codeBlock5.scrollTop = textarea5.scrollTop;codeBlock5.scrollLeft = textarea5.scrollLeft;});
+textarea5.scroll(function(){codeBlock5.scrollTop(textarea5.scrollTop());codeBlock5.scrollLeft(textarea5.scrollLeft());});
 textarea6.on("input", () => {updateCode6()});
-textarea6.on("scroll", () => {codeBlock6.scrollTop = textarea6.scrollTop;codeBlock6.scrollLeft = textarea6.scrollLeft;});
+textarea6.scroll(function(){codeBlock6.scrollTop(textarea6.scrollTop());codeBlock6.scrollLeft(textarea6.scrollLeft());});
 textarea7.on("input", () => {updateCode7()});
-textarea7.on("scroll", () => {codeBlock7.scrollTop = textarea7.scrollTop;codeBlock7.scrollLeft = textarea7.scrollLeft;});
+textarea7.scroll(function(){codeBlock7.scrollTop(textarea7.scrollTop());codeBlock7.scrollLeft(textarea7.scrollLeft());});
 textarea8.on("input", () => {updateCode8()});
-textarea8.on("scroll", () => {codeBlock8.scrollTop = textarea8.scrollTop;codeBlock8.scrollLeft = textarea8.scrollLeft;});
+textarea8.scroll(function(){codeBlock8.scrollTop(textarea8.scrollTop());codeBlock8.scrollLeft(textarea8.scrollLeft());});
 textarea9.on("input", () => {updateCode9()});
-textarea9.on("scroll", () => {codeBlock9.scrollTop = textarea9.scrollTop;codeBlock9.scrollLeft = textarea9.scrollLeft;});
+textarea9.scroll(function(){codeBlock9.scrollTop(textarea9.scrollTop());codeBlock9.scrollLeft(textarea9.scrollLeft());});
 textarea10.on("input", () => {updateCode10()});
-textarea10.on("scroll", () => {codeBlock10.scrollTop = textarea10.scrollTop;codeBlock10.scrollLeft = textarea10.scrollLeft;});
+textarea10.scroll(function(){codeBlock10.scrollTop(textarea10.scrollTop());codeBlock10.scrollLeft(textarea10.scrollLeft());});
 textarea11.on("input", () => {updateCode11()});
-textarea11.on("scroll", () => {codeBlock11.scrollTop = textarea11.scrollTop;codeBlock11.scrollLeft = textarea11.scrollLeft;});
+textarea11.scroll(function(){codeBlock11.scrollTop(textarea11.scrollTop());codeBlock11.scrollLeft(textarea11.scrollLeft());});
 textarea12.on("input", () => {updateCode12()});
-textarea12.on("scroll", () => {codeBlock12.scrollTop = textarea12.scrollTop;codeBlock12.scrollLeft = textarea12.scrollLeft;});
+textarea12.scroll(function(){codeBlock12.scrollTop(textarea12.scrollTop());codeBlock12.scrollLeft(textarea12.scrollLeft());});
 textarea13.on("input", () => {updateCode13()});
-textarea13.on("scroll", () => {codeBlock13.scrollTop = textarea13.scrollTop;codeBlock13.scrollLeft = textarea13.scrollLeft;});
+textarea13.scroll(function(){codeBlock13.scrollTop(textarea13.scrollTop());codeBlock13.scrollLeft(textarea13.scrollLeft());});
 textarea14.on("input", () => {updateCode14()});
-textarea14.on("scroll", () => {codeBlock14.scrollTop = textarea14.scrollTop;codeBlock14.scrollLeft = textarea14.scrollLeft;});
+textarea14.scroll(function(){codeBlock14.scrollTop(textarea14.scrollTop());codeBlock14.scrollLeft(textarea14.scrollLeft());});
 textarea15.on("input", () => {updateCode15()});
-textarea15.on("scroll", () => {codeBlock15.scrollTop = textarea15.scrollTop;codeBlock15.scrollLeft = textarea15.scrollLeft;});
+textarea15.scroll(function(){codeBlock15.scrollTop(textarea15.scrollTop());codeBlock15.scrollLeft(textarea15.scrollLeft());});
 textarea16.on("input", () => {updateCode16()});
-textarea16.on("scroll", () => {codeBlock16.scrollTop = textarea16.scrollTop;codeBlock15.scrollLeft = textarea16.scrollLeft;});
+textarea16.scroll(function(){codeBlock16.scrollTop(textarea16.scrollTop());codeBlock16.scrollLeft(textarea16.scrollLeft());});
 textarea17.on("input", () => {updateCode17()});
-textarea17.on("scroll", () => {codeBlock17.scrollTop = textarea17.scrollTop;codeBlock15.scrollLeft = textarea17.scrollLeft;});
+textarea17.scroll(function(){codeBlock17.scrollTop(textarea17.scrollTop());codeBlock17.scrollLeft(textarea17.scrollLeft());});
 textarea18.on("input", () => {updateCode18()});
-textarea18.on("scroll", () => {codeBlock18.scrollTop = textarea18.scrollTop;codeBlock15.scrollLeft = textarea18.scrollLeft;});
+textarea18.scroll(function(){codeBlock18.scrollTop(textarea18.scrollTop());codeBlock18.scrollLeft(textarea18.scrollLeft());});
 textarea19.on("input", () => {updateCode19()});
-textarea19.on("scroll", () => {codeBlock19.scrollTop = textarea19.scrollTop;codeBlock15.scrollLeft = textarea19.scrollLeft;});
+textarea19.scroll(function(){codeBlock19.scrollTop(textarea19.scrollTop());codeBlock19.scrollLeft(textarea19.scrollLeft());});
 textarea20.on("input", () => {updateCode20()});
-textarea20.on("scroll", () => {codeBlock20.scrollTop = textarea20.scrollTop;codeBlock15.scrollLeft = textarea20.scrollLeft;});
+textarea20.scroll(function(){codeBlock20.scrollTop(textarea20.scrollTop());codeBlock20.scrollLeft(textarea20.scrollLeft());});
 textarea21.on("input", () => {updateCode21()});
-textarea21.on("scroll", () => {codeBlock21.scrollTop = textarea21.scrollTop;codeBlock15.scrollLeft = textarea21.scrollLeft;});
+textarea21.scroll(function(){codeBlock21.scrollTop(textarea21.scrollTop());codeBlock21.scrollLeft(textarea21.scrollLeft());});
 textarea22.on("input", () => {updateCode22()});
-textarea22.on("scroll", () => {codeBlock22.scrollTop = textarea22.scrollTop;codeBlock15.scrollLeft = textarea22.scrollLeft;});
+textarea22.scroll(function(){codeBlock22.scrollTop(textarea22.scrollTop());codeBlock22.scrollLeft(textarea22.scrollLeft());});
 textarea23.on("input", () => {updateCode23()});
-textarea23.on("scroll", () => {codeBlock23.scrollTop = textarea23.scrollTop;codeBlock15.scrollLeft = textarea23.scrollLeft;});
+textarea23.scroll(function(){codeBlock23.scrollTop(textarea23.scrollTop());codeBlock23.scrollLeft(textarea23.scrollLeft());});
 textarea24.on("input", () => {updateCode24()});
-textarea24.on("scroll", () => {codeBlock24.scrollTop = textarea24.scrollTop;codeBlock15.scrollLeft = textarea24.scrollLeft;});
+textarea24.scroll(function(){codeBlock24.scrollTop(textarea24.scrollTop());codeBlock24.scrollLeft(textarea24.scrollLeft());});
 textarea25.on("input", () => {updateCode25()});
-textarea25.on("scroll", () => {codeBlock25.scrollTop = textarea25.scrollTop;codeBlock15.scrollLeft = textarea25.scrollLeft;});
+textarea25.scroll(function(){codeBlock25.scrollTop(textarea25.scrollTop());codeBlock25.scrollLeft(textarea25.scrollLeft());});
