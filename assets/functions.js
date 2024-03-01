@@ -1758,8 +1758,6 @@ $(document).ready(function () {
 		else{
 			const shader = '#reference "pathtofile\\'+e.target.files[0].name+'"\n';
 			$(".text").val(shader).text(shader);
-			
-			alert(shader);
 		}
 			
 		$('.shader input[type="file"]').val("");
@@ -2190,7 +2188,14 @@ $(document).ready(function () {
 				
 			}
 			
-			switch($(".active textarea").attr("class").replace("text", "")){
+			if(build == "on"){
+				var textBox = $(".active textarea").attr("class").replace("text", "");
+			}
+			else{
+				var textBox = "1";
+			}
+			
+			switch(textBox){
 				case "2":
 					updateCode2();
 					break;
@@ -2263,6 +2268,8 @@ $(document).ready(function () {
 				case "25":
 					updateCode25();
 					break;
+				default:
+					updateCode();
 			}
 		}
 		
