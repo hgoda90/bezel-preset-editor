@@ -1631,50 +1631,99 @@ $(document).ready(function () {
 
 	$('.image input[type="file"]').change(function (e) {
 		const geekss = e.target.files[0].name;
-		var settings = $(".active textarea").val();
 		
-		if(bezelStyle == "mbz"){
-			switch($(".mbz .layer input").val()){
-				case "2":
-					$(".active textarea").val(settings+'BackgroundImage = "pathtofile\\'+geekss+'"\n').text(settings+'BackgroundImage = "pathtofile\\'+geekss+'"\n');
-					break;
-				case "3":
-					$(".active textarea").val(settings+'LEDImage = "pathtofile\\'+geekss+'"\n').text(settings+'LEDImage = "pathtofile\\'+geekss+'"\n');
-					break;
-				case "4":
-					$(".active textarea").val(settings+'DeviceImage = "pathtofile\\'+geekss+'"\n').text(settings+'DeviceImage = "pathtofile\\'+geekss+'"\n');
-					break;
-				case "5":
-					$(".active textarea").val(settings+'DeviceLEDImage = "pathtofile\\'+geekss+'"\n').text(settings+'DeviceLEDImage = "pathtofile\\'+geekss+'"\n');
-					break;
-				case "6":
-					$(".active textarea").val(settings+'DecalImage = "pathtofile\\'+geekss+'"\n').text(settings+'DecalImage = "pathtofile\\'+geekss+'"\n');
-					break;
-				case "7":
-					$(".active textarea").val(settings+'TopLayerImage = "pathtofile\\'+geekss+'"\n').text(settings+'TopLayerImage = "pathtofile\\'+geekss+'"\n');
-					break;
-				case "8":
-					$(".active textarea").val(settings+'CabinetGlassImage = "pathtofile\\'+geekss+'"\n').text(settings+'CabinetGlassImage = "pathtofile\\'+geekss+'"\n');
-					break;
+		if(build == "on"){
+			var settings = $(".active textarea").val();
+			
+			if(bezelStyle == "mbz"){
+				switch($(".mbz .layer input").val()){
+					case "2":
+						$(".active textarea").val(settings+'BackgroundImage = "pathtofile\\'+geekss+'"\n').text(settings+'BackgroundImage = "pathtofile\\'+geekss+'"\n');
+						break;
+					case "3":
+						$(".active textarea").val(settings+'LEDImage = "pathtofile\\'+geekss+'"\n').text(settings+'LEDImage = "pathtofile\\'+geekss+'"\n');
+						break;
+					case "4":
+						$(".active textarea").val(settings+'DeviceImage = "pathtofile\\'+geekss+'"\n').text(settings+'DeviceImage = "pathtofile\\'+geekss+'"\n');
+						break;
+					case "5":
+						$(".active textarea").val(settings+'DeviceLEDImage = "pathtofile\\'+geekss+'"\n').text(settings+'DeviceLEDImage = "pathtofile\\'+geekss+'"\n');
+						break;
+					case "6":
+						$(".active textarea").val(settings+'DecalImage = "pathtofile\\'+geekss+'"\n').text(settings+'DecalImage = "pathtofile\\'+geekss+'"\n');
+						break;
+					case "7":
+						$(".active textarea").val(settings+'TopLayerImage = "pathtofile\\'+geekss+'"\n').text(settings+'TopLayerImage = "pathtofile\\'+geekss+'"\n');
+						break;
+					case "8":
+						$(".active textarea").val(settings+'CabinetGlassImage = "pathtofile\\'+geekss+'"\n').text(settings+'CabinetGlassImage = "pathtofile\\'+geekss+'"\n');
+						break;
+				}
+			}
+			else{
+				switch($(".koko-aio .layer input").val()){
+					case "1":
+						$(".active textarea").val(settings+'monitor_body_curved = "pathtofile\\'+geekss+'"\n').text(settings+'monitor_body_curved = "pathtofile\\'+geekss+'"\n');
+						break;
+					case "2":
+						$(".active textarea").val(settings+'monitor_body_straight = "pathtofile\\'+geekss+'"\n').text(settings+'monitor_body_straight = "pathtofile\\'+geekss+'"\n');
+						break;
+					case "3":
+						$(".active textarea").val(settings+'bg_under = "pathtofile\\'+geekss+'"\n').text(settings+'bg_under = "pathtofile\\'+geekss+'"\n');
+						break;
+					case "4":
+						$(".active textarea").val(settings+'bg_over = "pathtofile\\'+geekss+'"\n').text(settings+'bg_over = "pathtofile\\'+geekss+'"\n');
+						break;
+					case "5":
+						$(".active textarea").val(settings+'backdrop = "pathtofile\\'+geekss+'"\n').text(settings+'backdrop = "pathtofile\\'+geekss+'"\n');
+						break;
+				}
 			}
 		}
 		else{
-			switch($(".koko-aio .layer input").val()){
-				case "1":
-					$(".active textarea").val(settings+'monitor_body_curved = "pathtofile\\'+geekss+'"\n').text(settings+'monitor_body_curved = "pathtofile\\'+geekss+'"\n');
-					break;
-				case "2":
-					$(".active textarea").val(settings+'monitor_body_straight = "pathtofile\\'+geekss+'"\n').text(settings+'monitor_body_straight = "pathtofile\\'+geekss+'"\n');
-					break;
-				case "3":
-					$(".active textarea").val(settings+'bg_under = "pathtofile\\'+geekss+'"\n').text(settings+'bg_under = "pathtofile\\'+geekss+'"\n');
-					break;
-				case "4":
-					$(".active textarea").val(settings+'bg_over = "pathtofile\\'+geekss+'"\n').text(settings+'bg_over = "pathtofile\\'+geekss+'"\n');
-					break;
-				case "5":
-					$(".active textarea").val(settings+'backdrop = "pathtofile\\'+geekss+'"\n').text(settings+'backdrop = "pathtofile\\'+geekss+'"\n');
-					break;
+			if(bezelStyle == "mbz"){
+				switch($(".mbz .layer input").val()){
+					case "2":
+						$(".text").val('BackgroundImage = "pathtofile\\'+geekss+'"\n').text('BackgroundImage = "pathtofile\\'+geekss+'"\n');
+						break;
+					case "3":
+						$(".text").val('LEDImage = "pathtofile\\'+geekss+'"\n').text('LEDImage = "pathtofile\\'+geekss+'"\n');
+						break;
+					case "4":
+						$(".text").val('DeviceImage = "pathtofile\\'+geekss+'"\n').text('DeviceImage = "pathtofile\\'+geekss+'"\n');
+						break;
+					case "5":
+						$(".text").val('DeviceLEDImage = "pathtofile\\'+geekss+'"\n').text('DeviceLEDImage = "pathtofile\\'+geekss+'"\n');
+						break;
+					case "6":
+						$(".text").val('DecalImage = "pathtofile\\'+geekss+'"\n').text('DecalImage = "pathtofile\\'+geekss+'"\n');
+						break;
+					case "7":
+						$(".text").val('TopLayerImage = "pathtofile\\'+geekss+'"\n').text('TopLayerImage = "pathtofile\\'+geekss+'"\n');
+						break;
+					case "8":
+						$(".text").val('CabinetGlassImage = "pathtofile\\'+geekss+'"\n').text('CabinetGlassImage = "pathtofile\\'+geekss+'"\n');
+						break;
+				}
+			}
+			else{
+				switch($(".koko-aio .layer input").val()){
+					case "1":
+						$(".text").val('monitor_body_curved = "pathtofile\\'+geekss+'"\n').text('monitor_body_curved = "pathtofile\\'+geekss+'"\n');
+						break;
+					case "2":
+						$(".text").val('monitor_body_straight = "pathtofile\\'+geekss+'"\n').text('monitor_body_straight = "pathtofile\\'+geekss+'"\n');
+						break;
+					case "3":
+						$(".text").val('bg_under = "pathtofile\\'+geekss+'"\n').text('bg_under = "pathtofile\\'+geekss+'"\n');
+						break;
+					case "4":
+						$(".text").val('bg_over = "pathtofile\\'+geekss+'"\n').text('bg_over = "pathtofile\\'+geekss+'"\n');
+						break;
+					case "5":
+						$("text").val('backdrop = "pathtofile\\'+geekss+'"\n').text('backdrop = "pathtofile\\'+geekss+'"\n');
+						break;
+				}
 			}
 		}
 		
@@ -1702,10 +1751,105 @@ $(document).ready(function () {
 	});
 	
 	$('.shader input[type="file"]').change(function (e) {
-		const geekss = $(".active textarea").val()+'#reference "pathtofile\\'+e.target.files[0].name+'"\n';
-		$(".active textarea").val(geekss).text(geekss);
+		if(build == "on"){
+			const shader = $(".active textarea").val()+'#reference "pathtofile\\'+e.target.files[0].name+'"\n';
+			$(".active textarea").val(shader).text(shader);
+		}
+		else{
+			const shader = '#reference "pathtofile\\'+e.target.files[0].name+'"\n';
+			$(".text").val(shader).text(shader);
+			
+			alert(shader);
+		}
+			
 		$('.shader input[type="file"]').val("");
 		$(this).blur();
+	});
+	
+	$('input[type="file"]').change(function(){
+		if(build == "on"){
+			var textBox = $(".active textarea").attr("class").replace("text", "");
+		}
+		else{
+			var textBox = "1";
+		}
+		
+		switch(textBox){
+			case "2":
+				updateCode2();
+				break;
+			case "3":
+				updateCode3();
+				break;
+			case "4":
+				updateCode4();
+				break;
+			case "5":
+				updateCode5();
+				break;
+			case "6":
+				updateCode6();
+				break;
+			case "7":
+				updateCode7();
+				break;
+			case "8":
+				updateCode8();
+				break;
+			case "9":
+				updateCode9();
+				break;
+			case "10":
+				updateCode10();
+				break;
+			case "11":
+				updateCode11();
+				break;
+			case "12":
+				updateCode12();
+				break;
+			case "13":
+				updateCode13();
+				break;
+			case "14":
+				updateCode14();
+				break;
+			case "15":
+				updateCode15();
+				break;
+			case "16":
+				updateCode16();
+				break;
+			case "17":
+				updateCode17();
+				break;
+			case "18":
+				updateCode18();
+				break;
+			case "19":
+				updateCode19();
+				break;
+			case "20":
+				updateCode20();
+				break;
+			case "21":
+				updateCode21();
+				break;
+			case "22":
+				updateCode22();
+				break;
+			case "23":
+				updateCode23();
+				break;
+			case "24":
+				updateCode24();
+				break;
+			case "25":
+				updateCode25();
+				break;
+			default:
+				updateCode();
+		}
 	});
 	
 	$("form").submit(function (event) {
@@ -1939,111 +2083,187 @@ $(document).ready(function () {
 		
 		$(".text").val();
 		
-		if(bezelStyle == "mbz" && hexError == "false" && hslError == "false" && hsvError == "false" && rgbError == "false"){
-			preview();
-			
-			mbzHSB = mbzHSB.replace("hsb(", "").replace(")", "").replace(/%/g, "").split(', ')
-			
-			var hue = Math.round(mbzHSB[0]),
-				saturation = Math.round(mbzHSB[1]),
-				brightness = Math.round(mbzHSB[2]);
-			
-			if(imageType == "yellow"){
-				if(hue < 52 && $(".layer input").val() != "1"){
-					hue = hue + 308;
+		if(hexError == "false" && hslError == "false" && hsvError == "false" && rgbError == "false"){
+		
+			if(bezelStyle == "mbz"){
+				preview();
+				
+				mbzHSB = mbzHSB.replace("hsb(", "").replace(")", "").replace(/%/g, "").split(', ')
+				
+				var hue = Math.round(mbzHSB[0]),
+					saturation = Math.round(mbzHSB[1]),
+					brightness = Math.round(mbzHSB[2]);
+				
+				if(imageType == "yellow"){
+					if(hue < 52 && $(".layer input").val() != "1"){
+						hue = hue + 308;
+					}
+					else if($(".layer input").val() != "1"){
+						hue = hue - 52;
+					}
+					
+					var bezel = 'HSM_BZL_COLOR_HUE = "'+hue+'.000000"\nHSM_BZL_COLOR_SATURATION = "'+saturation+'.000000"\nHSM_BZL_COLOR_VALUE = "'+brightness+'.000000"\n',
+						bg = 'HSM_BG_HUE = "'+hue+'.000000"\nHSM_BG_SATURATION = "'+saturation+'.000000"\nHSM_BG_BRIGHTNESS = "'+brightness+'.000000"\nHSM_BG_GAMMA = "0.450000"\n',
+						led = 'HSM_LED_HUE = "'+hue+'.000000"\nHSM_LED_SATURATION = "'+saturation+'.000000"\nHSM_LED_BRIGHTNESS = "'+brightness+'.000000"\nHSM_LED_GAMMA = "0.450000"\n',
+						device = 'HSM_DEVICE_HUE = "'+hue+'.000000"\nHSM_DEVICE_SATURATION = "'+saturation+'.000000"\nHSM_DEVICE_BRIGHTNESS = "'+brightness+'.000000"\nHSM_DEVICE_GAMMA = "0.450000"\n',
+						deviceLED = 'HSM_DEVICELED_HUE = "'+hue+'.000000"\nHSM_DEVICELED_SATURATION = "'+saturation+'.000000"\nHSM_DEVICELED_BRIGHTNESS = "'+brightness+'.000000"\nHSM_DEVICELED_GAMMA = "0.450000"\n',
+						decal = 'HSM_DECAL_HUE = "'+hue+'.000000"\nHSM_DECAL_SATURATION = "'+saturation+'.000000"\nHSM_DECAL_BRIGHTNESS = "'+brightness+'.000000"\nHSM_DECAL_GAMMA = "0.450000"\n',
+						topLayer = 'HSM_TOP_HUE = "'+hue+'.000000"\nHSM_TOP_SATURATION = "'+saturation+'.000000"\nHSM_TOP_BRIGHTNESS = "'+brightness+'.000000"\nHSM_TOP_GAMMA = "0.450000"\n',
+						cabGlass = 'HSM_CAB_GLASS_HUE = "'+hue+'.000000"\nHSM_CAB_GLASS_SATURATION = "'+saturation+'.000000"\nHSM_CAB_GLASS_BRIGHTNESS = "'+brightness+'.000000"\nHSM_CAB_GLASS_GAMMA = "0.450000"\n';
 				}
-				else if($(".layer input").val() != "1"){
-					hue = hue - 52;
+				else{
+					var bezel = 'HSM_BZL_COLOR_HUE = "'+hue+'.000000"\nHSM_BZL_COLOR_SATURATION = "'+saturation+'.000000"\nHSM_BZL_COLOR_VALUE = "'+brightness+'.000000"\n',
+						bg = 'HSM_BG_HUE = "'+hue+'.000000"\nHSM_BG_SATURATION = "'+saturation+'.000000"\nHSM_BG_BRIGHTNESS = "'+brightness+'.000000"\n',
+						led = 'HSM_LED_HUE = "'+hue+'.000000"\nHSM_LED_SATURATION = "'+saturation+'.000000"\nHSM_LED_BRIGHTNESS = "'+brightness+'.000000"\n',
+						device = 'HSM_DEVICE_HUE = "'+hue+'.000000"\nHSM_DEVICE_SATURATION = "'+saturation+'.000000"\nHSM_DEVICE_BRIGHTNESS = "'+brightness+'.000000"\n',
+						deviceLED = 'HSM_DEVICELED_HUE = "'+hue+'.000000"\nHSM_DEVICELED_SATURATION = "'+saturation+'.000000"\nHSM_DEVICELED_BRIGHTNESS = "'+brightness+'.000000"\n',
+						decal = 'HSM_DECAL_HUE = "'+hue+'.000000"\nHSM_DECAL_SATURATION = "'+saturation+'.000000"\nHSM_DECAL_BRIGHTNESS = "'+brightness+'.000000"\n',
+						topLayer = 'HSM_TOP_HUE = "'+hue+'.000000"\nHSM_TOP_SATURATION = "'+saturation+'.000000"\nHSM_TOP_BRIGHTNESS = "'+brightness+'.000000"\n',
+						cabGlass = 'HSM_CAB_GLASS_HUE = "'+hue+'.000000"\nHSM_CAB_GLASS_SATURATION = "'+saturation+'.000000"\nHSM_CAB_GLASS_BRIGHTNESS = "'+brightness+'.000000"\n';
 				}
 				
-				var bezel = 'HSM_BZL_COLOR_HUE = "'+hue+'.000000"\nHSM_BZL_COLOR_SATURATION = "'+saturation+'.000000"\nHSM_BZL_COLOR_VALUE = "'+brightness+'.000000"\n',
-					bg = 'HSM_BG_HUE = "'+hue+'.000000"\nHSM_BG_SATURATION = "'+saturation+'.000000"\nHSM_BG_BRIGHTNESS = "'+brightness+'.000000"\nHSM_BG_GAMMA = "0.450000"\n',
-					led = 'HSM_LED_HUE = "'+hue+'.000000"\nHSM_LED_SATURATION = "'+saturation+'.000000"\nHSM_LED_BRIGHTNESS = "'+brightness+'.000000"\nHSM_LED_GAMMA = "0.450000"\n',
-					device = 'HSM_DEVICE_HUE = "'+hue+'.000000"\nHSM_DEVICE_SATURATION = "'+saturation+'.000000"\nHSM_DEVICE_BRIGHTNESS = "'+brightness+'.000000"\nHSM_DEVICE_GAMMA = "0.450000"\n',
-					deviceLED = 'HSM_DEVICELED_HUE = "'+hue+'.000000"\nHSM_DEVICELED_SATURATION = "'+saturation+'.000000"\nHSM_DEVICELED_BRIGHTNESS = "'+brightness+'.000000"\nHSM_DEVICELED_GAMMA = "0.450000"\n',
-					decal = 'HSM_DECAL_HUE = "'+hue+'.000000"\nHSM_DECAL_SATURATION = "'+saturation+'.000000"\nHSM_DECAL_BRIGHTNESS = "'+brightness+'.000000"\nHSM_DECAL_GAMMA = "0.450000"\n',
-					topLayer = 'HSM_TOP_HUE = "'+hue+'.000000"\nHSM_TOP_SATURATION = "'+saturation+'.000000"\nHSM_TOP_BRIGHTNESS = "'+brightness+'.000000"\nHSM_TOP_GAMMA = "0.450000"\n',
-					cabGlass = 'HSM_CAB_GLASS_HUE = "'+hue+'.000000"\nHSM_CAB_GLASS_SATURATION = "'+saturation+'.000000"\nHSM_CAB_GLASS_BRIGHTNESS = "'+brightness+'.000000"\nHSM_CAB_GLASS_GAMMA = "0.450000"\n';
-			}
-			else{
-				var bezel = 'HSM_BZL_COLOR_HUE = "'+hue+'.000000"\nHSM_BZL_COLOR_SATURATION = "'+saturation+'.000000"\nHSM_BZL_COLOR_VALUE = "'+brightness+'.000000"\n',
-					bg = 'HSM_BG_HUE = "'+hue+'.000000"\nHSM_BG_SATURATION = "'+saturation+'.000000"\nHSM_BG_BRIGHTNESS = "'+brightness+'.000000"\n',
-					led = 'HSM_LED_HUE = "'+hue+'.000000"\nHSM_LED_SATURATION = "'+saturation+'.000000"\nHSM_LED_BRIGHTNESS = "'+brightness+'.000000"\n',
-					device = 'HSM_DEVICE_HUE = "'+hue+'.000000"\nHSM_DEVICE_SATURATION = "'+saturation+'.000000"\nHSM_DEVICE_BRIGHTNESS = "'+brightness+'.000000"\n',
-					deviceLED = 'HSM_DEVICELED_HUE = "'+hue+'.000000"\nHSM_DEVICELED_SATURATION = "'+saturation+'.000000"\nHSM_DEVICELED_BRIGHTNESS = "'+brightness+'.000000"\n',
-					decal = 'HSM_DECAL_HUE = "'+hue+'.000000"\nHSM_DECAL_SATURATION = "'+saturation+'.000000"\nHSM_DECAL_BRIGHTNESS = "'+brightness+'.000000"\n',
-					topLayer = 'HSM_TOP_HUE = "'+hue+'.000000"\nHSM_TOP_SATURATION = "'+saturation+'.000000"\nHSM_TOP_BRIGHTNESS = "'+brightness+'.000000"\n',
-					cabGlass = 'HSM_CAB_GLASS_HUE = "'+hue+'.000000"\nHSM_CAB_GLASS_SATURATION = "'+saturation+'.000000"\nHSM_CAB_GLASS_BRIGHTNESS = "'+brightness+'.000000"\n';
-			}
-			
-			if(build == "off"){
-				switch($(".layer input").val()){
-					case "1":
-						$(".text").val(bezel).text(bezel);
-						break;
-					case "2":
-						$(".text").val(bg).text(bg);
-						break;
-					case "3":
-						$(".text").val(led).text(led);
-						break;
-					case "4":
-						$(".text").val(device).text(device);
-						break;
-					case "5":
-						$(".text").val(deviceLED).text(deviceLED);
-						break;
-					case "6":
-						$(".text").val(decal).text(decal);
-						break;
-					case "7":
-						$(".text").val(topLayer).text(topLayer);
-						break;
-					case "8":
-						$(".text").val(cabGlass).text(cabGlass);
-						break;
+				if(build == "off"){
+					switch($(".layer input").val()){
+						case "1":
+							$(".text").val(bezel).text(bezel);
+							break;
+						case "2":
+							$(".text").val(bg).text(bg);
+							break;
+						case "3":
+							$(".text").val(led).text(led);
+							break;
+						case "4":
+							$(".text").val(device).text(device);
+							break;
+						case "5":
+							$(".text").val(deviceLED).text(deviceLED);
+							break;
+						case "6":
+							$(".text").val(decal).text(decal);
+							break;
+						case "7":
+							$(".text").val(topLayer).text(topLayer);
+							break;
+						case "8":
+							$(".text").val(cabGlass).text(cabGlass);
+							break;
+					}
 				}
-			}
-			else{
-				switch($(".layer input").val()){
-					case "1":
-						$(".active textarea").val($(".active textarea").val()+bezel).text($(".active textarea").val()+bezel);
-						break;
-					case "2":
-						$(".active textarea").val($(".active textarea").val()+bg).text($(".active textarea").val()+bg);
-						break;
-					case "3":
-						$(".active textarea").val($(".active textarea").val()+led).text($(".active textarea").val()+led);
-						break;
-					case "4":
-						$(".active textarea").val($(".active textarea").val()+device).text($(".active textarea").val()+device);
-						break;
-					case "5":
-						$(".active textarea").val($(".active textarea").val()+deviceLED).text($(".active textarea").val()+deviceLED);
-						break;
-					case "6":
-						$(".active textarea").val($(".active textarea").val()+decal).text($(".active textarea").val()+decal);
-						break;
-					case "7":
-						$(".active textarea").val($(".active textarea").val()+topLayer).text($(".active textarea").val()+topLayer);
-						break;
-					case "8":
-						$(".active textarea").val($(".active textarea").val()+cabGlass).text($(".active textarea").val()+cabGlass);
-						break;
+				else{
+					switch($(".layer input").val()){
+						case "1":
+							$(".active textarea").val($(".active textarea").val()+bezel).text($(".active textarea").val()+bezel);
+							break;
+						case "2":
+							$(".active textarea").val($(".active textarea").val()+bg).text($(".active textarea").val()+bg);
+							break;
+						case "3":
+							$(".active textarea").val($(".active textarea").val()+led).text($(".active textarea").val()+led);
+							break;
+						case "4":
+							$(".active textarea").val($(".active textarea").val()+device).text($(".active textarea").val()+device);
+							break;
+						case "5":
+							$(".active textarea").val($(".active textarea").val()+deviceLED).text($(".active textarea").val()+deviceLED);
+							break;
+						case "6":
+							$(".active textarea").val($(".active textarea").val()+decal).text($(".active textarea").val()+decal);
+							break;
+						case "7":
+							$(".active textarea").val($(".active textarea").val()+topLayer).text($(".active textarea").val()+topLayer);
+							break;
+						case "8":
+							$(".active textarea").val($(".active textarea").val()+cabGlass).text($(".active textarea").val()+cabGlass);
+							break;
+					}
 				}
 			}
 			
-			updateCode();
-		}
-		
-		else if(bezelStyle == "koko-aio" && hexError == "false" && hslError == "false" && hsvError == "false" && rgbError == "false"){
-			preview();
+			else if(bezelStyle == "koko-aio"){
+				preview();
+				
+				var preset = 'BEZEL_R = "'+rSetting+'"\nBEZEL_G = "'+gSetting+'"\nBEZEL_B = "'+bSetting+'"\nBEZEL_CON = "'+contrastSetting+'"\n';
+				
+				$(".text").val($(".text").val()+preset).text($(".text").val()+preset);
+				
+				
+			}
 			
-			var preset = 'BEZEL_R = "'+rSetting+'"\nBEZEL_G = "'+gSetting+'"\nBEZEL_B = "'+bSetting+'"\nBEZEL_CON = "'+contrastSetting+'"\n';
-			
-			$(".text").val($(".text").val()+preset).text($(".text").val()+preset);
-			
-			updateCode();
+			switch($(".active textarea").attr("class").replace("text", "")){
+				case "2":
+					updateCode2();
+					break;
+				case "3":
+					updateCode3();
+					break;
+				case "4":
+					updateCode4();
+					break;
+				case "5":
+					updateCode5();
+					break;
+				case "6":
+					updateCode6();
+					break;
+				case "7":
+					updateCode7();
+					break;
+				case "8":
+					updateCode8();
+					break;
+				case "9":
+					updateCode9();
+					break;
+				case "10":
+					updateCode10();
+					break;
+				case "11":
+					updateCode11();
+					break;
+				case "12":
+					updateCode12();
+					break;
+				case "13":
+					updateCode13();
+					break;
+				case "14":
+					updateCode14();
+					break;
+				case "15":
+					updateCode15();
+					break;
+				case "16":
+					updateCode16();
+					break;
+				case "17":
+					updateCode17();
+					break;
+				case "18":
+					updateCode18();
+					break;
+				case "19":
+					updateCode19();
+					break;
+				case "20":
+					updateCode20();
+					break;
+				case "21":
+					updateCode21();
+					break;
+				case "22":
+					updateCode22();
+					break;
+				case "23":
+					updateCode23();
+					break;
+				case "24":
+					updateCode24();
+					break;
+				case "25":
+					updateCode25();
+					break;
+			}
 		}
 		
 		event.preventDefault();
