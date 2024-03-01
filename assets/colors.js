@@ -212,7 +212,7 @@ function sampleColors() {
 
 function colorMessage(colors) {
 	if(colorFormat == "HEX"){
-		switch(colors){
+		switch(colors.toUpperCase()){
 			case "242323":
 			case "946E4A":
 			case "FF9233":
@@ -410,12 +410,24 @@ function colorMessage(colors) {
 		}
 	}
 	
-	if($(".info").text() != ""){
-		$(".info").css("display", "block");
-		$(".color-vision").css("top", "-93px");
+	if(bezelStyle == "mbz"){
+		if($(".info").text() != ""){
+			$(".info").css("display", "block");
+			$(".color-vision").css("top", "-78px");
+		}
+		else{
+			$(".info").css("display", "none");
+			$(".color-vision").css("top", "-58px");
+		}
 	}
 	else{
-		$(".info").css("display", "none");
-		$(".color-vision").css("top", "-100px");
+		if($(".info").text() != ""){
+			$(".info").css("display", "block");
+			$(".color-vision").css("top", "-130px");
+		}
+		else{
+			$(".info").css("display", "none");
+			$(".color-vision").css("top", "-112px");
+		}
 	}
 }

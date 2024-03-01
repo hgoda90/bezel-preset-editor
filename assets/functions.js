@@ -145,6 +145,8 @@ function colorReset(){
 			$(".rgb input[name='blue']").attr("placeholder", "128");
 		}
 	}
+	
+	update();
 }
 
 function colorVersion(loc){
@@ -1129,6 +1131,7 @@ function start(){
 	
 	colorReset();
 	colorVersion(colorVer);
+	updateCode();
 }
 
 function update(){
@@ -2187,12 +2190,17 @@ $(document).ready(function () {
 				
 				var preset = 'BEZEL_R = "'+rSetting+'"\nBEZEL_G = "'+gSetting+'"\nBEZEL_B = "'+bSetting+'"\nBEZEL_CON = "'+contrastSetting+'"\n';
 				
-				$(".text").val($(".text").val()+preset).text($(".text").val()+preset);
+				if(build == "on"){
+					$(".active textarea").val($(".active textarea").val()+preset).text($(".active textarea").val()+preset);
+				}
+				else{
+					$(".text").val(preset).text(preset);
+				}
 				
 				
 			}
 		}
-		
+		update();
 		event.preventDefault();
 		
 	});
@@ -2203,6 +2211,10 @@ $(document).ready(function () {
 	
 	$(document).on('keydown', function(e){
 		keycode = e.keyCode ? e.keyCode : e.which;
+		
+		if (keycode == 13) {
+			$('form').submit();
+		}
 		
 		if(keycode == 18 && c == 0){
 			modalVar = "alt";
