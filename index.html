@@ -60,10 +60,15 @@
 					<pre id="preCode"><code id="codeBlock1" class="language-csharp"></code></pre>
 					<textarea class="text" id="dropText" rows="7" cols="36" readonly></textarea>
 				</div>
-				<label class="button" id="load">Load
-					<input type="file" accept=".slangp, .params">
-				</label>
 				<div class="button-group">
+					<div class="hold">
+						<input type="checkbox" id="chk1" name="chks">
+						<label for="chk1"></label>
+						<span class="label">Hold</span>
+					</div>
+					<label class="button" id="load">Load
+						<input type="file" accept=".slangp, .params">
+					</label>
 					<span class="button" id="save" onclick="savePreset(1);">Save</span>
 					<span class="button" id="edit" onclick="edit();">Edit</span>
 					<span class="button" id="copy" onclick="copy(1);">Copy</span>

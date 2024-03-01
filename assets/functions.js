@@ -93,7 +93,7 @@ function colorReset(){
 	if(bezelStyle == "mbz"){
 		$(".contrast").css("display", "none");
 		$(".dropper").val("#1A1A1A");
-		$(".color-vision").css("top", "-63px");
+		$(".color-vision").css("top", "-74px");
 		$(".square").css("background", "#1A1A1A");
 		$(".submit").css("color", "#1A1A1A");
 		
@@ -125,7 +125,7 @@ function colorReset(){
 		$(".contrast option").prop("selected", false);
 		$(".contrast option[value='1.30']").prop("selected", "selected");
 		$(".dropper").val("#808080");
-		$(".color-vision").css("top", "-116px");
+		$(".color-vision").css("top", "-112px");
 		$(".square").css("background", "#808080");
 		$(".submit").css("color", "#808080");
 	
@@ -1274,7 +1274,7 @@ dropText.ondrop = function(e) {e.preventDefault();var file = e.dataTransfer.file
 dropText2.ondrop = function(e) {
 	e.preventDefault();
 	const files = [];
-	$(".text-wrap .text-box:nth-child(4) textarea").text("").val("");
+	$(".text-wrap .text-box:nth-child(2) textarea").text("").val("");
 	$(".preset-title").empty();
 	$(".nav-hide").remove();
 	$(".remove").remove();
@@ -1346,7 +1346,7 @@ dropText2.ondrop = function(e) {
 			$(".nav-hide").css("transform", "translateY(-60px)");
 		}
 		
-		$(".text-wrap .text-box:nth-child(4)").append('<div class="nav-hide"><span class="material-symbols-outlined">keyboard_double_arrow_up</span></div>');
+		$(".text-wrap .text-box:nth-child(2)").append('<div class="nav-hide"><span class="material-symbols-outlined">keyboard_double_arrow_up</span></div>');
 		$(".nav-tabs").append('<div class="remove nav-item" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Remove Tabs"><span class="material-symbols-outlined nav-link">close_small</span></div>');
 		
 		const exampleEl = $('.remove')
@@ -1427,134 +1427,134 @@ $(document).ready(function () {
 		if(presets.length >= 3 || $(".active .text4").length == 1){
 			 var reader = new FileReader();
 			 reader.onload = function(e) {$(".text4").val(e.target.result).text(e.target.result);updateCode4();};
-			 reader.readAsText(presets[2], "UTF-8");
-			 $("#preset3").text(presets[2].name.replace(".params", "").replace(".slangp", ""));
+			 if($(".active .text4").length == 1){reader.readAsText(presets[0], "UTF-8");$("#preset3").text(presets[0].name.replace(".params", "").replace(".slangp", ""));}
+			 else{reader.readAsText(presets[2], "UTF-8");$("#preset3").text(presets[2].name.replace(".params", "").replace(".slangp", ""));}
 		}
 		if(presets.length >= 4 || $(".active .text5").length == 1){
 			 var reader = new FileReader();
 			 reader.onload = function(e) {$(".text5").val(e.target.result).text(e.target.result);updateCode5();};
-			 reader.readAsText(presets[3], "UTF-8");
-			 $("#preset4").text(presets[3].name.replace(".params", "").replace(".slangp", ""));
+			 if($(".active .text5").length == 1){reader.readAsText(presets[0], "UTF-8");$("#preset4").text(presets[0].name.replace(".params", "").replace(".slangp", ""));}
+			 else{reader.readAsText(presets[3], "UTF-8");$("#preset4").text(presets[3].name.replace(".params", "").replace(".slangp", ""));}
 		}
 		if(presets.length >= 5 || $(".active .text6").length == 1){
 			 var reader = new FileReader();
 			 reader.onload = function(e) {$(".text6").val(e.target.result).text(e.target.result);updateCode6();};
-			 reader.readAsText(presets[4], "UTF-8");
-			 $("#preset5").text(presets[4].name.replace(".params", "").replace(".slangp", ""));
+			 if($(".active .text6").length == 1){reader.readAsText(presets[0], "UTF-8");$("#preset5").text(presets[0].name.replace(".params", "").replace(".slangp", ""));}
+			 else{reader.readAsText(presets[4], "UTF-8");$("#preset5").text(presets[4].name.replace(".params", "").replace(".slangp", ""));}
 		}
 		if(presets.length >= 6 || $(".active .text7").length == 1){
 			 var reader = new FileReader();
 			 reader.onload = function(e) {$(".text7").val(e.target.result).text(e.target.result);updateCode7();};
-			 reader.readAsText(presets[5], "UTF-8");
-			 $("#preset6").text(presets[5].name.replace(".params", "").replace(".slangp", ""));
+			 if($(".active .text7").length == 1){reader.readAsText(presets[0], "UTF-8");$("#preset6").text(presets[0].name.replace(".params", "").replace(".slangp", ""));}
+			 else{reader.readAsText(presets[5], "UTF-8");$("#preset6").text(presets[5].name.replace(".params", "").replace(".slangp", ""));}
 		}
 		if(presets.length >= 7 || $(".active .text8").length == 1){
 			 var reader = new FileReader();
 			 reader.onload = function(e) {$(".text8").val(e.target.result).text(e.target.result);updateCode8();};
-			 reader.readAsText(presets[6], "UTF-8");
-			 $("#preset7").text(presets[6].name.replace(".params", "").replace(".slangp", ""));
+			 if($(".active .text8").length == 1){reader.readAsText(presets[0], "UTF-8");$("#preset7").text(presets[0].name.replace(".params", "").replace(".slangp", ""));}
+			 else{reader.readAsText(presets[6], "UTF-8");$("#preset7").text(presets[6].name.replace(".params", "").replace(".slangp", ""));}
 		}
 		if(presets.length >= 8 || $(".active .text9").length == 1){
 			 var reader = new FileReader();
 			 reader.onload = function(e) {$(".text9").val(e.target.result).text(e.target.result);updateCode9();};
-			 reader.readAsText(presets[7], "UTF-8");
-			 $("#preset8").text(presets[7].name.replace(".params", "").replace(".slangp", ""));
+			 if($(".active .text9").length == 1){reader.readAsText(presets[0], "UTF-8");$("#preset8").text(presets[0].name.replace(".params", "").replace(".slangp", ""));}
+			 else{reader.readAsText(presets[7], "UTF-8");$("#preset8").text(presets[7].name.replace(".params", "").replace(".slangp", ""));}
 		}
 		if(presets.length >= 9 || $(".active .text10").length == 1){
 			 var reader = new FileReader();
 			 reader.onload = function(e) {$(".text10").val(e.target.result).text(e.target.result);updateCode10();};
-			 reader.readAsText(presets[8], "UTF-8");
-			 $("#preset9").text(presets[8].name.replace(".params", "").replace(".slangp", ""));
+			 if($(".active .text10").length == 1){reader.readAsText(presets[0], "UTF-8");$("#preset9").text(presets[0].name.replace(".params", "").replace(".slangp", ""));}
+			 else{reader.readAsText(presets[8], "UTF-8");$("#preset9").text(presets[8].name.replace(".params", "").replace(".slangp", ""));}
 		}
 		if(presets.length >= 10 || $(".active .text11").length == 1){
 			 var reader = new FileReader();
 			 reader.onload = function(e) {$(".text11").val(e.target.result).text(e.target.result);updateCode11();};
-			 reader.readAsText(presets[9], "UTF-8");
-			 $("#preset10").text(presets[9].name.replace(".params", "").replace(".slangp", ""));
+			 if($(".active .text11").length == 1){reader.readAsText(presets[0], "UTF-8");$("#preset10").text(presets[0].name.replace(".params", "").replace(".slangp", ""));}
+			 else{reader.readAsText(presets[9], "UTF-8");$("#preset10").text(presets[9].name.replace(".params", "").replace(".slangp", ""));}
 		}
 		if(presets.length >= 11 || $(".active .text12").length == 1){
 			 var reader = new FileReader();
 			 reader.onload = function(e) {$(".text12").val(e.target.result).text(e.target.result);updateCode12();};
-			 reader.readAsText(presets[10], "UTF-8");
-			 $("#preset11").text(presets[10].name.replace(".params", "").replace(".slangp", ""));
+			 if($(".active .text12").length == 1){reader.readAsText(presets[0], "UTF-8");$("#preset11").text(presets[0].name.replace(".params", "").replace(".slangp", ""));}
+			 else{reader.readAsText(presets[10], "UTF-8");$("#preset11").text(presets[10].name.replace(".params", "").replace(".slangp", ""));}
 		}
 		if(presets.length >= 12 || $(".active .text13").length == 1){
 			 var reader = new FileReader();
 			 reader.onload = function(e) {$(".text13").val(e.target.result).text(e.target.result);updateCode13();};
-			 reader.readAsText(presets[11], "UTF-8");
-			 $("#preset12").text(presets[11].name.replace(".params", "").replace(".slangp", ""));
+			 if($(".active .text13").length == 1){reader.readAsText(presets[0], "UTF-8");$("#preset12").text(presets[0].name.replace(".params", "").replace(".slangp", ""));}
+			 else{reader.readAsText(presets[11], "UTF-8");$("#preset12").text(presets[11].name.replace(".params", "").replace(".slangp", ""));}
 		}
 		if(presets.length >= 13 || $(".active .text14").length == 1){
 			 var reader = new FileReader();
 			 reader.onload = function(e) {$(".text14").val(e.target.result).text(e.target.result);updateCode14();};
-			 reader.readAsText(presets[12], "UTF-8");
-			 $("#preset13").text(presets[12].name.replace(".params", "").replace(".slangp", ""));
+			 if($(".active .text14").length == 1){reader.readAsText(presets[0], "UTF-8");$("#preset13").text(presets[0].name.replace(".params", "").replace(".slangp", ""));}
+			 else{reader.readAsText(presets[12], "UTF-8");$("#preset13").text(presets[12].name.replace(".params", "").replace(".slangp", ""));}
 		}
 		if(presets.length >= 14 || $(".active .text15").length == 1){
 			 var reader = new FileReader();
 			 reader.onload = function(e) {$(".text15").val(e.target.result).text(e.target.result);updateCode15();};
-			 reader.readAsText(presets[13], "UTF-8");
-			 $("#preset14").text(presets[13].name.replace(".params", "").replace(".slangp", ""));
+			 if($(".active .text15").length == 1){reader.readAsText(presets[0], "UTF-8");$("#preset14").text(presets[0].name.replace(".params", "").replace(".slangp", ""));}
+			 else{reader.readAsText(presets[13], "UTF-8");$("#preset14").text(presets[13].name.replace(".params", "").replace(".slangp", ""));}
 		}
 		if(presets.length >= 15 || $(".active .text16").length == 1){
 			 var reader = new FileReader();
 			 reader.onload = function(e) {$(".text16").val(e.target.result).text(e.target.result);updateCode16();};
-			 reader.readAsText(presets[14], "UTF-8");
-			 $("#preset15").text(presets[14].name.replace(".params", "").replace(".slangp", ""));
+			 if($(".active .text16").length == 1){reader.readAsText(presets[0], "UTF-8");$("#preset15").text(presets[0].name.replace(".params", "").replace(".slangp", ""));}
+			 else{reader.readAsText(presets[14], "UTF-8");$("#preset15").text(presets[14].name.replace(".params", "").replace(".slangp", ""));}
 		}
 		if(presets.length >= 16 || $(".active .text17").length == 1){
 			 var reader = new FileReader();
 			 reader.onload = function(e) {$(".text17").val(e.target.result).text(e.target.result);updateCode17();};
-			 reader.readAsText(presets[15], "UTF-8");
-			 $("#preset16").text(presets[15].name.replace(".params", "").replace(".slangp", ""));
+			 if($(".active .text17").length == 1){reader.readAsText(presets[0], "UTF-8");$("#preset16").text(presets[0].name.replace(".params", "").replace(".slangp", ""));}
+			 else{reader.readAsText(presets[15], "UTF-8");$("#preset16").text(presets[15].name.replace(".params", "").replace(".slangp", ""));}
 		}
 		if(presets.length >= 17 || $(".active .text18").length == 1){
 			 var reader = new FileReader();
 			 reader.onload = function(e) {$(".text18").val(e.target.result).text(e.target.result);updateCode18();};
-			 reader.readAsText(presets[16], "UTF-8");
-			 $("#preset17").text(presets[16].name.replace(".params", "").replace(".slangp", ""));
+			 if($(".active .text18").length == 1){reader.readAsText(presets[0], "UTF-8");$("#preset17").text(presets[0].name.replace(".params", "").replace(".slangp", ""));}
+			 else{reader.readAsText(presets[16], "UTF-8");$("#preset17").text(presets[16].name.replace(".params", "").replace(".slangp", ""));}
 		}
 		if(presets.length >= 18 || $(".active .text19").length == 1){
 			 var reader = new FileReader();
 			 reader.onload = function(e) {$(".text19").val(e.target.result).text(e.target.result);updateCode19();};
-			 reader.readAsText(presets[17], "UTF-8");
-			 $("#preset18").text(presets[17].name.replace(".params", "").replace(".slangp", ""));
+			 if($(".active .text19").length == 1){reader.readAsText(presets[0], "UTF-8");$("#preset18").text(presets[0].name.replace(".params", "").replace(".slangp", ""));}
+			 else{reader.readAsText(presets[17], "UTF-8");$("#preset18").text(presets[17].name.replace(".params", "").replace(".slangp", ""));}
 		}
 		if(presets.length >= 19 || $(".active .text20").length == 1){
 			 var reader = new FileReader();
 			 reader.onload = function(e) {$(".text20").val(e.target.result).text(e.target.result);updateCode20();};
-			 reader.readAsText(presets[18], "UTF-8");
-			 $("#preset19").text(presets[18].name.replace(".params", "").replace(".slangp", ""));
+			 if($(".active .text20").length == 1){reader.readAsText(presets[0], "UTF-8");$("#preset19").text(presets[0].name.replace(".params", "").replace(".slangp", ""));}
+			 else{reader.readAsText(presets[18], "UTF-8");$("#preset19").text(presets[18].name.replace(".params", "").replace(".slangp", ""));}
 		}
 		if(presets.length >= 20 || $(".active .text21").length == 1){
 			 var reader = new FileReader();
 			 reader.onload = function(e) {$(".text21").val(e.target.result).text(e.target.result);updateCode21();};
-			 reader.readAsText(presets[19], "UTF-8");
-			 $("#preset20").text(presets[19].name.replace(".params", "").replace(".slangp", ""));
+			 if($(".active .text21").length == 1){reader.readAsText(presets[0], "UTF-8");$("#preset20").text(presets[0].name.replace(".params", "").replace(".slangp", ""));}
+			 else{reader.readAsText(presets[19], "UTF-8");$("#preset20").text(presets[19].name.replace(".params", "").replace(".slangp", ""));}
 		}
 		if(presets.length >= 21 || $(".active .text22").length == 1){
 			 var reader = new FileReader();
 			 reader.onload = function(e) {$(".text22").val(e.target.result).text(e.target.result);updateCode22();};
-			 reader.readAsText(presets[20], "UTF-8");
-			 $("#preset21").text(presets[20].name.replace(".params", "").replace(".slangp", ""));
+			 if($(".active .text22").length == 1){reader.readAsText(presets[0], "UTF-8");$("#preset21").text(presets[0].name.replace(".params", "").replace(".slangp", ""));}
+			 else{reader.readAsText(presets[20], "UTF-8");$("#preset21").text(presets[20].name.replace(".params", "").replace(".slangp", ""));}
 		}
 		if(presets.length >= 22 || $(".active .text23").length == 1){
 			 var reader = new FileReader();
 			 reader.onload = function(e) {$(".text23").val(e.target.result).text(e.target.result);updateCode23();};
-			 reader.readAsText(presets[21], "UTF-8");
-			 $("#preset22").text(presets[21].name.replace(".params", "").replace(".slangp", ""));
+			 if($(".active .text23").length == 1){reader.readAsText(presets[0], "UTF-8");$("#preset22").text(presets[0].name.replace(".params", "").replace(".slangp", ""));}
+			 else{reader.readAsText(presets[21], "UTF-8");$("#preset22").text(presets[21].name.replace(".params", "").replace(".slangp", ""));}
 		}
 		if(presets.length >= 23 || $(".active .text24").length == 1){
 			 var reader = new FileReader();
 			 reader.onload = function(e) {$(".text24").val(e.target.result).text(e.target.result);updateCode24();};
-			 reader.readAsText(presets[22], "UTF-8");
-			 $("#preset23").text(presets[22].name.replace(".params", "").replace(".slangp", ""));
+			 if($(".active .text24").length == 1){reader.readAsText(presets[0], "UTF-8");$("#preset23").text(presets[0].name.replace(".params", "").replace(".slangp", ""));}
+			 else{reader.readAsText(presets[22], "UTF-8");$("#preset23").text(presets[22].name.replace(".params", "").replace(".slangp", ""));}
 		}
 		if(presets.length >= 24 || $(".active .text25").length == 1){
 			 var reader = new FileReader();
 			 reader.onload = function(e) {$(".text25").val(e.target.result).text(e.target.result);updateCode25();};
-			 reader.readAsText(presets[23], "UTF-8");
-			 $("#preset24").text(presets[23].name.replace(".params", "").replace(".slangp", ""));
+			 if($(".active .text25").length == 1){reader.readAsText(presets[0], "UTF-8");$("#preset24").text(presets[0].name.replace(".params", "").replace(".slangp", ""));}
+			 else{reader.readAsText(presets[23], "UTF-8");$("#preset24").text(presets[23].name.replace(".params", "").replace(".slangp", ""));}
 		}
 		
 		if(presets.length > 1 && $(".nav").children().length == 0){
@@ -1616,7 +1616,7 @@ $(document).ready(function () {
 				$(".nav-hide").css("transform", "translateY(-60px)");
 			}
 			
-			$(".text-wrap .text-box:nth-child(4)").append('<div class="nav-hide"><span class="material-symbols-outlined">keyboard_double_arrow_up</span></div>');
+			$(".text-wrap .text-box:nth-child(2)").append('<div class="nav-hide"><span class="material-symbols-outlined">keyboard_double_arrow_up</span></div>');
 			$(".nav-tabs").append('<div class="remove nav-item" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Remove Tabs"><span class="material-symbols-outlined nav-link">close_small</span></div>');
 			
 			const exampleEl = $('.remove')

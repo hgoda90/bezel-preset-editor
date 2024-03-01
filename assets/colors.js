@@ -412,10 +412,10 @@ function colorMessage(colors) {
 	
 	if($(".info").text() != ""){
 		$(".info").css("display", "block");
-		$(".color-vision").css("top", "-94px");
+		$(".color-vision").css("top", "-130px");
 	}
 	else{
 		$(".info").css("display", "none");
-		$(".color-vision").css("top", "-63px");
+		$(".color-vision").css("top", "-100px");
 	}
 }
