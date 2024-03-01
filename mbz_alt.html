@@ -1156,10 +1156,10 @@
 			text = $(".active textarea").text();
 		
 		if(bezelStyle == "mbz"){
-			if(hold == "on" && text == ""){
+			if(build == "on" && text == ""){
 				$(".active textarea").text(setting).val(setting);
 			}
-			else if(hold == "on" && text != ""){
+			else if(build == "on" && text != ""){
 				$(".active textarea").text(text + '\n' + setting).val(text + '\n' + setting);
 			}
 			else{
@@ -1167,6 +1167,6 @@
 			}
 		}
 		
-		updateCode();
+		update();
 	});
 </script>

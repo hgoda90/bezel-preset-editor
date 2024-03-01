@@ -771,7 +771,7 @@ function passText(){
 		$(".text-box .tab-pane.active textarea").text(txt+"\n"+$(".text").val()).val(txt+"\n"+$(".text").val())
 	}
 	
-	updateCode2();
+	update();
 }
 
 function presetCopy(){
@@ -893,9 +893,9 @@ function samples(){
 		
 		$(this).addClass("active");
 		preview();
+		
+		update();
 	});
-	
-	updateCode();
 	
 	$(".sample .color").on('mouseover', function(){
 		$(this).parents(".colors").siblings(".color-code").text($(this).data("code"));
@@ -1129,6 +1129,92 @@ function start(){
 	
 	colorReset();
 	colorVersion(colorVer);
+}
+
+function update(){
+	if(build == "on"){
+		var textBox = $(".active textarea").attr("class").replace("text", "");
+	}
+	else{
+		var textBox = "1";
+	}
+	
+	switch(textBox){
+		case "2":
+			updateCode2();
+			break;
+		case "3":
+			updateCode3();
+			break;
+		case "4":
+			updateCode4();
+			break;
+		case "5":
+			updateCode5();
+			break;
+		case "6":
+			updateCode6();
+			break;
+		case "7":
+			updateCode7();
+			break;
+		case "8":
+			updateCode8();
+			break;
+		case "9":
+			updateCode9();
+			break;
+		case "10":
+			updateCode10();
+			break;
+		case "11":
+			updateCode11();
+			break;
+		case "12":
+			updateCode12();
+			break;
+		case "13":
+			updateCode13();
+			break;
+		case "14":
+			updateCode14();
+			break;
+		case "15":
+			updateCode15();
+			break;
+		case "16":
+			updateCode16();
+			break;
+		case "17":
+			updateCode17();
+			break;
+		case "18":
+			updateCode18();
+			break;
+		case "19":
+			updateCode19();
+			break;
+		case "20":
+			updateCode20();
+			break;
+		case "21":
+			updateCode21();
+			break;
+		case "22":
+			updateCode22();
+			break;
+		case "23":
+			updateCode23();
+			break;
+		case "24":
+			updateCode24();
+			break;
+		case "25":
+			updateCode25();
+			break;
+		default:
+			updateCode();
+	}
 }
 
 $(".brightness").on('click', function(){
@@ -1765,89 +1851,7 @@ $(document).ready(function () {
 	});
 	
 	$('input[type="file"]').change(function(){
-		if(build == "on"){
-			var textBox = $(".active textarea").attr("class").replace("text", "");
-		}
-		else{
-			var textBox = "1";
-		}
-		
-		switch(textBox){
-			case "2":
-				updateCode2();
-				break;
-			case "3":
-				updateCode3();
-				break;
-			case "4":
-				updateCode4();
-				break;
-			case "5":
-				updateCode5();
-				break;
-			case "6":
-				updateCode6();
-				break;
-			case "7":
-				updateCode7();
-				break;
-			case "8":
-				updateCode8();
-				break;
-			case "9":
-				updateCode9();
-				break;
-			case "10":
-				updateCode10();
-				break;
-			case "11":
-				updateCode11();
-				break;
-			case "12":
-				updateCode12();
-				break;
-			case "13":
-				updateCode13();
-				break;
-			case "14":
-				updateCode14();
-				break;
-			case "15":
-				updateCode15();
-				break;
-			case "16":
-				updateCode16();
-				break;
-			case "17":
-				updateCode17();
-				break;
-			case "18":
-				updateCode18();
-				break;
-			case "19":
-				updateCode19();
-				break;
-			case "20":
-				updateCode20();
-				break;
-			case "21":
-				updateCode21();
-				break;
-			case "22":
-				updateCode22();
-				break;
-			case "23":
-				updateCode23();
-				break;
-			case "24":
-				updateCode24();
-				break;
-			case "25":
-				updateCode25();
-				break;
-			default:
-				updateCode();
-		}
+		update();
 	});
 	
 	$("form").submit(function (event) {
@@ -2186,90 +2190,6 @@ $(document).ready(function () {
 				$(".text").val($(".text").val()+preset).text($(".text").val()+preset);
 				
 				
-			}
-			
-			if(build == "on"){
-				var textBox = $(".active textarea").attr("class").replace("text", "");
-			}
-			else{
-				var textBox = "1";
-			}
-			
-			switch(textBox){
-				case "2":
-					updateCode2();
-					break;
-				case "3":
-					updateCode3();
-					break;
-				case "4":
-					updateCode4();
-					break;
-				case "5":
-					updateCode5();
-					break;
-				case "6":
-					updateCode6();
-					break;
-				case "7":
-					updateCode7();
-					break;
-				case "8":
-					updateCode8();
-					break;
-				case "9":
-					updateCode9();
-					break;
-				case "10":
-					updateCode10();
-					break;
-				case "11":
-					updateCode11();
-					break;
-				case "12":
-					updateCode12();
-					break;
-				case "13":
-					updateCode13();
-					break;
-				case "14":
-					updateCode14();
-					break;
-				case "15":
-					updateCode15();
-					break;
-				case "16":
-					updateCode16();
-					break;
-				case "17":
-					updateCode17();
-					break;
-				case "18":
-					updateCode18();
-					break;
-				case "19":
-					updateCode19();
-					break;
-				case "20":
-					updateCode20();
-					break;
-				case "21":
-					updateCode21();
-					break;
-				case "22":
-					updateCode22();
-					break;
-				case "23":
-					updateCode23();
-					break;
-				case "24":
-					updateCode24();
-					break;
-				case "25":
-					updateCode25();
-					break;
-				default:
-					updateCode();
 			}
 		}
 		
