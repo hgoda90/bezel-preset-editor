@@ -412,7 +412,7 @@ function colorMessage(colors) {
 	
 	if($(".info").text() != ""){
 		$(".info").css("display", "block");
-		$(".color-vision").css("top", "-130px");
+		$(".color-vision").css("top", "-93px");
 	}
 	else{
 		$(".info").css("display", "none");

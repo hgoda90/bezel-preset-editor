@@ -36,7 +36,7 @@ function bezelToggle(){
 	else{
 		setCookie("bezelStyle", "koko-aio", 30);
 		bezelStyle = "koko-aio";
-		holdToggle();
+		buildToggle();
 		layerToggle(imageLayer);
 		$(".bezel .switch-label:nth-child(1)").addClass("active");
 		$(".imageType").addClass("disabled");
@@ -96,10 +96,7 @@ function colorReset(){
 		$(".color-vision").css("top", "-74px");
 		$(".square").css("background", "#1A1A1A");
 		$(".submit").css("color", "#1A1A1A");
-		
-		if(hold == "off"){
-			settingReset();
-		}
+		settingReset();
 		
 		if($(".format-labels .active").text() == "HEX"){
 			$(".hex input").attr("placeholder", "1A1A1A");
@@ -225,9 +222,7 @@ function colorVision(){
 		});
 	}
 	
-	if(hold == "off"){
-		$("form").submit();
-	}
+	$("form").submit();
 	
 	preview();
 }
@@ -658,19 +653,16 @@ function hide(){
 	}
 }
 
-function holdToggle(){
-	$(".hold .switch-label").removeClass("active");
-	
-	if($(".hold input").is(":checked")){
-		setCookie("hold", "on", 30);
-		hold = "on";
-		$(".hold .switch-label:nth-child(3)").addClass("active");
+function buildToggle(){
+	if($(".build input").is(":checked")){
+		setCookie("build", "on", 30);
+		build = "on";
+		$(".build input").prop( "checked", true);
 	}
 	else{
-		setCookie("hold", "off", 30);
-		hold = "off";
-		$(".hold .switch-label:nth-child(1)").addClass("active");
-		$(".hold input").prop( "checked", false );
+		setCookie("build", "off", 30);
+		build = "off";
+		$(".build input").prop( "checked", false );
 	}
 }
 
@@ -688,10 +680,10 @@ function imageTypeToggle(){
 		$(".imageType .switch-label:nth-child(1)").addClass("active");
 	}
 	
-	if($(".hex input, .hsb input, .rgb input").val() == "" && hold == "off"){
+	if($(".hex input, .hsb input, .hsl input, .rgb input").val() == ""){
 		settingReset();
 	}
-	else if(hold == "off"){
+	else{
 		$("form").submit();
 	}
 }
@@ -700,11 +692,8 @@ function layerToggle(imageLayers){
 	setCookie("imageLayer", imageLayers, 30);
 	imageLayer = imageLayers
 	
-	if($(".hex input, .hsb input, .rgb input").val() == "" && hold == "off"){
+	if($(".hex input, .hsb input, .hsl input, .rgb input").val() == ""){
 		settingReset();
-	}
-	else if(hold == "off"){
-		$("form").submit();
 	}
 	
 	if(bezelStyle == "mbz"){
@@ -776,10 +765,10 @@ function passText(){
 	var txt = $(".text-box .tab-pane.active textarea").val();
 	
 	if(txt == ""){
-		$(".text-box .tab-pane.active textarea").text($(".text").text()).val($(".text").text());
+		$(".text-box .tab-pane.active textarea").text($(".text").val()).val($(".text").val());
 	}
 	else{
-		$(".text-box .tab-pane.active textarea").text(txt+"\n"+$(".text").text()).val(txt+"\n"+$(".text").text())
+		$(".text-box .tab-pane.active textarea").text(txt+"\n"+$(".text").val()).val(txt+"\n"+$(".text").val())
 	}
 	
 	updateCode2();
@@ -898,7 +887,7 @@ function samples(){
 			$(".dropper").val(colorcolor("rgb("+r+", "+g+", "+b+")", 'hex'));
 		}
 		
-		if(hold == "off" && $("#edit").hasClass("active") == false){
+		if($("#edit").hasClass("active") == false){
 			$("form").submit();
 		}
 		
@@ -1051,11 +1040,11 @@ function start(){
 		imageType = getCookie("imageType");
 	}
 	
-	if(getCookie("hold") == ""){
-		hold = "off";
+	if(getCookie("build") == ""){
+		build = "off";
 	}
 	else{
-		hold = getCookie("hold");
+		build = getCookie("build");
 	}
 	
 	if(getCookie("sample") == ""){
@@ -1117,12 +1106,12 @@ function start(){
 		$(".imageType input").prop("disabled", true);
 	}
 	
-	if(hold == "on"){
-		$(".hold input").attr("checked", "checked");
-		$(".hold .switch-label:nth-child(3)").addClass("active");
+	if(build == "on"){
+		$(".build input").attr("checked", "checked");
+		$(".build .switch-label:nth-child(3)").addClass("active");
 	}
 	else{
-		$(".hold .switch-label:nth-child(1)").addClass("active");
+		$(".build .switch-label:nth-child(1)").addClass("active");
 	}
 	
 	if(imageType == "yellow"){
@@ -1158,23 +1147,23 @@ $(".dropper").on('change', function(){
 	colorVision();
 });
 
-$(".hold input").on('click', function(){
-	holdToggle();
+$(".build input").on('click', function(){
+	buildToggle();
 });
 
-$(".hold .switch-label").on('click', function(){
+$(".build .switch-label").on('click', function(){
 	if($(this).hasClass("active") == false){
-		if($(".hold input").is(":checked")){
-			$(".hold input").prop('checked', false);
+		if($(".build input").is(":checked")){
+			$(".build input").prop('checked', false);
 		}
 		else{
-			$(".hold input").prop('checked', true);
+			$(".build input").prop('checked', true);
 			
 		}
 		
-		$(".hold .switch-label").removeClass("active");
+		$(".build .switch-label").removeClass("active");
 		
-		holdToggle();
+		buildToggle();
 	}
 });
 
@@ -1642,49 +1631,49 @@ $(document).ready(function () {
 
 	$('.image input[type="file"]').change(function (e) {
 		const geekss = e.target.files[0].name;
-		var settings = $("textarea").text();
+		var settings = $(".active textarea").val();
 		
 		if(bezelStyle == "mbz"){
 			switch($(".mbz .layer input").val()){
 				case "2":
-					$(".text").val(settings+'BackgroundImage = "pathtofile\\'+geekss+'"\n').text(settings+'BackgroundImage = "pathtofile\\'+geekss+'"\n');
+					$(".active textarea").val(settings+'BackgroundImage = "pathtofile\\'+geekss+'"\n').text(settings+'BackgroundImage = "pathtofile\\'+geekss+'"\n');
 					break;
 				case "3":
-					$(".text").val(settings+'LEDImage = "pathtofile\\'+geekss+'"\n').text(settings+'LEDImage = "pathtofile\\'+geekss+'"\n');
+					$(".active textarea").val(settings+'LEDImage = "pathtofile\\'+geekss+'"\n').text(settings+'LEDImage = "pathtofile\\'+geekss+'"\n');
 					break;
 				case "4":
-					$(".text").val(settings+'DeviceImage = "pathtofile\\'+geekss+'"\n').text(settings+'DeviceImage = "pathtofile\\'+geekss+'"\n');
+					$(".active textarea").val(settings+'DeviceImage = "pathtofile\\'+geekss+'"\n').text(settings+'DeviceImage = "pathtofile\\'+geekss+'"\n');
 					break;
 				case "5":
-					$(".text").val(settings+'DeviceLEDImage = "pathtofile\\'+geekss+'"\n').text(settings+'DeviceLEDImage = "pathtofile\\'+geekss+'"\n');
+					$(".active textarea").val(settings+'DeviceLEDImage = "pathtofile\\'+geekss+'"\n').text(settings+'DeviceLEDImage = "pathtofile\\'+geekss+'"\n');
 					break;
 				case "6":
-					$(".text").val(settings+'DecalImage = "pathtofile\\'+geekss+'"\n').text(settings+'DecalImage = "pathtofile\\'+geekss+'"\n');
+					$(".active textarea").val(settings+'DecalImage = "pathtofile\\'+geekss+'"\n').text(settings+'DecalImage = "pathtofile\\'+geekss+'"\n');
 					break;
 				case "7":
-					$(".text").val(settings+'TopLayerImage = "pathtofile\\'+geekss+'"\n').text(settings+'TopLayerImage = "pathtofile\\'+geekss+'"\n');
+					$(".active textarea").val(settings+'TopLayerImage = "pathtofile\\'+geekss+'"\n').text(settings+'TopLayerImage = "pathtofile\\'+geekss+'"\n');
 					break;
 				case "8":
-					$(".text").val(settings+'CabinetGlassImage = "pathtofile\\'+geekss+'"\n').text(settings+'CabinetGlassImage = "pathtofile\\'+geekss+'"\n');
+					$(".active textarea").val(settings+'CabinetGlassImage = "pathtofile\\'+geekss+'"\n').text(settings+'CabinetGlassImage = "pathtofile\\'+geekss+'"\n');
 					break;
 			}
 		}
 		else{
 			switch($(".koko-aio .layer input").val()){
 				case "1":
-					$(".text").val(settings+'monitor_body_curved = "pathtofile\\'+geekss+'"\n').text(settings+'monitor_body_curved = "pathtofile\\'+geekss+'"\n');
+					$(".active textarea").val(settings+'monitor_body_curved = "pathtofile\\'+geekss+'"\n').text(settings+'monitor_body_curved = "pathtofile\\'+geekss+'"\n');
 					break;
 				case "2":
-					$(".text").val(settings+'monitor_body_straight = "pathtofile\\'+geekss+'"\n').text(settings+'monitor_body_straight = "pathtofile\\'+geekss+'"\n');
+					$(".active textarea").val(settings+'monitor_body_straight = "pathtofile\\'+geekss+'"\n').text(settings+'monitor_body_straight = "pathtofile\\'+geekss+'"\n');
 					break;
 				case "3":
-					$(".text").val(settings+'bg_under = "pathtofile\\'+geekss+'"\n').text(settings+'bg_under = "pathtofile\\'+geekss+'"\n');
+					$(".active textarea").val(settings+'bg_under = "pathtofile\\'+geekss+'"\n').text(settings+'bg_under = "pathtofile\\'+geekss+'"\n');
 					break;
 				case "4":
-					$(".text").val(settings+'bg_over = "pathtofile\\'+geekss+'"\n').text(settings+'bg_over = "pathtofile\\'+geekss+'"\n');
+					$(".active textarea").val(settings+'bg_over = "pathtofile\\'+geekss+'"\n').text(settings+'bg_over = "pathtofile\\'+geekss+'"\n');
 					break;
 				case "5":
-					$(".text").val(settings+'backdrop = "pathtofile\\'+geekss+'"\n').text(settings+'backdrop = "pathtofile\\'+geekss+'"\n');
+					$(".active textarea").val(settings+'backdrop = "pathtofile\\'+geekss+'"\n').text(settings+'backdrop = "pathtofile\\'+geekss+'"\n');
 					break;
 			}
 		}
@@ -1713,15 +1702,8 @@ $(document).ready(function () {
 	});
 	
 	$('.shader input[type="file"]').change(function (e) {
-		if(bezelStyle == "mbz"){
-			const geekss = $(".text").val()+'#reference "pathtofile\\'+e.target.files[0].name+'"\n';
-			$(".text").val(geekss).text(geekss);
-		}
-		else{
-			const geekss = $(".text").val()+'#reference "pathtofile\\'+e.target.files[0].name+'"\n';
-			$(".text").val(geekss).text(geekss);
-		}
-		
+		const geekss = $(".active textarea").val()+'#reference "pathtofile\\'+e.target.files[0].name+'"\n';
+		$(".active textarea").val(geekss).text(geekss);
 		$('.shader input[type="file"]').val("");
 		$(this).blur();
 	});
@@ -1994,7 +1976,7 @@ $(document).ready(function () {
 					cabGlass = 'HSM_CAB_GLASS_HUE = "'+hue+'.000000"\nHSM_CAB_GLASS_SATURATION = "'+saturation+'.000000"\nHSM_CAB_GLASS_BRIGHTNESS = "'+brightness+'.000000"\n';
 			}
 			
-			if(hold == "off"){
+			if(build == "off"){
 				switch($(".layer input").val()){
 					case "1":
 						$(".text").val(bezel).text(bezel);
@@ -2025,28 +2007,28 @@ $(document).ready(function () {
 			else{
 				switch($(".layer input").val()){
 					case "1":
-						$(".text").val($(".text").text()+bezel).text($(".text").text()+bezel);
+						$(".active textarea").val($(".active textarea").val()+bezel).text($(".active textarea").val()+bezel);
 						break;
 					case "2":
-						$(".text").val($(".text").text()+bg).text($(".text").text()+bg);
+						$(".active textarea").val($(".active textarea").val()+bg).text($(".active textarea").val()+bg);
 						break;
 					case "3":
-						$(".text").val($(".text").text()+led).text($(".text").text()+led);
+						$(".active textarea").val($(".active textarea").val()+led).text($(".active textarea").val()+led);
 						break;
 					case "4":
-						$(".text").val($(".text").text()+device).text($(".text").text()+device);
+						$(".active textarea").val($(".active textarea").val()+device).text($(".active textarea").val()+device);
 						break;
 					case "5":
-						$(".text").val($(".text").text()+deviceLED).text($(".text").text()+deviceLED);
+						$(".active textarea").val($(".active textarea").val()+deviceLED).text($(".active textarea").val()+deviceLED);
 						break;
 					case "6":
-						$(".text").val($(".text").text()+decal).text($(".text").text()+decal);
+						$(".active textarea").val($(".active textarea").val()+decal).text($(".active textarea").val()+decal);
 						break;
 					case "7":
-						$(".text").val($(".text").text()+topLayer).text($(".text").text()+topLayer);
+						$(".active textarea").val($(".active textarea").val()+topLayer).text($(".active textarea").val()+topLayer);
 						break;
 					case "8":
-						$(".text").val($(".text").text()+cabGlass).text($(".text").text()+cabGlass);
+						$(".active textarea").val($(".active textarea").val()+cabGlass).text($(".active textarea").val()+cabGlass);
 						break;
 				}
 			}
@@ -2059,12 +2041,7 @@ $(document).ready(function () {
 			
 			var preset = 'BEZEL_R = "'+rSetting+'"\nBEZEL_G = "'+gSetting+'"\nBEZEL_B = "'+bSetting+'"\nBEZEL_CON = "'+contrastSetting+'"\n';
 			
-			if(hold == "off"){
-				$(".text").val(preset).text(preset);
-			}
-			else{
-				$(".text").val($(".text").text()+preset).text($(".text").text()+preset);
-			}
+			$(".text").val($(".text").val()+preset).text($(".text").val()+preset);
 			
 			updateCode();
 		}

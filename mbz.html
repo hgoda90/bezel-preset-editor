@@ -1153,14 +1153,14 @@
 <script>
 	$('.modal .modal-body span').on('click', function(){
 		var setting = $(this)[0].childNodes[0].data.trim(),
-			text = $(".text").text();
+			text = $(".active textarea").text();
 		
 		if(bezelStyle == "mbz"){
 			if(hold == "on" && text == ""){
-				$(".text").text(setting).val(setting);
+				$(".active textarea").text(setting).val(setting);
 			}
 			else if(hold == "on" && text != ""){
-				$(".text").text(text + '\n' + setting).val(text + '\n' + setting);
+				$(".active textarea").text(text + '\n' + setting).val(text + '\n' + setting);
 			}
 			else{
 				$(".text").text(setting).val(setting);

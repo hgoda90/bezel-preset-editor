@@ -51,10 +51,10 @@ form {
     flex-direction: row;
 }
 
-.hold {
+.build {
     position: absolute;
-    bottom: -36px;
-    left: 18px;
+    top: -46px;
+    right: 10px;
 }
 
 .text-box {
@@ -69,25 +69,25 @@ form {
 }
 
 textarea {
-            font-family: "Roboto Mono", monospace;
-            font-weight: 400;
-            font-size: 12pt;
-            line-height: 150%;
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 100%;
-            width: 100%;
-            padding: 15px;
-            z-index: 2;
-            overflow-x: auto;
-            overflow-y: scroll;
-            white-space: pre;
-            background-color: rgba(0,0,0,0);
-            color: rgba(0,0,0,0);
-            caret-color: white;
-            resize: none;
-        }
+	font-family: "Roboto Mono", monospace;
+	font-weight: 400;
+	font-size: 12pt;
+	line-height: 150%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	padding: 15px;
+	z-index: 2;
+	overflow-x: auto;
+	overflow-y: scroll;
+	white-space: pre;
+	background-color: rgba(0,0,0,0);
+	color: rgba(0,0,0,0);
+	caret-color: white;
+	resize: none;
+}
 
 textarea:focus-visible {
 	outline: none;
@@ -604,20 +604,20 @@ span.square-title {
 	cursor: not-allowed;
 }
 
-#copy, #copy2, #copy3, #copy4 {
-    right: 92px;
+#copy {
+    right: 112px;
 }
 
-#edit, #load2, #load3, #load4 {
-    right: 164px;
+#edit {
+    right: 184px;
 }
 
-#load, #save2, #save3, #save4 {
-    right: 236px;
+#load {
+    right: 256px;
 }
 
 #save {
-    right: 308px;
+    right: 328px;
 }
 
 .text-wrap.extra{
@@ -954,8 +954,8 @@ footer .button {
     transition: transform .2s ease-in;
 }
 
-#clear, #clear2 {
-    right: 12px;
+#clear {
+    right: 32px;
 }
 
 .nav-item.empty .nav-link {
@@ -1239,45 +1239,54 @@ pre {
     background: rgb(0 0 0 / 6%);
 }
 
-.hold input {
+.build input {
 	display: none;
 }
 
-.hold label {
+.build label {
 	cursor: pointer;
 }
 
-.hold label:before {
+.build label:before {
 	content: '';
 	display: inline-block;
 	height: 20px;
 	width: 20px;
-	background: rgb(0 0 0 / 7%);
+	background: rgb(0 0 0 / 4%);
 	border-radius: 50%;
 	z-index: 2;
-	border-bottom: 3px solid rgb(0 0 0 / 20%);
+	border-bottom: 2px solid rgb(0 0 0 / 10%);
 	transition: box-shadow .4s ease,
 					background .3s ease;
 }
 
-.hold input:checked + label:before {
-	box-shadow: inset 0px 3px 0 2px rgb(0 0 0 / 20%);
+.build input:checked + label:before {
+	box-shadow: inset 0px 2px 0 1px rgb(0 0 0 / 8%);
 	border-bottom: none;
 }
 
-.hold .label {
+.build .label {
 	display: block;
 	font-size: 10px;
 	width: 30px;
 	color: #888;
 	position: absolute;
-	top: 25px;
+	top: 26px;
+	left: -3px;
 }
 
-.hold input:checked ~ span {
-    top: 22px;
+#clear2 {
+    right: 54px;
 }
 
-.on .hold {
-    left: 18px;
+#copy2 {
+    right: 134px;
+}
+
+#load2 {
+    right: 208px;
+}
+
+#save2 {
+    right: 280px;
 }
