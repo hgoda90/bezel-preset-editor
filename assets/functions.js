@@ -1875,17 +1875,18 @@ $(document).ready(function () {
 	
 	$('.power').click(function(e){
 		if($(this).hasClass('on')){
-			setCookie("power", "off", 30);
-			$(this).removeClass('on');
-			$(".text1, .text-box, .mini").removeClass('on');
-			$("code").css("display", "block");
-			
 			e1 = $('.active textarea');
 			e1.addClass('turn-off');
 			e1.one('webkitAnimationEnd oanimationend msAnimationEnd animationend',
 			function (e) {
 				e1.removeClass('turn-off');
+				
+				setCookie("power", "off", 30);
+				$(".text1, .text-box, .mini").removeClass('on');
+				$("code").css("display", "block");
 			});
+			
+			$(this).removeClass('on');
 		}
 		else{
 			setCookie("power", "on", 30);
