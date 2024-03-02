@@ -410,24 +410,5 @@ function colorMessage(colors) {
 		}
 	}
 	
-	if(bezelStyle == "mbz"){
-		if($(".info").text() != ""){
-			$(".info").css("display", "block");
-			$(".color-vision").css("top", "-78px");
-		}
-		else{
-			$(".info").css("display", "none");
-			$(".color-vision").css("top", "-58px");
-		}
-	}
-	else{
-		if($(".info").text() != ""){
-			$(".info").css("display", "block");
-			$(".color-vision").css("top", "-130px");
-		}
-		else{
-			$(".info").css("display", "none");
-			$(".color-vision").css("top", "-112px");
-		}
-	}
+	cvSet();
 }

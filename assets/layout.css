@@ -127,17 +127,20 @@ textarea:focus-visible {
     flex: 0 0 auto;
     margin: 0 auto 12px;
     overflow: hidden;
+    box-shadow: 0 2px 0 rgb(0 0 0 / 24%);
 }
 
 .button {
     border-radius: 34px;
-    background: rgba(255, 255, 255, 0.35);
+    background: linear-gradient(180deg, rgb(240 240 240 / 25%) 35%, rgb(160 160 160 / 10%) 70%);
     padding: 4px 14px;
-    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-bottom: 2px solid rgba(0, 0, 0, 0.2);
     color: #888;
     font-size: 14px;
     font-weight: bold;
     box-shadow: 0 0 4px #8883;
+    outline: 1px solid rgb(0 0 0 / 20%);
+    transition: box-shadow .25s ease-in-out, border .25s ease-in;
 }
 
 .text-wrap .button:not(.shader):hover, footer .left-foot .button:hover, .button.active {
@@ -598,6 +601,7 @@ span.square-title {
 
 .button:hover, .switch-label:hover, .format-labels span:hover {
     cursor: pointer;
+    box-shadow: none;
 }
 
 #copy:hover:disabled {
@@ -1039,13 +1043,14 @@ pre {
   width: 46px;
   height: 46px;
   border-radius: 50%;
-  border: 1px solid #ddd;
-  box-shadow: 0 0 3px 0px #AAA;
+  border: 1px solid rgb(0 0 0 / 20%);
   position: relative;
   display: grid;
   place-items: center;
   margin: 0px auto 0;
-  background: radial-gradient(rgba(250, 250, 250, 1) 30%, rgba(255, 255, 255, 1) 0%, rgba(230, 230, 230, 1) 100%);
+  background: linear-gradient(180deg, rgb(240 240 240 / 25%) 35%, rgb(160 160 160 / 10%) 70%);
+  box-shadow: 0 2px 0 rgb(0 0 0 / 24%);
+  transition: box-shadow .25s ease-in-out, border .25s ease-in;
 }
 
 .power::before {
@@ -1068,8 +1073,7 @@ pre {
 
 .power:hover, .power.on {
   cursor: pointer;
-  background: radial-gradient(rgba(250, 250, 250, 1) 40%, rgba(255, 255, 255, 1) 0%, rgba(210, 210, 210, 1) 100%);
-  border: 2px solid #CCC;
+  border-width: 2px;
   box-shadow: none;
 }
 
@@ -1188,6 +1192,7 @@ pre {
     position: fixed;
     border-radius: 10px;
     z-index: 2;
+    transition: transform .3s linear;
 }
 
 .mini.on {
@@ -1252,12 +1257,12 @@ pre {
 	display: inline-block;
 	height: 20px;
 	width: 20px;
-	background: rgb(0 0 0 / 4%);
+	background: linear-gradient(225deg, rgb(180 180 180 / 15%) 35%, rgb(140 140 140 / 18%) 70%);
 	border-radius: 50%;
-	z-index: 2;
-	border-bottom: 2px solid rgb(0 0 0 / 10%);
+	border-bottom: 3px solid rgb(0 0 0 / 10%);
 	transition: box-shadow .4s ease,
 					background .3s ease;
+	outline: 1px solid rgb(0 0 0 / 8%);
 }
 
 .build input:checked + label:before {
@@ -1289,4 +1294,8 @@ pre {
 
 #save2 {
     right: 280px;
+}
+
+.right-foot .button {
+    outline: none;
 }
