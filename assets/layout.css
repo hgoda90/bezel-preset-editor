@@ -1017,7 +1017,6 @@ pre {
 	outline: 1px solid rgb(0 0 0 / 20%);
 	border-radius: 4px;
 	padding: 26px 30px 30px 26px;
-	transition: padding .3s ease-in;
 }
 
 .on textarea{
@@ -1153,10 +1152,10 @@ pre {
 
 .on #divCodeWrapper {
     border-radius: 1px;
-    box-shadow: 0 0 6px 2px #777;
+    box-shadow: 0 0 6px 2px #444;
     border: 2px solid rgb(0 0 0 / 20%);
     outline: 6px solid rgb(0 0 0 / 10%);
-    background: #777;
+    background: #444;
     transition: all .3s ease-in;
     filter: brightness(1.15);
 }
@@ -1316,15 +1315,16 @@ pre {
 }
 
 .on .screen-container::after {
+	content: " ";
 	float: left;
-	width: 200%;
+	width: 100%;
 	height: 100px;
 	z-index: 8;
 	background: linear-gradient(0deg,rgba(0,0,0,0) 0,rgba(255,255,255,.4) 10%,rgba(0,0,0,.1) 100%);
 	opacity: .1;
 	position: fixed;
 	bottom: 0;
-	  animation: refresh 8s linear infinite;
+	animation: refresh 8s linear infinite;
 	animation-name: refresh;
 	animation-duration: 8s;
 	animation-timing-function: linear;
@@ -1335,7 +1335,14 @@ pre {
 	animation-play-state: running;
 }
 
-@keyframes refresh{0%{bottom:100%}70%{bottom:100%}100%{bottom:0px}}
+@keyframes refresh{
+	0%{
+		bottom:100%
+	}
+	100%{
+		bottom: -100px
+	}
+}
 
 @keyframes turn-on {
   0% {
@@ -1417,4 +1424,19 @@ pre {
   font-size: 60px;
   visibility: hidden;
   pointer-events: none;
+}
+
+.turn-off {
+  animation: turn-off 0.55s cubic-bezier(0.23, 1, 0.32, 1);
+  animation-fill-mode: forwards;
+}
+
+.turn-on {
+  animation: turn-on 4s linear;
+  animation-fill-mode: forwards;
+}
+
+.turn-on + .overlay {
+  animation: overlay-anim 5s linear;
+  animation-fill-mode: forwards;
 }

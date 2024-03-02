@@ -1879,12 +1879,26 @@ $(document).ready(function () {
 			$(this).removeClass('on');
 			$(".text1, .text-box, .mini").removeClass('on');
 			$("code").css("display", "block");
+			
+			e1 = $('.active textarea');
+			e1.addClass('turn-off');
+			e1.one('webkitAnimationEnd oanimationend msAnimationEnd animationend',
+			function (e) {
+				e1.removeClass('turn-off');
+			});
 		}
 		else{
 			setCookie("power", "on", 30);
 			$(this).addClass('on');
 			$(".text1, .text-box, .mini").addClass('on');
 			$("code").css("display", "none");
+			
+			e1 = $('.active textarea');
+			e1.addClass('turn-on');
+			e1.one('webkitAnimationEnd oanimationend msAnimationEnd animationend',
+			function (e) {
+				e1.removeClass('turn-on');
+			});
 		}
 		
 		cvSet();
