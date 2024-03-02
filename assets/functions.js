@@ -1466,7 +1466,7 @@ dropText2.ondrop = function(e) {
 		}
 	}
 	
-	if(e.dataTransfer.files.length > 1 || $(".nav").children().length > 0){
+	if($(".nav").children().length > 0){
 		if(dots == "hidden"){
 			$(".nav-tabs").addClass("hide");
 			$(".nav-hide span").text("keyboard_double_arrow_down");
