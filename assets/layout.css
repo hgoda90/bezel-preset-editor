@@ -59,8 +59,8 @@ form {
 
 .text-box {
     position: relative;
-    width: 1130px;
-    height: 958px;
+    width: 1129px;
+    height: 886px;
     background: #F8F8F8;
     border-radius: 10px;
     border: 1px solid rgba(0, 0, 0, 0.2);
@@ -935,11 +935,12 @@ footer .button {
     position: absolute;
     top: -32px;
     left: 8px;
-    max-width: 720px;
+    max-width: 760px;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
-    display: none;
+    font-weight: bold;
+    font-style: italic;
 }
 
 .preset-title.show {
@@ -1018,10 +1019,9 @@ pre {
 
 .text-box.on{
 	width: 973px;
-	height: 800px;
+	height: 730px;
 	background: #ebe6c9;
 	outline: 1px solid rgb(0 0 0 / 20%);
-	border-radius: 10px;
 	padding: 76px 80px 80px 76px;
 }
 
@@ -1160,8 +1160,8 @@ pre {
 .on #divCodeWrapper {
     border-radius: 1px;
     box-shadow: 0 0 6px 2px #444;
-    border: 2px solid rgb(0 0 0 / 20%);
-    outline: 13px solid rgb(0 0 0 / 8%);
+    border: 2px solid #444;
+    outline: 13px solid rgb(0 0 0 / 15%);
     background: #444;
     transition: all .3s ease-in;
     filter: brightness(1.15);
@@ -1479,5 +1479,39 @@ pre {
     left: 61px;
     top: 61px;
     border-radius: 19px;
-	pointer-events: none;
+    pointer-events: none;
+}
+
+.glass {
+    position: absolute;
+    background: url('../assets/images/screen.png');
+    background-position: center;
+    background-size: contain;
+    left: 68px;
+    bottom: 0;
+    right: 0;
+    top: 66px;
+    height: 753px;
+    width: 994px;
+    z-index: 10;
+    transform: scale(1.035);
+    pointer-events: none;
+    display: none;
+}
+
+.on .glass {
+    display: block;
+}
+
+.mini.on #divCodeWrapper {
+    outline-width: 6px;
+}
+
+.mini .glass {
+    width: 302px;
+    height: 210px;
+    background-repeat: no-repeat;
+    top: 14px;
+    left: 58px;
+    transform: scale(1.475, 1.06);
 }

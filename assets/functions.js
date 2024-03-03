@@ -79,7 +79,6 @@ function clearText(id){
 	else{
 		$(".text-box .tab-pane.active textarea").text("").val("");
 		$("#codeBlock"+id).empty();
-		$(".preset-title.show").empty();
 		$(".nav-link.active").parents(".nav-item").addClass("empty");
 	}
 	
@@ -1405,7 +1404,6 @@ dropText2.ondrop = function(e) {
 	$(".preset-title").empty();
 	$(".nav-hide").remove();
 	$(".remove").remove();
-	$("#preset1").addClass("show");
 	$("code").empty();
 	var tabs = $(".nav").children().length;
   
@@ -1485,8 +1483,6 @@ dropText2.ondrop = function(e) {
 		
 		$(".nav-link").on('click', function(){
 			var id = $(this).parents(".nav-item").index();
-			$(".preset-title").removeClass("show");
-			$("#preset"+(id+1)).addClass("show");
 		});
 		
 		$(".remove").on('click', function(){
@@ -1755,8 +1751,6 @@ $(document).ready(function () {
 			
 			$(".nav-link").on('click', function(){
 				var id = $(this).parents(".nav-item").index();
-				$(".preset-title").removeClass("show");
-				$("#preset"+(id+1)).addClass("show");
 			});
 			
 			$(".remove").on('click', function(){
@@ -2329,10 +2323,8 @@ $(document).ready(function () {
 					if(id > 1){
 						$("#tab"+id).removeClass("active");
 						$("#tab-pane"+id).removeClass("active").removeClass("show");
-						$("#preset"+id).removeClass("show");
 						$("#tab"+(id-1)).addClass("active");
 						$("#tab-pane"+(id-1)).addClass("active").addClass("show");
-						$("#preset"+(id-1)).addClass("show");
 					}
 					break;
 				case 34:
@@ -2340,10 +2332,8 @@ $(document).ready(function () {
 					if(id+1 < $(".nav").children().length){
 						$("#tab"+id).removeClass("active");
 						$("#tab-pane"+id).removeClass("active").removeClass("show");
-						$("#preset"+id).removeClass("show");
 						$("#tab"+(id+1)).addClass("active");
 						$("#tab-pane"+(id+1)).addClass("active").addClass("show");
-						$("#preset"+(id+1)).addClass("show");
 					}
 					break;
 			}
