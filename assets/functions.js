@@ -1875,11 +1875,13 @@ $(document).ready(function () {
 	
 	$('.power').click(function(e){
 		if($(this).hasClass('on')){
-			e1 = $('.active textarea');
+			e1 = $('.active textarea, .mini textarea');
 			e1.addClass('turn-off');
+			$(".screen-container").addClass("turning-off");
 			e1.one('webkitAnimationEnd oanimationend msAnimationEnd animationend',
 			function (e) {
 				e1.removeClass('turn-off');
+				$(".screen-container").removeClass("turning-off");
 				
 				setCookie("power", "off", 30);
 				$(".text1, .text-box, .mini").removeClass('on');
@@ -1894,7 +1896,7 @@ $(document).ready(function () {
 			$(".text1, .text-box, .mini").addClass('on');
 			$("code").css("display", "none");
 			
-			e1 = $('.active textarea');
+			e1 = $('.active textarea, .mini textarea');
 			e1.addClass('turn-on');
 			e1.one('webkitAnimationEnd oanimationend msAnimationEnd animationend',
 			function (e) {

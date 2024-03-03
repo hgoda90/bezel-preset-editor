@@ -59,8 +59,8 @@ form {
 
 .text-box {
     position: relative;
-    width: 1140px;
-    height: 840px;
+    width: 1130px;
+    height: 958px;
     background: #F8F8F8;
     border-radius: 10px;
     border: 1px solid rgba(0, 0, 0, 0.2);
@@ -83,6 +83,8 @@ textarea {
 	bottom: 0;
 	margin: auto;
 	display: flex;
+	height: 100%;
+	width: 100%;
 	z-index: 2;
 	overflow-x: auto;
 	overflow-y: scroll;
@@ -1015,12 +1017,12 @@ pre {
 }
 
 .text-box.on{
-	width: 1083px;
+	width: 973px;
 	height: 800px;
 	background: #ebe6c9;
 	outline: 1px solid rgb(0 0 0 / 20%);
-	border-radius: 4px;
-	padding: 26px 30px 30px 26px;
+	border-radius: 10px;
+	padding: 76px 80px 80px 76px;
 }
 
 .on textarea{
@@ -1031,6 +1033,7 @@ pre {
 	caret-color: #7bffb0;
 	border-radius: 1px;
 	font-size: 17px;
+	animation: glow 3s linear infinite;
 }
 
 .text-box.on ::placeholder {
@@ -1158,7 +1161,7 @@ pre {
     border-radius: 1px;
     box-shadow: 0 0 6px 2px #444;
     border: 2px solid rgb(0 0 0 / 20%);
-    outline: 6px solid rgb(0 0 0 / 10%);
+    outline: 13px solid rgb(0 0 0 / 8%);
     background: #444;
     transition: all .3s ease-in;
     filter: brightness(1.15);
@@ -1324,19 +1327,16 @@ pre {
 	width: 100%;
 	height: 100px;
 	z-index: 8;
-	background: linear-gradient(0deg,rgba(0,0,0,0) 0,rgba(255,255,255,.4) 10%,rgba(0,0,0,.1) 100%);
+	background: linear-gradient(0deg, transparent 0,rgb(0 0 0 / 40%) 10%,rgb(0 0 0 / 10%) 100%);
 	opacity: .1;
 	position: fixed;
 	bottom: 0;
-	animation: refresh 8s linear infinite;
-	animation-name: refresh;
-	animation-duration: 8s;
-	animation-timing-function: linear;
+	animation: refresh 0.01s linear infinite;
 	animation-delay: 0s;
-	animation-iteration-count: infinite;
 	animation-direction: normal;
 	animation-fill-mode: none;
 	animation-play-state: running;
+	pointer-events: none;
 }
 
 @keyframes refresh{
@@ -1425,7 +1425,11 @@ pre {
   pointer-events: none;
 }
 
-.turn-off {
+.mini .overlay{
+	font-size: 24px;
+}
+
+.on textarea.turn-off {
   animation: turn-off 1s cubic-bezier(0.23, 1, 0.32, 1);
   animation-fill-mode: forwards;
   background: #FFF;
@@ -1435,12 +1439,45 @@ pre {
   filter: blur(10px);
 }
 
-.turn-on {
+.on textarea.turn-on {
   animation: turn-on 4s linear;
   animation-fill-mode: forwards;
 }
 
-.turn-on + .overlay {
+.on textarea.turn-on + .overlay {
   animation: overlay-anim 5s linear;
   animation-fill-mode: forwards;
+}
+
+.screen-container.turning-off::before, .screen-container.turning-off::after {
+	content: none;
+}
+
+@keyframes glow {
+  50% {
+	opacity: 0.85;
+  }
+}
+
+.on .active:before {
+    content: " ";
+    border: 3px inset rgb(0 0 0 / 30%);
+    width: calc(100% - 26px);
+    height: calc(100% - 26px);
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    border-radius: 6px;
+}
+
+.on .active:after {
+    content: " ";
+    border: 2px solid rgb(240 240 240 / 30%);
+    width: calc(100% - 126px);
+    height: calc(100% - 126px);
+    position: absolute;
+    left: 61px;
+    top: 61px;
+    border-radius: 19px;
+	pointer-events: none;
 }
