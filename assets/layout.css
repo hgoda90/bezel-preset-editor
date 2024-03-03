@@ -1164,7 +1164,7 @@ pre {
     outline: 13px solid rgb(0 0 0 / 15%);
     background: #444;
     transition: all .3s ease-in;
-    filter: brightness(1.15);
+    filter: brightness(1);
 }
 
 .on.amber textarea{
@@ -1514,4 +1514,15 @@ pre {
     top: 14px;
     left: 58px;
     transform: scale(1.475, 1.06);
+}
+
+video ~ textarea {
+    display: none;
+}
+
+video {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background: #222;
 }

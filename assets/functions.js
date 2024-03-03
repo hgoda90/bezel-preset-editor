@@ -80,6 +80,7 @@ function clearText(id){
 		$(".text-box .tab-pane.active textarea").text("").val("");
 		$("#codeBlock"+id).empty();
 		$(".nav-link.active").parents(".nav-item").addClass("empty");
+		$(".preset-title").empty();
 	}
 	
 	cvSet();
@@ -315,11 +316,21 @@ function dropfile(file) {
 }
 
 function dropfile2(file) {
-	if(file.length == 1){
+	var extension = file[0].name.substr( (file[0].name.lastIndexOf('.') +1) )
+	
+	if(file.length == 1 && extension != "mp4"){
 		 var reader = new FileReader();
 		 reader.onload = function(e) {dropText2.value = e.target.result;updateCode();updateCode2();};
 		 reader.readAsText(file[0], "UTF-8");
 		 $("#preset1").text(file[0].name.replace(".params", "").replace(".slangp", ""));
+	}
+	if(file.length == 1 && extension == "mp4"){
+		var video = file[0];
+		var clip = URL.createObjectURL(video);
+		$("#preset1 ~ .screen-container").append('<video controls autoplay></video>');
+
+		$('video').append('<source src="'+clip+'" type="video/mp4" />');
+		$(".active textarea").css("display", "none");
 	}
 	if(file.length == 2){
 		 var reader = new FileReader();
@@ -1532,14 +1543,24 @@ $(document).ready(function () {
 	$('#load2 input[type="file"]').change(function (e) {
 		const presets = e.target.files;
 		$(".remove").remove();
-		var tabs = $(".nav").children().length;
-		var files = [];
+		$("video").remove();
+		var tabs = $(".nav").children().length,
+			files = [],
+			extension = presets[0].name.substr( (presets[0].name.lastIndexOf('.') +1) );
 		
-		if(presets.length >= 1 && $(".active .text2").length == 1){
+		if(presets.length >= 1 && $(".active .text2").length == 1 && extension != "mp4"){
 			 var reader = new FileReader();
 			 reader.onload = function(e) {$(".text2").val(e.target.result).text(e.target.result);updateCode();updateCode2();};
 			 reader.readAsText(presets[0], "UTF-8");
 			 $("#preset1").text(presets[0].name.replace(".params", "").replace(".slangp", ""));
+		}
+		if(presets.length >= 1 && $(".active .text2").length == 1 && extension == "mp4"){
+			var video = presets[0];
+			var clip = URL.createObjectURL(video);
+			$("#preset1 ~ .screen-container").append('<video controls autoplay></video>');
+			
+			$('video').append('<source src="'+clip+'" type="video/mp4" />');
+			$(".active textarea").css("display", "none");
 		}
 		if(presets.length >= 2 || $(".active .text3").length == 1){
 			 var reader = new FileReader();
@@ -1758,6 +1779,7 @@ $(document).ready(function () {
 			});
 		}
 		
+		$('#load2 input[type="file"]').val("");
 		$(this).blur();
 	});
 
@@ -1883,6 +1905,8 @@ $(document).ready(function () {
 			});
 			
 			$(this).removeClass('on');
+			$("video").remove();
+			$(".active textarea").css("display", "block");
 		}
 		else{
 			setCookie("power", "on", 30);
