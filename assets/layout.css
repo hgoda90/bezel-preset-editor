@@ -107,10 +107,10 @@ textarea:focus-visible {
 
 .color-vision {
     display: inline-block;
-    width: 354px;
+    width: 406px;
     position: absolute;
     top: -106px;
-    left: 0;
+    left: -4px;
     background: #F2F2F2;
     padding: 12px 10px;
     border-radius: 10px 10px 0px 0px;

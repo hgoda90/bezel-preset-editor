@@ -318,6 +318,7 @@ function dropfile(file) {
 		
 		$('.mini video').append('<source src="'+clip+'" type="video/mp4" />');
 		$(".mini textarea").css("display", "none");
+		$(".content").css("transform", "translateX(-180px)");
 	}
 	else{
 	  var reader = new FileReader();
@@ -888,8 +889,9 @@ function preview(){
 }
 
 function refreshVideo(){
-	$("video").remove();
+	$(".active video").remove();
 	$(".active textarea").css("display", "block");
+	$(".content").css("transform", "translateX(0px)");
 }
 
 function removeTabs(){
@@ -1560,6 +1562,7 @@ $(document).ready(function () {
 			
 			$('.mini video').append('<source src="'+clip+'" type="video/mp4" />');
 			$(".mini textarea").css("display", "none");
+			$(".content").css("transform", "translateX(-180px)");
 		}
 		else{
 			var reader = new FileReader();
