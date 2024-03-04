@@ -2306,7 +2306,7 @@ $(document).ready(function () {
 			$('form').submit();
 		}
 		
-		if(e.ctrlKey && e.key === "Home"){
+		if(e.ctrlKey && key === "Home"){
 			e.preventDefault;
 			$("video").remove();
 			$(".active textarea").css("display", "block");
@@ -2352,7 +2352,7 @@ $(document).ready(function () {
 			var id = parseInt($(".nav-link.active").attr("id").replace("tab", ""));
 			
 			switch(key){
-				case "Page Down":
+				case "PageDown":
 					e.preventDefault();
 					if(id > 1){
 						$("#tab"+id).removeClass("active");
@@ -2361,7 +2361,7 @@ $(document).ready(function () {
 						$("#tab-pane"+(id-1)).addClass("active").addClass("show");
 					}
 					break;
-				case "Page Up":
+				case "PageUp":
 					e.preventDefault();
 					if(id+1 < $(".nav").children().length){
 						$("#tab"+id).removeClass("active");
