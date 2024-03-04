@@ -1459,7 +1459,7 @@ pre {
   }
 }
 
-.on .active:before {
+.on .active:not(.button):before {
     content: " ";
     border: 3px inset rgb(0 0 0 / 30%);
     width: calc(100% - 26px);
@@ -1470,7 +1470,7 @@ pre {
     border-radius: 6px;
 }
 
-.on .active:after {
+.on .active:not(.button):after {
     content: " ";
     border: 2px solid rgb(240 240 240 / 30%);
     width: calc(100% - 126px);
@@ -1525,4 +1525,9 @@ video {
     height: 100%;
     position: absolute;
     background: #222;
+}
+
+.mini.on .button.active {
+    background: rgb(0 0 0 / 10%);
+    border: none;
 }
