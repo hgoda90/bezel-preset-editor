@@ -876,6 +876,11 @@ function preview(){
 	}
 }
 
+function refreshVideo(){
+	$("video").remove();
+	$(".active textarea").css("display", "block");
+}
+
 function removeTabs(){
 	$(".preset-title").empty();
 	$(".nav-hide").remove();
@@ -1905,8 +1910,7 @@ $(document).ready(function () {
 			});
 			
 			$(this).removeClass('on');
-			$("video").remove();
-			$(".active textarea").css("display", "block");
+			refreshVideo();
 		}
 		else{
 			setCookie("power", "on", 30);
@@ -2296,22 +2300,28 @@ $(document).ready(function () {
 	var c = 0;
 	
 	$(document).on('keydown', function(e){
-		keycode = e.keyCode ? e.keyCode : e.which;
+		key = e.key ? e.key : e.which;
 		
-		if (keycode == 13) {
+		if (key == "Enter") {
 			$('form').submit();
 		}
 		
-		if(keycode == 18 && c == 0){
+		if(e.ctrlKey && e.key === "Home"){
+			e.preventDefault;
+			$("video").remove();
+			$(".active textarea").css("display", "block");
+		}
+		
+		if(e.altKey && c == 0){
 			modalVar = "alt";
 			c++;
 		}
-		else if(keycode == 18 && c == 1){
+		else if(e.altKey && c == 1){
 			modalVar = "standard";
 			c--;
 		};
 		
-		if(keycode == 113){
+		if(key == "F2"){
 			if($(".text").is(":focus")){
 				savePreset(1);
 			}
@@ -2320,7 +2330,7 @@ $(document).ready(function () {
 			}
 		}
 		
-		if(keycode == 115){
+		if(key == "F4"){
 			if($(".text").is(":focus")){
 				$('#load input[type="file"]').click();
 			}
@@ -2341,8 +2351,8 @@ $(document).ready(function () {
 		if($(".nav").children().length > 1){
 			var id = parseInt($(".nav-link.active").attr("id").replace("tab", ""));
 			
-			switch(keycode){
-				case 33:
+			switch(key){
+				case "Page Down":
 					e.preventDefault();
 					if(id > 1){
 						$("#tab"+id).removeClass("active");
@@ -2351,7 +2361,7 @@ $(document).ready(function () {
 						$("#tab-pane"+(id-1)).addClass("active").addClass("show");
 					}
 					break;
-				case 34:
+				case "Page Up":
 					e.preventDefault();
 					if(id+1 < $(".nav").children().length){
 						$("#tab"+id).removeClass("active");
