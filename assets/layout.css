@@ -1193,7 +1193,7 @@ pre {
     bottom: 58px;
     right: 16px;
     width: 386px;
-    height: 200px;
+    height: 217px;
     padding: 16px 20px 20px 16px;
     background: #444;
     position: fixed;
@@ -1219,7 +1219,7 @@ pre {
 }
 
 .mini.hide {
-    transform: translateY(296px);
+    transform: translateY(312px);
 }
 
 .mini.hide .color-vision {
@@ -1509,11 +1509,11 @@ pre {
 
 .mini .glass {
     width: 302px;
-    height: 210px;
+    height: 226px;
     background-repeat: no-repeat;
-    top: 14px;
-    left: 58px;
-    transform: scale(1.475, 1.06);
+    top: 16px;
+    left: 57px;
+    transform: scale(1.375, 1.06);
 }
 
 video ~ textarea {

@@ -310,9 +310,20 @@ function navHide(){
 }
 
 function dropfile(file) {
-  var reader = new FileReader();
-  reader.onload = function(e) {dropText.value = e.target.result;updateCode();};
-  reader.readAsText(file, "UTF-8");
+	var extension = file.name.substr( (file.name.lastIndexOf('.') +1) )
+	
+	if(extension == "mp4"){
+		var clip = URL.createObjectURL(file);
+		$(".mini .screen-container").append('<video controls autoplay></video>');
+		
+		$('.mini video').append('<source src="'+clip+'" type="video/mp4" />');
+		$(".mini textarea").css("display", "none");
+	}
+	else{
+	  var reader = new FileReader();
+	  reader.onload = function(e) {dropText.value = e.target.result;updateCode();};
+	  reader.readAsText(file, "UTF-8");
+	}
 }
 
 function dropfile2(file) {
@@ -1398,8 +1409,12 @@ $(".switch-panel .imageType input").on('click', function(){
 	}
 });
 
-$("textarea").dblclick(function(){
+$(".active textarea").dblclick(function(){
 	$('#load2 input[type="file"]').click();
+});
+
+$(".mini textarea").dblclick(function(){
+	$('#load input[type="file"]').click();
 });
 
 $(".us, .world").on('click', function(){
@@ -1535,12 +1550,24 @@ $(document).ready(function () {
 	$('[data-bs-toggle="tooltip"]').tooltip();
 	
 	$('#load input[type="file"]').change(function (e) {
-		const geekss = e.target.files[0];
+		const geekss = e.target.files[0],
+			extension = geekss.name.substr( (geekss.name.lastIndexOf('.') +1) );;
 		
-		var reader = new FileReader();
-		reader.onload = function (e) {$(".text").val(e.target.result).text(e.target.result);updateCode();};
+		if(extension == "mp4"){
+			var video = e.target.files[0];
+			var clip = URL.createObjectURL(video);
+			$(".mini .screen-container").append('<video controls autoplay></video>');
+			
+			$('.mini video').append('<source src="'+clip+'" type="video/mp4" />');
+			$(".mini textarea").css("display", "none");
+		}
+		else{
+			var reader = new FileReader();
+			reader.onload = function (e) {$(".text").val(e.target.result).text(e.target.result);updateCode();};
 		
-		reader.readAsText(geekss);
+			reader.readAsText(geekss);
+		}
+			
 		$('#load input[type="file"]').val("");
 		$(this).blur();
 	});
@@ -1548,7 +1575,7 @@ $(document).ready(function () {
 	$('#load2 input[type="file"]').change(function (e) {
 		const presets = e.target.files;
 		$(".remove").remove();
-		$("video").remove();
+		$(".active video").remove();
 		var tabs = $(".nav").children().length,
 			files = [],
 			extension = presets[0].name.substr( (presets[0].name.lastIndexOf('.') +1) );
@@ -1564,7 +1591,7 @@ $(document).ready(function () {
 			var clip = URL.createObjectURL(video);
 			$("#preset1 ~ .screen-container").append('<video controls autoplay></video>');
 			
-			$('video').append('<source src="'+clip+'" type="video/mp4" />');
+			$('.active video').append('<source src="'+clip+'" type="video/mp4" />');
 			$(".active textarea").css("display", "none");
 		}
 		if(presets.length >= 2 || $(".active .text3").length == 1){
@@ -2300,15 +2327,21 @@ $(document).ready(function () {
 	var c = 0;
 	
 	$(document).on('keydown', function(e){
-		key = e.key ? e.key : e.which;
+		key = e.key;
 		
 		if (key == "Enter") {
 			$('form').submit();
 		}
 		
-		if(e.ctrlKey && key === "Home"){
+		if(e.altKey && key === "Delete"){
 			e.preventDefault;
-			$("video").remove();
+			$(".mini video").remove();
+			$(".mini textarea").css("display", "block");
+		}
+		
+		if(e.ctrlKey && key === "Delete"){
+			e.preventDefault;
+			$(".active video").remove();
 			$(".active textarea").css("display", "block");
 		}
 		
