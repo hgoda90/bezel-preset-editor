@@ -1532,7 +1532,7 @@ dropText2.ondrop = function(e) {
 		}
 	}
 	
-	if(e.dataTransfer.files.length > 1){
+	if(e.dataTransfer.files.length > 1 || $(".nav").children().length > 0){
 		$(".nav-tabs").append('<div class="remove nav-item" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Remove Tabs"><span class="material-symbols-outlined nav-link">close_small</span></div>');
 		
 		const exampleEl = $('.remove')
@@ -1620,13 +1620,14 @@ $(document).ready(function () {
 		if(presets.length > 1){
 			$(".tab-pane textarea").text("").val("");
 			$(".tab-pane code").empty();
+			$(".preset-title").empty();
 		}
 		
-		if(presets.length >= 1 || $(".active .text2").length == 1 && extension != "mp4"){
+		if(presets.length == 1 && extension != "mp4"){
 			 var reader = new FileReader();
-			 reader.onload = function(e) {$(".text2").val(e.target.result).text(e.target.result);updateCode();updateCode2();};
+			 reader.onload = function(e) {$(".active textarea").val(e.target.result).text(e.target.result);update();};
 			 reader.readAsText(presets[0], "UTF-8");
-			 $("#preset1").text(presets[0].name.replace(".params", "").replace(".slangp", ""));
+			 $(".tab-pane.active .preset-title").text(presets[0].name.replace(".params", "").replace(".slangp", ""));
 		}
 		if($(".active .text2").length == 1 && extension == "mp4"){
 			var video = presets[0];
@@ -1642,7 +1643,12 @@ $(document).ready(function () {
 			
 			$(".active textarea").css("display", "none");
 		}
-		
+		if(presets.length > 1 || $(".active .text2").length == 1 && extension != "mp4"){
+			 var reader = new FileReader();
+			 reader.onload = function(e) {$(".text2").val(e.target.result).text(e.target.result);updateCode();updateCode2();};
+			 reader.readAsText(presets[0], "UTF-8");
+			 $("#preset1").text(presets[0].name.replace(".params", "").replace(".slangp", ""));
+		}
 		if(presets.length >= 2 || $(".active .text3").length == 1 && presets.length == 1){
 			 var reader = new FileReader();
 			 reader.onload = function(e) {$(".text3").val(e.target.result).text(e.target.result);updateCode3();};
@@ -1804,7 +1810,11 @@ $(document).ready(function () {
 					}
 					else{
 						$(".nav-tabs #tab"+(i+1)).parents(".nav-item").removeClass("empty");
+						$(".nav-tabs #tab"+(i+1)).parents(".nav-item").nextAll().addClass("empty");
 					}
+				}
+				else if($(".nav").children().length > 1 && presets.length == 1){
+					$(".nav-link.active").removeClass("empty");
 				}
 			}
 		}
@@ -1848,7 +1858,7 @@ $(document).ready(function () {
 			}
 		}
 		
-		if(presets.length > 1){
+		if(presets.length > 1 || $(".nav").children().length > 1){
 			$(".nav-tabs").append('<div class="remove nav-item" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Remove Tabs"><span class="material-symbols-outlined nav-link">close_small</span></div>');
 			
 			const exampleEl = $('.remove')
