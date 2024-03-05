@@ -105,17 +105,6 @@ textarea:focus-visible {
     right: -48px;
 }
 
-.color-vision {
-    display: inline-block;
-    width: 406px;
-    position: absolute;
-    top: -106px;
-    left: -4px;
-    background: #F2F2F2;
-    padding: 12px 10px;
-    border-radius: 10px 10px 0px 0px;
-}
-
 .button-wrap {
     display: flex;
     flex-direction: column;
@@ -1530,4 +1519,30 @@ video {
 .mini.on .button.active {
     background: rgb(0 0 0 / 10%);
     border: none;
+}
+
+.popover-default.bottom .arrow:after {
+    border-bottom-color: #DDD;
+}
+
+.popover-title {
+    background-color: #DDD !important;
+    --bs-popover-border-color: #BBB;
+    font-weight: bold;
+}
+
+#colorPop {
+    --bs-popover-max-width: 285px;
+    margin-top: -10px;
+    margin-left: 4px;
+}
+
+#colorPop button{
+  border: none;
+  float: right;
+  margin: 10px;
+}
+
+input[type="text"], select {
+    margin-bottom: 10px;
 }

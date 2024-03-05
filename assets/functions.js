@@ -96,7 +96,7 @@ function colorReset(){
 		$(".contrast").css("display", "none");
 		$(".dropper").val("#1A1A1A");
 		$(".square").css("background", "#1A1A1A");
-		$(".submit").css("color", "#1A1A1A");
+		$(".colorVis").css("color", "#1A1A1A");
 		settingReset();
 		
 		if($(".format-labels .active").text() == "HEX"){
@@ -124,7 +124,7 @@ function colorReset(){
 		$(".contrast option[value='1.30']").prop("selected", "selected");
 		$(".dropper").val("#808080");
 		$(".square").css("background", "#808080");
-		$(".submit").css("color", "#808080");
+		$(".colorVis").css("color", "#808080");
 	
 		if($(".format-labels .active").text() == "HEX"){
 			$(".hex input").attr("placeholder", "808080");
@@ -690,22 +690,22 @@ function formatToggle(value){
 	if(value == 1){
 		setCookie("colorFormat", "HEX", 30);
 		colorFormat = "HEX";
-		$(".color-vision .contrast").after('<div class="hex">HEX: # <input type="text" name="hex" size=6 maxlength=6></div>');
+		$("#colorPop .contrast").after('<div class="hex">HEX: # <input type="text" name="hex" size=6 maxlength=6></div>');
 	}
 	else if(value == 2){
 		setCookie("colorFormat", "HSB", 30);
 		colorFormat = "HSB";
-		$(".color-vision .contrast").after('<div class="hsb">hsb(<input type="text" name="hue" size=3 maxLength=3>deg, <input type="text" name="saturation" size=3 maxLength=3>%, <input type="text" name="brightness" size=3 maxLength=3>%)</div>');
+		$("#colorPop .contrast").after('<div class="hsb">hsb(<input type="text" name="hue" size=3 maxLength=3>deg, <input type="text" name="saturation" size=3 maxLength=3>%, <input type="text" name="brightness" size=3 maxLength=3>%)</div>');
 	}
 	else if(value == 3){
 		setCookie("colorFormat", "HSL", 30);
 		colorFormat = "HSL";
-		$(".color-vision .contrast").after('<div class="hsl">hsl(<input type="text" name="hue" size=3 maxLength=3>deg, <input type="text" name="saturation" size=3 maxLength=3>%, <input type="text" name="lightness" size=3 maxLength=3>%)</div>');
+		$("#colorPop .contrast").after('<div class="hsl">hsl(<input type="text" name="hue" size=3 maxLength=3>deg, <input type="text" name="saturation" size=3 maxLength=3>%, <input type="text" name="lightness" size=3 maxLength=3>%)</div>');
 	}
 	else if(value == 4){
 		setCookie("colorFormat", "RGB", 30);
 		colorFormat = "RGB";
-		$(".color-vision .contrast").after('<div class="rgb">rgb(<input type="text" name="red" size=3 maxLength=3>, <input type="text" name="green" size=3 maxLength=3>, <input type="text" name="blue" size=3 maxLength=3>)</div>');
+		$("#colorPop .contrast").after('<div class="rgb">rgb(<input type="text" name="red" size=3 maxLength=3>, <input type="text" name="green" size=3 maxLength=3>, <input type="text" name="blue" size=3 maxLength=3>)</div>');
 	}
 	
 	$(".info").empty();
@@ -865,25 +865,25 @@ function preview(){
 	if(colorFormat == "HEX"){
 		$(".square").css("background", "#"+hex);
 		$(".dropper").val("#"+hex);
-		$(".submit").css("color", "#"+hex);
+		$(".colorVis").css("color", "#"+hex);
 		colorMessage(hex);
 	}
 	else if(colorFormat == "HSB"){
 		$(".square").css("background", colorcolor("hsv("+h+", "+s+"%, "+v+"%)", 'hex'));
 		$(".dropper").val(colorcolor("hsv("+h+", "+s+"%, "+v+"%)", 'hex'));
-		$(".submit").css("color", colorcolor("hsv("+h+", "+s+"%, "+v+"%)", 'hex'));
+		$(".colorVis").css("color", colorcolor("hsv("+h+", "+s+"%, "+v+"%)", 'hex'));
 		colorMessage("hsb("+h+"deg, "+s+"%, "+v+"%)");
 	}
 	else if(colorFormat == "HSL"){
 		$(".square").css("background", colorcolor("hsl("+h2+", "+s2+"%, "+l+"%)", 'hex'));
 		$(".dropper").val(colorcolor("hsl("+h2+", "+s2+"%, "+l+"%)", 'hex'));
-		$(".submit").css("color", colorcolor("hsl("+h2+", "+s2+"%, "+l+"%)", 'hex'));
+		$(".colorVis").css("color", colorcolor("hsl("+h2+", "+s2+"%, "+l+"%)", 'hex'));
 		colorMessage("hsl("+h2+"deg, "+s2+"%, "+l+"%)");
 	}
 	else{
 		$(".square").css("background", "rgb("+r+", "+g+", "+b+")");
 		$(".dropper").val(colorcolor("rgb("+r+", "+g+", "+b+")", 'hex'));
-		$(".submit").css("color", colorcolor("rgb("+r+", "+g+", "+b+")", 'hex'));
+		$(".colorVis").css("color", colorcolor("rgb("+r+", "+g+", "+b+")", 'hex'));
 		colorMessage("rgb("+r+", "+g+", "+b+")");
 	}
 }
@@ -1300,6 +1300,14 @@ function update(){
 $(".brightness").on('click', function(){
 	brightness();
 	
+	$(this).blur();
+});
+
+$("#colorPop .submit").on('click', function(){
+	$('form').submit();
+});
+
+$(".colorVis").on('click', function(){
 	$(this).blur();
 });
 
@@ -1981,7 +1989,7 @@ $(document).ready(function () {
 		$(".info, .error").empty();
 		$(".color").removeClass("active");
 		hexError = hslError = hsvError = rgbError = "false";
-		$(".submit").blur();
+		$(".colorVis").blur();
 		
 		if(colorFormat == "HEX"){
 			var hex = $(".hex input").val().toUpperCase();
@@ -2323,6 +2331,9 @@ $(document).ready(function () {
 		update();
 		event.preventDefault();
 		
+		if($(".mini").hasClass("hide") && build == "off"){
+			hide();
+		}
 	});
 	
 	start();
