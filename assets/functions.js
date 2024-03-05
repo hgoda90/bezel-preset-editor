@@ -671,6 +671,14 @@ function edit(){
 	}
 }
 
+function extraTab(){
+	var tabs = $(".nav-item").length - 1;
+	
+	if(tabs < 25){
+		$(".nav-tabs .plus").before('<li class="nav-item empty" role="presentation"><button class="nav-link" id="tab'+tabs+'" data-bs-toggle="tab" data-bs-target="#tab-pane'+tabs+'" type="button" role="tab" aria-controls="tab-pane'+tabs+'" aria-selected="true">'+tabs+'</button></li>');
+	}
+}
+
 function formatToggle(value){
 	  value = parseInt(value, 10);
 	  $(".format-labels span").removeClass("active");
@@ -1532,6 +1540,17 @@ dropText2.ondrop = function(e) {
 		}
 	}
 	
+	$(".nav-tabs").append('<div class="plus nav-item" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Plus 1" role="presentation"><span class="material-symbols-outlined nav-link" aria-selected="false" tabindex="-1" role="tab">exposure_plus_1</span></div>');
+	
+	const tooltip = new bootstrap.Tooltip($('.plus'));
+	
+	if($(".nav-tabs .nav-link").length < 26){
+		$(".plus").on('click', function(){
+			extraTab();
+			$(this).children('span').blur();
+		});
+	}
+	
 	if(e.dataTransfer.files.length > 1 || $(".nav").children().length > 0){
 		$(".nav-tabs").append('<div class="remove nav-item" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Remove Tabs"><span class="material-symbols-outlined nav-link">close_small</span></div>');
 		
@@ -1856,6 +1875,17 @@ $(document).ready(function () {
 				$(".nav-hide span").text("keyboard_double_arrow_up");
 				$(".nav-hide").css("transform", "translateY(-4px)");
 			}
+		}
+			
+		$(".nav-tabs").append('<div class="plus nav-item" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Plus 1" role="presentation"><span class="material-symbols-outlined nav-link" aria-selected="false" tabindex="-1" role="tab">exposure_plus_1</span></div>');
+		
+		const tooltip = new bootstrap.Tooltip($('.plus'));
+		
+		if($(".nav-tabs .nav-link").length < 26){
+			$(".plus").on('click', function(){
+				extraTab();
+				$(this).children('span').blur();
+			});
 		}
 		
 		if(presets.length > 1 || $(".nav").children().length > 1){
