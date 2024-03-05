@@ -911,7 +911,7 @@ footer .button {
 .nav-tabs {
     border: none;
     position: absolute;
-    right: -12px;
+    right: 4px;
     bottom: -43px;
     transition: transform .2s ease-in;
     display: table;

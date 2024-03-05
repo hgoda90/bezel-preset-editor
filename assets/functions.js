@@ -314,9 +314,15 @@ function dropfile(file) {
 	
 	if(extension == "mp4"){
 		var clip = URL.createObjectURL(file);
-		$(".mini .screen-container").append('<video controls autoplay></video>');
 		
-		$('.mini video').append('<source src="'+clip+'" type="video/mp4" />');
+		if($(".mini video").length == 0){
+			$(".mini .screen-container").append('<video controls autoplay></video>');
+			$('.mini video').append('<source src="'+clip+'" type="video/mp4" />');
+		}
+		else{
+			$('.mini video source').attr("src", clip);
+		}
+		
 		$(".mini textarea").css("display", "none");
 		$(".content").css("transform", "translateX(-180px)");
 	}
@@ -339,9 +345,15 @@ function dropfile2(file) {
 	if(file.length == 1 && extension == "mp4"){
 		var video = file[0];
 		var clip = URL.createObjectURL(video);
-		$("#preset1 ~ .screen-container").append('<video controls autoplay></video>');
-
-		$('video').append('<source src="'+clip+'" type="video/mp4" />');
+		
+		if($(".active video").length == 0){
+			$("#preset1 ~ .screen-container").append('<video controls autoplay></video>');
+			$('.active video').append('<source src="'+clip+'" type="video/mp4" />');
+		}
+		else{
+			$('.active video source').attr("src", clip);
+		}
+		
 		$(".active textarea").css("display", "none");
 	}
 	if(file.length == 2){
@@ -1505,14 +1517,23 @@ dropText2.ondrop = function(e) {
 		}
 	}
 	
-	if($(".nav").children().length > 0){
+	if(e.dataTransfer.files.length > 1 && $(".nav-hide").length == 0){
+		$(".text-wrap .text-box:nth-child(2)").append('<div class="nav-hide"><span class="material-symbols-outlined">keyboard_double_arrow_up</span></div>');
+		$(".nav-tabs").append('<div class="remove nav-item" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Remove Tabs"><span class="material-symbols-outlined nav-link">close_small</span></div>');
+		
 		if(dots == "hidden"){
 			$(".nav-tabs").addClass("hide");
 			$(".nav-hide span").text("keyboard_double_arrow_down");
 			$(".nav-hide").css("transform", "translateY(-60px)");
 		}
-		
-		$(".text-wrap .text-box:nth-child(2)").append('<div class="nav-hide"><span class="material-symbols-outlined">keyboard_double_arrow_up</span></div>');
+		else{
+			$(".nav-tabs").removeClass("hide");
+			$(".nav-hide span").text("keyboard_double_arrow_up");
+			$(".nav-hide").css("transform", "translateY(-4px)");
+		}
+	}
+	
+	if(e.dataTransfer.filese.length > 1){
 		$(".nav-tabs").append('<div class="remove nav-item" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Remove Tabs"><span class="material-symbols-outlined nav-link">close_small</span></div>');
 		
 		const exampleEl = $('.remove')
@@ -1566,9 +1587,15 @@ $(document).ready(function () {
 		if(extension == "mp4"){
 			var video = e.target.files[0];
 			var clip = URL.createObjectURL(video);
-			$(".mini .screen-container").append('<video controls autoplay></video>');
 			
-			$('.mini video').append('<source src="'+clip+'" type="video/mp4" />');
+			if($(".mini video").length == 0){
+				$(".mini .screen-container").append('<video controls autoplay></video>');
+				$('.mini video').append('<source src="'+clip+'" type="video/mp4" />');
+			}
+			else{
+				$('.mini video source').attr("src", clip);
+			}
+			
 			$(".mini textarea").css("display", "none");
 			$(".content").css("transform", "translateX(-180px)");
 		}
@@ -1600,9 +1627,15 @@ $(document).ready(function () {
 		if(presets.length >= 1 && $(".active .text2").length == 1 && extension == "mp4"){
 			var video = presets[0];
 			var clip = URL.createObjectURL(video);
-			$("#preset1 ~ .screen-container").append('<video controls autoplay></video>');
 			
-			$('.active video').append('<source src="'+clip+'" type="video/mp4" />');
+			if($(".active video").length == 0){
+				$("#preset1 ~ .screen-container").append('<video controls autoplay></video>');
+				$('.active video').append('<source src="'+clip+'" type="video/mp4" />');
+			}
+			else{
+				$('.active video source').attr("src", clip);
+			}
+			
 			$(".active textarea").css("display", "none");
 		}
 		if(presets.length >= 2 || $(".active .text3").length == 1){
@@ -1766,7 +1799,6 @@ $(document).ready(function () {
 					}
 					else{
 						$(".nav-tabs #tab"+(i+1)).parents(".nav-item").removeClass("empty");
-						$(".nav-tabs #tab"+(i+1)).parents(".nav-item").nextAll().addClass("empty");
 					}
 				}
 			}
@@ -1796,14 +1828,22 @@ $(document).ready(function () {
 			}
 		}
 		
-		if(presets.length > 1 || $(".nav").children().length > 0){
+		if(presets.length > 1 && $(".nav-hide").length == 0){
+			$(".text-wrap .text-box:nth-child(2)").append('<div class="nav-hide"><span class="material-symbols-outlined">keyboard_double_arrow_up</span></div>');
+			
 			if(dots == "hidden"){
 				$(".nav-tabs").addClass("hide");
 				$(".nav-hide span").text("keyboard_double_arrow_down");
 				$(".nav-hide").css("transform", "translateY(-60px)");
 			}
-			
-			$(".text-wrap .text-box:nth-child(2)").append('<div class="nav-hide"><span class="material-symbols-outlined">keyboard_double_arrow_up</span></div>');
+			else{
+				$(".nav-tabs").removeClass("hide");
+				$(".nav-hide span").text("keyboard_double_arrow_up");
+				$(".nav-hide").css("transform", "translateY(-4px)");
+			}
+		}
+		
+		if(presets.length > 1){
 			$(".nav-tabs").append('<div class="remove nav-item" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Remove Tabs"><span class="material-symbols-outlined nav-link">close_small</span></div>');
 			
 			const exampleEl = $('.remove')
