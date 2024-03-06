@@ -1563,3 +1563,8 @@ input[type="text"], select {
     background: #222;
     margin: 35% 2%;
 }
+
+.plyr--paused video {
+    filter: blur(6px) brightness(0.75) opacity(0.9);
+    position: relative;
+}
