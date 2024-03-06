@@ -310,21 +310,26 @@ function navHide(){
 }
 
 function dropfile(file) {
-	var extension = file.name.substr( (file.name.lastIndexOf('.') +1) )
-	
-	if(extension == "mp4"){
-		var clip = URL.createObjectURL(file);
+	var extension = file.name.substr( (file.name.lastIndexOf('.') +1) ),
+		input = URL.createObjectURL(file);
 		
-		if($(".mini video").length == 0){
-			$(".mini .screen-container").append('<video controls autoplay></video>');
-			$('.mini video').append('<source src="'+clip+'" type="video/mp4" />');
-		}
-		else{
-			$('.mini video source').attr("src", clip);
-		}
+	if(extension == "mp4" && $(".mini video").length == 0){
+		$(".mini .screen-container").append('<video controls crossorigin playsinline id="player"></video>');
+	}
+	else if(extension == "mp3" && $(".mini audio").length == 0){
+		$(".mini .screen-container").append('<audio controls crossorigin playsinline id="player"></audio>');
+	}
+	
+	if(extension == "mp4" || extension == "mp3"){
+		const playing = (extension == "mp4") ? "video" : "audio";
+		
+		const player = new Plyr('#player', {autoplay: true,invertTime: false});
+		
+		window.player = player;
+		
+		player.source = {type: playing,sources: [{src: input,type: playing+'/'+extension}]};
 		
 		$(".mini textarea").css("display", "none");
-		$(".content").css("transform", "translateX(-180px)");
 	}
 	else{
 	  var reader = new FileReader();
@@ -334,27 +339,34 @@ function dropfile(file) {
 }
 
 function dropfile2(file) {
-	var extension = file[0].name.substr( (file[0].name.lastIndexOf('.') +1) )
-	
-	if(file.length == 1 && extension != "mp4"){
-		 var reader = new FileReader();
-		 reader.onload = function(e) {dropText2.value = e.target.result;updateCode();updateCode2();};
-		 reader.readAsText(file[0], "UTF-8");
-		 $("#preset1").text(file[0].name.replace(".params", "").replace(".slangp", ""));
-	}
-	if(file.length == 1 && extension == "mp4"){
-		var video = file[0];
-		var clip = URL.createObjectURL(video);
+	if(file.length == 1){
+		var extension = file[0].name.substr( (file[0].name.lastIndexOf('.') +1) ),
+			input = URL.createObjectURL(file[0]);
+			
+		if(extension == "mp4" && $(".tab-pane.active video").length == 0){
+			$("#dropText2").parents(".screen-container").append('<video controls crossorigin playsinline id="player2"></video>');
+		}
+		else if(extension == "mp3" && $(".tab-pane.active audio").length == 0){
+			$("#dropText2").parents(".screen-container").append('<audio controls crossorigin playsinline id="player2"></audio>');
+		}
 		
-		if($(".active video").length == 0){
-			$("#preset1 ~ .screen-container").append('<video controls autoplay></video>');
-			$('.active video').append('<source src="'+clip+'" type="video/mp4" />');
+		if(extension == "mp4" || extension == "mp3"){
+			const playing = (extension == "mp4") ? "video" : "audio";
+			
+			const player = new Plyr('#player2', {autoplay: true,invertTime: false});
+			
+			window.player = player;
+			
+			player.source = {type: playing,sources: [{src: input,type: playing+'/'+extension}]};
+			
+			$(".tab-pane.active textarea").css("display", "none");
 		}
 		else{
-			$('.active video source').attr("src", clip);
+			var reader = new FileReader();
+			 reader.onload = function(e) {dropText2.value;updateCode();updateCode2();};
+			 reader.readAsText(file[0], "UTF-8");
+			 $("#preset1").text(file[0].name.replace(".params", "").replace(".slangp", ""));
 		}
-		
-		$(".active textarea").css("display", "none");
 	}
 	if(file.length == 2){
 		 var reader = new FileReader();
@@ -499,10 +511,10 @@ function dropfile2(file) {
 }
 
 function dropfile3(file) {
-  var reader = new FileReader();
-  reader.onload = function(e) {dropText3.value = e.target.result;updateCode3();};
-  reader.readAsText(file, "UTF-8");
-  $("#preset2").text(file.name.replace(".params", "").replace(".slangp", ""));
+	var reader = new FileReader();
+	reader.onload = function(e) {dropText3.value = e.target.result;updateCode3();};
+	reader.readAsText(file, "UTF-8");
+	$("#preset2").text(file.name.replace(".params", "").replace(".slangp", ""));
 }
 
 function dropfile4(file) {
@@ -1461,12 +1473,10 @@ dropText.ondrop = function(e) {e.preventDefault();var file = e.dataTransfer.file
 dropText2.ondrop = function(e) {
 	e.preventDefault();
 	const files = [];
-	$(".text-wrap .text-box:nth-child(2) textarea").text("").val("");
-	$(".preset-title").empty();
-	$(".nav-hide").remove();
-	$(".remove").remove();
-	$("code").empty();
 	var tabs = $(".nav").children().length;
+	$(".text-wrap .text-box:nth-child(2) textarea").text("").val("");
+	$(".preset-title, code").empty();
+	$(".nav-hide, .plus, .remove").remove();
   
 	if(e.dataTransfer.files.length > 1 && $(".nav").children().length == 0){
 		$(".text-wrap").append('<ul class="nav nav-tabs" id="myTab" role="tablist"></ul>');
@@ -1525,49 +1535,50 @@ dropText2.ondrop = function(e) {
 		}
 	}
 	
-	if(e.dataTransfer.files.length > 1 && $(".nav-hide").length == 0){
-		$(".text-wrap .text-box:nth-child(2)").append('<div class="nav-hide"><span class="material-symbols-outlined">keyboard_double_arrow_up</span></div>');
+	if(e.dataTransfer.files.length > 1){
+		$(".nav-tabs").append('<div class="plus nav-item" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Plus 1" role="presentation"><span class="material-symbols-outlined nav-link" aria-selected="false" tabindex="-1" role="tab">exposure_plus_1</span></div>');
+	
+		const tooltip = new bootstrap.Tooltip($('.plus'));
 		
-		if(dots == "hidden"){
-			$(".nav-tabs").addClass("hide");
-			$(".nav-hide span").text("keyboard_double_arrow_down");
-			$(".nav-hide").css("transform", "translateY(-60px)");
+		if($(".nav-tabs .nav-link").length < 26){
+			$(".plus").on('click', function(){
+				extraTab();
+				$(this).children('span').blur();
+			});
 		}
-		else{
-			$(".nav-tabs").removeClass("hide");
-			$(".nav-hide span").text("keyboard_double_arrow_up");
-			$(".nav-hide").css("transform", "translateY(-4px)");
+	
+		if($(".nav").children().length > 0){
+			$(".nav-tabs").append('<div class="remove nav-item" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Remove Tabs"><span class="material-symbols-outlined nav-link">close_small</span></div>');
+			
+			const tooltip = new bootstrap.Tooltip($('.remove'));
+			
+			$(".nav-hide").on('click', function(){
+				navHide();
+			});
+			
+			$(".nav-link").on('click', function(){
+				var id = $(this).parents(".nav-item").index();
+			});
+			
+			$(".remove").on('click', function(){
+				removeTabs();
+			});
 		}
-	}
-	
-	$(".nav-tabs").append('<div class="plus nav-item" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Plus 1" role="presentation"><span class="material-symbols-outlined nav-link" aria-selected="false" tabindex="-1" role="tab">exposure_plus_1</span></div>');
-	
-	const tooltip = new bootstrap.Tooltip($('.plus'));
-	
-	if($(".nav-tabs .nav-link").length < 26){
-		$(".plus").on('click', function(){
-			extraTab();
-			$(this).children('span').blur();
-		});
-	}
-	
-	if(e.dataTransfer.files.length > 1 || $(".nav").children().length > 0){
-		$(".nav-tabs").append('<div class="remove nav-item" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Remove Tabs"><span class="material-symbols-outlined nav-link">close_small</span></div>');
 		
-		const exampleEl = $('.remove')
-		const tooltip = new bootstrap.Tooltip(exampleEl);
-		
-		$(".nav-hide").on('click', function(){
-			navHide();
-		});
-		
-		$(".nav-link").on('click', function(){
-			var id = $(this).parents(".nav-item").index();
-		});
-		
-		$(".remove").on('click', function(){
-			removeTabs();
-		});
+		if($(".nav-hide").length == 0){
+			$(".text-wrap .text-box:nth-child(2)").append('<div class="nav-hide"><span class="material-symbols-outlined">keyboard_double_arrow_up</span></div>');
+			
+			if(dots == "hidden"){
+				$(".nav-tabs").addClass("hide");
+				$(".nav-hide span").text("keyboard_double_arrow_down");
+				$(".nav-hide").css("transform", "translateY(-60px)");
+			}
+			else{
+				$(".nav-tabs").removeClass("hide");
+				$(".nav-hide span").text("keyboard_double_arrow_up");
+				$(".nav-hide").css("transform", "translateY(-4px)");
+			}
+		}
 	}
 };
 
@@ -1599,29 +1610,33 @@ $(document).ready(function () {
 	$('[data-bs-toggle="tooltip"]').tooltip();
 	
 	$('#load input[type="file"]').change(function (e) {
-		const geekss = e.target.files[0],
-			extension = geekss.name.substr( (geekss.name.lastIndexOf('.') +1) );;
+		const file = e.target.files[0],
+			extension = file.name.substr( (file.name.lastIndexOf('.') +1) ),
+			input = URL.createObjectURL(file);
 		
-		if(extension == "mp4"){
-			var video = e.target.files[0];
-			var clip = URL.createObjectURL(video);
+		if(extension == "mp4" && $(".mini video").length == 0){
+			$(".mini .screen-container").append('<video controls crossorigin playsinline id="player"></video>');
+		}
+		else if(extension == "mp3" && $(".mini audio").length == 0){
+			$(".mini .screen-container").append('<audio controls crossorigin playsinline id="player"></audio>');
+		}
+		
+		if(extension == "mp4" || extension == "mp3"){
+			const playing = (extension == "mp4") ? "video" : "audio";
 			
-			if($(".mini video").length == 0){
-				$(".mini .screen-container").append('<video controls autoplay></video>');
-				$('.mini video').append('<source src="'+clip+'" type="video/mp4" />');
-			}
-			else{
-				$('.mini video source').attr("src", clip);
-			}
+			const player = new Plyr('#player', {autoplay: true,invertTime: false});
+			
+			window.player = player;
+			
+			player.source = {type: playing,sources: [{src: input,type: playing+'/'+extension}]};
 			
 			$(".mini textarea").css("display", "none");
-			$(".content").css("transform", "translateX(-180px)");
 		}
 		else{
 			var reader = new FileReader();
 			reader.onload = function (e) {$(".text").val(e.target.result).text(e.target.result);updateCode();};
 		
-			reader.readAsText(geekss);
+			reader.readAsText(file);
 		}
 			
 		$('#load input[type="file"]').val("");
@@ -1630,39 +1645,44 @@ $(document).ready(function () {
 	
 	$('#load2 input[type="file"]').change(function (e) {
 		const presets = e.target.files;
-		$(".remove").remove();
-		$(".active video").remove();
+		$(".active video, .active audio, .nav-hide, .plus, .remove").remove();
 		var tabs = $(".nav").children().length,
 			files = [],
-			extension = presets[0].name.substr( (presets[0].name.lastIndexOf('.') +1) );
+			extension = presets[0].name.substr( (presets[0].name.lastIndexOf('.') +1) ),
+			input = URL.createObjectURL(presets[0]);
 		
 		if(presets.length > 1){
 			$(".tab-pane textarea").text("").val("");
-			$(".tab-pane code").empty();
-			$(".preset-title").empty();
+			$(".tab-pane code, .preset-title").empty();
 		}
-		
-		if(presets.length == 1 && extension != "mp4"){
-			 var reader = new FileReader();
-			 reader.onload = function(e) {$(".active textarea").val(e.target.result).text(e.target.result);update();};
-			 reader.readAsText(presets[0], "UTF-8");
-			 $(".tab-pane.active .preset-title").text(presets[0].name.replace(".params", "").replace(".slangp", ""));
-		}
-		if($(".active .text2").length == 1 && extension == "mp4"){
-			var video = presets[0];
-			var clip = URL.createObjectURL(video);
 			
-			if($(".active video").length == 0){
-				$("#preset1 ~ .screen-container").append('<video controls autoplay></video>');
-				$('.active video').append('<source src="'+clip+'" type="video/mp4" />');
+		if(presets.length == 1){
+			if(extension == "mp4" && $(".tab-pane.active video").length == 0){
+				$(".tab-pane.active .screen-container").append('<video controls crossorigin playsinline id="player2"></video>');
+			}
+			else if(extension == "mp3" && $(".tab-pane.active audio").length == 0){
+				$(".tab-pane.active .screen-container").append('<audio controls crossorigin playsinline id="player2"></audio>');
+			}
+			
+			if(extension == "mp4" || extension == "mp3"){
+				const playing = (extension == "mp4") ? "video" : "audio";
+				
+				const player = new Plyr('#player2', {autoplay: true,invertTime: false});
+				
+				window.player = player;
+				
+				player.source = {type: playing,sources: [{src: input,type: playing+'/'+extension}]};
+				
+				$(".tab-pane.active textarea").css("display", "none");
 			}
 			else{
-				$('.active video source').attr("src", clip);
+				 var reader = new FileReader();
+				 reader.onload = function(e) {$(".active textarea").val(e.target.result).text(e.target.result);update();};
+				 reader.readAsText(presets[0], "UTF-8");
+				 $(".tab-pane.active .preset-title").text(presets[0].name.replace(".params", "").replace(".slangp", ""));
 			}
-			
-			$(".active textarea").css("display", "none");
 		}
-		if(presets.length > 1 || $(".active .text2").length == 1 && extension != "mp4"){
+		if(presets.length > 1 || $(".active .text2").length == 1 && (extension != "mp4" && extension != "mp3")){
 			 var reader = new FileReader();
 			 reader.onload = function(e) {$(".text2").val(e.target.result).text(e.target.result);updateCode();updateCode2();};
 			 reader.readAsText(presets[0], "UTF-8");
@@ -1862,49 +1882,51 @@ $(document).ready(function () {
 			}
 		}
 		
-		if(presets.length > 1 && $(".nav-hide").length == 0){
-			$(".text-wrap .text-box:nth-child(2)").append('<div class="nav-hide"><span class="material-symbols-outlined">keyboard_double_arrow_up</span></div>');
+		if(presets.length > 1){
+			$(".nav-tabs").append('<div class="plus nav-item" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Plus 1" role="presentation"><span class="material-symbols-outlined nav-link" aria-selected="false" tabindex="-1" role="tab">exposure_plus_1</span></div>');
+		
+			const tooltip = new bootstrap.Tooltip($('.plus'));
 			
-			if(dots == "hidden"){
-				$(".nav-tabs").addClass("hide");
-				$(".nav-hide span").text("keyboard_double_arrow_down");
-				$(".nav-hide").css("transform", "translateY(-60px)");
+			if($(".nav-tabs .nav-link").length < 26){
+				$(".plus").on('click', function(){
+					extraTab();
+					$(this).children('span').blur();
+				});
 			}
-			else{
-				$(".nav-tabs").removeClass("hide");
-				$(".nav-hide span").text("keyboard_double_arrow_up");
-				$(".nav-hide").css("transform", "translateY(-4px)");
+			
+			if($(".nav").children().length > 1){
+				$(".nav-tabs").append('<div class="remove nav-item" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Remove Tabs"><span class="material-symbols-outlined nav-link">close_small</span></div>');
+				
+				const exampleEl = $('.remove')
+				const tooltip = new bootstrap.Tooltip(exampleEl);
+				
+				$(".nav-hide").on('click', function(){
+					navHide();
+				});
+				
+				$(".nav-link").on('click', function(){
+					var id = $(this).parents(".nav-item").index();
+				});
+				
+				$(".remove").on('click', function(){
+					removeTabs();
+				});
 			}
-		}
 			
-		$(".nav-tabs").append('<div class="plus nav-item" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Plus 1" role="presentation"><span class="material-symbols-outlined nav-link" aria-selected="false" tabindex="-1" role="tab">exposure_plus_1</span></div>');
-		
-		const tooltip = new bootstrap.Tooltip($('.plus'));
-		
-		if($(".nav-tabs .nav-link").length < 26){
-			$(".plus").on('click', function(){
-				extraTab();
-				$(this).children('span').blur();
-			});
-		}
-		
-		if(presets.length > 1 || $(".nav").children().length > 1){
-			$(".nav-tabs").append('<div class="remove nav-item" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Remove Tabs"><span class="material-symbols-outlined nav-link">close_small</span></div>');
+			if($(".nav-hide").length == 0){
+				$(".text-wrap .text-box:nth-child(2)").append('<div class="nav-hide"><span class="material-symbols-outlined">keyboard_double_arrow_up</span></div>');
 			
-			const exampleEl = $('.remove')
-			const tooltip = new bootstrap.Tooltip(exampleEl);
-			
-			$(".nav-hide").on('click', function(){
-				navHide();
-			});
-			
-			$(".nav-link").on('click', function(){
-				var id = $(this).parents(".nav-item").index();
-			});
-			
-			$(".remove").on('click', function(){
-				removeTabs();
-			});
+				if(dots == "hidden"){
+					$(".nav-tabs").addClass("hide");
+					$(".nav-hide span").text("keyboard_double_arrow_down");
+					$(".nav-hide").css("transform", "translateY(-60px)");
+				}
+				else{
+					$(".nav-tabs").removeClass("hide");
+					$(".nav-hide span").text("keyboard_double_arrow_up");
+					$(".nav-hide").css("transform", "translateY(-4px)");
+				}
+			}
 		}
 		
 		$('#load2 input[type="file"]').val("");
@@ -2434,13 +2456,13 @@ $(document).ready(function () {
 		
 		if(e.altKey && key === "Delete"){
 			e.preventDefault;
-			$(".mini video").remove();
+			$(".mini .plyr").remove();
 			$(".mini textarea").css("display", "block");
 		}
 		
 		if(e.ctrlKey && key === "Delete"){
 			e.preventDefault;
-			$(".active video").remove();
+			$(".active .plyr").remove();
 			$(".active textarea").css("display", "block");
 		}
 		
