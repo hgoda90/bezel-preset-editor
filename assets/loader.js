@@ -1,1135 +1,911 @@
-function dropfile(file) {
-	var extension = file.name.substr( (file.name.lastIndexOf('.') +1) ),
-		input = URL.createObjectURL(file);
-		
-	$(".mini .plyr").remove();
-		
-	if(extension == "mp4" && $(".mini video").length == 0){
-		$(".mini .screen-container").append('<video controls crossorigin playsinline id="player"></video>');
-	}
-	else if(extension == "mp3" && $(".mini audio").length == 0){
-		$(".mini .screen-container").append('<audio controls crossorigin playsinline id="player"></audio>');
-	}
-	
-	if(extension == "mp4" || extension == "mp3"){
-		const playing = (extension == "mp4") ? "video" : "audio";
-		
-		const player = new Plyr('#player', {autoplay: true,invertTime: false});
-		
-		window.player = player;
-		
-		player.source = {type: playing,sources: [{src: input,type: playing+'/'+extension}]};
-		
-		$(".mini textarea").css("display", "none");
+var p = 1;
+
+function loadFile(presets, files, id){
+	var reader = new FileReader();
+	reader.onload = function(e) {
+		var preset = e.target.result;
+		if(id == 1){
+			$(".text").val(preset.trim()).text(preset.trim());
+			uc[1]();
+		}
+		else{
+			$(".text"+(id+1)).val(preset.trim()).text(preset.trim());
+			uc[id+1]();
+		}
+	};
+
+	if($(".tab-pane.active").length == 1 && files == 1){
+		reader.readAsText(presets[0], "UTF-8");
+		$("#preset"+id).text(presets[0].name.replace(".params", "").replace(".slangp", ""));
 	}
 	else{
-	  var reader = new FileReader();
-	  reader.onload = function(e) {dropText.value = e.target.result;updateCode();};
-	  reader.readAsText(file, "UTF-8");
+		reader.readAsText(presets[id-1], "UTF-8");
+		$("#preset"+id).text(presets[id-1].name.replace(".params", "").replace(".slangp", ""));
 	}
 }
 
-function dropfile2(file) {
-	if(file.length == 1){
-		var extension = file[0].name.substr( (file[0].name.lastIndexOf('.') +1) ),
-			input = URL.createObjectURL(file[0]);
-			
-		$(".tab-pane.active .plyr").remove();
-		$(".tab-pane.active .preset-title").empty();
-			
-		if(extension == "mp4" && $(".tab-pane.active video").length == 0){
-			$("#dropText2").parents(".screen-container").append('<video controls crossorigin playsinline id="player2"></video>');
+function miniLoad(file){
+	var reader = new FileReader();
+	reader.onload = function(e) {
+		var preset = e.target.result;
+		$(".text").val(preset.trim()).text(preset.trim());
+		uc[1]();
+	};
+	reader.readAsText(file, "UTF-8");
+}
+
+function dropLoad(file, files, id){
+	var reader = new FileReader();
+	reader.onload = function(e) {
+		var preset = e.target.result;
+		$("#dropText"+(id+1)+" textarea").text(preset.trim()).val(preset.trim());
+		uc[id+1]();
+	};
+	reader.readAsText(file, "UTF-8");
+}
+
+function minitube(file){
+	let video = prompt("Enter Video Line Number", "1");
+
+	jQuery.get("youtube/"+file.name, function(data) {
+		data = data.trim().split("\n");
+
+		if(video != null && video > 0 && video <= data.length && video % 1 == 0){
+			if($("#player").length == 0){
+				$(".mini .screen-container").append('<div id="player" data-plyr-provider="youtube" data-plyr-embed-id="'+data[(video-1)]+'"></div>');
+
+				const player = new Plyr('#player', {autoplay: true,invertTime: false});
+				player.source = {type: 'video',sources: [{src: data[(video-1)],provider: 'youtube'}]};
+
+				function next(){
+					var nextVid = video++;
+
+					if(nextVid < data.length){
+						$(".mini .plyr").remove();
+
+						$(".mini .screen-container").append('<div id="player" data-plyr-provider="youtube" data-plyr-embed-id="'+data[(nextVid)]+'"></div>');
+						const player = new Plyr('#player', {autoplay: true,invertTime: false});
+						player.source = {type: 'video',sources: [{src: data[(nextVid)],provider: 'youtube'}]};
+
+						player.on('ready', (event) => {
+							$(".plyr").addClass("yt");
+
+							if(data.length > 1 && video < data.length){
+								$('.mini .plyr__controls .plyr__controls__item:first-child').after('<button class="plyr__controls__item plyr__control" id="next" type="button" data-plyr="next" aria-pressed="false" aria-label="Next"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M660-240v-480h80v480h-80Zm-440 0v-480l360 240-360 240Z"></path></svg><span class="label--not-pressed plyr__sr-only">Next</span></button>');
+							}
+
+							$(".mini #next").on("click", function(){
+								next();
+							});
+						});
+					}
+				}
+
+				player.on('ready', (event) => {
+					$(".plyr").addClass("yt");
+
+					if(data.length > 1 && video < data.length){
+						$('.mini .plyr__controls .plyr__controls__item:first-child').after('<button class="plyr__controls__item plyr__control" id="next" type="button" data-plyr="next" aria-pressed="false" aria-label="Next"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" 	width="24"><path d="M660-240v-480h80v480h-80Zm-440 0v-480l360 240-360 240Z"></path></svg><span class="label--not-pressed plyr__sr-only">Next</span></button>');
+					}
+
+					$(".mini #next").on("click", function(){
+						next();
+					});
+				});
+			}
+			$(".mini textarea").css("display", "none");
 		}
-		else if(extension == "mp3" && $(".tab-pane.active audio").length == 0){
-			$("#dropText2").parents(".screen-container").append('<audio controls crossorigin playsinline id="player2"></audio>');
-		}
-		
-		if(extension == "mp4" || extension == "mp3"){
-			const playing = (extension == "mp4") ? "video" : "audio";
-			
-			const player = new Plyr('#player2', {autoplay: true,invertTime: false});
-			
-			window.player = player;
-			
-			player.source = {type: playing,sources: [{src: input,type: playing+'/'+extension}]};
-			
+	});
+}
+
+function youtube(file, id){
+	let video = prompt("Enter Video Line Number", "1");
+	$(".tab-pane.active .preset-title").empty();
+
+	if(id == 2){
+		links = file[0].name;
+	}
+	else{
+		links = file.name;
+	}
+
+	jQuery.get("youtube/"+links, function(data) {
+		data = data.trim().split("\n");
+
+		if(video != null && video > 0 && video <= data.length && video % 1 == 0){
+			if($("#player"+id).length == 0){
+				$(".tab-pane.active .screen-container").append('<div id="player'+id+'" data-plyr-provider="youtube" data-plyr-embed-id="'+data[(video-1)]+'"></div>');
+
+				const player = new Plyr('#player'+id, {autoplay: true,invertTime: false});
+				player.source = {type: 'video',sources: [{src: data[(video-1)],provider: 'youtube'}]};
+
+				function next(){
+					var nextVid = video++;
+
+					if(nextVid < data.length){
+						$(".tab-pane.active .plyr").remove();
+
+						$(".tab-pane.active .screen-container").append('<div id="player'+id+'" data-plyr-provider="youtube" data-plyr-embed-id="'+data[(nextVid)]+'"></div>');
+						const player = new Plyr('#player'+id, {autoplay: true,invertTime: false});
+						player.source = {type: 'video',sources: [{src: data[(nextVid)],provider: 'youtube'}]};
+
+						player.on('ready', (event) => {
+							$(".plyr").addClass("yt");
+
+							if(data.length > 1 && video < data.length){
+								$('.tab-pane.active .plyr__controls .plyr__controls__item:first-child').after('<button class="plyr__controls__item plyr__control" id="next" type="button" data-plyr="next" aria-pressed="false" aria-label="Next"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M660-240v-480h80v480h-80Zm-440 0v-480l360 240-360 240Z"></path></svg><span class="label--not-pressed plyr__sr-only">Next</span></button>');
+							}
+
+							fetchJSONFile('https://www.youtube.com/oembed?url='+data[(video)], function(info){
+								$(".tab-pane.active .plyr__controls").prepend('<div class="next-up"><img src="'+info["thumbnail_url"]+'"><div class="next-info"><span>Next</span><span id="next-title">'+info["title"]+'</span><span id="user"><a href="'+info["author_url"]+'">'+info["author_name"]+'</a></span></div></div>')
+							});
+
+							$(".tab-pane.active #next").on("click", function(){
+								next();
+							});
+
+							$(".tab-pane.active #next").hover(function(){$(".next-up").addClass("show")}, function(){$(".next-up").removeClass("show")});
+						});
+					}
+				}
+
+				player.on('ready', (event) => {
+					$(".plyr").addClass("yt");
+
+					if(data.length > 1 && video < data.length){
+						$('.tab-pane.active .plyr__controls .plyr__controls__item:first-child').after('<button class="plyr__controls__item plyr__control" id="next" type="button" data-plyr="next" aria-pressed="false" aria-label="Next"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M660-240v-480h80v480h-80Zm-440 0v-480l360 240-360 240Z"></path></svg><span class="label--not-pressed plyr__sr-only">Next</span></button>');
+					}
+
+					fetchJSONFile('https://www.youtube.com/oembed?url='+data[(video)], function(info){
+						$(".tab-pane.active .plyr__controls").prepend('<div class="next-up"><img src="'+info["thumbnail_url"]+'"><div class="next-info"><span>Next</span><span id="next-title">'+info["title"]+'</span><span id="user"><a href="'+info["author_url"]+'">'+info["author_name"]+'</a></span></div></div>')
+					});
+
+					$(".tab-pane.active #next").on("click", function(){
+						next();
+					});
+
+					$(".tab-pane.active #next").hover(function(){$(".next-up").addClass("show")}, function(){$(".next-up").removeClass("show")});
+				});
+			}
 			$(".tab-pane.active textarea").css("display", "none");
-			
-			$(".nav-link").on('click', function(){
-				player.pause();
-			});
+		}
+	});
+}
+
+function video(id, file, files, extension, playing){
+	if(files == 1){
+		var input = URL.createObjectURL(file[0]);
+	}
+	else{
+		var input = URL.createObjectURL(file[id-1]);
+	}
+
+	if(extension == "mp3" && $(".tab-pane.active audio").length == 0){
+		$("#dropText"+id).append('<audio controls crossorigin playsinline id="player'+id+'"></audio>');
+	}
+	else if(extension == "mp4" && $(".tab-pane.active video").length == 0){
+		$("#dropText"+id).append('<video controls crossorigin playsinline id="player'+id+'"></video>');
+	}
+
+	const player = new Plyr('#player'+id, {autoplay: true,invertTime: false,ratio: "4:3"});
+	player.source = {type: playing,sources: [{src: input,type: playing+'/'+extension}]};
+
+	$(".nav-link").on('click', function(){
+		player.pause();
+	});
+}
+
+function dropFile(file) {
+	var extension = file.name.substr( (file.name.lastIndexOf('.') +1) ),
+			input = URL.createObjectURL(file);
+	
+	$(".mini .plyr, #player").remove();
+	
+	if(extension == "mp3" && $(".tab-pane.active audio").length == 0){
+		$(".mini .screen-container").append('<audio controls crossorigin playsinline id="player"></audio>');
+	}
+	else if(extension == "mp4" && $(".tab-pane.active video").length == 0){
+		$(".mini .screen-container").append('<video controls crossorigin playsinline id="player"></video>');
+	}
+	
+	if(extension == "mp4" || extension == "mp3" || extension == "txt"){
+		const playing = (extension == "mp4") ? "video" : (extension == "mp3") ? "audio" : "youtube";
+		
+		if(playing == "youtube"){
+			minitube(file);
 		}
 		else{
-			var reader = new FileReader();
-			 reader.onload = function(e) {dropText2.value;updateCode();updateCode2();};
-			 reader.readAsText(file[0], "UTF-8");
-			 $("#preset1").text(file[0].name.replace(".params", "").replace(".slangp", ""));
+			player.source = {type: playing,sources: [{src: input,type: playing+'/'+extension}]};
+		}
+		
+		$(".text").css("display", "none");
+	}
+	else{
+		miniLoad(file);
+	}
+}
+
+function dropFile2(file) {
+	if(file.length == 1){
+		var extension = file[0].name.substr( (file[0].name.lastIndexOf('.') +1) );
+		
+		if(extension == "mp4" || extension == "mp3" || extension == "txt"){
+			const playing = (extension == "mp4") ? "video" : (extension == "mp3") ? "audio" : "youtube";
+			
+			if(playing == "youtube"){
+				youtube(file, 2);
+			}
+			else{
+				video(2, file, 1, extension, playing);
+				
+				$(".tab-pane.active textarea").css("display", "none");
+			}
+		}
+		else{
+			dropLoad(file[0], 1, 1);
+			$("#preset1").text(file[0].name.replace(".params", "").replace(".slangp", ""));
 		}
 		
 		$(".nav-link.active").parents(".nav-item").removeClass("empty");
 	}
 	if(file.length == 2){
-		 var reader = new FileReader();
-		 reader.onload = function(e) {dropText3.value = e.target.result;updateCode3();};
-		 reader.readAsText(file[1], "UTF-8");
-		 $("#preset2").text(file[1].name.replace(".params", "").replace(".slangp", ""));
+		dropLoad(file[1], 2, 2);
+		$("#preset2").text(file[1].name.replace(".params", "").replace(".slangp", ""));
 	}
 	if(file.length == 3){
-		 var reader = new FileReader();
-		 reader.onload = function(e) {dropText4.value = e.target.result;updateCode4();};
-		 reader.readAsText(file[2], "UTF-8");
-		 $("#preset3").text(file[2].name.replace(".params", "").replace(".slangp", ""));
+		dropLoad(file[2], 3, 3);
+		$("#preset3").text(file[2].name.replace(".params", "").replace(".slangp", ""));
 	}
 	if(file.length == 4){
-		 var reader = new FileReader();
-		 reader.onload = function(e) {dropText5.value = e.target.result;updateCode5();};
-		 reader.readAsText(file[3], "UTF-8");
-		 $("#preset4").text(file[3].name.replace(".params", "").replace(".slangp", ""));
+		dropLoad(file[3], 4, 4);
+		$("#preset4").text(file[3].name.replace(".params", "").replace(".slangp", ""));
 	}
 	if(file.length == 5){
-		 var reader = new FileReader();
-		 reader.onload = function(e) {dropText6.value = e.target.result;updateCode6();};
-		 reader.readAsText(file[4], "UTF-8");
-		 $("#preset5").text(file[4].name.replace(".params", "").replace(".slangp", ""));
+		dropLoad(file[4], 5, 5);
+		$("#preset5").text(file[4].name.replace(".params", "").replace(".slangp", ""));
 	}
 	if(file.length == 6){
-		 var reader = new FileReader();
-		 reader.onload = function(e) {dropText7.value = e.target.result;updateCode7();};
-		 reader.readAsText(file[5], "UTF-8");
-		 $("#preset6").text(file[5].name.replace(".params", "").replace(".slangp", ""));
+		dropLoad(file[5], 6, 6);
+		$("#preset6").text(file[5].name.replace(".params", "").replace(".slangp", ""));
 	}
 	if(file.length == 7){
-		 var reader = new FileReader();
-		 reader.onload = function(e) {dropText8.value = e.target.result;updateCode8();};
-		 reader.readAsText(file[6], "UTF-8");
-		 $("#preset7").text(file[6].name.replace(".params", "").replace(".slangp", ""));
+		dropLoad(file[6], 7, 7);
+		$("#preset7").text(file[6].name.replace(".params", "").replace(".slangp", ""));
 	}
 	if(file.length == 8){
-		 var reader = new FileReader();
-		 reader.onload = function(e) {dropText9.value = e.target.result;updateCode9();};
-		 reader.readAsText(file[7], "UTF-8");
-		 $("#preset8").text(file[7].name.replace(".params", "").replace(".slangp", ""));
+		dropLoad(file[7], 8, 8);
+		$("#preset8").text(file[7].name.replace(".params", "").replace(".slangp", ""));
 	}
 	if(file.length == 9){
-		 var reader = new FileReader();
-		 reader.onload = function(e) {dropText10.value = e.target.result;updateCode10();};
-		 reader.readAsText(file[8], "UTF-8");
-		 $("#preset9").text(file[8].name.replace(".params", "").replace(".slangp", ""));
+		dropLoad(file[8], 9, 9);
+		$("#preset9").text(file[8].name.replace(".params", "").replace(".slangp", ""));
 	}
 	if(file.length == 10){
-		 var reader = new FileReader();
-		 reader.onload = function(e) {dropText11.value = e.target.result;updateCode11();};
-		 reader.readAsText(file[9], "UTF-8");
-		 $("#preset10").text(file[9].name.replace(".params", "").replace(".slangp", ""));
+		dropLoad(file[9], 10, 10);
+		$("#preset10").text(file[9].name.replace(".params", "").replace(".slangp", ""));
 	}
 	if(file.length == 11){
-		 var reader = new FileReader();
-		 reader.onload = function(e) {dropText12.value = e.target.result;updateCode12();};
-		 reader.readAsText(file[10], "UTF-8");
-		 $("#preset11").text(file[10].name.replace(".params", "").replace(".slangp", ""));
+		dropLoad(file[10], 11, 11);
+		$("#preset11").text(file[10].name.replace(".params", "").replace(".slangp", ""));
 	}
 	if(file.length == 12){
-		 var reader = new FileReader();
-		 reader.onload = function(e) {dropText13.value = e.target.result;updateCode13();};
-		 reader.readAsText(file[11], "UTF-8");
-		 $("#preset12").text(file[11].name.replace(".params", "").replace(".slangp", ""));
+		dropLoad(file[11], 12, 12);
+		$("#preset12").text(file[11].name.replace(".params", "").replace(".slangp", ""));
 	}
 	if(file.length == 13){
-		 var reader = new FileReader();
-		 reader.onload = function(e) {dropText14.value = e.target.result;updateCode14();};
-		 reader.readAsText(file[12], "UTF-8");
-		 $("#preset13").text(file[12].name.replace(".params", "").replace(".slangp", ""));
+		dropLoad(file[12], 13, 13);
+		$("#preset13").text(file[12].name.replace(".params", "").replace(".slangp", ""));
 	}
 	if(file.length == 14){
-		 var reader = new FileReader();
-		 reader.onload = function(e) {dropText15.value = e.target.result;updateCode15();};
-		 reader.readAsText(file[13], "UTF-8");
-		 $("#preset14").text(file[13].name.replace(".params", "").replace(".slangp", ""));
+		dropLoad(file[13], 14, 14);
+		$("#preset14").text(file[13].name.replace(".params", "").replace(".slangp", ""));
 	}
 	if(file.length == 15){
-		 var reader = new FileReader();
-		 reader.onload = function(e) {dropText16.value = e.target.result;updateCode16();};
-		 reader.readAsText(file[14], "UTF-8");
-		 $("#preset15").text(file[14].name.replace(".params", "").replace(".slangp", ""));
+		dropLoad(file[14], 15, 15);
+		$("#preset15").text(file[14].name.replace(".params", "").replace(".slangp", ""));
 	}
 	if(file.length == 16){
-		 var reader = new FileReader();
-		 reader.onload = function(e) {dropText17.value = e.target.result;updateCode17();};
-		 reader.readAsText(file[15], "UTF-8");
-		 $("#preset16").text(file[15].name.replace(".params", "").replace(".slangp", ""));
+		dropLoad(file[15], 16, 16);
+		$("#preset16").text(file[15].name.replace(".params", "").replace(".slangp", ""));
 	}
 	if(file.length == 17){
-		 var reader = new FileReader();
-		 reader.onload = function(e) {dropText18.value = e.target.result;updateCode18();};
-		 reader.readAsText(file[16], "UTF-8");
-		 $("#preset17").text(file[16].name.replace(".params", "").replace(".slangp", ""));
+		dropLoad(file[16], 17, 17);
+		$("#preset17").text(file[16].name.replace(".params", "").replace(".slangp", ""));
 	}
 	if(file.length == 18){
-		 var reader = new FileReader();
-		 reader.onload = function(e) {dropText19.value = e.target.result;updateCode19();};
-		 reader.readAsText(file[17], "UTF-8");
-		 $("#preset18").text(file[17].name.replace(".params", "").replace(".slangp", ""));
+		dropLoad(file[17], 18, 18);
+		$("#preset18").text(file[17].name.replace(".params", "").replace(".slangp", ""));
 	}
 	if(file.length == 19){
-		 var reader = new FileReader();
-		 reader.onload = function(e) {dropText20.value = e.target.result;updateCode20();};
-		 reader.readAsText(file[18], "UTF-8");
-		 $("#preset19").text(file[18].name.replace(".params", "").replace(".slangp", ""));
+		dropLoad(file[18], 19, 19);
+		$("#preset19").text(file[18].name.replace(".params", "").replace(".slangp", ""));
 	}
 	if(file.length == 20){
-		 var reader = new FileReader();
-		 reader.onload = function(e) {dropText21.value = e.target.result;updateCode21();};
-		 reader.readAsText(file[19], "UTF-8");
-		 $("#preset20").text(file[19].name.replace(".params", "").replace(".slangp", ""));
+		dropLoad(file[19], 20, 20);
+		$("#preset20").text(file[19].name.replace(".params", "").replace(".slangp", ""));
 	}
 	if(file.length == 21){
-		 var reader = new FileReader();
-		 reader.onload = function(e) {dropText22.value = e.target.result;updateCode22();};
-		 reader.readAsText(file[20], "UTF-8");
-		 $("#preset21").text(file[20].name.replace(".params", "").replace(".slangp", ""));
+		dropLoad(file[20], 21, 21);
+		$("#preset21").text(file[20].name.replace(".params", "").replace(".slangp", ""));
 	}
 	if(file.length == 22){
-		 var reader = new FileReader();
-		 reader.onload = function(e) {dropText23.value = e.target.result;updateCode23();};
-		 reader.readAsText(file[21], "UTF-8");
-		 $("#preset22").text(file[21].name.replace(".params", "").replace(".slangp", ""));
+		dropLoad(file[21], 22, 22);
+		$("#preset22").text(file[21].name.replace(".params", "").replace(".slangp", ""));
 	}
 	if(file.length == 23){
-		 var reader = new FileReader();
-		 reader.onload = function(e) {dropText24.value = e.target.result;updateCode24();};
-		 reader.readAsText(file[22], "UTF-8");
-		 $("#preset23").text(file[22].name.replace(".params", "").replace(".slangp", ""));
+		dropLoad(file[22], 23, 23);
+		$("#preset23").text(file[22].name.replace(".params", "").replace(".slangp", ""));
 	}
 	if(file.length == 24){
-		 var reader = new FileReader();
-		 reader.onload = function(e) {dropText25.value = e.target.result;updateCode25();};
-		 reader.readAsText(file[23], "UTF-8");
-		 $("#preset24").text(file[23].name.replace(".params", "").replace(".slangp", ""));
+		dropLoad(file[23], 24, 24);
+		$("#preset24").text(file[23].name.replace(".params", "").replace(".slangp", ""));
 	}
 	
 	$(".nav").removeClass("empty");
 }
 
-function dropfile3(file) {
-  var extension = file.name.substr( (file.name.lastIndexOf('.') +1) ),
-		input = URL.createObjectURL(file);
-		
-	$(".tab-pane.active .plyr").remove();
-	$(".tab-pane.active .preset-title").empty();
-		
-	if(extension == "mp4" && $(".tab-pane.active video").length == 0){
-		$("#dropText3").parents(".screen-container").append('<video controls crossorigin playsinline id="player3"></video>');
-	}
-	else if(extension == "mp3" && $(".tab-pane.active audio").length == 0){
-		$("#dropText3").parents(".screen-container").append('<audio controls crossorigin playsinline id="player3"></audio>');
-	}
+function dropFile3(file) {
+	var extension = file.name.substr( (file.name.lastIndexOf('.') +1) );
 	
-	if(extension == "mp4" || extension == "mp3"){
-		const playing = (extension == "mp4") ? "video" : "audio";
+	if(extension == "mp4" || extension == "mp3" || extension == "txt"){
+		const playing = (extension == "mp4") ? "video" : (extension == "mp3") ? "audio" : "youtube";
 		
-		const player = new Plyr('#player3', {autoplay: true,invertTime: false});
-		
-		window.player = player;
-		
-		player.source = {type: playing,sources: [{src: input,type: playing+'/'+extension}]};
-		
-		$(".tab-pane.active textarea").css("display", "none");
+		if(playing == "youtube"){
+			youtube(file, 3);
+		}
+		else{
+			video(3, file, 1, extension, playing);
 			
-		$(".nav-link").on('click', function(){
-			player.pause();
-		});
+			$(".tab-pane.active textarea").css("display", "none");
+		}
 	}
-	else{  
-	  var reader = new FileReader();
-	  reader.onload = function(e) {dropText4.value = e.target.result;updateCode4();};
-	  reader.readAsText(file, "UTF-8");
-	  $("#preset2").text(file.name.replace(".params", "").replace(".slangp", ""));
-  }
+	else{
+		dropLoad(file, 1, 3);
+		$("#preset3").text(file.name.replace(".params", "").replace(".slangp", ""));
+	}
 	
 	$(".nav-link.active").parents(".nav-item").removeClass("empty");
 }
 
-function dropfile4(file) {
-  var extension = file.name.substr( (file.name.lastIndexOf('.') +1) ),
-		input = URL.createObjectURL(file);
+function dropFile4(file) {
+	var extension = file.name.substr( (file.name.lastIndexOf('.') +1) );
+	
+	if(extension == "mp4" || extension == "mp3" || extension == "txt"){
+		const playing = (extension == "mp4") ? "video" : (extension == "mp3") ? "audio" : "youtube";
 		
-	$(".tab-pane.active .plyr").remove();
-	$(".tab-pane.active .preset-title").empty();
-		
-	if(extension == "mp4" && $(".tab-pane.active video").length == 0){
-		$("#dropText4").parents(".screen-container").append('<video controls crossorigin playsinline id="player4"></video>');
+		if(playing == "youtube"){
+			youtube(file, 4);
+		}
+		else{
+			video(4, file, 1, extension, playing);
+			
+			$(".tab-pane.active textarea").css("display", "none");
+		}
 	}
-	else if(extension == "mp3" && $(".tab-pane.active audio").length == 0){
-		$("#dropText4").parents(".screen-container").append('<audio controls crossorigin playsinline id="player4"></audio>');
+	else{
+		dropLoad(file, 1, 4);
+		$("#preset4").text(file.name.replace(".params", "").replace(".slangp", ""));
 	}
 	
-	if(extension == "mp4" || extension == "mp3"){
-		const playing = (extension == "mp4") ? "video" : "audio";
-		
-		const player = new Plyr('#player4', {autoplay: true,invertTime: false});
-		
-		window.player = player;
-		
-		player.source = {type: playing,sources: [{src: input,type: playing+'/'+extension}]};
-		
-		$(".tab-pane.active textarea").css("display", "none");
-			
-		$(".nav-link").on('click', function(){
-			player.pause();
-		});
-	}
-	else{  
-	  var reader = new FileReader();
-	  reader.onload = function(e) {dropText4.value = e.target.result;updateCode4();};
-	  reader.readAsText(file, "UTF-8");
-	  $("#preset3").text(file.name.replace(".params", "").replace(".slangp", ""));
-  }
-  
 	$(".nav-link.active").parents(".nav-item").removeClass("empty");
 }
 
-function dropfile5(file) {
-  var extension = file.name.substr( (file.name.lastIndexOf('.') +1) ),
-		input = URL.createObjectURL(file);
+function dropFile5(file) {
+	var extension = file.name.substr( (file.name.lastIndexOf('.') +1) );
+	
+	if(extension == "mp4" || extension == "mp3" || extension == "txt"){
+		const playing = (extension == "mp4") ? "video" : (extension == "mp3") ? "audio" : "youtube";
 		
-	$(".tab-pane.active .plyr").remove();
-	$(".tab-pane.active .preset-title").empty();
-		
-	if(extension == "mp4" && $(".tab-pane.active video").length == 0){
-		$("#dropText5").parents(".screen-container").append('<video controls crossorigin playsinline id="player5"></video>');
+		if(playing == "youtube"){
+			youtube(file, 5);
+		}
+		else{
+			video(5, file, 1, extension, playing);
+			
+			$(".tab-pane.active textarea").css("display", "none");
+		}
 	}
-	else if(extension == "mp3" && $(".tab-pane.active audio").length == 0){
-		$("#dropText5").parents(".screen-container").append('<audio controls crossorigin playsinline id="player5"></audio>');
+	else{
+		dropLoad(file, 1, 5);
+		$("#preset5").text(file.name.replace(".params", "").replace(".slangp", ""));
 	}
 	
-	if(extension == "mp4" || extension == "mp3"){
-		const playing = (extension == "mp4") ? "video" : "audio";
-		
-		const player = new Plyr('#player5', {autoplay: true,invertTime: false});
-		
-		window.player = player;
-		
-		player.source = {type: playing,sources: [{src: input,type: playing+'/'+extension}]};
-		
-		$(".tab-pane.active textarea").css("display", "none");
-			
-		$(".nav-link").on('click', function(){
-			player.pause();
-		});
-	}
-	else{  
-	  var reader = new FileReader();
-	  reader.onload = function(e) {dropText5.value = e.target.result;updateCode5();};
-	  reader.readAsText(file, "UTF-8");
-	  $("#preset4").text(file.name.replace(".params", "").replace(".slangp", ""));
-  }
-  
 	$(".nav-link.active").parents(".nav-item").removeClass("empty");
 }
 
-function dropfile6(file) {
-  var extension = file.name.substr( (file.name.lastIndexOf('.') +1) ),
-		input = URL.createObjectURL(file);
+function dropFile6(file) {
+	var extension = file.name.substr( (file.name.lastIndexOf('.') +1) );
+	
+	if(extension == "mp4" || extension == "mp3" || extension == "txt"){
+		const playing = (extension == "mp4") ? "video" : (extension == "mp3") ? "audio" : "youtube";
 		
-	$(".tab-pane.active .plyr").remove();
-	$(".tab-pane.active .preset-title").empty();
-		
-	if(extension == "mp4" && $(".tab-pane.active video").length == 0){
-		$("#dropText6").parents(".screen-container").append('<video controls crossorigin playsinline id="player6"></video>');
+		if(playing == "youtube"){
+			youtube(file, 6);
+		}
+		else{
+			video(6, file, 1, extension, playing);
+			
+			$(".tab-pane.active textarea").css("display", "none");
+		}
 	}
-	else if(extension == "mp3" && $(".tab-pane.active audio").length == 0){
-		$("#dropText6").parents(".screen-container").append('<audio controls crossorigin playsinline id="player6"></audio>');
+	else{
+		dropLoad(file, 1, 6);
+		$("#preset6").text(file.name.replace(".params", "").replace(".slangp", ""));
 	}
 	
-	if(extension == "mp4" || extension == "mp3"){
-		const playing = (extension == "mp4") ? "video" : "audio";
-		
-		const player = new Plyr('#player6', {autoplay: true,invertTime: false});
-		
-		window.player = player;
-		
-		player.source = {type: playing,sources: [{src: input,type: playing+'/'+extension}]};
-		
-		$(".tab-pane.active textarea").css("display", "none");
-			
-		$(".nav-link").on('click', function(){
-			player.pause();
-		});
-	}
-	else{  
-	  var reader = new FileReader();
-	  reader.onload = function(e) {dropText6.value = e.target.result;updateCode6();};
-	  reader.readAsText(file, "UTF-8");
-	  $("#preset5").text(file.name.replace(".params", "").replace(".slangp", ""));
-  }
-  
 	$(".nav-link.active").parents(".nav-item").removeClass("empty");
 }
 
-function dropfile7(file) {
-  var extension = file.name.substr( (file.name.lastIndexOf('.') +1) ),
-		input = URL.createObjectURL(file);
+function dropFile7(file) {
+	var extension = file.name.substr( (file.name.lastIndexOf('.') +1) );
+	
+	if(extension == "mp4" || extension == "mp3" || extension == "txt"){
+		const playing = (extension == "mp4") ? "video" : (extension == "mp3") ? "audio" : "youtube";
 		
-	$(".tab-pane.active .plyr").remove();
-	$(".tab-pane.active .preset-title").empty();
-		
-	if(extension == "mp4" && $(".tab-pane.active video").length == 0){
-		$("#dropText7").parents(".screen-container").append('<video controls crossorigin playsinline id="player7"></video>');
+		if(playing == "youtube"){
+			youtube(file, 7);
+		}
+		else{
+			video(7, file, 1, extension, playing);
+			
+			$(".tab-pane.active textarea").css("display", "none");
+		}
 	}
-	else if(extension == "mp3" && $(".tab-pane.active audio").length == 0){
-		$("#dropText7").parents(".screen-container").append('<audio controls crossorigin playsinline id="player7"></audio>');
+	else{
+		dropLoad(file, 1, 7);
+		$("#preset7").text(file.name.replace(".params", "").replace(".slangp", ""));
 	}
 	
-	if(extension == "mp4" || extension == "mp3"){
-		const playing = (extension == "mp4") ? "video" : "audio";
-		
-		const player = new Plyr('#player7', {autoplay: true,invertTime: false});
-		
-		window.player = player;
-		
-		player.source = {type: playing,sources: [{src: input,type: playing+'/'+extension}]};
-		
-		$(".tab-pane.active textarea").css("display", "none");
-			
-		$(".nav-link").on('click', function(){
-			player.pause();
-		});
-	}
-	else{  
-	  var reader = new FileReader();
-	  reader.onload = function(e) {dropText7.value = e.target.result;updateCode7();};
-	  reader.readAsText(file, "UTF-8");
-	  $("#preset6").text(file.name.replace(".params", "").replace(".slangp", ""));
-  }
-  
 	$(".nav-link.active").parents(".nav-item").removeClass("empty");
 }
 
-function dropfile8(file) {
-  var extension = file.name.substr( (file.name.lastIndexOf('.') +1) ),
-		input = URL.createObjectURL(file);
+function dropFile8(file) {
+	var extension = file.name.substr( (file.name.lastIndexOf('.') +1) );
+	
+	if(extension == "mp4" || extension == "mp3" || extension == "txt"){
+		const playing = (extension == "mp4") ? "video" : (extension == "mp3") ? "audio" : "youtube";
 		
-	$(".tab-pane.active .plyr").remove();
-	$(".tab-pane.active .preset-title").empty();
-		
-	if(extension == "mp4" && $(".tab-pane.active video").length == 0){
-		$("#dropText8").parents(".screen-container").append('<video controls crossorigin playsinline id="player8"></video>');
+		if(playing == "youtube"){
+			youtube(file, 8);
+		}
+		else{
+			video(8, file, 1, extension, playing);
+			
+			$(".tab-pane.active textarea").css("display", "none");
+		}
 	}
-	else if(extension == "mp3" && $(".tab-pane.active audio").length == 0){
-		$("#dropText8").parents(".screen-container").append('<audio controls crossorigin playsinline id="player8"></audio>');
+	else{
+		dropLoad(file, 1, 8);
+		$("#preset8").text(file.name.replace(".params", "").replace(".slangp", ""));
 	}
 	
-	if(extension == "mp4" || extension == "mp3"){
-		const playing = (extension == "mp4") ? "video" : "audio";
-		
-		const player = new Plyr('#player8', {autoplay: true,invertTime: false});
-		
-		window.player = player;
-		
-		player.source = {type: playing,sources: [{src: input,type: playing+'/'+extension}]};
-		
-		$(".tab-pane.active textarea").css("display", "none");
-			
-		$(".nav-link").on('click', function(){
-			player.pause();
-		});
-	}
-	else{  
-	  var reader = new FileReader();
-	  reader.onload = function(e) {dropText8.value = e.target.result;updateCode8();};
-	  reader.readAsText(file, "UTF-8");
-	  $("#preset7").text(file.name.replace(".params", "").replace(".slangp", ""));
-  }
-  
 	$(".nav-link.active").parents(".nav-item").removeClass("empty");
 }
 
-function dropfile9(file) {
-  var extension = file.name.substr( (file.name.lastIndexOf('.') +1) ),
-		input = URL.createObjectURL(file);
+function dropFile9(file) {
+	var extension = file.name.substr( (file.name.lastIndexOf('.') +1) );
+	
+	if(extension == "mp4" || extension == "mp3" || extension == "txt"){
+		const playing = (extension == "mp4") ? "video" : (extension == "mp3") ? "audio" : "youtube";
 		
-	$(".tab-pane.active .plyr").remove();
-	$(".tab-pane.active .preset-title").empty();
-		
-	if(extension == "mp4" && $(".tab-pane.active video").length == 0){
-		$("#dropText9").parents(".screen-container").append('<video controls crossorigin playsinline id="player9"></video>');
+		if(playing == "youtube"){
+			youtube(file, 9);
+		}
+		else{
+			video(9, file, 1, extension, playing);
+			
+			$(".tab-pane.active textarea").css("display", "none");
+		}
 	}
-	else if(extension == "mp3" && $(".tab-pane.active audio").length == 0){
-		$("#dropText9").parents(".screen-container").append('<audio controls crossorigin playsinline id="player9"></audio>');
+	else{
+		dropLoad(file, 1, 9);
+		$("#preset9").text(file.name.replace(".params", "").replace(".slangp", ""));
 	}
 	
-	if(extension == "mp4" || extension == "mp3"){
-		const playing = (extension == "mp4") ? "video" : "audio";
-		
-		const player = new Plyr('#player9', {autoplay: true,invertTime: false});
-		
-		window.player = player;
-		
-		player.source = {type: playing,sources: [{src: input,type: playing+'/'+extension}]};
-		
-		$(".tab-pane.active textarea").css("display", "none");
-			
-		$(".nav-link").on('click', function(){
-			player.pause();
-		});
-	}
-	else{  
-	  var reader = new FileReader();
-	  reader.onload = function(e) {dropText9.value = e.target.result;updateCode9();};
-	  reader.readAsText(file, "UTF-8");
-	  $("#preset8").text(file.name.replace(".params", "").replace(".slangp", ""));
-  }
-  
 	$(".nav-link.active").parents(".nav-item").removeClass("empty");
 }
 
-function dropfile10(file) {
-  var extension = file.name.substr( (file.name.lastIndexOf('.') +1) ),
-		input = URL.createObjectURL(file);
+function dropFile10(file) {
+	var extension = file.name.substr( (file.name.lastIndexOf('.') +1) );
+	
+	if(extension == "mp4" || extension == "mp3" || extension == "txt"){
+		const playing = (extension == "mp4") ? "video" : (extension == "mp3") ? "audio" : "youtube";
 		
-	$(".tab-pane.active .plyr").remove();
-	$(".tab-pane.active .preset-title").empty();
-		
-	if(extension == "mp4" && $(".tab-pane.active video").length == 0){
-		$("#dropText10").parents(".screen-container").append('<video controls crossorigin playsinline id="player10"></video>');
+		if(playing == "youtube"){
+			youtube(file, 10);
+		}
+		else{
+			video(10, file, 1, extension, playing);
+			
+			$(".tab-pane.active textarea").css("display", "none");
+		}
 	}
-	else if(extension == "mp3" && $(".tab-pane.active audio").length == 0){
-		$("#dropText10").parents(".screen-container").append('<audio controls crossorigin playsinline id="player10"></audio>');
+	else{
+		dropLoad(file, 1, 10);
+		$("#preset10").text(file.name.replace(".params", "").replace(".slangp", ""));
 	}
 	
-	if(extension == "mp4" || extension == "mp3"){
-		const playing = (extension == "mp4") ? "video" : "audio";
-		
-		const player = new Plyr('#player10', {autoplay: true,invertTime: false});
-		
-		window.player = player;
-		
-		player.source = {type: playing,sources: [{src: input,type: playing+'/'+extension}]};
-		
-		$(".tab-pane.active textarea").css("display", "none");
-			
-		$(".nav-link").on('click', function(){
-			player.pause();
-		});
-	}
-	else{  
-	  var reader = new FileReader();
-	  reader.onload = function(e) {dropText10.value = e.target.result;updateCode10();};
-	  reader.readAsText(file, "UTF-8");
-	  $("#preset9").text(file.name.replace(".params", "").replace(".slangp", ""));
-  }
-  
 	$(".nav-link.active").parents(".nav-item").removeClass("empty");
 }
 
-function dropfile11(file) {
-  var extension = file.name.substr( (file.name.lastIndexOf('.') +1) ),
-		input = URL.createObjectURL(file);
+function dropFile11(file) {
+	var extension = file.name.substr( (file.name.lastIndexOf('.') +1) );
+	
+	if(extension == "mp4" || extension == "mp3" || extension == "txt"){
+		const playing = (extension == "mp4") ? "video" : (extension == "mp11") ? "audio" : "youtube";
 		
-	$(".tab-pane.active .plyr").remove();
-	$(".tab-pane.active .preset-title").empty();
-		
-	if(extension == "mp4" && $(".tab-pane.active video").length == 0){
-		$("#dropText11").parents(".screen-container").append('<video controls crossorigin playsinline id="player11"></video>');
+		if(playing == "youtube"){
+			youtube(file, 11);
+		}
+		else{
+			video(11, file, 1, extension, playing);
+			
+			$(".tab-pane.active textarea").css("display", "none");
+		}
 	}
-	else if(extension == "mp3" && $(".tab-pane.active audio").length == 0){
-		$("#dropText11").parents(".screen-container").append('<audio controls crossorigin playsinline id="player11"></audio>');
+	else{
+		dropLoad(file, 1, 11);
+		$("#preset11").text(file.name.replace(".params", "").replace(".slangp", ""));
 	}
 	
-	if(extension == "mp4" || extension == "mp3"){
-		const playing = (extension == "mp4") ? "video" : "audio";
-		
-		const player = new Plyr('#player11', {autoplay: true,invertTime: false});
-		
-		window.player = player;
-		
-		player.source = {type: playing,sources: [{src: input,type: playing+'/'+extension}]};
-		
-		$(".tab-pane.active textarea").css("display", "none");
-			
-		$(".nav-link").on('click', function(){
-			player.pause();
-		});
-	}
-	else{  
-	  var reader = new FileReader();
-	  reader.onload = function(e) {dropText11.value = e.target.result;updateCode11();};
-	  reader.readAsText(file, "UTF-8");
-	  $("#preset10").text(file.name.replace(".params", "").replace(".slangp", ""));
-  }
-  
 	$(".nav-link.active").parents(".nav-item").removeClass("empty");
 }
 
-function dropfile12(file) {
-  var extension = file.name.substr( (file.name.lastIndexOf('.') +1) ),
-		input = URL.createObjectURL(file);
+function dropFile12(file) {
+	var extension = file.name.substr( (file.name.lastIndexOf('.') +1) );
+	
+	if(extension == "mp4" || extension == "mp3" || extension == "txt"){
+		const playing = (extension == "mp4") ? "video" : (extension == "mp3") ? "audio" : "youtube";
 		
-	$(".tab-pane.active .plyr").remove();
-	$(".tab-pane.active .preset-title").empty();
-		
-	if(extension == "mp4" && $(".tab-pane.active video").length == 0){
-		$("#dropText12").parents(".screen-container").append('<video controls crossorigin playsinline id="player12"></video>');
+		if(playing == "youtube"){
+			youtube(file, 12);
+		}
+		else{
+			video(12, file, 1, extension, playing);
+			
+			$(".tab-pane.active textarea").css("display", "none");
+		}
 	}
-	else if(extension == "mp3" && $(".tab-pane.active audio").length == 0){
-		$("#dropText12").parents(".screen-container").append('<audio controls crossorigin playsinline id="player12"></audio>');
+	else{
+		dropLoad(file, 1, 12);
+		$("#preset12").text(file.name.replace(".params", "").replace(".slangp", ""));
 	}
 	
-	if(extension == "mp4" || extension == "mp3"){
-		const playing = (extension == "mp4") ? "video" : "audio";
-		
-		const player = new Plyr('#player12', {autoplay: true,invertTime: false});
-		
-		window.player = player;
-		
-		player.source = {type: playing,sources: [{src: input,type: playing+'/'+extension}]};
-		
-		$(".tab-pane.active textarea").css("display", "none");
-			
-		$(".nav-link").on('click', function(){
-			player.pause();
-		});
-	}
-	else{  
-	  var reader = new FileReader();
-	  reader.onload = function(e) {dropText12.value = e.target.result;updateCode12();};
-	  reader.readAsText(file, "UTF-8");
-	  $("#preset11").text(file.name.replace(".params", "").replace(".slangp", ""));
-  }
-  
 	$(".nav-link.active").parents(".nav-item").removeClass("empty");
 }
 
-function dropfile13(file) {
-  var extension = file.name.substr( (file.name.lastIndexOf('.') +1) ),
-		input = URL.createObjectURL(file);
+function dropFile13(file) {
+	var extension = file.name.substr( (file.name.lastIndexOf('.') +1) );
+	
+	if(extension == "mp4" || extension == "mp3" || extension == "txt"){
+		const playing = (extension == "mp4") ? "video" : (extension == "mp3") ? "audio" : "youtube";
 		
-	$(".tab-pane.active .plyr").remove();
-	$(".tab-pane.active .preset-title").empty();
-		
-	if(extension == "mp4" && $(".tab-pane.active video").length == 0){
-		$("#dropText13").parents(".screen-container").append('<video controls crossorigin playsinline id="player13"></video>');
+		if(playing == "youtube"){
+			youtube(file, 13);
+		}
+		else{
+			video(13, file, 1, extension, playing);
+			
+			$(".tab-pane.active textarea").css("display", "none");
+		}
 	}
-	else if(extension == "mp3" && $(".tab-pane.active audio").length == 0){
-		$("#dropText13").parents(".screen-container").append('<audio controls crossorigin playsinline id="player13"></audio>');
+	else{
+		dropLoad(file, 1, 13);
+		$("#preset13").text(file.name.replace(".params", "").replace(".slangp", ""));
 	}
 	
-	if(extension == "mp4" || extension == "mp3"){
-		const playing = (extension == "mp4") ? "video" : "audio";
-		
-		const player = new Plyr('#player13', {autoplay: true,invertTime: false});
-		
-		window.player = player;
-		
-		player.source = {type: playing,sources: [{src: input,type: playing+'/'+extension}]};
-		
-		$(".tab-pane.active textarea").css("display", "none");
-			
-		$(".nav-link").on('click', function(){
-			player.pause();
-		});
-	}
-	else{  
-	  var reader = new FileReader();
-	  reader.onload = function(e) {dropText13.value = e.target.result;updateCode13();};
-	  reader.readAsText(file, "UTF-8");
-	  $("#preset12").text(file.name.replace(".params", "").replace(".slangp", ""));
-  }
-  
 	$(".nav-link.active").parents(".nav-item").removeClass("empty");
 }
 
-function dropfile14(file) {
-  var extension = file.name.substr( (file.name.lastIndexOf('.') +1) ),
-		input = URL.createObjectURL(file);
+function dropFile14(file) {
+	var extension = file.name.substr( (file.name.lastIndexOf('.') +1) );
+	
+	if(extension == "mp4" || extension == "mp3" || extension == "txt"){
+		const playing = (extension == "mp4") ? "video" : (extension == "mp3") ? "audio" : "youtube";
 		
-	$(".tab-pane.active .plyr").remove();
-	$(".tab-pane.active .preset-title").empty();
-		
-	if(extension == "mp4" && $(".tab-pane.active video").length == 0){
-		$("#dropText14").parents(".screen-container").append('<video controls crossorigin playsinline id="player14"></video>');
+		if(playing == "youtube"){
+			youtube(file, 14);
+		}
+		else{
+			video(14, file, 1, extension, playing);
+			
+			$(".tab-pane.active textarea").css("display", "none");
+		}
 	}
-	else if(extension == "mp3" && $(".tab-pane.active audio").length == 0){
-		$("#dropText14").parents(".screen-container").append('<audio controls crossorigin playsinline id="player14"></audio>');
+	else{
+		dropLoad(file, 1, 14);
+		$("#preset14").text(file.name.replace(".params", "").replace(".slangp", ""));
 	}
 	
-	if(extension == "mp4" || extension == "mp3"){
-		const playing = (extension == "mp4") ? "video" : "audio";
-		
-		const player = new Plyr('#player14', {autoplay: true,invertTime: false});
-		
-		window.player = player;
-		
-		player.source = {type: playing,sources: [{src: input,type: playing+'/'+extension}]};
-		
-		$(".tab-pane.active textarea").css("display", "none");
-			
-		$(".nav-link").on('click', function(){
-			player.pause();
-		});
-	}
-	else{  
-	  var reader = new FileReader();
-	  reader.onload = function(e) {dropText14.value = e.target.result;updateCode14();};
-	  reader.readAsText(file, "UTF-8");
-	  $("#preset13").text(file.name.replace(".params", "").replace(".slangp", ""));
-  }
-  
 	$(".nav-link.active").parents(".nav-item").removeClass("empty");
 }
 
-function dropfile15(file) {
-  var extension = file.name.substr( (file.name.lastIndexOf('.') +1) ),
-		input = URL.createObjectURL(file);
+function dropFile15(file) {
+	var extension = file.name.substr( (file.name.lastIndexOf('.') +1) );
+	
+	if(extension == "mp4" || extension == "mp3" || extension == "txt"){
+		const playing = (extension == "mp4") ? "video" : (extension == "mp3") ? "audio" : "youtube";
 		
-	$(".tab-pane.active .plyr").remove();
-	$(".tab-pane.active .preset-title").empty();
-		
-	if(extension == "mp4" && $(".tab-pane.active video").length == 0){
-		$("#dropText15").parents(".screen-container").append('<video controls crossorigin playsinline id="player15"></video>');
+		if(playing == "youtube"){
+			youtube(file, 15);
+		}
+		else{
+			video(15, file, 1, extension, playing);
+			
+			$(".tab-pane.active textarea").css("display", "none");
+		}
 	}
-	else if(extension == "mp3" && $(".tab-pane.active audio").length == 0){
-		$("#dropText15").parents(".screen-container").append('<audio controls crossorigin playsinline id="player15"></audio>');
+	else{
+		dropLoad(file, 1, 15);
+		$("#preset15").text(file.name.replace(".params", "").replace(".slangp", ""));
 	}
 	
-	if(extension == "mp4" || extension == "mp3"){
-		const playing = (extension == "mp4") ? "video" : "audio";
-		
-		const player = new Plyr('#player15', {autoplay: true,invertTime: false});
-		
-		window.player = player;
-		
-		player.source = {type: playing,sources: [{src: input,type: playing+'/'+extension}]};
-		
-		$(".tab-pane.active textarea").css("display", "none");
-			
-		$(".nav-link").on('click', function(){
-			player.pause();
-		});
-	}
-	else{  
-	  var reader = new FileReader();
-	  reader.onload = function(e) {dropText15.value = e.target.result;updateCode15();};
-	  reader.readAsText(file, "UTF-8");
-	  $("#preset14").text(file.name.replace(".params", "").replace(".slangp", ""));
-  }
-  
 	$(".nav-link.active").parents(".nav-item").removeClass("empty");
 }
 
-function dropfile16(file) {
-  var extension = file.name.substr( (file.name.lastIndexOf('.') +1) ),
-		input = URL.createObjectURL(file);
+function dropFile16(file) {
+	var extension = file.name.substr( (file.name.lastIndexOf('.') +1) );
+	
+	if(extension == "mp4" || extension == "mp3" || extension == "txt"){
+		const playing = (extension == "mp4") ? "video" : (extension == "mp3") ? "audio" : "youtube";
 		
-	$(".tab-pane.active .plyr").remove();
-	$(".tab-pane.active .preset-title").empty();
-		
-	if(extension == "mp4" && $(".tab-pane.active video").length == 0){
-		$("#dropText16").parents(".screen-container").append('<video controls crossorigin playsinline id="player16"></video>');
+		if(playing == "youtube"){
+			youtube(file, 16);
+		}
+		else{
+			video(16, file, 1, extension, playing);
+			
+			$(".tab-pane.active textarea").css("display", "none");
+		}
 	}
-	else if(extension == "mp3" && $(".tab-pane.active audio").length == 0){
-		$("#dropText16").parents(".screen-container").append('<audio controls crossorigin playsinline id="player16"></audio>');
+	else{
+		dropLoad(file, 1, 16);
+		$("#preset16").text(file.name.replace(".params", "").replace(".slangp", ""));
 	}
 	
-	if(extension == "mp4" || extension == "mp3"){
-		const playing = (extension == "mp4") ? "video" : "audio";
-		
-		const player = new Plyr('#player16', {autoplay: true,invertTime: false});
-		
-		window.player = player;
-		
-		player.source = {type: playing,sources: [{src: input,type: playing+'/'+extension}]};
-		
-		$(".tab-pane.active textarea").css("display", "none");
-			
-		$(".nav-link").on('click', function(){
-			player.pause();
-		});
-	}
-	else{  
-	  var reader = new FileReader();
-	  reader.onload = function(e) {dropText16.value = e.target.result;updateCode16();};
-	  reader.readAsText(file, "UTF-8");
-	  $("#preset15").text(file.name.replace(".params", "").replace(".slangp", ""));
-  }
-  
 	$(".nav-link.active").parents(".nav-item").removeClass("empty");
 }
 
-function dropfile17(file) {
-  var extension = file.name.substr( (file.name.lastIndexOf('.') +1) ),
-		input = URL.createObjectURL(file);
+function dropFile17(file) {
+	var extension = file.name.substr( (file.name.lastIndexOf('.') +1) );
+	
+	if(extension == "mp4" || extension == "mp3" || extension == "txt"){
+		const playing = (extension == "mp4") ? "video" : (extension == "mp3") ? "audio" : "youtube";
 		
-	$(".tab-pane.active .plyr").remove();
-	$(".tab-pane.active .preset-title").empty();
-		
-	if(extension == "mp4" && $(".tab-pane.active video").length == 0){
-		$("#dropText17").parents(".screen-container").append('<video controls crossorigin playsinline id="player17"></video>');
+		if(playing == "youtube"){
+			youtube(file, 17);
+		}
+		else{
+			video(17, file, 1, extension, playing);
+			
+			$(".tab-pane.active textarea").css("display", "none");
+		}
 	}
-	else if(extension == "mp3" && $(".tab-pane.active audio").length == 0){
-		$("#dropText17").parents(".screen-container").append('<audio controls crossorigin playsinline id="player17"></audio>');
+	else{
+		dropLoad(file, 1, 17);
+		$("#preset17").text(file.name.replace(".params", "").replace(".slangp", ""));
 	}
 	
-	if(extension == "mp4" || extension == "mp3"){
-		const playing = (extension == "mp4") ? "video" : "audio";
-		
-		const player = new Plyr('#player17', {autoplay: true,invertTime: false});
-		
-		window.player = player;
-		
-		player.source = {type: playing,sources: [{src: input,type: playing+'/'+extension}]};
-		
-		$(".tab-pane.active textarea").css("display", "none");
-			
-		$(".nav-link").on('click', function(){
-			player.pause();
-		});
-	}
-	else{  
-	  var reader = new FileReader();
-	  reader.onload = function(e) {dropText17.value = e.target.result;updateCode17();};
-	  reader.readAsText(file, "UTF-8");
-	  $("#preset16").text(file.name.replace(".params", "").replace(".slangp", ""));
-  }
-  
 	$(".nav-link.active").parents(".nav-item").removeClass("empty");
 }
 
-function dropfile18(file) {
-  var extension = file.name.substr( (file.name.lastIndexOf('.') +1) ),
-		input = URL.createObjectURL(file);
+function dropFile18(file) {
+	var extension = file.name.substr( (file.name.lastIndexOf('.') +1) );
+	
+	if(extension == "mp4" || extension == "mp3" || extension == "txt"){
+		const playing = (extension == "mp4") ? "video" : (extension == "mp3") ? "audio" : "youtube";
 		
-	$(".tab-pane.active .plyr").remove();
-	$(".tab-pane.active .preset-title").empty();
-		
-	if(extension == "mp4" && $(".tab-pane.active video").length == 0){
-		$("#dropText18").parents(".screen-container").append('<video controls crossorigin playsinline id="player18"></video>');
+		if(playing == "youtube"){
+			youtube(file, 18);
+		}
+		else{
+			video(18, file, 1, extension, playing);
+			
+			$(".tab-pane.active textarea").css("display", "none");
+		}
 	}
-	else if(extension == "mp3" && $(".tab-pane.active audio").length == 0){
-		$("#dropText18").parents(".screen-container").append('<audio controls crossorigin playsinline id="player18"></audio>');
+	else{
+		dropLoad(file, 1, 18);
+		$("#preset18").text(file.name.replace(".params", "").replace(".slangp", ""));
 	}
 	
-	if(extension == "mp4" || extension == "mp3"){
-		const playing = (extension == "mp4") ? "video" : "audio";
-		
-		const player = new Plyr('#player18', {autoplay: true,invertTime: false});
-		
-		window.player = player;
-		
-		player.source = {type: playing,sources: [{src: input,type: playing+'/'+extension}]};
-		
-		$(".tab-pane.active textarea").css("display", "none");
-			
-		$(".nav-link").on('click', function(){
-			player.pause();
-		});
-	}
-	else{  
-	  var reader = new FileReader();
-	  reader.onload = function(e) {dropText18.value = e.target.result;updateCode18();};
-	  reader.readAsText(file, "UTF-8");
-	  $("#preset17").text(file.name.replace(".params", "").replace(".slangp", ""));
-  }
-  
 	$(".nav-link.active").parents(".nav-item").removeClass("empty");
 }
 
-function dropfile19(file) {
-  var extension = file.name.substr( (file.name.lastIndexOf('.') +1) ),
-		input = URL.createObjectURL(file);
+function dropFile19(file) {
+	var extension = file.name.substr( (file.name.lastIndexOf('.') +1) );
+	
+	if(extension == "mp4" || extension == "mp3" || extension == "txt"){
+		const playing = (extension == "mp4") ? "video" : (extension == "mp3") ? "audio" : "youtube";
 		
-	$(".tab-pane.active .plyr").remove();
-	$(".tab-pane.active .preset-title").empty();
-		
-	if(extension == "mp4" && $(".tab-pane.active video").length == 0){
-		$("#dropText19").parents(".screen-container").append('<video controls crossorigin playsinline id="player19"></video>');
+		if(playing == "youtube"){
+			youtube(file, 19);
+		}
+		else{
+			video(19, file, 1, extension, playing);
+			
+			$(".tab-pane.active textarea").css("display", "none");
+		}
 	}
-	else if(extension == "mp3" && $(".tab-pane.active audio").length == 0){
-		$("#dropText19").parents(".screen-container").append('<audio controls crossorigin playsinline id="player19"></audio>');
+	else{
+		dropLoad(file, 1, 19);
+		$("#preset19").text(file.name.replace(".params", "").replace(".slangp", ""));
 	}
 	
-	if(extension == "mp4" || extension == "mp3"){
-		const playing = (extension == "mp4") ? "video" : "audio";
-		
-		const player = new Plyr('#player19', {autoplay: true,invertTime: false});
-		
-		window.player = player;
-		
-		player.source = {type: playing,sources: [{src: input,type: playing+'/'+extension}]};
-		
-		$(".tab-pane.active textarea").css("display", "none");
-			
-		$(".nav-link").on('click', function(){
-			player.pause();
-		});
-	}
-	else{  
-	  var reader = new FileReader();
-	  reader.onload = function(e) {dropText19.value = e.target.result;updateCode19();};
-	  reader.readAsText(file, "UTF-8");
-	  $("#preset18").text(file.name.replace(".params", "").replace(".slangp", ""));
-  }
-  
 	$(".nav-link.active").parents(".nav-item").removeClass("empty");
 }
 
-function dropfile20(file) {
-  var extension = file.name.substr( (file.name.lastIndexOf('.') +1) ),
-		input = URL.createObjectURL(file);
+function dropFile20(file) {
+	var extension = file.name.substr( (file.name.lastIndexOf('.') +1) );
+	
+	if(extension == "mp4" || extension == "mp3" || extension == "txt"){
+		const playing = (extension == "mp4") ? "video" : (extension == "mp3") ? "audio" : "youtube";
 		
-	$(".tab-pane.active .plyr").remove();
-	$(".tab-pane.active .preset-title").empty();
-		
-	if(extension == "mp4" && $(".tab-pane.active video").length == 0){
-		$("#dropText20").parents(".screen-container").append('<video controls crossorigin playsinline id="player20"></video>');
+		if(playing == "youtube"){
+			youtube(file, 20);
+		}
+		else{
+			video(20, file, 1, extension, playing);
+			
+			$(".tab-pane.active textarea").css("display", "none");
+		}
 	}
-	else if(extension == "mp3" && $(".tab-pane.active audio").length == 0){
-		$("#dropText20").parents(".screen-container").append('<audio controls crossorigin playsinline id="player20"></audio>');
+	else{
+		dropLoad(file, 1, 20);
+		$("#preset20").text(file.name.replace(".params", "").replace(".slangp", ""));
 	}
 	
-	if(extension == "mp4" || extension == "mp3"){
-		const playing = (extension == "mp4") ? "video" : "audio";
-		
-		const player = new Plyr('#player20', {autoplay: true,invertTime: false});
-		
-		window.player = player;
-		
-		player.source = {type: playing,sources: [{src: input,type: playing+'/'+extension}]};
-		
-		$(".tab-pane.active textarea").css("display", "none");
-			
-		$(".nav-link").on('click', function(){
-			player.pause();
-		});
-	}
-	else{  
-	  var reader = new FileReader();
-	  reader.onload = function(e) {dropText20.value = e.target.result;updateCode20();};
-	  reader.readAsText(file, "UTF-8");
-	  $("#preset19").text(file.name.replace(".params", "").replace(".slangp", ""));
-  }
-  
 	$(".nav-link.active").parents(".nav-item").removeClass("empty");
 }
 
-function dropfile21(file) {
-  var extension = file.name.substr( (file.name.lastIndexOf('.') +1) ),
-		input = URL.createObjectURL(file);
+function dropFile21(file) {
+	var extension = file.name.substr( (file.name.lastIndexOf('.') +1) );
+	
+	if(extension == "mp4" || extension == "mp3" || extension == "txt"){
+		const playing = (extension == "mp4") ? "video" : (extension == "mp3") ? "audio" : "youtube";
 		
-	$(".tab-pane.active .plyr").remove();
-	$(".tab-pane.active .preset-title").empty();
-		
-	if(extension == "mp4" && $(".tab-pane.active video").length == 0){
-		$("#dropText21").parents(".screen-container").append('<video controls crossorigin playsinline id="player21"></video>');
+		if(playing == "youtube"){
+			youtube(file, 21);
+		}
+		else{
+			video(21, file, 1, extension, playing);
+			
+			$(".tab-pane.active textarea").css("display", "none");
+		}
 	}
-	else if(extension == "mp3" && $(".tab-pane.active audio").length == 0){
-		$("#dropText21").parents(".screen-container").append('<audio controls crossorigin playsinline id="player21"></audio>');
+	else{
+		dropLoad(file, 1, 21);
+		$("#preset21").text(file.name.replace(".params", "").replace(".slangp", ""));
 	}
 	
-	if(extension == "mp4" || extension == "mp3"){
-		const playing = (extension == "mp4") ? "video" : "audio";
-		
-		const player = new Plyr('#player21', {autoplay: true,invertTime: false});
-		
-		window.player = player;
-		
-		player.source = {type: playing,sources: [{src: input,type: playing+'/'+extension}]};
-		
-		$(".tab-pane.active textarea").css("display", "none");
-			
-		$(".nav-link").on('click', function(){
-			player.pause();
-		});
-	}
-	else{  
-	  var reader = new FileReader();
-	  reader.onload = function(e) {dropText21.value = e.target.result;updateCode21();};
-	  reader.readAsText(file, "UTF-8");
-	  $("#preset20").text(file.name.replace(".params", "").replace(".slangp", ""));
-  }
-  
 	$(".nav-link.active").parents(".nav-item").removeClass("empty");
 }
 
-function dropfile22(file) {
-  var extension = file.name.substr( (file.name.lastIndexOf('.') +1) ),
-		input = URL.createObjectURL(file);
+function dropFile22(file) {
+	var extension = file.name.substr( (file.name.lastIndexOf('.') +1) );
+	
+	if(extension == "mp4" || extension == "mp3" || extension == "txt"){
+		const playing = (extension == "mp4") ? "video" : (extension == "mp3") ? "audio" : "youtube";
 		
-	$(".tab-pane.active .plyr").remove();
-	$(".tab-pane.active .preset-title").empty();
-		
-	if(extension == "mp4" && $(".tab-pane.active video").length == 0){
-		$("#dropText22").parents(".screen-container").append('<video controls crossorigin playsinline id="player22"></video>');
+		if(playing == "youtube"){
+			youtube(file, 22);
+		}
+		else{
+			video(22, file, 1, extension, playing);
+			
+			$(".tab-pane.active textarea").css("display", "none");
+		}
 	}
-	else if(extension == "mp3" && $(".tab-pane.active audio").length == 0){
-		$("#dropText22").parents(".screen-container").append('<audio controls crossorigin playsinline id="player22"></audio>');
+	else{
+		dropLoad(file, 1, 22);
+		$("#preset22").text(file.name.replace(".params", "").replace(".slangp", ""));
 	}
 	
-	if(extension == "mp4" || extension == "mp3"){
-		const playing = (extension == "mp4") ? "video" : "audio";
-		
-		const player = new Plyr('#player22', {autoplay: true,invertTime: false});
-		
-		window.player = player;
-		
-		player.source = {type: playing,sources: [{src: input,type: playing+'/'+extension}]};
-		
-		$(".tab-pane.active textarea").css("display", "none");
-			
-		$(".nav-link").on('click', function(){
-			player.pause();
-		});
-	}
-	else{  
-	  var reader = new FileReader();
-	  reader.onload = function(e) {dropText22.value = e.target.result;updateCode22();};
-	  reader.readAsText(file, "UTF-8");
-	  $("#preset21").text(file.name.replace(".params", "").replace(".slangp", ""));
-  }
-  
 	$(".nav-link.active").parents(".nav-item").removeClass("empty");
 }
 
-function dropfile23(file) {
-  var extension = file.name.substr( (file.name.lastIndexOf('.') +1) ),
-		input = URL.createObjectURL(file);
+function dropFile23(file) {
+	var extension = file.name.substr( (file.name.lastIndexOf('.') +1) );
+	
+	if(extension == "mp4" || extension == "mp3" || extension == "txt"){
+		const playing = (extension == "mp4") ? "video" : (extension == "mp3") ? "audio" : "youtube";
 		
-	$(".tab-pane.active .plyr").remove();
-	$(".tab-pane.active .preset-title").empty();
-		
-	if(extension == "mp4" && $(".tab-pane.active video").length == 0){
-		$("#dropText23").parents(".screen-container").append('<video controls crossorigin playsinline id="player23"></video>');
+		if(playing == "youtube"){
+			youtube(file, 23);
+		}
+		else{
+			video(23, file, 1, extension, playing);
+			
+			$(".tab-pane.active textarea").css("display", "none");
+		}
 	}
-	else if(extension == "mp3" && $(".tab-pane.active audio").length == 0){
-		$("#dropText23").parents(".screen-container").append('<audio controls crossorigin playsinline id="player23"></audio>');
+	else{
+		dropLoad(file, 1, 23);
+		$("#preset23").text(file.name.replace(".params", "").replace(".slangp", ""));
 	}
 	
-	if(extension == "mp4" || extension == "mp3"){
-		const playing = (extension == "mp4") ? "video" : "audio";
-		
-		const player = new Plyr('#player23', {autoplay: true,invertTime: false});
-		
-		window.player = player;
-		
-		player.source = {type: playing,sources: [{src: input,type: playing+'/'+extension}]};
-		
-		$(".tab-pane.active textarea").css("display", "none");
-			
-		$(".nav-link").on('click', function(){
-			player.pause();
-		});
-	}
-	else{  
-	  var reader = new FileReader();
-	  reader.onload = function(e) {dropText23.value = e.target.result;updateCode23();};
-	  reader.readAsText(file, "UTF-8");
-	  $("#preset22").text(file.name.replace(".params", "").replace(".slangp", ""));
-  }
-  
 	$(".nav-link.active").parents(".nav-item").removeClass("empty");
 }
 
-function dropfile24(file) {
-  var extension = file.name.substr( (file.name.lastIndexOf('.') +1) ),
-		input = URL.createObjectURL(file);
+function dropFile24(file) {
+	var extension = file.name.substr( (file.name.lastIndexOf('.') +1) );
+	
+	if(extension == "mp4" || extension == "mp3" || extension == "txt"){
+		const playing = (extension == "mp4") ? "video" : (extension == "mp3") ? "audio" : "youtube";
 		
-	$(".tab-pane.active .plyr").remove();
-	$(".tab-pane.active .preset-title").empty();
-		
-	if(extension == "mp4" && $(".tab-pane.active video").length == 0){
-		$("#dropText24").parents(".screen-container").append('<video controls crossorigin playsinline id="player24"></video>');
+		if(playing == "youtube"){
+			youtube(file, 24);
+		}
+		else{
+			video(24, file, 1, extension, playing);
+			
+			$(".tab-pane.active textarea").css("display", "none");
+		}
 	}
-	else if(extension == "mp3" && $(".tab-pane.active audio").length == 0){
-		$("#dropText24").parents(".screen-container").append('<audio controls crossorigin playsinline id="player24"></audio>');
+	else{
+		dropLoad(file, 1, 24);
+		$("#preset24").text(file.name.replace(".params", "").replace(".slangp", ""));
 	}
 	
-	if(extension == "mp4" || extension == "mp3"){
-		const playing = (extension == "mp4") ? "video" : "audio";
-		
-		const player = new Plyr('#player24', {autoplay: true,invertTime: false});
-		
-		window.player = player;
-		
-		player.source = {type: playing,sources: [{src: input,type: playing+'/'+extension}]};
-		
-		$(".tab-pane.active textarea").css("display", "none");
-			
-		$(".nav-link").on('click', function(){
-			player.pause();
-		});
-	}
-	else{  
-	  var reader = new FileReader();
-	  reader.onload = function(e) {dropText24.value = e.target.result;updateCode24();};
-	  reader.readAsText(file, "UTF-8");
-	  $("#preset23").text(file.name.replace(".params", "").replace(".slangp", ""));
-  }
-  
 	$(".nav-link.active").parents(".nav-item").removeClass("empty");
 }
 
-function dropfile25(file) {
-  var extension = file.name.substr( (file.name.lastIndexOf('.') +1) ),
-		input = URL.createObjectURL(file);
+function dropFile25(file) {
+	var extension = file.name.substr( (file.name.lastIndexOf('.') +1) );
+	
+	if(extension == "mp4" || extension == "mp3" || extension == "txt"){
+		const playing = (extension == "mp4") ? "video" : (extension == "mp3") ? "audio" : "youtube";
 		
-	$(".tab-pane.active .plyr").remove();
-	$(".tab-pane.active .preset-title").empty();
-		
-	if(extension == "mp4" && $(".tab-pane.active video").length == 0){
-		$("#dropText25").parents(".screen-container").append('<video controls crossorigin playsinline id="player25"></video>');
+		if(playing == "youtube"){
+			youtube(file, 25);
+		}
+		else{
+			video(25, file, 1, extension, playing);
+			
+			$(".tab-pane.active textarea").css("display", "none");
+		}
 	}
-	else if(extension == "mp3" && $(".tab-pane.active audio").length == 0){
-		$("#dropText25").parents(".screen-container").append('<audio controls crossorigin playsinline id="player25"></audio>');
+	else{
+		dropLoad(file, 1, 25);
+		$("#preset25").text(file.name.replace(".params", "").replace(".slangp", ""));
 	}
 	
-	if(extension == "mp4" || extension == "mp3"){
-		const playing = (extension == "mp4") ? "video" : "audio";
-		
-		const player = new Plyr('#player25', {autoplay: true,invertTime: false});
-		
-		window.player = player;
-		
-		player.source = {type: playing,sources: [{src: input,type: playing+'/'+extension}]};
-		
-		$(".tab-pane.active textarea").css("display", "none");
-			
-		$(".nav-link").on('click', function(){
-			player.pause();
-		});
-	}
-	else{  
-	  var reader = new FileReader();
-	  reader.onload = function(e) {dropText25.value = e.target.result;updateCode25();};
-	  reader.readAsText(file, "UTF-8");
-	  $("#preset24").text(file.name.replace(".params", "").replace(".slangp", ""));
-  }
-  
 	$(".nav-link.active").parents(".nav-item").removeClass("empty");
 }
 
-dropText.ondrop = function(e) {e.preventDefault();var file = e.dataTransfer.files[0];dropfile(file);};
-dropText2.ondrop = function(e) {
+$(".mini .screen-container").on("drop", function(e) {
 	e.preventDefault();
-	const files = [];
+	var file = e.originalEvent.dataTransfer.files[0];
+	dropFile(file);
+});
+
+$("#tab-pane1 .screen-container").on("drop", function(e) {
+	e.preventDefault();
+	const files = [],
+		length = e.originalEvent.dataTransfer.files.length,
+		name = e.originalEvent.dataTransfer.files[0].name;
 	var tabs = $(".nav").children().length;
 	$(".text-wrap .text-box:nth-child(2) textarea").text("").val("");
 	$(".preset-title, code").empty();
 	$(".nav-hide, .plus, .remove").remove();
   
-	if(e.dataTransfer.files.length > 1 && $(".nav").children().length == 0){
+	var extension = name.substr( (name.lastIndexOf('.') +1) );
+	
+
+	if(length > 1 && $(".nav").children().length == 0){
 		$(".text-wrap").append('<ul class="nav nav-tabs" id="myTab" role="tablist"></ul>');
 	}
   
-	if(e.dataTransfer.files.length <= 24){
-		for (var i=0; i< e.dataTransfer.files.length;i++){
-			files[i] = e.dataTransfer.files[i];
-			dropfile2(files);
-			if(e.dataTransfer.files.length > 1){
-				if($(".nav").children().length < e.dataTransfer.files.length){
+	if(length <= 24){
+		for (var i=0; i< length;i++){
+			files[i] = e.originalEvent.dataTransfer.files[i];
+			dropFile2(files);
+			if(length > 1){
+				if($(".nav").children().length < length){
 					if(i == 0 && $(".nav").children().length == 0){
 						$(".nav.nav-tabs").append('<li class="nav-item" role="presentation"><button class="nav-link active" id="tab1" data-bs-toggle="tab" data-bs-target="#tab-pane1" type="button" role="tab" aria-controls="tab-pane1" aria-selected="true">1</button></li>');
 					}
-					else if(e.dataTransfer.files.length == 24){
+					else if(length == 24){
 						$(".nav.nav-tabs").append('<li class="nav-item" role="presentation"><button class="nav-link" id="tab'+(tabs+(i+1))+'" data-bs-toggle="tab" data-bs-target="#tab-pane'+(tabs+(i+1))+'" type="button" role="tab" aria-controls="tab-pane'+(tabs+(i+1))+'" aria-selected="true">'+(tabs+(i+1))+'</button></li>');
 						$(".nav-item").removeClass("empty");
 					}
@@ -1138,17 +914,10 @@ dropText2.ondrop = function(e) {
 						$(".nav-tabs #tab"+(i+1)).parents(".nav-item").removeClass("empty");
 					}
 				}
-				else{
-					$(".nav-tabs #tab"+(i+1)).parents(".nav-item").removeClass("empty");
-					$(".nav-tabs #tab"+(i+1)).parents(".nav-item").nextAll().addClass("empty");
-				}
-			}
-			else if($(".nav").children().length > 1){
-				$(".nav-tabs #tab"+(i+1)).parents(".nav-item").nextAll().addClass("empty");
 			}
 		}
 	}
-	else if(e.dataTransfer.files.length > 24){
+	else if(length > 24){
 		if($(".nav").children().length == 0){
 			for (var i=0; i<24;i++){
 				$(".nav-item").removeClass("empty");
@@ -1168,15 +937,17 @@ dropText2.ondrop = function(e) {
 		}
 		
 		for (var i=0; i<24;i++){
-			files[i] = e.dataTransfer.files[i];
-			dropfile2(files);
+			files[i] = e.originalEvent.dataTransfer.files[i];
+			dropFile2(files);
 		}
 	}
-	
-	if(e.dataTransfer.files.length > 1){
+
+	if(tabs > 1 || length > 1){
 		$(".nav-tabs").append('<div class="plus nav-item" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Plus 1" role="presentation"><span class="material-symbols-outlined nav-link" aria-selected="false" tabindex="-1" role="tab">exposure_plus_1</span></div>');
-	
+		$(".nav-tabs").append('<div class="remove nav-item" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Remove Tabs"><span class="material-symbols-outlined nav-link">close_small</span></div>');
+		
 		const tooltip = new bootstrap.Tooltip($('.plus'));
+		const tooltip2 = new bootstrap.Tooltip($('.remove'));
 		
 		if($(".nav-tabs .nav-link").length < 26){
 			$(".plus").on('click', function(){
@@ -1184,27 +955,17 @@ dropText2.ondrop = function(e) {
 				$(this).children('span').blur();
 			});
 		}
-	
-		if($(".nav").children().length > 0){
-			$(".nav-tabs").append('<div class="remove nav-item" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Remove Tabs"><span class="material-symbols-outlined nav-link">close_small</span></div>');
-			
-			const tooltip = new bootstrap.Tooltip($('.remove'));
+		
+		$(".remove").on('click', function(){
+			removeTabs();
+		});
+		
+		if($(".nav-hide").length == 0){
+			$(".text-wrap .text-box:nth-child(2)").append('<div class="nav-hide"><span class="material-symbols-outlined">keyboard_double_arrow_up</span></div>');
 			
 			$(".nav-hide").on('click', function(){
 				navHide();
 			});
-			
-			$(".nav-link").on('click', function(){
-				var id = $(this).parents(".nav-item").index();
-			});
-			
-			$(".remove").on('click', function(){
-				removeTabs();
-			});
-		}
-		
-		if($(".nav-hide").length == 0){
-			$(".text-wrap .text-box:nth-child(2)").append('<div class="nav-hide"><span class="material-symbols-outlined">keyboard_double_arrow_up</span></div>');
 			
 			if(dots == "hidden"){
 				$(".nav-tabs").addClass("hide");
@@ -1218,30 +979,175 @@ dropText2.ondrop = function(e) {
 			}
 		}
 	}
-};
-dropText3.ondrop = function(e) {e.preventDefault();var file = e.dataTransfer.files[0];dropfile3(file);$(".nav-link.active").parents(".nav-item").removeClass("empty");};
-dropText4.ondrop = function(e) {e.preventDefault();var file = e.dataTransfer.files[0];dropfile4(file);$(".nav-link.active").parents(".nav-item").removeClass("empty");};
-dropText5.ondrop = function(e) {e.preventDefault();var file = e.dataTransfer.files[0];dropfile5(file);$(".nav-link.active").parents(".nav-item").removeClass("empty");};
-dropText6.ondrop = function(e) {e.preventDefault();var file = e.dataTransfer.files[0];dropfile6(file);$(".nav-link.active").parents(".nav-item").removeClass("empty");};
-dropText7.ondrop = function(e) {e.preventDefault();var file = e.dataTransfer.files[0];dropfile7(file);$(".nav-link.active").parents(".nav-item").removeClass("empty");};
-dropText8.ondrop = function(e) {e.preventDefault();var file = e.dataTransfer.files[0];dropfile8(file);$(".nav-link.active").parents(".nav-item").removeClass("empty");};
-dropText9.ondrop = function(e) {e.preventDefault();var file = e.dataTransfer.files[0];dropfile9(file);$(".nav-link.active").parents(".nav-item").removeClass("empty");};
-dropText10.ondrop = function(e) {e.preventDefault();var file = e.dataTransfer.files[0];dropfile10(file);$(".nav-link.active").parents(".nav-item").removeClass("empty");};
-dropText11.ondrop = function(e) {e.preventDefault();var file = e.dataTransfer.files[0];dropfile11(file);$(".nav-link.active").parents(".nav-item").removeClass("empty");};
-dropText12.ondrop = function(e) {e.preventDefault();var file = e.dataTransfer.files[0];dropfile12(file);$(".nav-link.active").parents(".nav-item").removeClass("empty");};
-dropText13.ondrop = function(e) {e.preventDefault();var file = e.dataTransfer.files[0];dropfile13(file);$(".nav-link.active").parents(".nav-item").removeClass("empty");};
-dropText14.ondrop = function(e) {e.preventDefault();var file = e.dataTransfer.files[0];dropfile14(file);$(".nav-link.active").parents(".nav-item").removeClass("empty");};
-dropText15.ondrop = function(e) {e.preventDefault();var file = e.dataTransfer.files[0];dropfile15(file);$(".nav-link.active").parents(".nav-item").removeClass("empty");};
-dropText16.ondrop = function(e) {e.preventDefault();var file = e.dataTransfer.files[0];dropfile16(file);$(".nav-link.active").parents(".nav-item").removeClass("empty");};
-dropText17.ondrop = function(e) {e.preventDefault();var file = e.dataTransfer.files[0];dropfile17(file);$(".nav-link.active").parents(".nav-item").removeClass("empty");};
-dropText18.ondrop = function(e) {e.preventDefault();var file = e.dataTransfer.files[0];dropfile18(file);$(".nav-link.active").parents(".nav-item").removeClass("empty");};
-dropText19.ondrop = function(e) {e.preventDefault();var file = e.dataTransfer.files[0];dropfile19(file);$(".nav-link.active").parents(".nav-item").removeClass("empty");};
-dropText20.ondrop = function(e) {e.preventDefault();var file = e.dataTransfer.files[0];dropfile20(file);$(".nav-link.active").parents(".nav-item").removeClass("empty");};
-dropText21.ondrop = function(e) {e.preventDefault();var file = e.dataTransfer.files[0];dropfile21(file);$(".nav-link.active").parents(".nav-item").removeClass("empty");};
-dropText22.ondrop = function(e) {e.preventDefault();var file = e.dataTransfer.files[0];dropfile22(file);$(".nav-link.active").parents(".nav-item").removeClass("empty");};
-dropText23.ondrop = function(e) {e.preventDefault();var file = e.dataTransfer.files[0];dropfile23(file);$(".nav-link.active").parents(".nav-item").removeClass("empty");};
-dropText24.ondrop = function(e) {e.preventDefault();var file = e.dataTransfer.files[0];dropfile24(file);$(".nav-link.active").parents(".nav-item").removeClass("empty");};
-dropText25.ondrop = function(e) {e.preventDefault();var file = e.dataTransfer.files[0];dropfile25(file);$(".nav-link.active").parents(".nav-item").removeClass("empty");};
+});
+
+$("#tab-pane2 .screen-container").on("drop", function(e) {
+	e.preventDefault();
+	var file = e.originalEvent.dataTransfer.files[0];
+	dropFile2(file);
+	$(".nav-link.active").parents(".nav-item").removeClass("empty");
+});
+
+$("#tab-pane3 .screen-container").on("drop", function(e) {
+	e.preventDefault();
+	var file = e.originalEvent.dataTransfer.files[0];
+	dropFile3(file);
+	$(".nav-link.active").parents(".nav-item").removeClass("empty");
+});
+
+$("#tab-pane4 .screen-container").on("drop", function(e) {
+	e.preventDefault();
+	var file = e.originalEvent.dataTransfer.files[0];
+	dropFile4(file);
+	$(".nav-link.active").parents(".nav-item").removeClass("empty");
+});
+
+$("#tab-pane5 .screen-container").on("drop", function(e) {
+	e.preventDefault();
+	var file = e.originalEvent.dataTransfer.files[0];
+	dropFile5(file);
+	$(".nav-link.active").parents(".nav-item").removeClass("empty");
+});
+
+$("#tab-pane6 .screen-container").on("drop", function(e) {
+	e.preventDefault();
+	var file = e.originalEvent.dataTransfer.files[0];
+	dropFile6(file);
+	$(".nav-link.active").parents(".nav-item").removeClass("empty");
+});
+
+$("#tab-pane7 .screen-container").on("drop", function(e) {
+	e.preventDefault();
+	var file = e.originalEvent.dataTransfer.files[0];
+	dropFile7(file);
+	$(".nav-link.active").parents(".nav-item").removeClass("empty");
+});
+
+$("#tab-pane8 .screen-container").on("drop", function(e) {
+	e.preventDefault();
+	var file = e.originalEvent.dataTransfer.files[0];
+	dropFile8(file);
+	$(".nav-link.active").parents(".nav-item").removeClass("empty");
+});
+
+$("#tab-pane9 .screen-container").on("drop", function(e) {
+	e.preventDefault();
+	var file = e.originalEvent.dataTransfer.files[0];
+	dropFile9(file);
+	$(".nav-link.active").parents(".nav-item").removeClass("empty");
+});
+
+$("#tab-pane10 .screen-container").on("drop", function(e) {
+	e.preventDefault();
+	var file = e.originalEvent.dataTransfer.files[0];
+	dropFile10(file);
+	$(".nav-link.active").parents(".nav-item").removeClass("empty");
+});
+
+$("#tab-pane11 .screen-container").on("drop", function(e) {
+	e.preventDefault();
+	var file = e.originalEvent.dataTransfer.files[0];
+	dropFile11(file);
+	$(".nav-link.active").parents(".nav-item").removeClass("empty");
+});
+
+$("#tab-pane12 .screen-container").on("drop", function(e) {
+	e.preventDefault();
+	var file = e.originalEvent.dataTransfer.files[0];
+	dropFile12(file);
+	$(".nav-link.active").parents(".nav-item").removeClass("empty");
+});
+
+$("#tab-pane13 .screen-container").on("drop", function(e) {
+	e.preventDefault();
+	var file = e.originalEvent.dataTransfer.files[0];
+	dropFile13(file);
+	$(".nav-link.active").parents(".nav-item").removeClass("empty");
+});
+
+$("#tab-pane14 .screen-container").on("drop", function(e) {
+	e.preventDefault();
+	var file = e.originalEvent.dataTransfer.files[0];
+	dropFile14(file);
+	$(".nav-link.active").parents(".nav-item").removeClass("empty");
+});
+
+$("#tab-pane15 .screen-container").on("drop", function(e) {
+	e.preventDefault();
+	var file = e.originalEvent.dataTransfer.files[0];
+	dropFile15(file);
+	$(".nav-link.active").parents(".nav-item").removeClass("empty");
+});
+
+$("#tab-pane16 .screen-container").on("drop", function(e) {
+	e.preventDefault();
+	var file = e.originalEvent.dataTransfer.files[0];
+	dropFile16(file);
+	$(".nav-link.active").parents(".nav-item").removeClass("empty");
+});
+
+$("#tab-pane17 .screen-container").on("drop", function(e) {
+	e.preventDefault();
+	var file = e.originalEvent.dataTransfer.files[0];
+	dropFile17(file);
+	$(".nav-link.active").parents(".nav-item").removeClass("empty");
+});
+
+$("#tab-pane18 .screen-container").on("drop", function(e) {
+	e.preventDefault();
+	var file = e.originalEvent.dataTransfer.files[0];
+	dropFile18(file);
+	$(".nav-link.active").parents(".nav-item").removeClass("empty");
+});
+
+$("#tab-pane19 .screen-container").on("drop", function(e) {
+	e.preventDefault();
+	var file = e.originalEvent.dataTransfer.files[0];
+	dropFile19(file);
+	$(".nav-link.active").parents(".nav-item").removeClass("empty");
+});
+
+$("#tab-pane20 .screen-container").on("drop", function(e) {
+	e.preventDefault();
+	var file = e.originalEvent.dataTransfer.files[0];
+	dropFile20(file);
+	$(".nav-link.active").parents(".nav-item").removeClass("empty");
+});
+
+$("#tab-pane21 .screen-container").on("drop", function(e) {
+	e.preventDefault();
+	var file = e.originalEvent.dataTransfer.files[0];
+	dropFile21(file);
+	$(".nav-link.active").parents(".nav-item").removeClass("empty");
+});
+
+$("#tab-pane22 .screen-container").on("drop", function(e) {
+	e.preventDefault();
+	var file = e.originalEvent.dataTransfer.files[0];
+	dropFile22(file);
+	$(".nav-link.active").parents(".nav-item").removeClass("empty");
+});
+
+$("#tab-pane23 .screen-container").on("drop", function(e) {
+	e.preventDefault();
+	var file = e.originalEvent.dataTransfer.files[0];
+	dropFile23(file);
+	$(".nav-link.active").parents(".nav-item").removeClass("empty");
+});
+
+$("#tab-pane24 .screen-container").on("drop", function(e) {
+	e.preventDefault();
+	var file = e.originalEvent.dataTransfer.files[0];
+	dropFile24(file);
+	$(".nav-link.active").parents(".nav-item").removeClass("empty");
+});
+
+$("#tab-pane25 .screen-container").on("drop", function(e) {
+	e.preventDefault();
+	var file = e.originalEvent.dataTransfer.files[0];
+	dropFile25(file);
+	$(".nav-link.active").parents(".nav-item").removeClass("empty");
+});
 
 $(document).ready(function(){
 	$('#load input[type="file"]').change(function (e) {
@@ -1249,35 +1155,30 @@ $(document).ready(function(){
 			extension = file.name.substr( (file.name.lastIndexOf('.') +1) ),
 			input = URL.createObjectURL(file);
 		
-		$(".mini .plyr").remove();
+		$(".mini .plyr, #player").remove();
 		
-		if(extension == "mp4" && $(".mini video").length == 0){
-			$(".mini .screen-container").append('<video controls crossorigin playsinline id="player"></video>');
-		}
-		else if(extension == "mp3" && $(".mini audio").length == 0){
+		if(extension == "mp3" && $(".tab-pane.active audio").length == 0){
 			$(".mini .screen-container").append('<audio controls crossorigin playsinline id="player"></audio>');
 		}
+		else if(extension == "mp4" && $(".tab-pane.active video").length == 0){
+			$(".mini .screen-container").append('<video controls crossorigin playsinline id="player"></video>');
+		}
 		
-		if(extension == "mp4" || extension == "mp3"){
-			const playing = (extension == "mp4") ? "video" : "audio";
+		if(extension == "mp4" || extension == "mp3" || extension == "txt"){
+			const playing = (extension == "mp4") ? "video" : (extension == "mp3") ? "audio" : "youtube";
 			
-			const player = new Plyr('#player', {autoplay: true,invertTime: false});
+			if(playing == "youtube"){
+				minitube(file);
+			}
+			else{
+				player.source = {type: playing,sources: [{src: input,type: playing+'/'+extension}]};
+			}
 			
-			window.player = player;
-			
-			player.source = {type: playing,sources: [{src: input,type: playing+'/'+extension}]};
-			
-			$(".mini textarea").css("display", "none");
+			$(".text").css("display", "none");
 		}
 		else{
-			var reader = new FileReader();
-			reader.onload = function (e) {$(".text").val(e.target.result).text(e.target.result);updateCode();};
-		
-			reader.readAsText(file);
+			miniLoad(file);
 		}
-			
-		$('#load input[type="file"]').val("");
-		$(this).blur();
 	});
 	
 	$('#load2 input[type="file"]').change(function (e) {
@@ -1286,9 +1187,7 @@ $(document).ready(function(){
 		$(".tab-pane.active textarea").css("display", "block");
 		$(".tab-pane.active .preset-title").empty();
 		var tabs = $(".nav").children().length,
-			files = [],
-			extension = presets[0].name.substr( (presets[0].name.lastIndexOf('.') +1) ),
-			input = URL.createObjectURL(presets[0]);
+			files = [];
 		
 		if(presets.length > 1){
 			$(".tab-pane textarea").text("").val("");
@@ -1296,180 +1195,97 @@ $(document).ready(function(){
 		}
 			
 		if(presets.length == 1){
-			if(extension == "mp4" && $(".tab-pane.active video").length == 0){
-				$(".tab-pane.active .screen-container").append('<video controls crossorigin playsinline id="player2"></video>');
-			}
-			else if(extension == "mp3" && $(".tab-pane.active audio").length == 0){
-				$(".tab-pane.active .screen-container").append('<audio controls crossorigin playsinline id="player2"></audio>');
-			}
-			
-			if(extension == "mp4" || extension == "mp3"){
-				const playing = (extension == "mp4") ? "video" : "audio";
+			var extension = presets[0].name.substr( (presets[0].name.lastIndexOf('.') +1) );
+		
+			if(extension == "mp4" || extension == "mp3" || extension == "txt"){
+				const playing = (extension == "mp4") ? "video" : (extension == "mp3") ? "audio" : "youtube";
 				
-				const player = new Plyr('#player2', {autoplay: true,invertTime: false});
-				
-				window.player = player;
-				
-				player.source = {type: playing,sources: [{src: input,type: playing+'/'+extension}]};
-				
-				$(".tab-pane.active textarea").css("display", "none");
-				
-				$(".nav-link").on('click', function(){
-					player.pause();
-				});
+				if(playing == "youtube"){
+					youtube(presets, 2);
+				}
+				else{
+					video(2, presets, 1, extension, playing);
+					
+					$(".tab-pane.active textarea").css("display", "none");
+				}
 			}
 			else{
-				 var reader = new FileReader();
-				 reader.onload = function(e) {$(".active textarea").val(e.target.result).text(e.target.result);update();};
-				 reader.readAsText(presets[0], "UTF-8");
-				 $(".tab-pane.active .preset-title").text(presets[0].name.replace(".params", "").replace(".slangp", ""));
+				loadFile(presets, presets.length, parseInt($(".tab-pane.active").attr("id").replace("tab-pane", "")));
 			}
 			
 			$(".nav-link.active").parents(".nav-item").removeClass("empty");
 		}
-		if(presets.length > 1 || $(".active .text2").length == 1 && (extension != "mp4" && extension != "mp3")){
-			 var reader = new FileReader();
-			 reader.onload = function(e) {$(".text2").val(e.target.result).text(e.target.result);updateCode();updateCode2();};
-			 reader.readAsText(presets[0], "UTF-8");
-			 $("#preset1").text(presets[0].name.replace(".params", "").replace(".slangp", ""));
+		if(presets.length > 1 && (extension != "mp4" && extension != "mp3")){
+			loadFile(presets, presets.length, 1);
 			 
-			if(presets.length >= 2 || $(".active .text3").length == 1 && presets.length == 1){
-				 var reader = new FileReader();
-				 reader.onload = function(e) {$(".text3").val(e.target.result).text(e.target.result);updateCode3();};
-				 if($(".active .text3").length == 1 && presets.length == 1){reader.readAsText(presets[0], "UTF-8");$("#preset2").text(presets[0].name.replace(".params", "").replace(".slangp", ""));}
-				 else{reader.readAsText(presets[1], "UTF-8");$("#preset2").text(presets[1].name.replace(".params", "").replace(".slangp", ""));}
+			if(presets.length >= 2){
+				loadFile(presets, presets.length, 2);
 			}
-			if(presets.length >= 3 || $(".active .text4").length == 1 && presets.length == 1){
-				 var reader = new FileReader();
-				 reader.onload = function(e) {$(".text4").val(e.target.result).text(e.target.result);updateCode4();};
-				 if($(".active .text4").length == 1 && presets.length == 1){reader.readAsText(presets[0], "UTF-8");$("#preset3").text(presets[0].name.replace(".params", "").replace(".slangp", ""));}
-				 else{reader.readAsText(presets[2], "UTF-8");$("#preset3").text(presets[2].name.replace(".params", "").replace(".slangp", ""));}
+			if(presets.length >= 3){
+				loadFile(presets, presets.length, 3);
 			}
-			if(presets.length >= 4 || $(".active .text5").length == 1 && presets.length == 1){
-				 var reader = new FileReader();
-				 reader.onload = function(e) {$(".text5").val(e.target.result).text(e.target.result);updateCode5();};
-				 if($(".active .text5").length == 1 && presets.length == 1){reader.readAsText(presets[0], "UTF-8");$("#preset4").text(presets[0].name.replace(".params", "").replace(".slangp", ""));}
-				 else{reader.readAsText(presets[3], "UTF-8");$("#preset4").text(presets[3].name.replace(".params", "").replace(".slangp", ""));}
+			if(presets.length >= 4){
+				loadFile(presets, presets.length, 4);
 			}
-			if(presets.length >= 5 || $(".active .text6").length == 1 && presets.length == 1){
-				 var reader = new FileReader();
-				 reader.onload = function(e) {$(".text6").val(e.target.result).text(e.target.result);updateCode6();};
-				 if($(".active .text6").length == 1 && presets.length == 1){reader.readAsText(presets[0], "UTF-8");$("#preset5").text(presets[0].name.replace(".params", "").replace(".slangp", ""));}
-				 else{reader.readAsText(presets[4], "UTF-8");$("#preset5").text(presets[4].name.replace(".params", "").replace(".slangp", ""));}
+			if(presets.length >= 5){
+				 loadFile(presets, presets.length, 5);
 			}
-			if(presets.length >= 6 || $(".active .text7").length == 1 && presets.length == 1){
-				 var reader = new FileReader();
-				 reader.onload = function(e) {$(".text7").val(e.target.result).text(e.target.result);updateCode7();};
-				 if($(".active .text7").length == 1 && presets.length == 1){reader.readAsText(presets[0], "UTF-8");$("#preset6").text(presets[0].name.replace(".params", "").replace(".slangp", ""));}
-				 else{reader.readAsText(presets[5], "UTF-8");$("#preset6").text(presets[5].name.replace(".params", "").replace(".slangp", ""));}
+			if(presets.length >= 6){
+				 loadFile(presets, presets.length, 6);
 			}
-			if(presets.length >= 7 || $(".active .text8").length == 1 && presets.length == 1){
-				 var reader = new FileReader();
-				 reader.onload = function(e) {$(".text8").val(e.target.result).text(e.target.result);updateCode8();};
-				 if($(".active .text8").length == 1 && presets.length == 1){reader.readAsText(presets[0], "UTF-8");$("#preset7").text(presets[0].name.replace(".params", "").replace(".slangp", ""));}
-				 else{reader.readAsText(presets[6], "UTF-8");$("#preset7").text(presets[6].name.replace(".params", "").replace(".slangp", ""));}
+			if(presets.length >= 7){
+				 loadFile(presets, presets.length, 7);
 			}
-			if(presets.length >= 8 || $(".active .text9").length == 1 && presets.length == 1){
-				 var reader = new FileReader();
-				 reader.onload = function(e) {$(".text9").val(e.target.result).text(e.target.result);updateCode9();};
-				 if($(".active .text9").length == 1 && presets.length == 1){reader.readAsText(presets[0], "UTF-8");$("#preset8").text(presets[0].name.replace(".params", "").replace(".slangp", ""));}
-				 else{reader.readAsText(presets[7], "UTF-8");$("#preset8").text(presets[7].name.replace(".params", "").replace(".slangp", ""));}
+			if(presets.length >= 8){
+				 loadFile(presets, presets.length, 8);
 			}
-			if(presets.length >= 9 || $(".active .text10").length == 1 && presets.length == 1){
-				 var reader = new FileReader();
-				 reader.onload = function(e) {$(".text10").val(e.target.result).text(e.target.result);updateCode10();};
-				 if($(".active .text10").length == 1 && presets.length == 1){reader.readAsText(presets[0], "UTF-8");$("#preset9").text(presets[0].name.replace(".params", "").replace(".slangp", ""));}
-				 else{reader.readAsText(presets[8], "UTF-8");$("#preset9").text(presets[8].name.replace(".params", "").replace(".slangp", ""));}
+			if(presets.length >= 9){
+				 loadFile(presets, presets.length, 9);
 			}
-			if(presets.length >= 10 || $(".active .text11").length == 1 && presets.length == 1){
-				 var reader = new FileReader();
-				 reader.onload = function(e) {$(".text11").val(e.target.result).text(e.target.result);updateCode11();};
-				 if($(".active .text11").length == 1 && presets.length == 1){reader.readAsText(presets[0], "UTF-8");$("#preset10").text(presets[0].name.replace(".params", "").replace(".slangp", ""));}
-				 else{reader.readAsText(presets[9], "UTF-8");$("#preset10").text(presets[9].name.replace(".params", "").replace(".slangp", ""));}
+			if(presets.length >= 10){
+				 loadFile(presets, presets.length, 10);
 			}
-			if(presets.length >= 11 || $(".active .text12").length == 1 && presets.length == 1){
-				 var reader = new FileReader();
-				 reader.onload = function(e) {$(".text12").val(e.target.result).text(e.target.result);updateCode12();};
-				 if($(".active .text12").length == 1 && presets.length == 1){reader.readAsText(presets[0], "UTF-8");$("#preset11").text(presets[0].name.replace(".params", "").replace(".slangp", ""));}
-				 else{reader.readAsText(presets[10], "UTF-8");$("#preset11").text(presets[10].name.replace(".params", "").replace(".slangp", ""));}
+			if(presets.length >= 11){
+				 loadFile(presets, presets.length, 11);
 			}
-			if(presets.length >= 12 || $(".active .text13").length == 1 && presets.length == 1){
-				 var reader = new FileReader();
-				 reader.onload = function(e) {$(".text13").val(e.target.result).text(e.target.result);updateCode13();};
-				 if($(".active .text13").length == 1 && presets.length == 1){reader.readAsText(presets[0], "UTF-8");$("#preset12").text(presets[0].name.replace(".params", "").replace(".slangp", ""));}
-				 else{reader.readAsText(presets[11], "UTF-8");$("#preset12").text(presets[11].name.replace(".params", "").replace(".slangp", ""));}
+			if(presets.length >= 12){
+				 loadFile(presets, presets.length, 12);
 			}
-			if(presets.length >= 13 || $(".active .text14").length == 1 && presets.length == 1){
-				 var reader = new FileReader();
-				 reader.onload = function(e) {$(".text14").val(e.target.result).text(e.target.result);updateCode14();};
-				 if($(".active .text14").length == 1 && presets.length == 1){reader.readAsText(presets[0], "UTF-8");$("#preset13").text(presets[0].name.replace(".params", "").replace(".slangp", ""));}
-				 else{reader.readAsText(presets[12], "UTF-8");$("#preset13").text(presets[12].name.replace(".params", "").replace(".slangp", ""));}
+			if(presets.length >= 13){
+				 loadFile(presets, presets.length, 13);
 			}
-			if(presets.length >= 14 || $(".active .text15").length == 1 && presets.length == 1){
-				 var reader = new FileReader();
-				 reader.onload = function(e) {$(".text15").val(e.target.result).text(e.target.result);updateCode15();};
-				 if($(".active .text15").length == 1 && presets.length == 1){reader.readAsText(presets[0], "UTF-8");$("#preset14").text(presets[0].name.replace(".params", "").replace(".slangp", ""));}
-				 else{reader.readAsText(presets[13], "UTF-8");$("#preset14").text(presets[13].name.replace(".params", "").replace(".slangp", ""));}
+			if(presets.length >= 14){
+				 loadFile(presets, presets.length, 14);
 			}
-			if(presets.length >= 15 || $(".active .text16").length == 1 && presets.length == 1){
-				 var reader = new FileReader();
-				 reader.onload = function(e) {$(".text16").val(e.target.result).text(e.target.result);updateCode16();};
-				 if($(".active .text16").length == 1 && presets.length == 1){reader.readAsText(presets[0], "UTF-8");$("#preset15").text(presets[0].name.replace(".params", "").replace(".slangp", ""));}
-				 else{reader.readAsText(presets[14], "UTF-8");$("#preset15").text(presets[14].name.replace(".params", "").replace(".slangp", ""));}
+			if(presets.length >= 15){
+				 loadFile(presets, presets.length, 15);
 			}
-			if(presets.length >= 16 || $(".active .text17").length == 1 && presets.length == 1){
-				 var reader = new FileReader();
-				 reader.onload = function(e) {$(".text17").val(e.target.result).text(e.target.result);updateCode17();};
-				 if($(".active .text17").length == 1 && presets.length == 1){reader.readAsText(presets[0], "UTF-8");$("#preset16").text(presets[0].name.replace(".params", "").replace(".slangp", ""));}
-				 else{reader.readAsText(presets[15], "UTF-8");$("#preset16").text(presets[15].name.replace(".params", "").replace(".slangp", ""));}
+			if(presets.length >= 16){
+				 loadFile(presets, presets.length, 16);
 			}
-			if(presets.length >= 17 || $(".active .text18").length == 1 && presets.length == 1){
-				 var reader = new FileReader();
-				 reader.onload = function(e) {$(".text18").val(e.target.result).text(e.target.result);updateCode18();};
-				 if($(".active .text18").length == 1 && presets.length == 1){reader.readAsText(presets[0], "UTF-8");$("#preset17").text(presets[0].name.replace(".params", "").replace(".slangp", ""));}
-				 else{reader.readAsText(presets[16], "UTF-8");$("#preset17").text(presets[16].name.replace(".params", "").replace(".slangp", ""));}
+			if(presets.length >= 17){
+				 loadFile(presets, presets.length, 17);
 			}
-			if(presets.length >= 18 || $(".active .text19").length == 1 && presets.length == 1){
-				 var reader = new FileReader();
-				 reader.onload = function(e) {$(".text19").val(e.target.result).text(e.target.result);updateCode19();};
-				 if($(".active .text19").length == 1 && presets.length == 1){reader.readAsText(presets[0], "UTF-8");$("#preset18").text(presets[0].name.replace(".params", "").replace(".slangp", ""));}
-				 else{reader.readAsText(presets[17], "UTF-8");$("#preset18").text(presets[17].name.replace(".params", "").replace(".slangp", ""));}
+			if(presets.length >= 18){
+				 loadFile(presets, presets.length, 18);
 			}
-			if(presets.length >= 19 || $(".active .text20").length == 1 && presets.length == 1){
-				 var reader = new FileReader();
-				 reader.onload = function(e) {$(".text20").val(e.target.result).text(e.target.result);updateCode20();};
-				 if($(".active .text20").length == 1 && presets.length == 1){reader.readAsText(presets[0], "UTF-8");$("#preset19").text(presets[0].name.replace(".params", "").replace(".slangp", ""));}
-				 else{reader.readAsText(presets[18], "UTF-8");$("#preset19").text(presets[18].name.replace(".params", "").replace(".slangp", ""));}
+			if(presets.length >= 19){
+				 loadFile(presets, presets.length, 19);
 			}
-			if(presets.length >= 20 || $(".active .text21").length == 1 && presets.length == 1){
-				 var reader = new FileReader();
-				 reader.onload = function(e) {$(".text21").val(e.target.result).text(e.target.result);updateCode21();};
-				 if($(".active .text21").length == 1 && presets.length == 1){reader.readAsText(presets[0], "UTF-8");$("#preset20").text(presets[0].name.replace(".params", "").replace(".slangp", ""));}
-				 else{reader.readAsText(presets[19], "UTF-8");$("#preset20").text(presets[19].name.replace(".params", "").replace(".slangp", ""));}
+			if(presets.length >= 20){
+				 loadFile(presets, presets.length, 20);
 			}
-			if(presets.length >= 21 || $(".active .text22").length == 1 && presets.length == 1){
-				 var reader = new FileReader();
-				 reader.onload = function(e) {$(".text22").val(e.target.result).text(e.target.result);updateCode22();};
-				 if($(".active .text22").length == 1 && presets.length == 1){reader.readAsText(presets[0], "UTF-8");$("#preset21").text(presets[0].name.replace(".params", "").replace(".slangp", ""));}
-				 else{reader.readAsText(presets[20], "UTF-8");$("#preset21").text(presets[20].name.replace(".params", "").replace(".slangp", ""));}
+			if(presets.length >= 21){
+				 loadFile(presets, presets.length, 21);
 			}
-			if(presets.length >= 22 || $(".active .text23").length == 1 && presets.length == 1){
-				 var reader = new FileReader();
-				 reader.onload = function(e) {$(".text23").val(e.target.result).text(e.target.result);updateCode23();};
-				 if($(".active .text23").length == 1 && presets.length == 1){reader.readAsText(presets[0], "UTF-8");$("#preset22").text(presets[0].name.replace(".params", "").replace(".slangp", ""));}
-				 else{reader.readAsText(presets[21], "UTF-8");$("#preset22").text(presets[21].name.replace(".params", "").replace(".slangp", ""));}
+			if(presets.length >= 22){
+				 loadFile(presets, presets.length, 22);
 			}
-			if(presets.length >= 23 || $(".active .text24").length == 1 && presets.length == 1){
-				 var reader = new FileReader();
-				 reader.onload = function(e) {$(".text24").val(e.target.result).text(e.target.result);updateCode24();};
-				 if($(".active .text24").length == 1 && presets.length == 1){reader.readAsText(presets[0], "UTF-8");$("#preset23").text(presets[0].name.replace(".params", "").replace(".slangp", ""));}
-				 else{reader.readAsText(presets[22], "UTF-8");$("#preset23").text(presets[22].name.replace(".params", "").replace(".slangp", ""));}
+			if(presets.length >= 23){
+				 loadFile(presets, presets.length, 23);
 			}
-			if(presets.length >= 24 || $(".active .text25").length == 1 && presets.length == 1){
-				 var reader = new FileReader();
-				 reader.onload = function(e) {$(".text25").val(e.target.result).text(e.target.result);updateCode25();};
-				 if($(".active .text25").length == 1 && presets.length == 1){reader.readAsText(presets[0], "UTF-8");$("#preset24").text(presets[0].name.replace(".params", "").replace(".slangp", ""));}
-				 else{reader.readAsText(presets[23], "UTF-8");$("#preset24").text(presets[23].name.replace(".params", "").replace(".slangp", ""));}
+			if(presets.length >= 24){
+				 loadFile(presets, presets.length, 24);
 			}
 		}
 		
@@ -1493,13 +1309,6 @@ $(document).ready(function(){
 							$(".nav-tabs #tab"+(i+1)).parents(".nav-item").removeClass("empty");
 						}
 					}
-					else{
-						$(".nav-tabs #tab"+(i+1)).parents(".nav-item").removeClass("empty");
-						$(".nav-tabs #tab"+(i+1)).parents(".nav-item").nextAll().addClass("empty");
-					}
-				}
-				else if($(".nav").children().length > 1 && presets.length == 1){
-					$(".nav-link.active").removeClass("empty");
 				}
 			}
 		}
@@ -1524,14 +1333,16 @@ $(document).ready(function(){
 			
 			for (var i=0; i<24;i++){
 				files[i] = presets[i];
-				dropfile2(files);
+				dropFile2(files);
 			}
 		}
 		
-		if(presets.length > 1 || $(".nav-tabs").children().length > 1){
+		if(tabs > 1 || presets.length > 1){
 			$(".nav-tabs").append('<div class="plus nav-item" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Plus 1" role="presentation"><span class="material-symbols-outlined nav-link" aria-selected="false" tabindex="-1" role="tab">exposure_plus_1</span></div>');
-		
+			$(".nav-tabs").append('<div class="remove nav-item" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Remove Tabs"><span class="material-symbols-outlined nav-link">close_small</span></div>');
+			
 			const tooltip = new bootstrap.Tooltip($('.plus'));
+			const tooltip2 = new bootstrap.Tooltip($('.remove'));
 			
 			if($(".nav-tabs .nav-link").length < 26){
 				$(".plus").on('click', function(){
@@ -1540,28 +1351,17 @@ $(document).ready(function(){
 				});
 			}
 			
-			if($(".nav").children().length > 1){
-				$(".nav-tabs").append('<div class="remove nav-item" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Remove Tabs"><span class="material-symbols-outlined nav-link">close_small</span></div>');
-				
-				const exampleEl = $('.remove')
-				const tooltip = new bootstrap.Tooltip(exampleEl);
+			$(".remove").on('click', function(){
+				removeTabs();
+			});
+			
+			if($(".nav-hide").length == 0){
+				$(".text-wrap .text-box:nth-child(2)").append('<div class="nav-hide"><span class="material-symbols-outlined">keyboard_double_arrow_up</span></div>');
 				
 				$(".nav-hide").on('click', function(){
 					navHide();
 				});
 				
-				$(".nav-link").on('click', function(){
-					var id = $(this).parents(".nav-item").index();
-				});
-				
-				$(".remove").on('click', function(){
-					removeTabs();
-				});
-			}
-			
-			if($(".nav-hide").length == 0){
-				$(".text-wrap .text-box:nth-child(2)").append('<div class="nav-hide"><span class="material-symbols-outlined">keyboard_double_arrow_up</span></div>');
-			
 				if(dots == "hidden"){
 					$(".nav-tabs").addClass("hide");
 					$(".nav-hide span").text("keyboard_double_arrow_down");

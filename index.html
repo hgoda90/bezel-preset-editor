@@ -16,9 +16,9 @@
 		<div class="mini hide">
 			<div class="wrap">
 				<div class="glass"></div>
-				<div class="screen-container" id="divCodeWrapper">
+				<div class="screen-container" id="dropText">
 					<pre id="preCode"><code id="codeBlock1" class="language-csharp"></code></pre>
-					<textarea class="text screen" id="dropText" rows="7" cols="36" readonly></textarea>
+					<textarea class="text screen" rows="7" cols="36" readonly></textarea>
 					<div class="overlay">Mini</div>
 				</div>
 				<div class="button-group">
@@ -174,6 +174,9 @@
 						<button class="brightness button" type="button" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Brightness">
 							<span class="material-symbols-outlined">light_mode</span>
 						</button>
+						<button class="aspect button" type="button" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Aspect Ratio">
+							<span class="material-symbols-outlined">aspect_ratio</span>
+						</button>
 						<div class="power-button">
 							<button class="power" type="button">
 								<div class="light"></div>
@@ -184,195 +187,202 @@
 					<div class="text-box">
 						<div class="tab-content" id="myTabContent">
 							<div class="glass"></div>
+							<div class="monochrome">
+								<label class="rocker">
+									<input type="checkbox">
+									<span class="switch-left">On</span>
+									<span class="switch-right">Off</span>
+								</label>
+							</div>
 							<div class="tab-pane fade active show" id="tab-pane1" role="tabpanel" aria-labelledby="tab1" tabindex="0">
 								<span class="preset-title" id="preset1"></span>
-								<div class="screen-container" id="divCodeWrapper">
+								<div class="screen-container" id="dropText2">
 									<pre id="preCode"><code id="codeBlock2" class="language-csharp"></code></pre>
-									<textarea class="text2 screen" id="dropText2" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
+									<textarea class="text2 screen" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
 									<div class="overlay">VGA 1</div>
 								</div>
 							</div>
 							<div class="tab-pane fade" id="tab-pane2" role="tabpanel" aria-labelledby="tab2" tabindex="0">
 								<span class="preset-title" id="preset2"></span>
-								<div class="screen-container" id="divCodeWrapper">
+								<div class="screen-container" id="dropText3">
 									<pre id="preCode"><code id="codeBlock3" class="language-csharp"></code></pre>
-									<textarea class="text3 screen" id="dropText3" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
+									<textarea class="text3 screen" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
 									<div class="overlay">VGA 2</div>
 								</div>
 							</div>
 							<div class="tab-pane fade" id="tab-pane3" role="tabpanel" aria-labelledby="tab3" tabindex="0">
 								<span class="preset-title" id="preset3"></span>
-								<div class="screen-container" id="divCodeWrapper">
+								<div class="screen-container" id="dropText4">
 									<pre id="preCode"><code id="codeBlock4" class="language-csharp"></code></pre>
-									<textarea class="text4 screen" id="dropText4" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
+									<textarea class="text4 screen" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
 									<div class="overlay">VGA 3</div>
 								</div>
 							</div>
 							<div class="tab-pane fade" id="tab-pane4" role="tabpanel" aria-labelledby="tab4" tabindex="0">
 								<span class="preset-title" id="preset4"></span>
-								<div class="screen-container" id="divCodeWrapper">
+								<div class="screen-container" id="dropText5">
 									<pre id="preCode"><code id="codeBlock5" class="language-csharp"></code></pre>
-									<textarea class="text5 screen" id="dropText5" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
+									<textarea class="text5 screen" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
 									<div class="overlay">VGA 4</div>
 								</div>
 							</div>
 							<div class="tab-pane fade" id="tab-pane5" role="tabpanel" aria-labelledby="tab5" tabindex="0">
 								<span class="preset-title" id="preset5"></span>
-								<div class="screen-container" id="divCodeWrapper">
+								<div class="screen-container" id="dropText6">
 									<pre id="preCode"><code id="codeBlock6" class="language-csharp"></code></pre>
-									<textarea class="text6 screen" id="dropText6" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
+									<textarea class="text6 screen" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
 									<div class="overlay">VGA 5</div>
 								</div>
 							</div>
 							<div class="tab-pane fade" id="tab-pane6" role="tabpanel" aria-labelledby="tab6" tabindex="0">
 								<span class="preset-title" id="preset6"></span>
-								<div class="screen-container" id="divCodeWrapper">
+								<div class="screen-container" id="dropText7">
 									<pre id="preCode"><code id="codeBlock7" class="language-csharp"></code></pre>
-									<textarea class="text7 screen" id="dropText7" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
+									<textarea class="text7 screen" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
 									<div class="overlay">VGA 6</div>
 								</div>
 							</div>
 							<div class="tab-pane fade" id="tab-pane7" role="tabpanel" aria-labelledby="tab7" tabindex="0">
 								<span class="preset-title" id="preset7"></span>
-								<div class="screen-container" id="divCodeWrapper">
+								<div class="screen-container" id="dropText8">
 									<pre id="preCode"><code id="codeBlock8" class="language-csharp"></code></pre>
-									<textarea class="text8 screen" id="dropText8" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
+									<textarea class="text8 screen" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
 									<div class="overlay">VGA 7</div>
 								</div>
 							</div>
 							<div class="tab-pane fade" id="tab-pane8" role="tabpanel" aria-labelledby="tab8" tabindex="0">
 								<span class="preset-title" id="preset8"></span>
-								<div class="screen-container" id="divCodeWrapper">
+								<div class="screen-container" id="dropText9">
 									<pre id="preCode"><code id="codeBlock9" class="language-csharp"></code></pre>
-									<textarea class="text9 screen" id="dropText9" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
+									<textarea class="text9 screen" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
 									<div class="overlay">VGA 8</div>
 								</div>
 							</div>
 							<div class="tab-pane fade" id="tab-pane9" role="tabpanel" aria-labelledby="tab9" tabindex="0">
 								<span class="preset-title" id="preset9"></span>
-								<div class="screen-container" id="divCodeWrapper">
+								<div class="screen-container" id="dropText10">
 									<pre id="preCode"><code id="codeBlock10" class="language-csharp"></code></pre>
-									<textarea class="text10 screen" id="dropText10" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
+									<textarea class="text10 screen" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
 									<div class="overlay">VGA 9</div>
 								</div>
 							</div>
 							<div class="tab-pane fade" id="tab-pane10" role="tabpanel" aria-labelledby="tab10" tabindex="0">
 								<span class="preset-title" id="preset10"></span>
-								<div class="screen-container" id="divCodeWrapper">
+								<div class="screen-container" id="dropText11">
 									<pre id="preCode"><code id="codeBlock11" class="language-csharp"></code></pre>
-									<textarea class="text11 screen" id="dropText11" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
+									<textarea class="text11 screen" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
 									<div class="overlay">VGA 10</div>
 								</div>
 							</div>
 							<div class="tab-pane fade" id="tab-pane11" role="tabpanel" aria-labelledby="tab11" tabindex="0">
 								<span class="preset-title" id="preset11"></span>
-								<div class="screen-container" id="divCodeWrapper">
+								<div class="screen-container" id="dropText12">
 									<pre id="preCode"><code id="codeBlock12" class="language-csharp"></code></pre>
-									<textarea class="text12 screen" id="dropText12" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
+									<textarea class="text12 screen" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
 									<div class="overlay">VGA 11</div>
 								</div>
 							</div>
 							<div class="tab-pane fade" id="tab-pane12" role="tabpanel" aria-labelledby="tab12" tabindex="0">
 								<span class="preset-title" id="preset12"></span>
-								<div class="screen-container" id="divCodeWrapper">
+								<div class="screen-container" id="dropText13">
 									<pre id="preCode"><code id="codeBlock13" class="language-csharp"></code></pre>
-									<textarea class="text13 screen" id="dropText13" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
+									<textarea class="text13 screen" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
 									<div class="overlay">VGA 12</div>
 								</div>
 							</div>
 							<div class="tab-pane fade" id="tab-pane13" role="tabpanel" aria-labelledby="tab13" tabindex="0">
 								<span class="preset-title" id="preset13"></span>
-								<div class="screen-container" id="divCodeWrapper">
+								<div class="screen-container" id="dropText14">
 									<pre id="preCode"><code id="codeBlock14" class="language-csharp"></code></pre>
-									<textarea class="text14 screen" id="dropText14" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
+									<textarea class="text14 screen" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
 									<div class="overlay">VGA 13</div>
 								</div>
 							</div>
 							<div class="tab-pane fade" id="tab-pane14" role="tabpanel" aria-labelledby="tab14" tabindex="0">
 								<span class="preset-title" id="preset14"></span>
-								<div class="screen-container" id="divCodeWrapper">
+								<div class="screen-container" id="dropText15">
 									<pre id="preCode"><code id="codeBlock15" class="language-csharp"></code></pre>
-									<textarea class="text15 screen" id="dropText15" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
+									<textarea class="text15 screen" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
 									<div class="overlay">VGA 14</div>
 								</div>
 							</div>
 							<div class="tab-pane fade" id="tab-pane15" role="tabpanel" aria-labelledby="tab14" tabindex="0">
 								<span class="preset-title" id="preset15"></span>
-								<div class="screen-container" id="divCodeWrapper">
+								<div class="screen-container" id="dropText16">
 									<pre id="preCode"><code id="codeBlock16" class="language-csharp"></code></pre>
-									<textarea class="text16 screen" id="dropText16" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
+									<textarea class="text16 screen" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
 									<div class="overlay">VGA 15</div>
 								</div>
 							</div>
 							<div class="tab-pane fade" id="tab-pane16" role="tabpanel" aria-labelledby="tab14" tabindex="0">
 								<span class="preset-title" id="preset16"></span>
-								<div class="screen-container" id="divCodeWrapper">
+								<div class="screen-container" id="dropText17">
 									<pre id="preCode"><code id="codeBlock17" class="language-csharp"></code></pre>
-									<textarea class="text17 screen" id="dropText17" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
+									<textarea class="text17 screen" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
 									<div class="overlay">VGA 16</div>
 								</div>
 							</div>
 							<div class="tab-pane fade" id="tab-pane17" role="tabpanel" aria-labelledby="tab14" tabindex="0">
 								<span class="preset-title" id="preset17"></span>
-								<div class="screen-container" id="divCodeWrapper">
+								<div class="screen-container" id="dropText18">
 									<pre id="preCode"><code id="codeBlock18" class="language-csharp"></code></pre>
-									<textarea class="text18 screen" id="dropText18" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
+									<textarea class="text18 screen" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
 									<div class="overlay">VGA 17</div>
 								</div>
 							</div>
 							<div class="tab-pane fade" id="tab-pane18" role="tabpanel" aria-labelledby="tab14" tabindex="0">
 								<span class="preset-title" id="preset18"></span>
-								<div class="screen-container" id="divCodeWrapper">
+								<div class="screen-container" id="dropText19">
 									<pre id="preCode"><code id="codeBlock19" class="language-csharp"></code></pre>
-									<textarea class="text19 screen" id="dropText19" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
+									<textarea class="text19 screen" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
 									<div class="overlay">VGA 18</div>
 								</div>
 							</div>
 							<div class="tab-pane fade" id="tab-pane19" role="tabpanel" aria-labelledby="tab14" tabindex="0">
 								<span class="preset-title" id="preset19"></span>
-								<div class="screen-container" id="divCodeWrapper">
+								<div class="screen-container" id="dropText20">
 									<pre id="preCode"><code id="codeBlock20" class="language-csharp"></code></pre>
-									<textarea class="text20 screen" id="dropText20" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
+									<textarea class="text20 screen" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
 									<div class="overlay">VGA 19</div>
 								</div>
 							</div>
 							<div class="tab-pane fade" id="tab-pane20" role="tabpanel" aria-labelledby="tab14" tabindex="0">
 								<span class="preset-title" id="preset20"></span>
-								<div class="screen-container" id="divCodeWrapper">
+								<div class="screen-container" id="dropText21">
 									<pre id="preCode"><code id="codeBlock21" class="language-csharp"></code></pre>
-									<textarea class="text21 screen" id="dropText21" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
+									<textarea class="text21 screen" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
 									<div class="overlay">VGA 20</div>
 								</div>
 							</div>
 							<div class="tab-pane fade" id="tab-pane21" role="tabpanel" aria-labelledby="tab14" tabindex="0">
 								<span class="preset-title" id="preset21"></span>
-								<div class="screen-container" id="divCodeWrapper">
+								<div class="screen-container" id="dropText22">
 									<pre id="preCode"><code id="codeBlock22" class="language-csharp"></code></pre>
-									<textarea class="text22 screen" id="dropText22" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
+									<textarea class="text22 screen" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
 									<div class="overlay">VGA 21</div>
 								</div>
 							</div>
 							<div class="tab-pane fade" id="tab-pane22" role="tabpanel" aria-labelledby="tab14" tabindex="0">
 								<span class="preset-title" id="preset22"></span>
-								<div class="screen-container" id="divCodeWrapper">
+								<div class="screen-container" id="dropText23">
 									<pre id="preCode"><code id="codeBlock23" class="language-csharp"></code></pre>
-									<textarea class="text23 screen" id="dropText23" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
+									<textarea class="text23 screen" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
 									<div class="overlay">VGA 22</div>
 								</div>
 							</div>
 							<div class="tab-pane fade" id="tab-pane23" role="tabpanel" aria-labelledby="tab14" tabindex="0">
 								<span class="preset-title" id="preset23"></span>
-								<div class="screen-container" id="divCodeWrapper">
+								<div class="screen-container" id="dropText24">
 									<pre id="preCode"><code id="codeBlock24" class="language-csharp"></code></pre>
-									<textarea class="text24 screen" id="dropText24" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
+									<textarea class="text24 screen" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
 									<div class="overlay">VGA 23</div>
 								</div>
 							</div>
 							<div class="tab-pane fade" id="tab-pane24" role="tabpanel" aria-labelledby="tab14" tabindex="0">
 								<span class="preset-title" id="preset24"></span>
-								<div class="screen-container" id="divCodeWrapper">
+								<div class="screen-container" id="dropText25">
 									<pre id="preCode"><code id="codeBlock25" class="language-csharp"></code></pre>
-									<textarea class="text25 screen" id="dropText25" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
+									<textarea class="text25 screen" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea>
 									<div class="overlay">VGA 24</div>
 								</div>
 							</div>
@@ -453,11 +463,16 @@
 			<div class="center-foot">
 				<div class="foot-wrapper">
 					<div class="credit design">
-						<em>Designed by hgoda90</em>
+						<em>Designed by hgoda90&emsp;</em>
+						<span class="dot-divider"></span>
+						<a href="https://github.com/sampotts/plyr">Plyr</a><em> by Sam Potts</em> &copy;2017
 					</div>
 					<div class="credit">
-						<a href="https://forums.libretro.com/t/koko-aio-shader-discussions-and-updates/38455">koko-aio</a><em class="modal-link" data-link="koko-aio.html" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="koko-aio Settings"> by kokoko3k </em> <span class="dot-divider"></span>
-						<a href="https://forums.libretro.com/t/mega-bezel-reflection-shader-feedback-and-updates/25512">Mega Bezel</a><em class="modal-link" data-link="mbz.html" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Mega Bezel Settings"> by HyperspaceMadness</em>
+						<a href="https://forums.libretro.com/t/koko-aio-shader-discussions-and-updates/38455">koko-aio</a>
+						<em class="modal-link" data-link="koko-aio.html" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="koko-aio Settings"> by kokoko3k </em>
+						<span class="dot-divider"></span>
+						<a href="https://forums.libretro.com/t/mega-bezel-reflection-shader-feedback-and-updates/25512">Mega Bezel</a>
+						<em class="modal-link" data-link="mbz.html" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Mega Bezel Settings"> by HyperspaceMadness</em>
 					</div>
 				</div>
 			</div>

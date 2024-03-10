@@ -1,0 +1,14 @@
+1. Go to page of Youtube Playlist
+2. Scroll to the bottom of the Playlist
+3. Place the code into internet browser's Console
+4. Paste the links into a txt file in youtube folder
+
+
+$$('a').forEach(function(v,i,a){
+	if (v.id=="video-title"){
+		link = v.href;
+		title = link.replace(link.slice(link.indexOf("&")), '');
+		links = links+title+"\n";
+		copy(links.trim());
+	}
+});
