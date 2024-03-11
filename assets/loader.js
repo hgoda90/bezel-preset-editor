@@ -210,6 +210,7 @@ function dropFile(file) {
 	
 	if(extension == "mp4" || extension == "mp3" || extension == "txt"){
 		const playing = (extension == "mp4") ? "video" : (extension == "mp3") ? "audio" : "youtube";
+		const player = new Plyr('#player', {autoplay: true,invertTime: false});
 		
 		if(playing == "youtube"){
 			minitube(file);

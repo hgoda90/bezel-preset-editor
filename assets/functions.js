@@ -935,7 +935,7 @@ function start(){
 
 function update(){
 	if(build == "on"){
-		var textBox = $(".active textarea").attr("class").replace("text", "");
+		var textBox = parseInt($(".active textarea").attr("class").replace("text", ""));
 	}
 	else{
 		var textBox = 1;
