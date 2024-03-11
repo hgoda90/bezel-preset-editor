@@ -5,7 +5,7 @@ function loadFile(presets, files, id){
 	reader.onload = function(e) {
 		var preset = e.target.result;
 		if(id == 1){
-			$(".text").val(preset.trim()).text(preset.trim());
+			$(".text2").val(preset.trim()).text(preset.trim());
 			uc[1]();
 		}
 		else{
