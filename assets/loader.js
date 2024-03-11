@@ -6,7 +6,7 @@ function loadFile(presets, files, id){
 		var preset = e.target.result;
 		if(id == 1){
 			$(".text2").val(preset.trim()).text(preset.trim());
-			uc[1]();
+			uc[2]();
 		}
 		else{
 			$(".text"+(id+1)).val(preset.trim()).text(preset.trim());
