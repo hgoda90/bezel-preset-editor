@@ -1168,6 +1168,7 @@ pre {
     background: #FFF;
     transition: all .3s ease-in;
     filter: brightness(1);
+    z-index: 20;
 }
 
 .on.amber .screen-container, .on.green .screen-container {
@@ -1201,7 +1202,7 @@ pre {
     right: 16px;
     width: 386px;
     height: 217px;
-    padding: 16px 20px 20px 16px;
+    padding: 14px 16px 20px 16px;
     background: #444;
     position: fixed;
     border-radius: 10px;
@@ -1210,7 +1211,6 @@ pre {
 }
 
 .mini.on {
-    background: #ebe6c9;
     border-radius: 4px;
 }
 

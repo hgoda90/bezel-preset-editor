@@ -98,15 +98,17 @@ function clearText(id){
 	if(id == 1){
 		$(".text").text("").val("");
 		$("#codeBlock1, .info").empty();
+		URL.revokeObjectURL($(".mini .plyr source").attr("src"));
 		$(".mini .plyr").remove();
 		$(".mini textarea").css("display", "block");
 		colorReset;
 	}
 	else{
 		$(".text-box .tab-pane.active textarea").text("").val("");
-		$("#codeBlock"+id).empty();
+		$(".tab-pane.active code").empty();
 		$(".nav-link.active").parents(".nav-item").addClass("empty");
 		$(".text-box .tab-pane.active .preset-title").empty();
+		URL.revokeObjectURL($(".tab-pane.active .plyr source").attr("src"));
 		$(".tab-pane.active .plyr").remove();
 		$(".tab-pane.active textarea").css("display", "block");
 	}
@@ -601,17 +603,19 @@ function preview(){
 }
 
 function removeTabs(){
-	$(".preset-title").empty();
-	$(".nav-hide").remove();
+	$( ".tab-pane .plyr" ).each(function() {
+		URL.revokeObjectURL($(this).children('source').attr('src'));
+	});
+	
+	$(".preset-title, .tab-pane code").empty();
 	$(".tab-content textarea").text("").val("");
-	$(".remove").remove();
-	$(".tooltip").remove();
-	$(".nav").addClass("empty");
+	$(".remove, .tooltip, .nav, .nav-hide, .tab-pane .plyr").remove();
 	$(".tab-pane").removeClass("active").removeClass("show");
 	$(".text2").parents(".tab-pane").addClass("active").addClass("show");
+	$(".text2").css("display", "block");
 	$(".nav-link").removeClass("active");
 	$("#tab1").addClass("active");
-	$(".nav").remove();
+	$(".tabe-pane .plyr").remove();
 }
 
 function samples(){
