@@ -26,7 +26,7 @@ function bezelToggle(){
 	if($(".switch-panel .bezel input").is(":checked")){
 		setCookie("bezelStyle", "mbz", 30);
 		bezelStyle = "mbz";
-		layerToggle(imageLayer);
+		layerToggle(mbzLayer);
 		$(".bezel .switch-label:nth-child(3)").addClass("active");
 		$(".imageType").removeClass("disabled");
 		$(".imageType input").prop("disabled", false);
@@ -37,7 +37,7 @@ function bezelToggle(){
 		setCookie("bezelStyle", "koko-aio", 30);
 		bezelStyle = "koko-aio";
 		buildToggle();
-		layerToggle(imageLayer);
+		layerToggle(kokoLayer);
 		$(".bezel .switch-label:nth-child(1)").addClass("active");
 		$(".imageType").addClass("disabled");
 		$(".imageType input").prop("disabled", true);
@@ -475,15 +475,19 @@ function imageTypeToggle(){
 }
 
 function layerToggle(imageLayers){
-	setCookie("imageLayer", imageLayers, 30);
-	imageLayer = imageLayers
+	if(bezelStyle == "mbz"){
+		setCookie("mbzLayer", imageLayers, 30);
+	}
+	else{
+		setCookie("kokoLayer", imageLayers, 30);
+	}
 	
 	if($(".hex input, .hsb input, .hsl input, .rgb input").val() == ""){
 		settingReset();
 	}
 	
 	if(bezelStyle == "mbz"){
-		switch(imageLayer){
+		switch(imageLayers){
 			case "Bezel":
 				$(".mbz .layer input").val(1).trigger('input');
 				$(".mbz .layer-labels li:nth-child(1)").addClass("active");
@@ -522,7 +526,7 @@ function layerToggle(imageLayers){
 		}
 	}
 	else{
-		switch(imageLayer){
+		switch(imageLayers){
 			case "Bezel Curved":
 				$(".koko-aio .layer input").val(1).trigger('input');
 				$(".koko-aio .layer-labels li:nth-child(1)").addClass("active");
@@ -768,7 +772,7 @@ function settingReset(){
 					cabGlass = 'HSM_CAB_GLASS_HUE = "0.000000"\nHSM_CAB_GLASS_SATURATION = "100.000000"\nHSM_CAB_GLASS_BRIGHTNESS = "100.000000"\n';
 		}
 		
-		switch(imageLayer){
+		switch(mbzLayer){
 			case "Bezel":
 				$(".text").val(bezel).text(bezel);
 				break;
@@ -815,11 +819,18 @@ function start(){
 		colorFormat = getCookie("colorFormat");
 	}
 	
-	if(getCookie("imageLayer") == ""){
-		imageLayer = "Bezel";
+	if(getCookie("mbzLayer") == ""){
+		mbzLayer = "Bezel";
 	}
 	else{
-		imageLayer = getCookie("imageLayer");
+		mbzLayer = getCookie("mbzLayer");
+	}
+	
+	if(getCookie("kokoLayer") == ""){
+		kokoLayer = "Bezel Curved";
+	}
+	else{
+		kokoLayer = getCookie("kokoLayer");
 	}
 	
 	if(getCookie("imageType") == ""){
@@ -888,7 +899,7 @@ function start(){
 	if(bezelStyle == "mbz"){
 		$(".switch-panel .bezel input").attr("checked", "checked");
 		$(".bezel .switch-label:nth-child(3)").addClass("active");
-		layerToggle(imageLayer);
+		layerToggle(mbzLayer);
 		$(".mbz.layers-wrap").css("display", "inline-block");
 		$(".koko-aio.layers-wrap").css("display", "none");
 		$(".imageType").removeClass("disabled");
@@ -899,7 +910,7 @@ function start(){
 		$(".imageType").addClass("disabled");
 		$(".mbz.layers-wrap").css("display", "none");
 		$(".koko-aio.layers-wrap").css("display", "inline-block");
-		layerToggle(imageLayer);
+		layerToggle(kokoLayer);
 		$(".imageType input").prop("disabled", true);
 	}
 	
