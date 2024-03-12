@@ -190,7 +190,7 @@ function video(id, file, files, extension, playing){
 		var input = URL.createObjectURL(file[(id-2)]);
 		
 		if(extension == "mp3"){
-			$("#dropText"+id).append('<audio controls crossorigin playsinline class="js-player" id="player'+id+'"></audio>');
+			$("#dropText"+id).append('<audio controls crossorigin playsinline class="js-player" id="player'+id+'" data-plyr-config=\'{ "invertTime": false }\'><source src="'+input+'" type="audio/mp3"></audio>');
 		}
 		else if(extension == "mp4"){
 			$("#dropText"+id).append('<video controls crossorigin playsinline class="js-player" id="player'+id+'" data-plyr-config=\'{ "invertTime": false }\'><source src="'+input+'" type="video/mp4"></video>');
@@ -205,10 +205,8 @@ function video(id, file, files, extension, playing){
 function loadVideo(id, file, files, extension, playing){
 	var input = URL.createObjectURL(file[(id-2)]);
 	
-	console.log(input);
-	
 	if(extension == "mp3"){
-		$("#dropText"+id).append('<audio controls crossorigin playsinline class="js-player" id="player'+id+'"></audio>');
+		$("#dropText"+id).append('<audio controls crossorigin playsinline class="js-player" id="player'+id+'" data-plyr-config=\'{ "invertTime": false }\'><source src="'+input+'" type="audio/mp3"></audio>');
 	}
 	else if(extension == "mp4"){
 		$("#dropText"+id).append('<video controls crossorigin playsinline class="js-player" id="player'+id+'" data-plyr-config=\'{ "invertTime": false }\'><source src="'+input+'" type="video/mp4"></video>');
