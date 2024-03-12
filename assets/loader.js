@@ -1197,7 +1197,7 @@ $("#tab-pane1 .screen-container").on("drop", function(e) {
 				navHide();
 			});
 			
-			if(dots == "hidden"){
+			if(tabs == "hidden"){
 				$(".nav-tabs").addClass("hide");
 				$(".nav-hide span").text("keyboard_double_arrow_down");
 				$(".nav-hide").css("transform", "translateY(-60px)");
@@ -1820,7 +1820,7 @@ $(document).ready(function(){
 					navHide();
 				});
 				
-				if(dots == "hidden"){
+				if(tabs == "hidden"){
 					$(".nav-tabs").addClass("hide");
 					$(".nav-hide span").text("keyboard_double_arrow_down");
 					$(".nav-hide").css("transform", "translateY(-60px)");

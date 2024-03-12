@@ -340,8 +340,9 @@ span.square-title {
 	appearance: none;
 	height: 8px;
 	width: 190px;
-	background-color: #DDD;
 	-webkit-border-radius: 25px;
+	background: rgb(0 0 0 / 6%);
+	border: 1px solid #AAA;
 	border-radius: 25px;
 	padding: 0 2px;
 	margin: 0;
@@ -352,17 +353,14 @@ span.square-title {
 }
 
 .format input::-webkit-slider-thumb {
-	background-color: #FFF;
-}
-
-.format input::-webkit-slider-thumb {
 	-webkit-appearance: none;
+	background: linear-gradient(0deg, #EEE, #FFF);
 	appearance: none;
 	width: 18px;
 	height: 18px;
 	-webkit-border-radius: 25px;
 	border-radius: 25px;
-	border: 2px solid #DDD
+	border: 2px solid #CCC;
 }
 
 .format input:focus {
@@ -416,7 +414,8 @@ span.square-title {
 	left: 0;
 	right: 0;
 	bottom: 0;
-	background-color: #DDD;
+	background: rgb(0 0 0 / 6%);
+	border: 1px solid #AAA;
 	-webkit-transition: .4s;
 	transition: .4s;
 }
@@ -427,11 +426,11 @@ span.square-title {
 	height: 14px;
 	width: 14px;
 	left: -2px;
-	top: -6px;
-	background-color: white;
+	top: -7px;
+	background: linear-gradient(0deg, #EEE, #FFF);
 	-webkit-transition: .4s;
 	transition: .4s;
-	border: 2px solid #DDD;
+	border: 2px solid #CCC;
 }
 
 .switch input:checked + .slider:before {
@@ -477,50 +476,52 @@ span.square-title {
 	display: block;
 	width: 18px;
 	height: 18px;
-	margin: -8px 0 0;
+	margin: -6px 0 0;
 	border-radius: 50%;
-	background: #FFF;
+	background: linear-gradient(0deg, #EEE, #FFF);
 	cursor: pointer;
-	border: 2px solid #DDD !important;
+	border: 2px solid #CCC !important;
 }
 .layer input::-moz-range-thumb {
 	width: 16px;
 	height: 16px;
-	margin: -8px 0 0;
+	margin: -6px 0 0;
 	border-radius: 50%;
-	background: #FFF;
+	background: linear-gradient(0deg, #EEE, #FFF);
 	cursor: pointer;
-	border: 2px solid #DDD !important;
+	border: 2px solid #CCC !important;
 }
 .layer input::-ms-thumb {
 	width: 16px;
 	height: 16px;
-	margin: -8px 0 0;
+	margin: -6px 0 0;
 	border-radius: 50%;
-	background: #FFF;
+	background: linear-gradient(0deg, #EEE, #FFF);
 	cursor: pointer;
-	border: 2px solid #DDD !important;
+	border: 2px solid #CCC !important;
 }
 
 .layer input::-webkit-slider-runnable-track {
 	width: 100%;
-	height: 2px;
+	height: 8px;
 	cursor: pointer;
-	background: #DDD;
+	background: rgb(0 0 0 / 6%);
+	border: 1px solid #AAA;
+	border-radius: 25px;
 }
 
 .layer input::-moz-range-track {
 	width: 100%;
 	height: 2px;
 	cursor: pointer;
-	background: #DDD;
+	background: rgb(0 0 0 / 6%);
 }
 
 .layer input::-ms-track {
 	width: 100%;
 	height: 2px;
 	cursor: pointer;
-	background: #DDD;
+	background: rgb(0 0 0 / 6%);
 	border-color: transparent;
 	color: transparent;
 }
@@ -545,19 +546,6 @@ span.square-title {
 	color: rgb(51 51 51 / 50%);
 	font-size: 14px;
 	cursor: pointer;
-}
-
-.layer-labels li::before {
-	position: absolute;
-	top: -29px;
-	right: 0;
-	left: 0;
-	content: "";
-	margin: 0 auto;
-	width: 10px;
-	height: 10px;
-	background: #DDD;
-	border-radius: 50%;
 }
 
 .layers-wrap:not(.disabled) .layer-labels .active {

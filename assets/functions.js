@@ -328,13 +328,13 @@ function destroy(){
 
 function navHide(){
 	if($(".nav-tabs").hasClass("hide")){
-		setCookie("dots", "shown", 30);
+		setCookie("tabs", "shown", 30);
 		$(".nav-tabs").removeClass("hide");
 		$(".nav-hide span").text("keyboard_double_arrow_up");
 		$(".nav-hide").css("transform", "translateY(-4px)");
 	}
 	else{
-		setCookie("dots", "hidden", 30);
+		setCookie("tabs", "hidden", 30);
 		$(".nav-tabs").addClass("hide");
 		$(".nav-hide span").text("keyboard_double_arrow_down");
 		$(".nav-hide").css("transform", "translateY(-60px)");
@@ -861,11 +861,11 @@ function start(){
 		colorVer = getCookie("colorVersion");
 	}
 	
-	if(getCookie("dots") == ""){
-		dots = "shown";
+	if(getCookie("tabs") == ""){
+		tabs = "shown";
 	}
 	else{
-		dots = getCookie("dots");
+		tabs = getCookie("tabs");
 	}
 	
 	if(getCookie("monochrome") == ""){
