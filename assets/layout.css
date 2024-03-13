@@ -329,6 +329,24 @@ span.square-title {
 
 .format-labels span {
     margin: 0 10px;
+    position: relative;
+}
+
+.format-labels span:before {
+	position: absolute;
+	top: -13px;
+	right: 0;
+	left: 0;
+	content: "";
+	margin: 0 auto;
+	width: 1px;
+	height: 4px;
+	background: rgb(0 0 0 / 20%);
+	border-radius: 50%;
+}
+
+.format-labels span.active:before {
+	content: none;
 }
 
 .format-labels .active, .switch-label.active {
@@ -341,8 +359,8 @@ span.square-title {
 	height: 8px;
 	width: 190px;
 	-webkit-border-radius: 25px;
-	background: rgb(0 0 0 / 6%);
-	border: 1px solid #AAA;
+	background: linear-gradient(rgb(0 0 0 / 4%) 70%, rgb(0 0 0 / 8%));
+	border: 1px solid rgb(0 0 0 / 5%);
 	border-radius: 25px;
 	padding: 0 2px;
 	margin: 0;
@@ -414,8 +432,8 @@ span.square-title {
 	left: 0;
 	right: 0;
 	bottom: 0;
-	background: rgb(0 0 0 / 6%);
-	border: 1px solid #AAA;
+	background: linear-gradient(rgb(0 0 0 / 4%) 70%, rgb(0 0 0 / 8%));
+	border: 1px solid rgb(0 0 0 / 5%);
 	-webkit-transition: .4s;
 	transition: .4s;
 }
@@ -505,8 +523,8 @@ span.square-title {
 	width: 100%;
 	height: 8px;
 	cursor: pointer;
-	background: rgb(0 0 0 / 6%);
-	border: 1px solid #AAA;
+	background: linear-gradient(rgb(0 0 0 / 4%) 70%, rgb(0 0 0 / 8%));
+	border: 1px solid rgb(0 0 0 / 5%);
 	border-radius: 25px;
 }
 
@@ -514,14 +532,14 @@ span.square-title {
 	width: 100%;
 	height: 2px;
 	cursor: pointer;
-	background: rgb(0 0 0 / 6%);
+	background: linear-gradient(rgb(0 0 0 / 4%) 70%, rgb(0 0 0 / 8%));
 }
 
 .layer input::-ms-track {
 	width: 100%;
 	height: 2px;
 	cursor: pointer;
-	background: rgb(0 0 0 / 6%);
+	background: linear-gradient(rgb(0 0 0 / 4%) 70%, rgb(0 0 0 / 8%));
 	border-color: transparent;
 	color: transparent;
 }
@@ -546,6 +564,19 @@ span.square-title {
 	color: rgb(51 51 51 / 50%);
 	font-size: 14px;
 	cursor: pointer;
+}
+
+.layer-labels li::before {
+	position: absolute;
+	top: -26px;
+	right: 0;
+	left: 0;
+	content: "";
+	margin: 0 auto;
+	width: 1px;
+	height: 4px;
+	background: rgb(0 0 0 / 20%);
+	border-radius: 50%;
 }
 
 .layers-wrap:not(.disabled) .layer-labels .active {
@@ -862,14 +893,20 @@ footer .button {
 	color: #888;
 }
 
-.nav-link:hover .dot-divider, .nav-link:focus .dot-divider {background-color: #BBB;}
+.nav-link:hover .dot-divider, .nav-link:focus .dot-divider {
+	background-color: #BBB;
+}
 
 .nav-tabs .nav-link.active, .nav-tabs .nav-link:hover, .nav-item.empty .nav-link.active, .nav-item.empty .nav-link:hover {
-    background: unset;
-    border: none;
-    background: rgb(0 0 0 / 10%);
-    border-radius: 50%;
+    border: 2px solid rgb(0 0 0 / 40%);
+    background: rgb(0 0 0 / 3%);
+    border-radius: 8px;
     color: #333;
+    line-height: 0.9;
+}
+
+.plus .nav-link:hover, .remove .nav-link:hover {
+    margin: 3px 0px;
 }
 
 .nav-tabs .nav-link.active .dot-divider{
@@ -891,7 +928,7 @@ footer .button {
     margin: 5px 2px;
     border: none;
     text-align: center;
-    width: 33px;
+    width: 35px;
     height: 33px;
 }
 
@@ -950,18 +987,13 @@ footer .button {
 }
 
 .remove .material-symbols-outlined.nav-link {
-    width: 27px;
-    height: 27px;
+    width: 21px;
+    height: 21px;
     vertical-align: middle;
-    line-height: 0.95;
+    line-height: 1;
     color: red;
     cursor: pointer;
-    font-size: 28px;
-}
-
-.nav-tabs .nav-link:focus {
-    border: none;
-    color: #888;
+    font-size: 21px;
 }
 
 .nav-link:focus-visible {
@@ -1548,6 +1580,15 @@ pre {
     transform: scale(1.375, 1.06);
 }
 
+.plyr{
+    --plyr-color-main: #FFF1;
+    --plyr-range-fill-background: #00B2FF;
+    --plyr-range-thumb-background: linear-gradient(rgb(0 0 0 / 6%) 36%, rgb(0 0 0 / 40%)), #FFF;
+    --plyr-video-progress-buffered-background: #FFF1;
+    --plyr-control-radius: 6px;
+    --plyr-video-control-background-hover: #FFF3;
+}
+
 .plyr ~ textarea {
     display: none;
 }
@@ -1557,6 +1598,11 @@ pre {
     height: 100%;
     position: absolute;
     background: #222;
+}
+
+.plyr:not(.yt) .plyr__control.plyr__control--overlaid{
+    padding: 24px;
+    --plyr-control-icon-size: 30px;
 }
 
 .mini.on .button.active {
@@ -1591,10 +1637,10 @@ input[type="text"], select {
 }
 
 .plus .nav-link {
-    width: 28px;
-    height: 28px;
+    width: 21px;
+    height: 21px;
     vertical-align: middle;
-    line-height: 1.3;
+    line-height: 1 !important;
     color: #777;
     cursor: pointer;
     font-size: 21px;

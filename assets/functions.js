@@ -331,7 +331,7 @@ function navHide(){
 		setCookie("tabs", "shown", 30);
 		$(".nav-tabs").removeClass("hide");
 		$(".nav-hide span").text("keyboard_double_arrow_up");
-		$(".nav-hide").css("transform", "translateY(-4px)");
+		$(".nav-hide").css("transform", "translateY(2px)");
 	}
 	else{
 		setCookie("tabs", "hidden", 30);
