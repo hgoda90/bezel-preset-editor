@@ -4,23 +4,23 @@ function loadFile(presets, files, id){
 	var reader = new FileReader();
 	reader.onload = function(e) {
 		var preset = e.target.result;
-		if(id == 1){
-			$(".text2").val(preset.trim()).text(preset.trim());
-			uc[2]();
+		$("#dropText"+(id+2)+" textarea").text(preset.trim()).val(preset.trim());
+		$("#dropText"+(id+2)+" .plyr").remove()
+		$("#dropText"+(id+2)+" textarea").css("display", "block");
+		$("#tab"+(id+1)).removeClass("yt").removeClass("vid");
+		
+		if(power == "off"){
+			$("#dropText"+(id+2)+" code").css("display", "block");
 		}
-		else{
-			$(".text"+(id+1)).val(preset.trim()).text(preset.trim());
-			uc[id+1]();
-		}
+		updateCode2(id+2);
 	};
-
-	if($(".tab-pane.active").length == 1 && files == 1){
-		reader.readAsText(presets[0], "UTF-8");
-		$("#preset"+id).text(presets[0].name.replace(".params", "").replace(".slangp", ""));
-	}
-	else{
-		reader.readAsText(presets[id-1], "UTF-8");
-		$("#preset"+id).text(presets[id-1].name.replace(".params", "").replace(".slangp", ""));
+	
+	reader.readAsText(presets, "UTF-8");
+	
+	if($(".tab-pane textarea").length > 2 && files == 1 && power == "off"){
+		for(i=0;i<$(".tab-pane textarea").length;i++){
+			updateCode2(id+2);
+		}
 	}
 }
 
@@ -29,7 +29,7 @@ function miniLoad(file){
 	reader.onload = function(e) {
 		var preset = e.target.result;
 		$(".text").val(preset.trim()).text(preset.trim());
-		uc[1]();
+		updateMini();
 	};
 	reader.readAsText(file, "UTF-8");
 }
@@ -39,9 +39,23 @@ function dropLoad(file, files, id){
 	reader.onload = function(e) {
 		var preset = e.target.result;
 		$("#dropText"+(id+1)+" textarea").text(preset.trim()).val(preset.trim());
-		uc[id+1]();
+		$("#dropText"+(id+1)+" .plyr").remove()
+		$("#dropText"+(id+1)+" textarea").css("display", "block");
+		$("#tab"+id).removeClass("yt").removeClass("vid");
+		
+		if(power == "off"){
+			$("#dropText"+(id+1)+" code").css("display", "block");
+		}
+		updateMini();
+		updateCode2((id+1));
 	};
 	reader.readAsText(file, "UTF-8");
+	
+	if($(".tab-pane textarea").length > 2 && files == 1 && power == "off"){
+		for(i=0;i<$(".tab-pane textarea").length;i++){
+			updateCode2(id+1);
+		}
+	}
 }
 
 function minitube(file){
@@ -96,6 +110,8 @@ function minitube(file){
 			$(".mini textarea").css("display", "none");
 		}
 	});
+	
+	$(".mini .plyr").attr("tab-index", "0");
 }
 
 function youtube(file, id){
@@ -115,6 +131,7 @@ function youtube(file, id){
 		if(video != null && video > 0 && video <= data.length && video % 1 == 0){
 			if($("#player"+id).length == 0){
 				$(".tab-pane.active .screen-container").append('<div id="player'+id+'" data-plyr-provider="youtube" data-plyr-embed-id="'+data[(video-1)]+'"></div>');
+				$("#tab"+$(".tab-pane.active").attr("id").replace("tab-pane", "")).addClass("yt").removeClass("vid");
 
 				const player = new Plyr('#player'+id, {autoplay: true,invertTime: false});
 				player.source = {type: 'video',sources: [{src: data[(video-1)],provider: 'youtube'}]};
@@ -170,11 +187,15 @@ function youtube(file, id){
 			$(".tab-pane.active textarea").css("display", "none");
 		}
 	});
+	
+	$(".tab-pane .plyr").attr("tab-index", "0");
 }
 
 function video(id, file, files, extension, playing){
+	$("#tab"+id).addClass("vid").removeClass("yt");
+	
 	if(files == 1 && id > 2){
-		var input = URL.createObjectURL(file);
+		var input = URL.createObjectURL(file[0]);
 		
 		if(extension == "mp3"){
 			$("#dropText"+(id+1)).append('<audio controls crossorigin playsinline id="player'+(id+1)+'"></audio>');
@@ -187,34 +208,116 @@ function video(id, file, files, extension, playing){
 		player.source = {type: playing,sources: [{src: input,type: playing+'/'+extension}]};
 	}
 	else{
-		var input = URL.createObjectURL(file[(id-2)]);
+		var input = URL.createObjectURL(file[files-1]);
 		
 		if(extension == "mp3"){
-			$("#dropText"+id).append('<audio controls crossorigin playsinline class="js-player" id="player'+id+'" data-plyr-config=\'{ "invertTime": false }\'><source src="'+input+'" type="audio/mp3"></audio>');
+			$("#dropText"+(id+1)).append('<audio controls crossorigin playsinline class="js-player" id="player'+(id+1)+'" data-plyr-config=\'{ "invertTime": false }\'><source src="'+input+'" type="audio/mp3"></audio>');
 		}
 		else if(extension == "mp4"){
-			$("#dropText"+id).append('<video controls crossorigin playsinline class="js-player" id="player'+id+'" data-plyr-config=\'{ "invertTime": false }\'><source src="'+input+'" type="video/mp4"></video>');
+			$("#dropText"+(id+1)).append('<video controls crossorigin playsinline class="js-player" id="player'+(id+1)+'" data-plyr-config=\'{ "invertTime": false }\'><source src="'+input+'" type="video/mp4"></video>');
 		}
 	
 		const players = Array.from(document.querySelectorAll('.js-player')).map((p) => new Plyr(p));
 	}
 	
-	$("#dropText"+id+" textarea").css("display", "none");
+	$("#dropText"+(id+1)+" textarea, #dropText"+(id+1)+" code").css("display", "none");
+	$(".tab-pane .plyr").attr("tab-index", (id+1));
 }
 
 function loadVideo(id, file, files, extension, playing){
-	var input = URL.createObjectURL(file[(id-2)]);
+	$("#tab"+(id-1)).addClass("vid").removeClass("yt");
 	
-	if(extension == "mp3"){
-		$("#dropText"+id).append('<audio controls crossorigin playsinline class="js-player" id="player'+id+'" data-plyr-config=\'{ "invertTime": false }\'><source src="'+input+'" type="audio/mp3"></audio>');
+	if(files == 1){
+		var input = URL.createObjectURL(file[0]);
+		
+		if(extension == "mp3"){
+			$("#dropText"+id).append('<audio controls crossorigin playsinline id="player'+id+'"></audio>');
+		}
+		else if(extension == "mp4"){
+			$("#dropText"+id).append('<video controls crossorigin playsinline id="player'+id+'"></video>');
+		}
+		
+		const player = new Plyr('#player'+id, {autoplay: true,invertTime: false});
+		player.source = {type: playing,sources: [{src: input,type: playing+'/'+extension}]};
 	}
-	else if(extension == "mp4"){
-		$("#dropText"+id).append('<video controls crossorigin playsinline class="js-player" id="player'+id+'" data-plyr-config=\'{ "invertTime": false }\'><source src="'+input+'" type="video/mp4"></video>');
+	else{
+		var input = URL.createObjectURL(file);
+		
+		if(extension == "mp3"){
+			$("#dropText"+(id+2)).append('<audio controls crossorigin playsinline class="js-player" id="player'+(id+2)+'" data-plyr-config=\'{ "invertTime": false }\'><source src="'+input+'" type="audio/mp3"></audio>');
+		}
+		else if(extension == "mp4"){
+			$("#dropText"+(id+2)).append('<video controls crossorigin playsinline class="js-player" id="player'+(id+2)+'" data-plyr-config=\'{ "invertTime": false }\'><source src="'+input+'" type="video/mp4"></video>');
+		}
+	
+		const players = Array.from(document.querySelectorAll('.js-player')).map((p) => new Plyr(p));
+		
+		$("#dropText"+(id+2)+" textarea, #dropText"+(id+1)+" code").css("display", "none");
 	}
+}
 
-	const players = Array.from(document.querySelectorAll('.js-player')).map((p) => new Plyr(p));
+function prevTab(){
+	var active = parseInt($(".nav-link.active").text()),
+		position = parseInt($('.nav-stage').css("transform").split(",")[4].trim()),
+		slide = position+39;
 	
-	$("#dropText"+id+" textarea").css("display", "none");
+	if(active > 1){
+		$("#tab"+active).removeClass("active");
+		$("#tab"+(active-1)).addClass("active");
+		$("#tab-pane"+active).removeClass("active show");
+		$("#tab-pane"+(active-1)).addClass("active show");
+	}
+	
+	prev = parseInt($(".nav-link.active").text())
+	
+	if(position < 0 && active+22 < $(".nav-stage").children('li').length){
+		$(".nav-stage").css("transform", "translateX("+slide+"px)");
+	}
+	
+	if(position < -39){
+		$(".nav .less").css("display", "table-cell");
+	}
+	else{
+		$(".nav .less").css("display", "none");
+	}
+	
+	if(position <= ($(".nav-stage").children('li').length-24) * -39){
+		$(".nav .more").css("display", "none");
+	}
+	else{
+		$(".nav .more").css("display", "table-cell");
+	}
+}
+
+function nextTab(){
+	var active = parseInt($(".nav-link.active").text()),
+		position = parseInt($('.nav-stage').css("transform").split(",")[4].trim()),
+		slide = position-39;
+	
+	if(active < $(".nav-stage").children('li').length){
+		$("#tab"+(active+1)).addClass("active");
+		$("#tab"+active).removeClass("active");
+		$("#tab-pane"+active).removeClass("active show");
+		$("#tab-pane"+(active+1)).addClass("active show");
+	}
+	
+	next = parseInt($(".nav-link.active").text());
+	
+	if(position <= ($(".nav-stage").children('li').length-24) * -39 || next == $(".nav-stage").children('li').length){
+		$(".nav .more").css("display", "none");
+	}
+	else{
+		$(".nav .more").css("display", "table-cell");
+	}
+	
+	if(next <= $(".nav-stage").children('li').length && position > (($(".nav-stage").children('li').length - 24) * -39) && next > 24){
+		$(".nav-stage").css("transform", "translateX("+slide+"px)");
+	}
+	
+	if(next > 25){
+		$(".nav .less").css("display", "table-cell");
+	}
+	
 }
 
 function dropFile(file) {
@@ -239,6 +342,7 @@ function dropFile(file) {
 		}
 		else{
 			player.source = {type: playing,sources: [{src: input,type: playing+'/'+extension}]};
+			$(".mini .plyr").attr("tab-index", "0");
 		}
 		
 		$(".text").css("display", "none");
@@ -249,858 +353,48 @@ function dropFile(file) {
 }
 
 function dropFile2(file) {
-	var extension = file[(file.length-1)].name.substr( (file[(file.length-1)].name.lastIndexOf('.') +1) );
+	var id = parseInt(file.length);
 	
-	if(file.length == 1){
-		if(extension == "mp4" || extension == "mp3" || extension == "txt"){
-			const playing = (extension == "mp4") ? "video" : (extension == "mp3") ? "audio" : "youtube";
-			
-			if(playing == "youtube"){
-				youtube(file, 2);
-			}
-			else{
-				video(2, file, 1, extension, playing);
-				
-				$(".tab-pane.active textarea").css("display", "none");
-			}
-		}
-		else{
-			dropLoad(file[0], 1, 1);
-			$("#preset1").text(file[0].name.replace(".params", "").replace(".slangp", ""));
-		}
-		
-		$(".nav-link.active").parents(".nav-item").removeClass("empty");
+	if($(".tab-pane.active").length == 0){
+		active = 1;
 	}
-	if(file.length == 2){
-		if(extension == "mp4" || extension == "mp3"){
-			const playing = (extension == "mp4") ? "video" : "audio";
-			
-			video(3, file, 2, extension, playing);
-			
-			$(".tab-pane.active textarea").css("display", "none");
-		}
-		else{
-			dropLoad(file[1], 2, 2);
-			$("#preset2").text(file[1].name.replace(".params", "").replace(".slangp", ""));
-		}
-	}
-	if(file.length == 3){
-		if(extension == "mp4" || extension == "mp3"){
-			const playing = (extension == "mp4") ? "video" : "audio";
-			
-			video(4, file, 3, extension, playing);
-			
-			$(".tab-pane.active textarea").css("display", "none");
-		}
-		else{
-			dropLoad(file[2], 3, 3);
-			$("#preset3").text(file[2].name.replace(".params", "").replace(".slangp", ""));
-		}
-	}
-	if(file.length == 4){
-		if(extension == "mp4" || extension == "mp3"){
-			const playing = (extension == "mp4") ? "video" : "audio";
-			
-			video(5, file, 4, extension, playing);
-			
-			$(".tab-pane.active textarea").css("display", "none");
-		}
-		else{
-			dropLoad(file[3], 4, 4);
-			$("#preset4").text(file[3].name.replace(".params", "").replace(".slangp", ""));
-		}
-	}
-	if(file.length == 5){
-		if(extension == "mp4" || extension == "mp3"){
-			const playing = (extension == "mp4") ? "video" : "audio";
-			
-			video(6, file, 5, extension, playing);
-			
-			$(".tab-pane.active textarea").css("display", "none");
-		}
-		else{
-			dropLoad(file[4], 5, 5);
-			$("#preset5").text(file[4].name.replace(".params", "").replace(".slangp", ""));
-		}
-	}
-	if(file.length == 6){
-		if(extension == "mp4" || extension == "mp3"){
-			const playing = (extension == "mp4") ? "video" : "audio";
-			
-			video(7, file, 6, extension, playing);
-			
-			$(".tab-pane.active textarea").css("display", "none");
-		}
-		else{
-			dropLoad(file[5], 5, 5);
-			$("#preset6").text(file[5].name.replace(".params", "").replace(".slangp", ""));
-		}
-	}
-	if(file.length == 7){
-		if(extension == "mp4" || extension == "mp3"){
-			const playing = (extension == "mp4") ? "video" : "audio";
-			
-			video(8, file, 7, extension, playing);
-			
-			$(".tab-pane.active textarea").css("display", "none");
-		}
-		else{
-			dropLoad(file[6], 7, 7);
-			$("#preset7").text(file[6].name.replace(".params", "").replace(".slangp", ""));
-		}
-	}
-	if(file.length == 8){
-		if(extension == "mp4" || extension == "mp3"){
-			const playing = (extension == "mp4") ? "video" : "audio";
-			
-			video(9, file, 8, extension, playing);
-			
-			$(".tab-pane.active textarea").css("display", "none");
-		}
-		else{
-			dropLoad(file[7], 8, 8);
-			$("#preset8").text(file[7].name.replace(".params", "").replace(".slangp", ""));
-		}
-	}
-	if(file.length == 9){
-		if(extension == "mp4" || extension == "mp3"){
-			const playing = (extension == "mp4") ? "video" : "audio";
-			
-			video(10, file, 9, extension, playing);
-			
-			$(".tab-pane.active textarea").css("display", "none");
-		}
-		else{
-			dropLoad(file[8], 9, 9);
-			$("#preset9").text(file[8].name.replace(".params", "").replace(".slangp", ""));
-		}
-	}
-	if(file.length == 10){
-		if(extension == "mp4" || extension == "mp3"){
-			const playing = (extension == "mp4") ? "video" : "audio";
-			
-			video(11, file, 10, extension, playing);
-			
-			$(".tab-pane.active textarea").css("display", "none");
-		}
-		else{
-			dropLoad(file[9], 10, 10);
-			$("#preset10").text(file[9].name.replace(".params", "").replace(".slangp", ""));
-		}
-	}
-	if(file.length == 11){
-		if(extension == "mp4" || extension == "mp3"){
-			const playing = (extension == "mp4") ? "video" : "audio";
-			
-			video(12, file, 11, extension, playing);
-			
-			$(".tab-pane.active textarea").css("display", "none");
-		}
-		else{
-			dropLoad(file[10], 11, 11);
-			$("#preset11").text(file[10].name.replace(".params", "").replace(".slangp", ""));
-		}
-	}
-	if(file.length == 12){
-		if(extension == "mp4" || extension == "mp3"){
-			const playing = (extension == "mp4") ? "video" : "audio";
-			
-			video(13, file, 12, extension, playing);
-			
-			$(".tab-pane.active textarea").css("display", "none");
-		}
-		else{
-			dropLoad(file[11], 12, 12);
-			$("#preset12").text(file[11].name.replace(".params", "").replace(".slangp", ""));
-		}
-	}
-	if(file.length == 13){
-		if(extension == "mp4" || extension == "mp3"){
-			const playing = (extension == "mp4") ? "video" : "audio";
-			
-			video(14, file, 13, extension, playing);
-			
-			$(".tab-pane.active textarea").css("display", "none");
-		}
-		else{
-			dropLoad(file[12], 13, 13);
-			$("#preset13").text(file[12].name.replace(".params", "").replace(".slangp", ""));
-		}
-	}
-	if(file.length == 14){
-		if(extension == "mp4" || extension == "mp3"){
-			const playing = (extension == "mp4") ? "video" : "audio";
-			
-			video(15, file, 14, extension, playing);
-			
-			$(".tab-pane.active textarea").css("display", "none");
-		}
-		else{
-			dropLoad(file[13], 14, 14);
-			$("#preset14").text(file[13].name.replace(".params", "").replace(".slangp", ""));
-		}
-	}
-	if(file.length == 15){
-		if(extension == "mp4" || extension == "mp3"){
-			const playing = (extension == "mp4") ? "video" : "audio";
-			
-			video(16, file, 15, extension, playing);
-			
-			$(".tab-pane.active textarea").css("display", "none");
-		}
-		else{
-			dropLoad(file[14], 15, 15);
-			$("#preset15").text(file[14].name.replace(".params", "").replace(".slangp", ""));
-		}
-	}
-	if(file.length == 16){
-		if(extension == "mp4" || extension == "mp3"){
-			const playing = (extension == "mp4") ? "video" : "audio";
-			
-			video(17, file, 16, extension, playing);
-			
-			$(".tab-pane.active textarea").css("display", "none");
-		}
-		else{
-			dropLoad(file[15], 16, 16);
-			$("#preset16").text(file[15].name.replace(".params", "").replace(".slangp", ""));
-		}
-	}
-	if(file.length == 17){
-		if(extension == "mp4" || extension == "mp3"){
-			const playing = (extension == "mp4") ? "video" : "audio";
-			
-			video(18, file, 17, extension, playing);
-			
-			$(".tab-pane.active textarea").css("display", "none");
-		}
-		else{
-			dropLoad(file[16], 17, 17);
-			$("#preset17").text(file[16].name.replace(".params", "").replace(".slangp", ""));
-		}
-	}
-	if(file.length == 18){
-		if(extension == "mp4" || extension == "mp3"){
-			const playing = (extension == "mp4") ? "video" : "audio";
-			
-			video(19, file, 18, extension, playing);
-			
-			$(".tab-pane.active textarea").css("display", "none");
-		}
-		else{
-			dropLoad(file[17], 18, 18);
-			$("#preset18").text(file[17].name.replace(".params", "").replace(".slangp", ""));
-		}
-	}
-	if(file.length == 19){
-		if(extension == "mp4" || extension == "mp3"){
-			const playing = (extension == "mp4") ? "video" : "audio";
-			
-			video(20, file, 19, extension, playing);
-			
-			$(".tab-pane.active textarea").css("display", "none");
-		}
-		else{
-			dropLoad(file[18], 19, 19);
-			$("#preset19").text(file[18].name.replace(".params", "").replace(".slangp", ""));
-		}
-	}
-	if(file.length == 20){
-		if(extension == "mp4" || extension == "mp3"){
-			const playing = (extension == "mp4") ? "video" : "audio";
-			
-			video(21, file, 20, extension, playing);
-			
-			$(".tab-pane.active textarea").css("display", "none");
-		}
-		else{
-			dropLoad(file[19], 20, 20);
-			$("#preset20").text(file[19].name.replace(".params", "").replace(".slangp", ""));
-		}
-	}
-	if(file.length == 21){
-		if(extension == "mp4" || extension == "mp3"){
-			const playing = (extension == "mp4") ? "video" : "audio";
-			
-			video(22, file, 21, extension, playing);
-			
-			$(".tab-pane.active textarea").css("display", "none");
-		}
-		else{
-			dropLoad(file[20], 21, 21);
-			$("#preset21").text(file[20].name.replace(".params", "").replace(".slangp", ""));
-		}
-	}
-	if(file.length == 22){
-		if(extension == "mp4" || extension == "mp3"){
-			const playing = (extension == "mp4") ? "video" : "audio";
-			
-			video(23, file, 22, extension, playing);
-			
-			$(".tab-pane.active textarea").css("display", "none");
-		}
-		else{
-			dropLoad(file[21], 22, 22);
-			$("#preset22").text(file[21].name.replace(".params", "").replace(".slangp", ""));
-		}
-	}
-	if(file.length == 23){
-		if(extension == "mp4" || extension == "mp3"){
-			const playing = (extension == "mp4") ? "video" : "audio";
-			
-			video(24, file, 23, extension, playing);
-			
-			$(".tab-pane.active textarea").css("display", "none");
-		}
-		else{
-			dropLoad(file[22], 23, 23);
-			$("#preset23").text(file[22].name.replace(".params", "").replace(".slangp", ""));
-		}
-	}
-	if(file.length == 24){
-		if(extension == "mp4" || extension == "mp3"){
-			const playing = (extension == "mp4") ? "video" : "audio";
-			
-			video(25, file, 24, extension, playing);
-			
-			$(".tab-pane.active textarea").css("display", "none");
-		}
-		else{
-			dropLoad(file[23], 24, 24);
-			$("#preset24").text(file[23].name.replace(".params", "").replace(".slangp", ""));
-		}
+	else{
+		active = parseInt($(".tab-pane.active").attr("id").replace("tab-pane", ""));
 	}
 	
-	$(".nav").removeClass("empty");
-}
-
-function dropFile3(file) {
-	var extension = file.name.substr( (file.name.lastIndexOf('.') +1) );
+	var num = (active + id) - 1;
+	
+	if($(".tab-pane").length < num){
+		$(".tab-content").append('<div class="tab-pane fade" id="tab-pane'+num+'" role="tabpanel" aria-labelledby="tab'+num+'" tabindex="0"><span class="preset-title" id="preset'+num+'"></span><div class="screen-container" id="dropText'+(num+1)+'"><pre id="preCode"><code id="codeBlock'+(num+1)+'" class="language-csharp"></code></pre><textarea class="text'+(num+1)+' screen" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea><div class="overlay">VGA '+num+'</div></div></div>');
+	}
+	
+	var extension = file[id-1].name.substr( (file[id-1].name.lastIndexOf('.') +1) );
 	
 	if(extension == "mp4" || extension == "mp3" || extension == "txt"){
 		const playing = (extension == "mp4") ? "video" : (extension == "mp3") ? "audio" : "youtube";
 		
 		if(playing == "youtube"){
-			youtube(file, 3);
+			youtube(file, active+1);
 		}
 		else{
-			video(3, file, 1, extension, playing);
+			video(num, file, file.length, extension, playing);
 			
 			$(".tab-pane.active textarea").css("display", "none");
 		}
-	}
-	else{
-		dropLoad(file, 1, 3);
-		$("#preset3").text(file.name.replace(".params", "").replace(".slangp", ""));
-	}
-	
-	$(".nav-link.active").parents(".nav-item").removeClass("empty");
-}
-
-function dropFile4(file) {
-	var extension = file.name.substr( (file.name.lastIndexOf('.') +1) );
-	
-	if(extension == "mp4" || extension == "mp3" || extension == "txt"){
-		const playing = (extension == "mp4") ? "video" : (extension == "mp3") ? "audio" : "youtube";
 		
-		if(playing == "youtube"){
-			youtube(file, 4);
-		}
-		else{
-			video(4, file, 1, extension, playing);
-			
-			$(".tab-pane.active textarea").css("display", "none");
-		}
+		$("#preset"+num).empty();
 	}
 	else{
-		dropLoad(file, 1, 4);
-		$("#preset4").text(file.name.replace(".params", "").replace(".slangp", ""));
+		dropLoad(file[id-1], file.length, num);
+		$("#preset"+num).text(file[id-1].name.replace(".params", "").replace(".slangp", ""));
 	}
+	$("#tab"+(num)).removeClass("empty");
 	
-	$(".nav-link.active").parents(".nav-item").removeClass("empty");
-}
-
-function dropFile5(file) {
-	var extension = file.name.substr( (file.name.lastIndexOf('.') +1) );
-	
-	if(extension == "mp4" || extension == "mp3" || extension == "txt"){
-		const playing = (extension == "mp4") ? "video" : (extension == "mp3") ? "audio" : "youtube";
-		
-		if(playing == "youtube"){
-			youtube(file, 5);
-		}
-		else{
-			video(5, file, 1, extension, playing);
-			
-			$(".tab-pane.active textarea").css("display", "none");
-		}
+	if(power == "on"){
+		$(".tab-pane code").each(function(){
+			$(this).css("display", "none");
+		});
 	}
-	else{
-		dropLoad(file, 1, 5);
-		$("#preset5").text(file.name.replace(".params", "").replace(".slangp", ""));
-	}
-	
-	$(".nav-link.active").parents(".nav-item").removeClass("empty");
-}
-
-function dropFile6(file) {
-	var extension = file.name.substr( (file.name.lastIndexOf('.') +1) );
-	
-	if(extension == "mp4" || extension == "mp3" || extension == "txt"){
-		const playing = (extension == "mp4") ? "video" : (extension == "mp3") ? "audio" : "youtube";
-		
-		if(playing == "youtube"){
-			youtube(file, 6);
-		}
-		else{
-			video(6, file, 1, extension, playing);
-			
-			$(".tab-pane.active textarea").css("display", "none");
-		}
-	}
-	else{
-		dropLoad(file, 1, 6);
-		$("#preset6").text(file.name.replace(".params", "").replace(".slangp", ""));
-	}
-	
-	$(".nav-link.active").parents(".nav-item").removeClass("empty");
-}
-
-function dropFile7(file) {
-	var extension = file.name.substr( (file.name.lastIndexOf('.') +1) );
-	
-	if(extension == "mp4" || extension == "mp3" || extension == "txt"){
-		const playing = (extension == "mp4") ? "video" : (extension == "mp3") ? "audio" : "youtube";
-		
-		if(playing == "youtube"){
-			youtube(file, 7);
-		}
-		else{
-			video(7, file, 1, extension, playing);
-			
-			$(".tab-pane.active textarea").css("display", "none");
-		}
-	}
-	else{
-		dropLoad(file, 1, 7);
-		$("#preset7").text(file.name.replace(".params", "").replace(".slangp", ""));
-	}
-	
-	$(".nav-link.active").parents(".nav-item").removeClass("empty");
-}
-
-function dropFile8(file) {
-	var extension = file.name.substr( (file.name.lastIndexOf('.') +1) );
-	
-	if(extension == "mp4" || extension == "mp3" || extension == "txt"){
-		const playing = (extension == "mp4") ? "video" : (extension == "mp3") ? "audio" : "youtube";
-		
-		if(playing == "youtube"){
-			youtube(file, 8);
-		}
-		else{
-			video(8, file, 1, extension, playing);
-			
-			$(".tab-pane.active textarea").css("display", "none");
-		}
-	}
-	else{
-		dropLoad(file, 1, 8);
-		$("#preset8").text(file.name.replace(".params", "").replace(".slangp", ""));
-	}
-	
-	$(".nav-link.active").parents(".nav-item").removeClass("empty");
-}
-
-function dropFile9(file) {
-	var extension = file.name.substr( (file.name.lastIndexOf('.') +1) );
-	
-	if(extension == "mp4" || extension == "mp3" || extension == "txt"){
-		const playing = (extension == "mp4") ? "video" : (extension == "mp3") ? "audio" : "youtube";
-		
-		if(playing == "youtube"){
-			youtube(file, 9);
-		}
-		else{
-			video(9, file, 1, extension, playing);
-			
-			$(".tab-pane.active textarea").css("display", "none");
-		}
-	}
-	else{
-		dropLoad(file, 1, 9);
-		$("#preset9").text(file.name.replace(".params", "").replace(".slangp", ""));
-	}
-	
-	$(".nav-link.active").parents(".nav-item").removeClass("empty");
-}
-
-function dropFile10(file) {
-	var extension = file.name.substr( (file.name.lastIndexOf('.') +1) );
-	
-	if(extension == "mp4" || extension == "mp3" || extension == "txt"){
-		const playing = (extension == "mp4") ? "video" : (extension == "mp3") ? "audio" : "youtube";
-		
-		if(playing == "youtube"){
-			youtube(file, 10);
-		}
-		else{
-			video(10, file, 1, extension, playing);
-			
-			$(".tab-pane.active textarea").css("display", "none");
-		}
-	}
-	else{
-		dropLoad(file, 1, 10);
-		$("#preset10").text(file.name.replace(".params", "").replace(".slangp", ""));
-	}
-	
-	$(".nav-link.active").parents(".nav-item").removeClass("empty");
-}
-
-function dropFile11(file) {
-	var extension = file.name.substr( (file.name.lastIndexOf('.') +1) );
-	
-	if(extension == "mp4" || extension == "mp3" || extension == "txt"){
-		const playing = (extension == "mp4") ? "video" : (extension == "mp11") ? "audio" : "youtube";
-		
-		if(playing == "youtube"){
-			youtube(file, 11);
-		}
-		else{
-			video(11, file, 1, extension, playing);
-			
-			$(".tab-pane.active textarea").css("display", "none");
-		}
-	}
-	else{
-		dropLoad(file, 1, 11);
-		$("#preset11").text(file.name.replace(".params", "").replace(".slangp", ""));
-	}
-	
-	$(".nav-link.active").parents(".nav-item").removeClass("empty");
-}
-
-function dropFile12(file) {
-	var extension = file.name.substr( (file.name.lastIndexOf('.') +1) );
-	
-	if(extension == "mp4" || extension == "mp3" || extension == "txt"){
-		const playing = (extension == "mp4") ? "video" : (extension == "mp3") ? "audio" : "youtube";
-		
-		if(playing == "youtube"){
-			youtube(file, 12);
-		}
-		else{
-			video(12, file, 1, extension, playing);
-			
-			$(".tab-pane.active textarea").css("display", "none");
-		}
-	}
-	else{
-		dropLoad(file, 1, 12);
-		$("#preset12").text(file.name.replace(".params", "").replace(".slangp", ""));
-	}
-	
-	$(".nav-link.active").parents(".nav-item").removeClass("empty");
-}
-
-function dropFile13(file) {
-	var extension = file.name.substr( (file.name.lastIndexOf('.') +1) );
-	
-	if(extension == "mp4" || extension == "mp3" || extension == "txt"){
-		const playing = (extension == "mp4") ? "video" : (extension == "mp3") ? "audio" : "youtube";
-		
-		if(playing == "youtube"){
-			youtube(file, 13);
-		}
-		else{
-			video(13, file, 1, extension, playing);
-			
-			$(".tab-pane.active textarea").css("display", "none");
-		}
-	}
-	else{
-		dropLoad(file, 1, 13);
-		$("#preset13").text(file.name.replace(".params", "").replace(".slangp", ""));
-	}
-	
-	$(".nav-link.active").parents(".nav-item").removeClass("empty");
-}
-
-function dropFile14(file) {
-	var extension = file.name.substr( (file.name.lastIndexOf('.') +1) );
-	
-	if(extension == "mp4" || extension == "mp3" || extension == "txt"){
-		const playing = (extension == "mp4") ? "video" : (extension == "mp3") ? "audio" : "youtube";
-		
-		if(playing == "youtube"){
-			youtube(file, 14);
-		}
-		else{
-			video(14, file, 1, extension, playing);
-			
-			$(".tab-pane.active textarea").css("display", "none");
-		}
-	}
-	else{
-		dropLoad(file, 1, 14);
-		$("#preset14").text(file.name.replace(".params", "").replace(".slangp", ""));
-	}
-	
-	$(".nav-link.active").parents(".nav-item").removeClass("empty");
-}
-
-function dropFile15(file) {
-	var extension = file.name.substr( (file.name.lastIndexOf('.') +1) );
-	
-	if(extension == "mp4" || extension == "mp3" || extension == "txt"){
-		const playing = (extension == "mp4") ? "video" : (extension == "mp3") ? "audio" : "youtube";
-		
-		if(playing == "youtube"){
-			youtube(file, 15);
-		}
-		else{
-			video(15, file, 1, extension, playing);
-			
-			$(".tab-pane.active textarea").css("display", "none");
-		}
-	}
-	else{
-		dropLoad(file, 1, 15);
-		$("#preset15").text(file.name.replace(".params", "").replace(".slangp", ""));
-	}
-	
-	$(".nav-link.active").parents(".nav-item").removeClass("empty");
-}
-
-function dropFile16(file) {
-	var extension = file.name.substr( (file.name.lastIndexOf('.') +1) );
-	
-	if(extension == "mp4" || extension == "mp3" || extension == "txt"){
-		const playing = (extension == "mp4") ? "video" : (extension == "mp3") ? "audio" : "youtube";
-		
-		if(playing == "youtube"){
-			youtube(file, 16);
-		}
-		else{
-			video(16, file, 1, extension, playing);
-			
-			$(".tab-pane.active textarea").css("display", "none");
-		}
-	}
-	else{
-		dropLoad(file, 1, 16);
-		$("#preset16").text(file.name.replace(".params", "").replace(".slangp", ""));
-	}
-	
-	$(".nav-link.active").parents(".nav-item").removeClass("empty");
-}
-
-function dropFile17(file) {
-	var extension = file.name.substr( (file.name.lastIndexOf('.') +1) );
-	
-	if(extension == "mp4" || extension == "mp3" || extension == "txt"){
-		const playing = (extension == "mp4") ? "video" : (extension == "mp3") ? "audio" : "youtube";
-		
-		if(playing == "youtube"){
-			youtube(file, 17);
-		}
-		else{
-			video(17, file, 1, extension, playing);
-			
-			$(".tab-pane.active textarea").css("display", "none");
-		}
-	}
-	else{
-		dropLoad(file, 1, 17);
-		$("#preset17").text(file.name.replace(".params", "").replace(".slangp", ""));
-	}
-	
-	$(".nav-link.active").parents(".nav-item").removeClass("empty");
-}
-
-function dropFile18(file) {
-	var extension = file.name.substr( (file.name.lastIndexOf('.') +1) );
-	
-	if(extension == "mp4" || extension == "mp3" || extension == "txt"){
-		const playing = (extension == "mp4") ? "video" : (extension == "mp3") ? "audio" : "youtube";
-		
-		if(playing == "youtube"){
-			youtube(file, 18);
-		}
-		else{
-			video(18, file, 1, extension, playing);
-			
-			$(".tab-pane.active textarea").css("display", "none");
-		}
-	}
-	else{
-		dropLoad(file, 1, 18);
-		$("#preset18").text(file.name.replace(".params", "").replace(".slangp", ""));
-	}
-	
-	$(".nav-link.active").parents(".nav-item").removeClass("empty");
-}
-
-function dropFile19(file) {
-	var extension = file.name.substr( (file.name.lastIndexOf('.') +1) );
-	
-	if(extension == "mp4" || extension == "mp3" || extension == "txt"){
-		const playing = (extension == "mp4") ? "video" : (extension == "mp3") ? "audio" : "youtube";
-		
-		if(playing == "youtube"){
-			youtube(file, 19);
-		}
-		else{
-			video(19, file, 1, extension, playing);
-			
-			$(".tab-pane.active textarea").css("display", "none");
-		}
-	}
-	else{
-		dropLoad(file, 1, 19);
-		$("#preset19").text(file.name.replace(".params", "").replace(".slangp", ""));
-	}
-	
-	$(".nav-link.active").parents(".nav-item").removeClass("empty");
-}
-
-function dropFile20(file) {
-	var extension = file.name.substr( (file.name.lastIndexOf('.') +1) );
-	
-	if(extension == "mp4" || extension == "mp3" || extension == "txt"){
-		const playing = (extension == "mp4") ? "video" : (extension == "mp3") ? "audio" : "youtube";
-		
-		if(playing == "youtube"){
-			youtube(file, 20);
-		}
-		else{
-			video(20, file, 1, extension, playing);
-			
-			$(".tab-pane.active textarea").css("display", "none");
-		}
-	}
-	else{
-		dropLoad(file, 1, 20);
-		$("#preset20").text(file.name.replace(".params", "").replace(".slangp", ""));
-	}
-	
-	$(".nav-link.active").parents(".nav-item").removeClass("empty");
-}
-
-function dropFile21(file) {
-	var extension = file.name.substr( (file.name.lastIndexOf('.') +1) );
-	
-	if(extension == "mp4" || extension == "mp3" || extension == "txt"){
-		const playing = (extension == "mp4") ? "video" : (extension == "mp3") ? "audio" : "youtube";
-		
-		if(playing == "youtube"){
-			youtube(file, 21);
-		}
-		else{
-			video(21, file, 1, extension, playing);
-			
-			$(".tab-pane.active textarea").css("display", "none");
-		}
-	}
-	else{
-		dropLoad(file, 1, 21);
-		$("#preset21").text(file.name.replace(".params", "").replace(".slangp", ""));
-	}
-	
-	$(".nav-link.active").parents(".nav-item").removeClass("empty");
-}
-
-function dropFile22(file) {
-	var extension = file.name.substr( (file.name.lastIndexOf('.') +1) );
-	
-	if(extension == "mp4" || extension == "mp3" || extension == "txt"){
-		const playing = (extension == "mp4") ? "video" : (extension == "mp3") ? "audio" : "youtube";
-		
-		if(playing == "youtube"){
-			youtube(file, 22);
-		}
-		else{
-			video(22, file, 1, extension, playing);
-			
-			$(".tab-pane.active textarea").css("display", "none");
-		}
-	}
-	else{
-		dropLoad(file, 1, 22);
-		$("#preset22").text(file.name.replace(".params", "").replace(".slangp", ""));
-	}
-	
-	$(".nav-link.active").parents(".nav-item").removeClass("empty");
-}
-
-function dropFile23(file) {
-	var extension = file.name.substr( (file.name.lastIndexOf('.') +1) );
-	
-	if(extension == "mp4" || extension == "mp3" || extension == "txt"){
-		const playing = (extension == "mp4") ? "video" : (extension == "mp3") ? "audio" : "youtube";
-		
-		if(playing == "youtube"){
-			youtube(file, 23);
-		}
-		else{
-			video(23, file, 1, extension, playing);
-			
-			$(".tab-pane.active textarea").css("display", "none");
-		}
-	}
-	else{
-		dropLoad(file, 1, 23);
-		$("#preset23").text(file.name.replace(".params", "").replace(".slangp", ""));
-	}
-	
-	$(".nav-link.active").parents(".nav-item").removeClass("empty");
-}
-
-function dropFile24(file) {
-	var extension = file.name.substr( (file.name.lastIndexOf('.') +1) );
-	
-	if(extension == "mp4" || extension == "mp3" || extension == "txt"){
-		const playing = (extension == "mp4") ? "video" : (extension == "mp3") ? "audio" : "youtube";
-		
-		if(playing == "youtube"){
-			youtube(file, 24);
-		}
-		else{
-			video(24, file, 1, extension, playing);
-			
-			$(".tab-pane.active textarea").css("display", "none");
-		}
-	}
-	else{
-		dropLoad(file, 1, 24);
-		$("#preset24").text(file.name.replace(".params", "").replace(".slangp", ""));
-	}
-	
-	$(".nav-link.active").parents(".nav-item").removeClass("empty");
-}
-
-function dropFile25(file) {
-	var extension = file.name.substr( (file.name.lastIndexOf('.') +1) );
-	
-	if(extension == "mp4" || extension == "mp3" || extension == "txt"){
-		const playing = (extension == "mp4") ? "video" : (extension == "mp3") ? "audio" : "youtube";
-		
-		if(playing == "youtube"){
-			youtube(file, 25);
-		}
-		else{
-			video(25, file, 1, extension, playing);
-			
-			$(".tab-pane.active textarea").css("display", "none");
-		}
-	}
-	else{
-		dropLoad(file, 1, 25);
-		$("#preset25").text(file.name.replace(".params", "").replace(".slangp", ""));
-	}
-	
-	$(".nav-link.active").parents(".nav-item").removeClass("empty");
 }
 
 $(".mini .screen-container").on("drop", function(e) {
@@ -1109,69 +403,89 @@ $(".mini .screen-container").on("drop", function(e) {
 	dropFile(file);
 });
 
-$("#tab-pane1 .screen-container").on("drop", function(e) {
+function dropTab(e){
 	e.preventDefault();
 	const files = [],
 		length = e.originalEvent.dataTransfer.files.length,
 		name = e.originalEvent.dataTransfer.files[0].name;
-	var tabs = $(".nav").children().length;
-	$(".text-wrap .text-box:nth-child(2) textarea").text("").val("");
-	$(".preset-title, code").empty();
-	$(".nav-hide, .plus, .remove").remove();
-  
+	var tabs = parseInt($(".nav-stage").children().length);
+	$(".tab-pane.active textarea").text("").val("");
+	$(".less, .more, .nav-hide, .plus, .remove").remove();
+	
 	var extension = name.substr( (name.lastIndexOf('.') +1) );
 	
-
+	if($(".tab-pane.active").length == 0){
+		active = 1;
+	}
+	else{
+		active = parseInt($(".tab-pane.active").attr("id").replace("tab-pane", ""));
+	}
+	
 	if(length > 1 && $(".nav").children().length == 0){
 		$(".text-wrap").append('<ul class="nav nav-tabs" id="myTab" role="tablist"></ul>');
 	}
+	
+	if($(".nav-slide").length == 0){
+		$(".nav.nav-tabs").append('<div class="nav-slide"><div class="nav-stage" style="transform:translateX(0px);"></div></div>');
+	}
   
-	if(length <= 24){
-		for (var i=0; i< length;i++){
-			files[i] = e.originalEvent.dataTransfer.files[i];
-			dropFile2(files);
+	if(length <= 100){
+		for (var i=0; i<length;i++){
 			if(length > 1){
-				if($(".nav").children().length < length){
-					if(i == 0 && $(".nav").children().length == 0){
-						$(".nav.nav-tabs").append('<li class="nav-item" role="presentation"><button class="nav-link active" id="tab1" data-bs-toggle="tab" data-bs-target="#tab-pane1" type="button" role="tab" aria-controls="tab-pane1" aria-selected="true">1</button></li>');
-					}
-					else if(length == 24){
-						$(".nav.nav-tabs").append('<li class="nav-item" role="presentation"><button class="nav-link" id="tab'+(tabs+(i+1))+'" data-bs-toggle="tab" data-bs-target="#tab-pane'+(tabs+(i+1))+'" type="button" role="tab" aria-controls="tab-pane'+(tabs+(i+1))+'" aria-selected="true">'+(tabs+(i+1))+'</button></li>');
-						$(".nav-item").removeClass("empty");
-					}
-					else{
-						$(".nav.nav-tabs").append('<li class="nav-item" role="presentation"><button class="nav-link" id="tab'+(tabs+(i+1))+'" data-bs-toggle="tab" data-bs-target="#tab-pane'+(tabs+(i+1))+'" type="button" role="tab" aria-controls="tab-pane'+(tabs+(i+1))+'" aria-selected="true">'+(tabs+(i+1))+'</button></li>');
-						$(".nav-tabs #tab"+(i+1)).parents(".nav-item").removeClass("empty");
-					}
+				if(i == 0 && $(".nav-stage").children().length == 0){
+					$(".nav-stage").append('<li class="nav-item" role="presentation"><button class="nav-link active" id="tab1" data-bs-toggle="tab" data-bs-target="#tab-pane1" type="button" role="tab" aria-controls="tab-pane1" aria-selected="true">1</button></li>');
+				}
+				else if(length == 100){
+					$(".nav-stage").append('<li class="nav-item" role="presentation"><button class="nav-link" id="tab'+(tabs+(i+1))+'" data-bs-toggle="tab" data-bs-target="#tab-pane'+(tabs+(i+1))+'" type="button" role="tab" aria-controls="tab-pane'+(tabs+(i+1))+'" aria-selected="true">'+(tabs+(i+1))+'</button></li>');
+					$(".nav-link").removeClass("empty");
+				}
+				else if(active+i > tabs){
+					$(".nav-stage").append('<li class="nav-item" role="presentation"><button class="nav-link" id="tab'+(active+i)+'" data-bs-toggle="tab" data-bs-target="#tab-pane'+(active+i)+'" type="button" role="tab" aria-controls="tab-pane'+(active+i)+'" aria-selected="true">'+(active+i)+'</button></li>');
+					$(".nav-tabs #tab"+(active+i)).removeClass("empty");
 				}
 			}
+			files[i] = e.originalEvent.dataTransfer.files[i];
+			dropFile2(files);
 		}
 	}
-	else if(length > 24){
-		if($(".nav").children().length == 0){
-			for (var i=0; i<24;i++){
-				$(".nav-item").removeClass("empty");
-				if(i == 0 && $(".nav").children().length == 0){
-					$(".nav.nav-tabs").append('<li class="nav-item" role="presentation"><button class="nav-link active" id="tab1" data-bs-toggle="tab" data-bs-target="#tab-pane1" type="button" role="tab" aria-controls="tab-pane1" aria-selected="true">1</button></li>');
+	else if(length > 100){
+		if($(".nav-stage").children().length == 0){
+			for (i=0; i<100;i++){
+				$(".nav-link").removeClass("empty");
+				if(i == 0 && $(".nav-stage").children().length == 0){
+					$(".nav-stage").append('<li class="nav-item" role="presentation"><button class="nav-link active" id="tab1" data-bs-toggle="tab" data-bs-target="#tab-pane1" type="button" role="tab" aria-controls="tab-pane1" aria-selected="true">1</button></li>');
 				}
 				else{
-					$(".nav.nav-tabs").append('<li class="nav-item" role="presentation"><button class="nav-link" id="tab'+(i+1)+'" data-bs-toggle="tab" data-bs-target="#tab-pane'+(i+1)+'" type="button" role="tab" aria-controls="tab-pane'+(i+1)+'" aria-selected="true">'+(i+1)+'</button></li>');
+					$(".nav-stage").append('<li class="nav-item" role="presentation"><button class="nav-link" id="tab'+(i+1)+'" data-bs-toggle="tab" data-bs-target="#tab-pane'+(i+1)+'" type="button" role="tab" aria-controls="tab-pane'+(i+1)+'" aria-selected="true">'+(i+1)+'</button></li>');
 				}
 			}
 		}
 		else{
-			for (var i=0; i<(24 - tabs);i++){
-				$(".nav-item").removeClass("empty");
-				$(".nav.nav-tabs").append('<li class="nav-item" role="presentation"><button class="nav-link" id="tab'+parseInt(tabs+(i+1))+'" data-bs-toggle="tab" data-bs-target="#tab-pane'+parseInt(tabs+(i+1))+'" type="button" role="tab" aria-controls="tab-pane'+parseInt(tabs+(i+1))+'" aria-selected="true">'+parseInt(tabs+(i+1))+'</button></li>');
+			for (var i=0; i<(100 - tabs);i++){
+				$(".nav-link").removeClass("empty");
+				$(".nav-stage").append('<li class="nav-item" role="presentation"><button class="nav-link" id="tab'+parseInt(tabs+(i+1))+'" data-bs-toggle="tab" data-bs-target="#tab-pane'+parseInt(tabs+(i+1))+'" type="button" role="tab" aria-controls="tab-pane'+parseInt(tabs+(i+1))+'" aria-selected="true">'+parseInt(tabs+(i+1))+'</button></li>');
 			}
 		}
 		
-		for (var i=0; i<24;i++){
+		for (var i=0; i<100;i++){
 			files[i] = e.originalEvent.dataTransfer.files[i];
 			dropFile2(files);
 		}
 	}
 
+	if($(".nav-stage").children().length > 24 && $(".nav .more").length == 0){
+		$(".nav-tabs").prepend('<div class="less nav-item" style="display: none;"><span>...</span></div>');
+		$(".nav-tabs").append('<div class="more nav-item" style="display: table-cell;"><span>...</span></div>');
+		
+		$(".less.nav-item").on('click', function(){
+			prevTab();
+		});
+		
+		$(".more.nav-item").on('click', function(){
+			nextTab();
+		});
+	}
+	
 	if(tabs > 1 || length > 1){
 		$(".nav-tabs").append('<div class="plus nav-item" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Plus 1" role="presentation"><span class="material-symbols-outlined nav-link" aria-selected="false" tabindex="-1" role="tab">exposure_plus_1</span></div>');
 		$(".nav-tabs").append('<div class="remove nav-item" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Remove Tabs"><span class="material-symbols-outlined nav-link">close_small</span></div>');
@@ -1179,7 +493,7 @@ $("#tab-pane1 .screen-container").on("drop", function(e) {
 		const tooltip = new bootstrap.Tooltip($('.plus'));
 		const tooltip2 = new bootstrap.Tooltip($('.remove'));
 		
-		if($(".nav-tabs .nav-link").length < 26){
+		if(tabs < 100){
 			$(".plus").on('click', function(){
 				extraTab();
 				$(this).children('span').blur();
@@ -1205,179 +519,11 @@ $("#tab-pane1 .screen-container").on("drop", function(e) {
 			else{
 				$(".nav-tabs").removeClass("hide");
 				$(".nav-hide span").text("keyboard_double_arrow_up");
-				$(".nav-hide").css("transform", "translateY(-4px)");
+				$(".nav-hide").css("transform", "translateY(2px)");
 			}
 		}
 	}
-});
-
-$("#tab-pane2 .screen-container").on("drop", function(e) {
-	e.preventDefault();
-	var file = e.originalEvent.dataTransfer.files[0];
-	dropFile2(file);
-	$(".nav-link.active").parents(".nav-item").removeClass("empty");
-});
-
-$("#tab-pane3 .screen-container").on("drop", function(e) {
-	e.preventDefault();
-	var file = e.originalEvent.dataTransfer.files[0];
-	dropFile3(file);
-	$(".nav-link.active").parents(".nav-item").removeClass("empty");
-});
-
-$("#tab-pane4 .screen-container").on("drop", function(e) {
-	e.preventDefault();
-	var file = e.originalEvent.dataTransfer.files[0];
-	dropFile4(file);
-	$(".nav-link.active").parents(".nav-item").removeClass("empty");
-});
-
-$("#tab-pane5 .screen-container").on("drop", function(e) {
-	e.preventDefault();
-	var file = e.originalEvent.dataTransfer.files[0];
-	dropFile5(file);
-	$(".nav-link.active").parents(".nav-item").removeClass("empty");
-});
-
-$("#tab-pane6 .screen-container").on("drop", function(e) {
-	e.preventDefault();
-	var file = e.originalEvent.dataTransfer.files[0];
-	dropFile6(file);
-	$(".nav-link.active").parents(".nav-item").removeClass("empty");
-});
-
-$("#tab-pane7 .screen-container").on("drop", function(e) {
-	e.preventDefault();
-	var file = e.originalEvent.dataTransfer.files[0];
-	dropFile7(file);
-	$(".nav-link.active").parents(".nav-item").removeClass("empty");
-});
-
-$("#tab-pane8 .screen-container").on("drop", function(e) {
-	e.preventDefault();
-	var file = e.originalEvent.dataTransfer.files[0];
-	dropFile8(file);
-	$(".nav-link.active").parents(".nav-item").removeClass("empty");
-});
-
-$("#tab-pane9 .screen-container").on("drop", function(e) {
-	e.preventDefault();
-	var file = e.originalEvent.dataTransfer.files[0];
-	dropFile9(file);
-	$(".nav-link.active").parents(".nav-item").removeClass("empty");
-});
-
-$("#tab-pane10 .screen-container").on("drop", function(e) {
-	e.preventDefault();
-	var file = e.originalEvent.dataTransfer.files[0];
-	dropFile10(file);
-	$(".nav-link.active").parents(".nav-item").removeClass("empty");
-});
-
-$("#tab-pane11 .screen-container").on("drop", function(e) {
-	e.preventDefault();
-	var file = e.originalEvent.dataTransfer.files[0];
-	dropFile11(file);
-	$(".nav-link.active").parents(".nav-item").removeClass("empty");
-});
-
-$("#tab-pane12 .screen-container").on("drop", function(e) {
-	e.preventDefault();
-	var file = e.originalEvent.dataTransfer.files[0];
-	dropFile12(file);
-	$(".nav-link.active").parents(".nav-item").removeClass("empty");
-});
-
-$("#tab-pane13 .screen-container").on("drop", function(e) {
-	e.preventDefault();
-	var file = e.originalEvent.dataTransfer.files[0];
-	dropFile13(file);
-	$(".nav-link.active").parents(".nav-item").removeClass("empty");
-});
-
-$("#tab-pane14 .screen-container").on("drop", function(e) {
-	e.preventDefault();
-	var file = e.originalEvent.dataTransfer.files[0];
-	dropFile14(file);
-	$(".nav-link.active").parents(".nav-item").removeClass("empty");
-});
-
-$("#tab-pane15 .screen-container").on("drop", function(e) {
-	e.preventDefault();
-	var file = e.originalEvent.dataTransfer.files[0];
-	dropFile15(file);
-	$(".nav-link.active").parents(".nav-item").removeClass("empty");
-});
-
-$("#tab-pane16 .screen-container").on("drop", function(e) {
-	e.preventDefault();
-	var file = e.originalEvent.dataTransfer.files[0];
-	dropFile16(file);
-	$(".nav-link.active").parents(".nav-item").removeClass("empty");
-});
-
-$("#tab-pane17 .screen-container").on("drop", function(e) {
-	e.preventDefault();
-	var file = e.originalEvent.dataTransfer.files[0];
-	dropFile17(file);
-	$(".nav-link.active").parents(".nav-item").removeClass("empty");
-});
-
-$("#tab-pane18 .screen-container").on("drop", function(e) {
-	e.preventDefault();
-	var file = e.originalEvent.dataTransfer.files[0];
-	dropFile18(file);
-	$(".nav-link.active").parents(".nav-item").removeClass("empty");
-});
-
-$("#tab-pane19 .screen-container").on("drop", function(e) {
-	e.preventDefault();
-	var file = e.originalEvent.dataTransfer.files[0];
-	dropFile19(file);
-	$(".nav-link.active").parents(".nav-item").removeClass("empty");
-});
-
-$("#tab-pane20 .screen-container").on("drop", function(e) {
-	e.preventDefault();
-	var file = e.originalEvent.dataTransfer.files[0];
-	dropFile20(file);
-	$(".nav-link.active").parents(".nav-item").removeClass("empty");
-});
-
-$("#tab-pane21 .screen-container").on("drop", function(e) {
-	e.preventDefault();
-	var file = e.originalEvent.dataTransfer.files[0];
-	dropFile21(file);
-	$(".nav-link.active").parents(".nav-item").removeClass("empty");
-});
-
-$("#tab-pane22 .screen-container").on("drop", function(e) {
-	e.preventDefault();
-	var file = e.originalEvent.dataTransfer.files[0];
-	dropFile22(file);
-	$(".nav-link.active").parents(".nav-item").removeClass("empty");
-});
-
-$("#tab-pane23 .screen-container").on("drop", function(e) {
-	e.preventDefault();
-	var file = e.originalEvent.dataTransfer.files[0];
-	dropFile23(file);
-	$(".nav-link.active").parents(".nav-item").removeClass("empty");
-});
-
-$("#tab-pane24 .screen-container").on("drop", function(e) {
-	e.preventDefault();
-	var file = e.originalEvent.dataTransfer.files[0];
-	dropFile24(file);
-	$(".nav-link.active").parents(".nav-item").removeClass("empty");
-});
-
-$("#tab-pane25 .screen-container").on("drop", function(e) {
-	e.preventDefault();
-	var file = e.originalEvent.dataTransfer.files[0];
-	dropFile25(file);
-	$(".nav-link.active").parents(".nav-item").removeClass("empty");
-});
+}
 
 $(document).ready(function(){
 	$('#load input[type="file"]').change(function (e) {
@@ -1403,6 +549,7 @@ $(document).ready(function(){
 			else{
 				const player = new Plyr('#player', {autoplay: true,invertTime: false});
 				player.source = {type: playing,sources: [{src: input,type: playing+'/'+extension}]};
+				$(".mini .plyr").attr("tab-index", "0");
 			}
 			
 			$(".text").css("display", "none");
@@ -1416,393 +563,79 @@ $(document).ready(function(){
 		const presets = e.target.files;
 		$(".nav-hide, .plus, .tab-pane.active .plyr, .remove").remove();
 		$(".tab-pane.active textarea").css("display", "block");
-		$(".tab-pane.active .preset-title").empty();
-		var tabs = $(".nav").children().length,
+		var tabs = parseInt($(".nav-stage").children().length),
 			files = [];
-		
-		if(presets.length > 1){
-			$(".tab-pane textarea").text("").val("");
-			$(".tab-pane code, .preset-title").empty();
-		}
 			
-		var extension = presets[(presets.length-1)].name.substr( (presets[(presets.length-1)].name.lastIndexOf('.') +1) );
+		var id = parseInt(presets.length);
+		
+		var extension = presets[(id-1)].name.substr( (presets[(id-1)].name.lastIndexOf('.') +1) );
 
-		if(presets.length >= 1){
-			if(extension == "mp4" || extension == "mp3" || extension == "txt"){
-				const playing = (extension == "mp4") ? "video" : (extension == "mp3") ? "audio" : "youtube";
-				
-				if(playing == "youtube"){
-					youtube(presets, parseInt($(".active textarea").attr("class").replace("text", "")));
-				}
-				else{
-					loadVideo(2, presets, 1, extension, playing);
-					
-					$(".tab-pane.active textarea").css("display", "none");
-				}
-			}
-			else{
-				loadFile(presets, presets.length, 1);
-				$("#preset1").text(presets[0].name.replace(".params", "").replace(".slangp", ""));
-			}
-			
-			$(".nav-link.active").parents(".nav-item").removeClass("empty");
-		}
-		if(presets.length >= 2){
-			if(extension == "mp4" || extension == "mp3" || extension == "txt"){
-				const playing = (extension == "mp4") ? "video" : (extension == "mp3") ? "audio" : "youtube";
-				
-				loadVideo(3, presets, 2, extension, playing);
-				
-				$(".tab-pane.active textarea").css("display", "none");
-			}
-			else{
-				loadFile(presets, presets.length, 2);
-				$("#preset2").text(presets[1].name.replace(".params", "").replace(".slangp", ""));
-			}
-		}
-		if(presets.length >= 3){
-			if(extension == "mp4" || extension == "mp3"){
-				const playing = (extension == "mp4") ? "video" : "audio";
-				
-				loadVideo(4, presets, 3, extension, playing);
-				
-				$(".tab-pane.active textarea").css("display", "none");
-			}
-			else{
-				loadFile(presets, presets.length, 3);
-				$("#preset3").text(presets[2].name.replace(".params", "").replace(".slangp", ""));
-			}
-		}
-		if(presets.length >= 4){
-			if(extension == "mp4" || extension == "mp3"){
-				const playing = (extension == "mp4") ? "video" : "audio";
-				
-				loadVideo(5, presets, 4, extension, playing);
-				
-				$(".tab-pane.active textarea").css("display", "none");
-			}
-			else{
-				loadFile(presets, presets.length, 4);
-				$("#preset4").text(presets[3].name.replace(".params", "").replace(".slangp", ""));
-			}
-		}
-		if(presets.length >= 5){
-			if(extension == "mp4" || extension == "mp3"){
-				const playing = (extension == "mp4") ? "video" : "audio";
-				
-				loadVideo(6, presets, 5, extension, playing);
-				
-				$(".tab-pane.active textarea").css("display", "none");
-			}
-			else{
-				loadFile(presets, presets.length, 5);
-				$("#preset5").text(presets[4].name.replace(".params", "").replace(".slangp", ""));
-			}
-		}
-		if(presets.length >= 6){
-			if(extension == "mp4" || extension == "mp3"){
-				const playing = (extension == "mp4") ? "video" : "audio";
-				
-				loadVideo(7, presets, 6, extension, playing);
-				
-				$(".tab-pane.active textarea").css("display", "none");
-			}
-			else{
-				loadFile(presets, presets.length, 6);
-				$("#preset6").text(presets[5].name.replace(".params", "").replace(".slangp", ""));
-			}
-		}
-		if(presets.length >= 7){
-			if(extension == "mp4" || extension == "mp3"){
-				const playing = (extension == "mp4") ? "video" : "audio";
-				
-				loadVideo(8, presets, 7, extension, playing);
-				
-				$(".tab-pane.active textarea").css("display", "none");
-			}
-			else{
-				loadFile(presets, presets.length, 7);
-				$("#preset7").text(presets[6].name.replace(".params", "").replace(".slangp", ""));
-			}
-		}
-		if(presets.length >= 8){
-			if(extension == "mp4" || extension == "mp3"){
-				const playing = (extension == "mp4") ? "video" : "audio";
-				
-				loadVideo(9, presets, 8, extension, playing);
-				
-				$(".tab-pane.active textarea").css("display", "none");
-			}
-			else{
-				loadFile(presets, presets.length, 8);
-				$("#preset8").text(presets[7].name.replace(".params", "").replace(".slangp", ""));
-			}
-		}
-		if(presets.length >= 9){
-			if(extension == "mp4" || extension == "mp3"){
-				const playing = (extension == "mp4") ? "video" : "audio";
-				
-				loadVideo(10, presets, 9, extension, playing);
-				
-				$(".tab-pane.active textarea").css("display", "none");
-			}
-			else{
-				loadFile(presets, presets.length, 9);
-				$("#preset9").text(presets[8].name.replace(".params", "").replace(".slangp", ""));
-			}
-		}
-		if(presets.length >= 10){
-			if(extension == "mp4" || extension == "mp3"){
-				const playing = (extension == "mp4") ? "video" : "audio";
-				
-				loadVideo(11, presets, 10, extension, playing);
-				
-				$(".tab-pane.active textarea").css("display", "none");
-			}
-			else{
-				loadFile(presets, presets.length, 10);
-				$("#preset10").text(presets[9].name.replace(".params", "").replace(".slangp", ""));
-			}
-		}
-		if(presets.length >= 11){
-			if(extension == "mp4" || extension == "mp3"){
-				const playing = (extension == "mp4") ? "video" : "audio";
-				
-				loadVideo(12, presets, 11, extension, playing);
-				
-				$(".tab-pane.active textarea").css("display", "none");
-			}
-			else{
-				loadFile(presets, presets.length, 11);
-				$("#preset11").text(presets[10].name.replace(".params", "").replace(".slangp", ""));
-			}
-		}
-		if(presets.length >= 12){
-			if(extension == "mp4" || extension == "mp3"){
-				const playing = (extension == "mp4") ? "video" : "audio";
-				
-				loadVideo(13, presets, 12, extension, playing);
-				
-				$(".tab-pane.active textarea").css("display", "none");
-			}
-			else{
-				loadFile(presets, presets.length, 12);
-				$("#preset12").text(presets[11].name.replace(".params", "").replace(".slangp", ""));
-			}
-		}
-		if(presets.length >= 13){
-			if(extension == "mp4" || extension == "mp3"){
-				const playing = (extension == "mp4") ? "video" : "audio";
-				
-				loadVideo(14, presets, 13, extension, playing);
-				
-				$(".tab-pane.active textarea").css("display", "none");
-			}
-			else{
-				loadFile(presets, presets.length, 13);
-				$("#preset13").text(presets[12].name.replace(".params", "").replace(".slangp", ""));
-			}
-		}
-		if(presets.length >= 14){
-			if(extension == "mp4" || extension == "mp3"){
-				const playing = (extension == "mp4") ? "video" : "audio";
-				
-				loadVideo(15, presets, 14, extension, playing);
-				
-				$(".tab-pane.active textarea").css("display", "none");
-			}
-			else{
-				loadFile(presets, presets.length, 14);
-				$("#preset14").text(presets[13].name.replace(".params", "").replace(".slangp", ""));
-			}
-		}
-		if(presets.length >= 15){
-			if(extension == "mp4" || extension == "mp3"){
-				const playing = (extension == "mp4") ? "video" : "audio";
-				
-				loadVideo(16, presets, 15, extension, playing);
-				
-				$(".tab-pane.active textarea").css("display", "none");
-			}
-			else{
-				loadFile(presets, presets.length, 15);
-				$("#preset15").text(presets[14].name.replace(".params", "").replace(".slangp", ""));
-			}
-		}
-		if(presets.length >= 16){
-			if(extension == "mp4" || extension == "mp3"){
-				const playing = (extension == "mp4") ? "video" : "audio";
-				
-				loadVideo(17, presets, 16, extension, playing);
-				
-				$(".tab-pane.active textarea").css("display", "none");
-			}
-			else{
-				loadFile(presets, presets.length, 16);
-				$("#preset16").text(presets[15].name.replace(".params", "").replace(".slangp", ""));
-			}
-		}
-		if(presets.length >= 17){
-			if(extension == "mp4" || extension == "mp3"){
-				const playing = (extension == "mp4") ? "video" : "audio";
-				
-				loadVideo(18, presets, 17, extension, playing);
-				
-				$(".tab-pane.active textarea").css("display", "none");
-			}
-			else{
-				loadFile(presets, presets.length, 17);
-				$("#preset17").text(presets[16].name.replace(".params", "").replace(".slangp", ""));
-			}
-		}
-		if(presets.length >= 18){
-			if(extension == "mp4" || extension == "mp3"){
-				const playing = (extension == "mp4") ? "video" : "audio";
-				
-				loadVideo(19, presets, 18, extension, playing);
-				
-				$(".tab-pane.active textarea").css("display", "none");
-			}
-			else{
-				loadFile(presets, presets.length, 18);
-				$("#preset18").text(presets[17].name.replace(".params", "").replace(".slangp", ""));
-			}
-		}
-		if(presets.length >= 19){
-			if(extension == "mp4" || extension == "mp3"){
-				const playing = (extension == "mp4") ? "video" : "audio";
-				
-				loadVideo(20, presets, 19, extension, playing);
-				
-				$(".tab-pane.active textarea").css("display", "none");
-			}
-			else{
-				loadFile(presets, presets.length, 19);
-				$("#preset19").text(presets[18].name.replace(".params", "").replace(".slangp", ""));
-			}
-		}
-		if(presets.length >= 20){
-			if(extension == "mp4" || extension == "mp3"){
-				const playing = (extension == "mp4") ? "video" : "audio";
-				
-				loadVideo(21, presets, 20, extension, playing);
-				
-				$(".tab-pane.active textarea").css("display", "none");
-			}
-			else{
-				loadFile(presets, presets.length, 20);
-				$("#preset20").text(presets[19].name.replace(".params", "").replace(".slangp", ""));
-			}
-		}
-		if(presets.length >= 21){
-			if(extension == "mp4" || extension == "mp3"){
-				const playing = (extension == "mp4") ? "video" : "audio";
-				
-				loadVideo(22, presets, 21, extension, playing);
-				
-				$(".tab-pane.active textarea").css("display", "none");
-			}
-			else{
-				loadFile(presets, presets.length, 21);
-				$("#preset21").text(presets[20].name.replace(".params", "").replace(".slangp", ""));
-			}
-		}
-		if(presets.length >= 22){
-			if(extension == "mp4" || extension == "mp3"){
-				const playing = (extension == "mp4") ? "video" : "audio";
-				
-				loadVideo(23, presets, 22, extension, playing);
-				
-				$(".tab-pane.active textarea").css("display", "none");
-			}
-			else{
-				loadFile(presets, presets.length, 22);
-				$("#preset22").text(presets[21].name.replace(".params", "").replace(".slangp", ""));
-			}
-		}
-		if(presets.length >= 23){
-			if(extension == "mp4" || extension == "mp3"){
-				const playing = (extension == "mp4") ? "video" : "audio";
-				
-				loadVideo(24, presets, 23, extension, playing);
-				
-				$(".tab-pane.active textarea").css("display", "none");
-			}
-			else{
-				loadFile(presets, presets.length, 23);
-				$("#preset23").text(presets[22].name.replace(".params", "").replace(".slangp", ""));
-			}
-		}
-		if(presets.length >= 24){
-			if(extension == "mp4" || extension == "mp3"){
-				const playing = (extension == "mp4") ? "video" : "audio";
-				
-				loadVideo(25, presets, 24, extension, playing);
-				
-				$(".tab-pane.active textarea").css("display", "none");
-			}
-			else{
-				loadFile(presets, presets.length, 24);
-				$("#preset24").text(presets[23].name.replace(".params", "").replace(".slangp", ""));
-			}
-		}
-		
-		if(presets.length > 1 && $(".nav").children().length == 0){
+		if(id > 1 && $(".nav").children().length == 0){
 			$(".text-wrap").append('<ul class="nav nav-tabs" id="myTab" role="tablist"></ul>');
 		}
+		
+		if($(".nav-slide").length == 0){
+			$(".nav.nav-tabs").append('<div class="nav-slide"><div class="nav-stage" style="transform:translateX(0px);"></div></div>');
+		}
 	  
-		if(presets.length <= 24){
-			for (var i=0; i< presets.length;i++){
-				if(presets.length > 1){
-					if($(".nav").children().length < presets.length){
-						if(i == 0 && $(".nav").children().length == 0){
-							$(".nav.nav-tabs").append('<li class="nav-item" role="presentation"><button class="nav-link active" id="tab1" data-bs-toggle="tab" data-bs-target="#tab-pane1" type="button" role="tab" aria-controls="tab-pane1" aria-selected="true">1</button></li>');
-						}
-						else if(presets.length == 24){
-							$(".nav.nav-tabs").append('<li class="nav-item" role="presentation"><button class="nav-link" id="tab'+(tabs+(i+1))+'" data-bs-toggle="tab" data-bs-target="#tab-pane'+(tabs+(i+1))+'" type="button" role="tab" aria-controls="tab-pane'+(tabs+(i+1))+'" aria-selected="true">'+(tabs+(i+1))+'</button></li>');
-							$(".nav-item").removeClass("empty");
-						}
-						else{
-							$(".nav.nav-tabs").append('<li class="nav-item" role="presentation"><button class="nav-link" id="tab'+(tabs+(i+1))+'" data-bs-toggle="tab" data-bs-target="#tab-pane'+(tabs+(i+1))+'" type="button" role="tab" aria-controls="tab-pane'+(tabs+(i+1))+'" aria-selected="true">'+(tabs+(i+1))+'</button></li>');
-							$(".nav-tabs #tab"+(i+1)).parents(".nav-item").removeClass("empty");
-						}
+		if(id+tabs <= 100){
+			for (let i=0;i<id;i++){
+				if(id > 1){
+					if(i == 0 && $(".nav-stage").children().length == 0){
+						$(".nav-stage").append('<li class="nav-item" role="presentation"><button class="nav-link active" id="tab1" data-bs-toggle="tab" data-bs-target="#tab-pane1" type="button" role="tab" aria-controls="tab-pane1" aria-selected="true">1</button></li>');
+					}
+					else if(id == 100){
+						$(".nav-stage").append('<li class="nav-item" role="presentation"><button class="nav-link" id="tab'+(tabs+(i+1))+'" data-bs-toggle="tab" data-bs-target="#tab-pane'+(tabs+(i+1))+'" type="button" role="tab" aria-controls="tab-pane'+(tabs+(i+1))+'" aria-selected="true">'+(tabs+(i+1))+'</button></li>');
+						$(".nav-link").removeClass("empty");
+					}
+					else if(tabs < active+i){
+						$(".nav-stage").append('<li class="nav-item" role="presentation"><button class="nav-link" id="tab'+(active+i)+'" data-bs-toggle="tab" data-bs-target="#tab-pane'+(active+i)+'" type="button" role="tab" aria-controls="tab-pane'+(active+i)+'" aria-selected="true">'+(active+i)+'</button></li>');
+						$(".nav-tabs #tab"+(active+i)).removeClass("empty");
 					}
 				}
 			}
 		}
-		else if(presets.length > 24){
-			if($(".nav").children().length == 0){
-				for (var i=0; i<24;i++){
-					$(".nav-item").removeClass("empty");
-					if(i == 0 && $(".nav").children().length == 0){
-						$(".nav.nav-tabs").append('<li class="nav-item" role="presentation"><button class="nav-link active" id="tab1" data-bs-toggle="tab" data-bs-target="#tab-pane1" type="button" role="tab" aria-controls="tab-pane1" aria-selected="true">1</button></li>');
+		else if(id > 100){
+			if($(".nav-slide").children().length == 0){
+				for (var i=0; i<100;i++){
+					$(".nav-link").removeClass("empty");
+					if(i == 0 && $(".nav-stage").children().length == 0){
+						$(".nav-stage").append('<li class="nav-item" role="presentation"><button class="nav-link active" id="tab1" data-bs-toggle="tab" data-bs-target="#tab-pane1" type="button" role="tab" aria-controls="tab-pane1" aria-selected="true">1</button></li>');
 					}
 					else{
-						$(".nav.nav-tabs").append('<li class="nav-item" role="presentation"><button class="nav-link" id="tab'+(i+1)+'" data-bs-toggle="tab" data-bs-target="#tab-pane'+(i+1)+'" type="button" role="tab" aria-controls="tab-pane'+(i+1)+'" aria-selected="true">'+(i+1)+'</button></li>');
+						$(".nav-stage").append('<li class="nav-item" role="presentation"><button class="nav-link" id="tab'+(i+1)+'" data-bs-toggle="tab" data-bs-target="#tab-pane'+(i+1)+'" type="button" role="tab" aria-controls="tab-pane'+(i+1)+'" aria-selected="true">'+(i+1)+'</button></li>');
 					}
 				}
 			}
 			else{
-				for (var i=0; i<(24 - tabs);i++){
-					$(".nav-item").removeClass("empty");
-					$(".nav.nav-tabs").append('<li class="nav-item" role="presentation"><button class="nav-link" id="tab'+parseInt(tabs+(i+1))+'" data-bs-toggle="tab" data-bs-target="#tab-pane'+parseInt(tabs+(i+1))+'" type="button" role="tab" aria-controls="tab-pane'+parseInt(tabs+(i+1))+'" aria-selected="true">'+parseInt(tabs+(i+1))+'</button></li>');
+				for (var i=0; i<(100 - tabs);i++){
+					$(".nav-link").removeClass("empty");
+					$(".nav-stage").append('<li class="nav-item" role="presentation"><button class="nav-link" id="tab'+parseInt(tabs+(i+1))+'" data-bs-toggle="tab" data-bs-target="#tab-pane'+parseInt(tabs+(i+1))+'" type="button" role="tab" aria-controls="tab-pane'+parseInt(tabs+(i+1))+'" aria-selected="true">'+parseInt(tabs+(i+1))+'</button></li>');
 				}
-			}
-			
-			for (var i=0; i<24;i++){
-				files[i] = presets[i];
-				dropFile2(files);
 			}
 		}
 		
-		if(tabs > 1 || presets.length > 1){
+		if($(".nav-stage").children().length > 24 && $(".nav .more").length == 0){
+			$(".nav-tabs").prepend('<div class="less nav-item" style="display: none;"><span>...</span></div>');
+			$(".nav-tabs").append('<div class="more nav-item" style="display: table-cell;"><span>...</span></div>');
+			
+			$(".less.nav-item").on('click', function(){
+				prevTab();
+			});
+			
+			$(".more.nav-item").on('click', function(){
+				nextTab();
+			});
+		}
+		
+		if(tabs > 1 || id > 1){
 			$(".nav-tabs").append('<div class="plus nav-item" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Plus 1" role="presentation"><span class="material-symbols-outlined nav-link" aria-selected="false" tabindex="-1" role="tab">exposure_plus_1</span></div>');
 			$(".nav-tabs").append('<div class="remove nav-item" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Remove Tabs"><span class="material-symbols-outlined nav-link">close_small</span></div>');
 			
 			const tooltip = new bootstrap.Tooltip($('.plus'));
 			const tooltip2 = new bootstrap.Tooltip($('.remove'));
 			
-			if($(".nav-tabs .nav-link").length < 26){
+			if(tabs < 100){
 				$(".plus").on('click', function(){
 					extraTab();
 					$(this).children('span').blur();
@@ -1828,7 +661,77 @@ $(document).ready(function(){
 				else{
 					$(".nav-tabs").removeClass("hide");
 					$(".nav-hide span").text("keyboard_double_arrow_up");
-					$(".nav-hide").css("transform", "translateY(-4px)");
+					$(".nav-hide").css("transform", "translateY(2px)");
+				}
+			}
+		}
+		
+		if(id == 1){
+			if($(".nav-stage .nav-link").length == 0){
+				var num = 1;
+			}
+			else{
+				var num = parseInt($(".nav-link.active").text());
+			}
+			
+			if(extension == "mp4" || extension == "mp3" || extension == "txt"){
+				const playing = (extension == "mp4") ? "video" : (extension == "mp3") ? "audio" : "youtube";
+				
+				if(playing == "youtube"){
+					youtube(presets, parseInt($(".active textarea").attr("class").replace("text", "")));
+				}
+				else{
+					loadVideo(num+1, presets, 1, extension, playing);
+					
+					$(".tab-pane.active textarea").css("display", "none");
+				}
+			}
+			else{
+				loadFile(presets[0], 1, num-1);
+				$("#preset"+num).text(presets[0].name.replace(".params", "").replace(".slangp", ""));
+			}
+			
+			$(".nav-link.active").removeClass("empty");
+		}
+		if(id > 1){
+			if($(".tab-pane.active").length == 0){
+				active = 1;
+			}
+			else{
+				active = parseInt($(".tab-pane.active").attr("id").replace("tab-pane", ""));
+			}
+		
+			for(i=0;i<id;i++){
+				var num = (active + i) - 1;
+				
+				if($(".tab-pane").length < num+1){
+					$(".tab-content").append('<div class="tab-pane fade" id="tab-pane'+(num+1)+'" role="tabpanel" aria-labelledby="tab'+(num+1)+'" tabindex="0"><span class="preset-title" id="preset'+(num+1)+'"></span><div class="screen-container" id="dropText'+(num+2)+'"><pre id="preCode"><code id="codeBlock'+(num+2)+'" class="language-csharp"></code></pre><textarea class="text'+(num+2)+' screen" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea><div class="overlay">VGA '+(num+1)+'</div></div></div>');
+				}
+				
+				if(extension == "mp4" || extension == "mp3" || extension == "txt"){
+					const playing = (extension == "mp4") ? "video" : (extension == "mp3") ? "audio" : "youtube";
+					
+					if(playing == "youtube"){
+						youtube(presets, num);
+					}
+					else{
+						loadVideo(num, presets[i], id, extension, playing);
+						
+						$(".tab-pane.active textarea").css("display", "none");
+					}
+					
+					$("#preset"+(num+1)).empty();
+				}
+				else{
+					loadFile(presets[i], id, num);
+					$("#preset"+(num+1)).text(presets[i].name.replace(".params", "").replace(".slangp", ""));
+				}
+				$("#tab"+(num+1)).removeClass("empty");
+				
+				if(power == "on"){
+					$(".tab-pane code").each(function(){
+						$(this).css("display", "none");
+					});
 				}
 			}
 		}

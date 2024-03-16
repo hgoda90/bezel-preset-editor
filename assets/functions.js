@@ -106,7 +106,8 @@ function clearText(id){
 	else{
 		$(".text-box .tab-pane.active textarea").text("").val("");
 		$(".tab-pane.active code").empty();
-		$(".nav-link.active").parents(".nav-item").addClass("empty");
+		$(".nav-link.active").addClass("empty");
+		$(".nav-link.active").removeClass("yt").removeClass("vid");
 		$(".text-box .tab-pane.active .preset-title").empty();
 		URL.revokeObjectURL($(".tab-pane.active .plyr source").attr("src"));
 		$(".tab-pane.active .plyr").remove();
@@ -176,7 +177,7 @@ function colorReset(){
 		}
 	}
 	
-	update();
+	updateMini();
 	cvSet();
 }
 
@@ -319,7 +320,7 @@ function copy(id){
 function destroy(){
 	$(".preset-title").empty();
 	$("textarea").val("").text("");
-	$(".nav-item:not(.plus):not(.remove)").addClass("empty");
+	$(".nav-item:not(.plus):not(.remove) .nav-link").addClass("empty");
 	$("code").empty();
 	$(".plyr").remove();
 	$("textarea").css("display", "block");
@@ -354,10 +355,31 @@ function edit(){
 }
 
 function extraTab(){
-	var tabs = $(".nav-item").length - 1;
+	var tabs = $(".nav-stage").children().length;
+	$(".more.nav-item").css("display", "table-cell");
 	
-	if(tabs < 25){
-		$(".nav-tabs .plus").before('<li class="nav-item empty" role="presentation"><button class="nav-link" id="tab'+tabs+'" data-bs-toggle="tab" data-bs-target="#tab-pane'+tabs+'" type="button" role="tab" aria-controls="tab-pane'+tabs+'" aria-selected="true">'+tabs+'</button></li>');
+	if(tabs < 100){
+		$(".nav-tabs .nav-stage").append('<li class="nav-item" role="presentation"><button class="nav-link empty" id="tab'+(tabs+1)+'" data-bs-toggle="tab" data-bs-target="#tab-pane'+(tabs+1)+'" type="button" role="tab" aria-controls="tab-pane'+(tabs+1)+'" aria-selected="true">'+(tabs+1)+'</button></li>');
+		$(".tab-content").append('<div class="tab-pane fade" id="tab-pane'+(tabs+1)+'" role="tabpanel" aria-labelledby="tab'+(tabs+1)+'" tabindex="0"><span class="preset-title" id="preset'+(tabs+1)+'"></span><div class="screen-container" id="dropText'+(tabs+2)+'"><pre id="preCode"><code id="codeBlock'+(tabs+2)+'" class="language-csharp"></code></pre><textarea class="text'+(tabs+2)+' screen" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea><div class="overlay">VGA '+(tabs+1)+'</div></div></div>');
+	}
+	
+	if(tabs == 24){
+		$(".nav-tabs").prepend('<div class="less nav-item" style="display: none;"><span>...</span></div>');
+		$(".nav-tabs .plus").before('<div class="more nav-item" style="display: table-cell;"><span>...</span></div>');
+		
+		$(".less.nav-item").on('click', function(){
+			prevTab();
+		});
+		
+		$(".more.nav-item").on('click', function(){
+			nextTab();
+		});
+	}
+	
+	if(power == "on"){
+		$(".tab-pane code").each(function(){
+			$(this).css("display", "none");
+		});
 	}
 }
 
@@ -561,7 +583,7 @@ function passText(){
 		$(".text-box .tab-pane.active textarea").text(txt+"\n"+$(".text").val()).val(txt+"\n"+$(".text").val())
 	}
 	
-	update();
+	updateCode();
 }
 
 function presetCopy(){
@@ -619,7 +641,11 @@ function removeTabs(){
 	$(".text2").css("display", "block");
 	$(".nav-link").removeClass("active");
 	$("#tab1").addClass("active");
-	$(".tabe-pane .plyr").remove();
+	$(".tab-pane .plyr").remove();
+	
+	$(".tab-pane:not(.active)").each(function(){
+		$(this).remove();
+	})
 }
 
 function samples(){
@@ -686,7 +712,7 @@ function samples(){
 		$(this).addClass("active");
 		preview();
 		
-		update();
+		updateMini();
 		cvSet();
 	});
 	
@@ -945,18 +971,14 @@ function start(){
 	
 	colorReset();
 	colorVersion(colorVer);
-	uc[1]();
-}
-
-function update(){
-	if(build == "on"){
-		var textBox = parseInt($(".active textarea").attr("class").replace("text", ""));
-	}
-	else{
-		var textBox = 1;
-	}
+	updateCode();
+	$(document).on("drop", ".tab-pane.active .screen-container", function(e) {
+	  dropTab(e);
+	});
 	
-	uc[textBox]();
+	$(document).on("input", ".tab-pane.active", function() {
+		updateCode2(parseInt($(".tab-pane.active").attr("id").replace("tab-pane", "")) + 1);
+	});
 }
 
 $(".aspect").on('click', function(){
@@ -1009,13 +1031,9 @@ $(".destroy").on('click', function(){
 	$(this).blur();
 });
 
-$(".dropper").on('change', function(){
-	colorVision();
-});
+$(".dropper").on('change', colorVision);
 
-$(".build input").on('click', function(){
-	buildToggle();
-});
+$(".build input").on('click', buildToggle);
 
 $(".build .switch-label").on('click', function(){
 	if($(this).hasClass("active") == false){
@@ -1071,9 +1089,7 @@ $(".switch-panel .bezel .switch-label").on('click', function(){
 	}
 });
 
-$(".switch-panel .bezel input").on('click', function(){	
-	bezelToggle();
-});
+$(".switch-panel .bezel input").on('click', bezelToggle);
 
 $(".switch-panel .format-labels span").on('click', function(){
 	if($(this).text() == "HEX"){
@@ -1308,7 +1324,7 @@ $(document).ready(function () {
 	});
 	
 	$('input[type="file"]').change(function(){
-		update();
+		updateCode();
 	});
 	
 	$("form").submit(function (event) {
@@ -1642,7 +1658,7 @@ $(document).ready(function () {
 			}
 		}
 		
-		update();
+		updateMini();
 		event.preventDefault();
 		
 		if($(".mini").hasClass("hide") && build == "off"){
@@ -1670,7 +1686,7 @@ $(document).ready(function () {
 		if(e.ctrlKey && key === "Delete"){
 			e.preventDefault;
 			$(".active .plyr").remove();
-			$(".nav-link.active").parents(".nav-item").addClass("empty");
+			$(".nav-link.active").addClass("empty").removeClass("vid").removeClass("yt");
 			$(".active textarea").css("display", "block");
 		}
 		
@@ -1710,26 +1726,20 @@ $(document).ready(function () {
 			}
 		});
 		
-		if($(".nav").children().length > 1){
+		if($(".nav-stage").children().length > 1){
 			var id = parseInt($(".nav-link.active").attr("id").replace("tab", ""));
 			
 			switch(key){
 				case "PageDown":
 					e.preventDefault();
 					if(id > 1){
-						$("#tab"+id).removeClass("active");
-						$("#tab-pane"+id).removeClass("active").removeClass("show");
-						$("#tab"+(id-1)).addClass("active");
-						$("#tab-pane"+(id-1)).addClass("active").addClass("show");
+						prevTab();
 					}
 					break;
 				case "PageUp":
 					e.preventDefault();
-					if(id+2 < $(".nav").children().length){
-						$("#tab"+id).removeClass("active");
-						$("#tab-pane"+id).removeClass("active").removeClass("show");
-						$("#tab"+(id+1)).addClass("active");
-						$("#tab-pane"+(id+1)).addClass("active").addClass("show");
+					if(id < $(".nav-stage").children().length){
+						nextTab();
 					}
 					break;
 			}
