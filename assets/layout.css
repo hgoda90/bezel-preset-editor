@@ -926,13 +926,15 @@ footer .button {
     text-align: center;
     height: 33px;
     min-width: 35px;
+    position: relative;
 }
 
 .nav-tabs {
+    height: 60px;
     border: none;
     position: absolute;
     right: 4px;
-    bottom: -43px;
+    bottom: -56px;
     transition: transform .2s ease-in;
     display: table;
     margin: 0 2.5px -8px;
@@ -1964,6 +1966,7 @@ input[type="text"], select {
 .nav-slide {
     overflow: hidden;
     max-width: 942px;
+    height: 100%;
 }
 
 .nav-link.empty {
@@ -1994,4 +1997,26 @@ input[type="text"], select {
     color: #BBB;
     border-color: #BBB;
     background: transparent;
+}
+
+.nav-item .nav-link.active .close {
+    width: 6px;
+    height: 6px;
+    position: absolute;
+    bottom: -14px;
+    left: 42%;
+    background: #888;
+    border-radius: 50%;
+}
+
+.nav-item .nav-link.active.empty .close {
+	background: #BBB;
+}
+
+.nav-item .nav-link.active.vid .close {
+	background: #00B2FF;
+}
+
+.nav-item .nav-link.active.yt .close {
+	background: #FF0000;
 }
