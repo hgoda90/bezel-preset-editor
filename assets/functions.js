@@ -317,9 +317,97 @@ function copy(id){
 	}
 }
 
+function deleteTab(){
+	var tab = parseInt($(".tab-pane.active").attr("id").replace("tab-pane", ""));
+	
+	$("#tab-pane"+tab).remove();
+	$("#tab"+tab).parent().remove();
+	
+	if(tab-1 == $(".nav-stage").children().length){
+		$("#tab-pane"+(tab-1)).addClass("active show");
+		$("#tab"+(tab-1)).addClass("active");
+		
+		$(".tab-pane.active .preset-title").attr("id", "preset"+(tab-1));
+		$(".tab-pane.active .screen-container").attr("id", "dropText"+tab);
+		$(".tab-pane.active code").attr("id", "codeBlock"+tab);
+		$(".tab-pane.active textarea").removeClass("text"+(tab+1)).addClass("text"+tab);
+		$(".tab-pane.active .overlay").text("VGA"+(tab-1));
+		$(".tab-pane.active").attr("id", "tab-pane"+(tab-1)).attr("aria-labelledby", "tab"+(tab-1));
+		
+		$(".nav-link.active").attr("id", "tab"+(tab-1));
+		$(".nav-link.active").attr("data-bs-target", "#tab-pane"+(tab-1));
+		$(".nav-link.active").attr("aria-controls", "tab-pane"+(tab-1));
+		$(".nav-link.active").text(tab-1);
+	}
+	else{
+		$("#tab-pane"+(tab+1)).addClass("active show");
+		$("#tab"+(tab+1)).addClass("active");
+		
+		$(".tab-pane.active .preset-title").attr("id", "preset"+tab);
+		$(".tab-pane.active .screen-container").attr("id", "dropText"+(tab+1));
+		$(".tab-pane.active code").attr("id", "codeBlock"+(tab+1));
+		$(".tab-pane.active textarea").removeClass("text"+(tab+2)).addClass("text"+(tab+1));
+		$(".tab-pane.active .overlay").text("VGA"+tab);
+		$(".tab-pane.active").attr("id", "tab-pane"+tab).attr("aria-labelledby", "tab"+tab);
+		
+		$(".nav-link.active").attr("id", "tab"+tab);
+		$(".nav-link.active").attr("data-bs-target", "#tab-pane"+tab);
+		$(".nav-link.active").attr("aria-controls", "tab-pane"+tab);
+		$(".nav-link.active").text(tab);
+	}
+	
+	$(".tab-pane.active").nextAll().each(function(){
+		if(tab-1 == $(".nav-stage").children().length){
+			tp = parseInt($(this).attr("id").replace("tab-pane", "")) - 2;
+		}
+		else{
+			tp = parseInt($(this).attr("id").replace("tab-pane", "")) - 1;
+		}
+		
+		$(this).find(".preset-title").attr("id", "preset"+tp);
+		$(this).find(".screen-container").attr("id", "dropText"+(tp+1));
+		$(this).find("code").attr("id", "codeBlock"+(tp+1));
+		$(this).find("textarea").removeClass("text"+(tp+2)).addClass("text"+(tp+1));
+		$(this).find(".overlay").text("VGA"+tp);
+		$(this).attr("id", "tab-pane"+tp).attr("aria-labelledby", "tab"+tp);
+	});
+	
+	$(".nav-link.active").parent().nextAll().each(function(){
+		if(tab-1 == $(".nav-stage").children().length){
+			tb = parseInt($(this).children(".nav-link").attr("id").replace("tab", "")) - 3;
+		}
+		else{
+			tb = parseInt($(this).children(".nav-link").attr("id").replace("tab", "")) - 1;
+		}
+		
+		$(this).find(".nav-link").attr("id", "tab"+tb);
+		$(this).find(".nav-link").attr("data-bs-target", "#tab-pane"+tb);
+		$(this).find(".nav-link").attr("aria-controls", "tab-pane"+tb);
+		$(this).find(".nav-link").text(tb);
+	});
+	
+	if($(".nav-stage").children().length == 1){
+		$(".nav").remove();
+		$(".nav-hide").remove();
+	}
+	
+	if($(".nav-stage").children().length < 25){
+		$(".less.nav-item, .more.nav-item").remove();
+		$(".nav-stage").css("transform", "translateX(0px)");
+	}
+	else if($(".nav-stage").children().length > 24 && tab > 24 && ($(".nav-stage").children().length - tab) == 1){
+		$(".nav-stage").css("transform", "translateX("+((tab - 24) * -39)+"px)");
+	}
+	else if(($(".nav-stage").children().length - tab) < 24){
+		$(".nav-stage").css("transform", "translateX("+(($(".nav-stage").children().length - 24) * -39)+"px)");
+		$(".more.nav-item").css("display", "none");
+	}
+}
+
 function destroy(){
 	$(".preset-title").empty();
 	$("textarea").val("").text("");
+	$(".nav-item:not(.plus):not(.remove) .nav-link").removeClass("vid").removeClass("yt");
 	$(".nav-item:not(.plus):not(.remove) .nav-link").addClass("empty");
 	$("code").empty();
 	$(".plyr").remove();
@@ -356,11 +444,57 @@ function edit(){
 
 function extraTab(){
 	var tabs = $(".nav-stage").children().length;
-	$(".more.nav-item").css("display", "table-cell");
 	
-	if(tabs < 100){
+	if(tabs < 100 && tabs > 1){
 		$(".nav-tabs .nav-stage").append('<li class="nav-item" role="presentation"><button class="nav-link empty" id="tab'+(tabs+1)+'" data-bs-toggle="tab" data-bs-target="#tab-pane'+(tabs+1)+'" type="button" role="tab" aria-controls="tab-pane'+(tabs+1)+'" aria-selected="true">'+(tabs+1)+'</button></li>');
 		$(".tab-content").append('<div class="tab-pane fade" id="tab-pane'+(tabs+1)+'" role="tabpanel" aria-labelledby="tab'+(tabs+1)+'" tabindex="0"><span class="preset-title" id="preset'+(tabs+1)+'"></span><div class="screen-container" id="dropText'+(tabs+2)+'"><pre id="preCode"><code id="codeBlock'+(tabs+2)+'" class="language-csharp"></code></pre><textarea class="text'+(tabs+2)+' screen" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea><div class="overlay">VGA '+(tabs+1)+'</div></div></div>');
+	}
+	
+	if(tabs == 0){
+		$(".text-wrap").append('<ul class="nav nav-tabs" id="myTab" role="tablist"><div class="nav-slide"><div class="nav-stage" style="transform:translateX(0px);"></div></div></ul>');
+		
+		$(".nav-tabs .nav-stage").append('<li class="nav-item" role="presentation"><button class="nav-link active" id="tab1" data-bs-toggle="tab" data-bs-target="#tab-pane1" type="button" role="tab" aria-controls="tab-pane1" aria-selected="true">1</button></li>');
+		$(".nav-tabs .nav-stage").append('<li class="nav-item" role="presentation"><button class="nav-link empty" id="tab2" data-bs-toggle="tab" data-bs-target="#tab-pane1" type="button" role="tab" aria-controls="tab-pane1" aria-selected="true">2</button></li>');
+		$(".tab-content").append('<div class="tab-pane fade" id="tab-pane2" role="tabpanel" aria-labelledby="tab2" tabindex="0"><span class="preset-title" id="preset2"></span><div class="screen-container" id="dropText3"><pre id="preCode"><code id="codeBlock3" class="language-csharp"></code></pre><textarea class="text3 screen" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea><div class="overlay">VGA 2</div></div></div>');
+		
+		$(".nav-tabs").append('<div class="plus nav-item" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Plus 1" role="presentation"><span class="material-symbols-outlined nav-link" aria-selected="false" tabindex="-1" role="tab">exposure_plus_1</span></div>');
+		$(".nav-tabs").append('<div class="remove nav-item" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Remove Tabs"><span class="material-symbols-outlined nav-link">close_small</span></div>');
+		
+		const tooltip = new bootstrap.Tooltip($('.plus'));
+		const tooltip2 = new bootstrap.Tooltip($('.remove'));
+		
+		$(".remove").on('click', function(){
+			removeTabs();
+		});
+		
+		if($(".nav-hide").length == 0){
+			$(".text-wrap .text-box:nth-child(2)").append('<div class="nav-hide"><span class="material-symbols-outlined">keyboard_double_arrow_up</span></div>');
+			
+			$(".nav-hide").on('click', function(){
+				navHide();
+			});
+			
+			if(tabs == "hidden"){
+				$(".nav-tabs").addClass("hide");
+				$(".nav-hide span").text("keyboard_double_arrow_down");
+				$(".nav-hide").css("transform", "translateY(-60px)");
+			}
+			else{
+				$(".nav-tabs").removeClass("hide");
+				$(".nav-hide span").text("keyboard_double_arrow_up");
+				$(".nav-hide").css("transform", "translateY(2px)");
+			}
+		}
+		
+		if($(".tab-pane.active textarea").val() == "" && $(".tab-pane.active .plyr").length == 0){
+			$("#tab1").addClass("empty");
+		}
+		else if($(".tab-pane.active .plyr.yt").length == 1){
+			$("#tab1").addClass("yt");
+		}
+		else if($(".tab-pane.active .plyr").length == 1){
+			$("#tab1").addClass("vid");
+		}
 	}
 	
 	if(tabs == 24){
@@ -374,6 +508,10 @@ function extraTab(){
 		$(".more.nav-item").on('click', function(){
 			nextTab();
 		});
+	}
+	
+	if(tabs > 24){
+		$(".more.nav-item").css("display", "table-cell");
 	}
 	
 	if(power == "on"){
@@ -1688,6 +1826,17 @@ $(document).ready(function () {
 			$(".active .plyr").remove();
 			$(".nav-link.active").addClass("empty").removeClass("vid").removeClass("yt");
 			$(".active textarea").css("display", "block");
+		}
+		
+		if(e.ctrlKey && key == "End"){
+			e.preventDefault;
+			if($(".nav-stage").length == 1){
+				deleteTab();
+			}
+		}
+		
+		if(e.ctrlKey && key == "Insert"){
+			extraTab();
 		}
 		
 		if(e.altKey && c == 0){

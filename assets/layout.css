@@ -127,9 +127,9 @@ textarea:focus-visible {
 
 .button {
     border-radius: 34px;
-    background: linear-gradient(180deg, rgb(240 240 240 / 25%) 35%, rgb(160 160 160 / 10%) 70%);
+    background: linear-gradient(0deg, #E2E2E2 35%, #F2F2F2 70%);
     padding: 4px 14px;
-    border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+    border-bottom: 2px solid rgb(0 0 0 / 10%);
     color: #888;
     font-size: 14px;
     font-weight: bold;
@@ -1963,7 +1963,7 @@ input[type="text"], select {
 
 .nav-slide {
     overflow: hidden;
-    max-width: 936px;
+    max-width: 942px;
 }
 
 .nav-link.empty {
