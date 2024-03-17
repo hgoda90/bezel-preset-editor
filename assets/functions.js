@@ -338,7 +338,7 @@ function deleteTab(){
 		$(".nav-link.active").attr("data-bs-target", "#tab-pane"+(tab-1));
 		$(".nav-link.active").attr("aria-controls", "tab-pane"+(tab-1));
 		$(".nav-link.active").text(tab-1);
-		$(".nav-link.active").append('<span class="close"></span>');
+		$(".nav-link.active").append('<span class="material-symbols-outlined close">close_small</span>');
 	}
 	else{
 		$("#tab-pane"+(tab+1)).addClass("active show");
@@ -355,7 +355,7 @@ function deleteTab(){
 		$(".nav-link.active").attr("data-bs-target", "#tab-pane"+tab);
 		$(".nav-link.active").attr("aria-controls", "tab-pane"+tab);
 		$(".nav-link.active").text(tab);
-		$(".nav-link.active").append('<span class="close"></span>');
+		$(".nav-link.active").append('<span class="material-symbols-outlined close">close_small</span>');
 	}
 	
 	$(".tab-pane.active").nextAll().each(function(){
@@ -386,7 +386,7 @@ function deleteTab(){
 		$(this).find(".nav-link").attr("data-bs-target", "#tab-pane"+tb);
 		$(this).find(".nav-link").attr("aria-controls", "tab-pane"+tb);
 		$(this).find(".nav-link").text(tb);
-		$(this).find(".nav-link").append('<span class="close"></span>');
+		$(this).find(".nav-link").append('<span class="material-symbols-outlined close">close_small</span>');
 	});
 	
 	if($(".nav-stage").children().length == 1){
@@ -449,19 +449,19 @@ function extraTab(){
 	var tabs = $(".nav-stage").children().length;
 	
 	if(tabs < 100 && tabs > 1){
-		$(".nav-tabs .nav-stage").append('<li class="nav-item" role="presentation"><button class="nav-link empty" id="tab'+(tabs+1)+'" data-bs-toggle="tab" data-bs-target="#tab-pane'+(tabs+1)+'" type="button" role="tab" aria-controls="tab-pane'+(tabs+1)+'" aria-selected="true">'+(tabs+1)+'<span class="close"></span></button></li>');
+		$(".nav-tabs .nav-stage").append('<li class="nav-item" role="presentation"><button class="nav-link empty" id="tab'+(tabs+1)+'" data-bs-toggle="tab" data-bs-target="#tab-pane'+(tabs+1)+'" type="button" role="tab" aria-controls="tab-pane'+(tabs+1)+'" aria-selected="true">'+(tabs+1)+'<span class="material-symbols-outlined close">close_small</span></button></li>');
 		$(".tab-content").append('<div class="tab-pane fade" id="tab-pane'+(tabs+1)+'" role="tabpanel" aria-labelledby="tab'+(tabs+1)+'" tabindex="0"><span class="preset-title" id="preset'+(tabs+1)+'"></span><div class="screen-container" id="dropText'+(tabs+2)+'"><pre id="preCode"><code id="codeBlock'+(tabs+2)+'" class="language-csharp"></code></pre><textarea class="text'+(tabs+2)+' screen" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea><div class="overlay">VGA '+(tabs+1)+'</div></div></div>');
 	}
 	
 	if(tabs == 0){
 		$(".text-wrap").append('<ul class="nav nav-tabs" id="myTab" role="tablist"><div class="nav-slide"><div class="nav-stage" style="transform:translateX(0px);"></div></div></ul>');
 		
-		$(".nav-tabs .nav-stage").append('<li class="nav-item" role="presentation"><button class="nav-link active" id="tab1" data-bs-toggle="tab" data-bs-target="#tab-pane1" type="button" role="tab" aria-controls="tab-pane1" aria-selected="true">1<span class="close"></span></button></li>');
-		$(".nav-tabs .nav-stage").append('<li class="nav-item" role="presentation"><button class="nav-link empty" id="tab2" data-bs-toggle="tab" data-bs-target="#tab-pane2" type="button" role="tab" aria-controls="tab-pane2" aria-selected="true">2<span class="close"></span></button></li>');
+		$(".nav-tabs .nav-stage").append('<li class="nav-item" role="presentation"><button class="nav-link active" id="tab1" data-bs-toggle="tab" data-bs-target="#tab-pane1" type="button" role="tab" aria-controls="tab-pane1" aria-selected="true">1<span class="material-symbols-outlined close">close_small</span></button></li>');
+		$(".nav-tabs .nav-stage").append('<li class="nav-item" role="presentation"><button class="nav-link empty" id="tab2" data-bs-toggle="tab" data-bs-target="#tab-pane2" type="button" role="tab" aria-controls="tab-pane2" aria-selected="true">2<span class="material-symbols-outlined close">close_small</span></button></li>');
 		$(".tab-content").append('<div class="tab-pane fade" id="tab-pane2" role="tabpanel" aria-labelledby="tab2" tabindex="0"><span class="preset-title" id="preset2"></span><div class="screen-container" id="dropText3"><pre id="preCode"><code id="codeBlock3" class="language-csharp"></code></pre><textarea class="text3 screen" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea><div class="overlay">VGA 2</div></div></div>');
 		
 		$(".nav-tabs").append('<div class="plus nav-item" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Plus 1" role="presentation"><span class="material-symbols-outlined nav-link" aria-selected="false" tabindex="-1" role="tab">exposure_plus_1</span></div>');
-		$(".nav-tabs").append('<div class="remove nav-item" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Remove Tabs"><span class="material-symbols-outlined nav-link">close_small</span></div>');
+		$(".nav-tabs").append('<div class="remove nav-item" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Remove Tabs"><span class="material-symbols-outlined nav-link">backspace</span></div>');
 		
 		const tooltip = new bootstrap.Tooltip($('.plus'));
 		const tooltip2 = new bootstrap.Tooltip($('.remove'));

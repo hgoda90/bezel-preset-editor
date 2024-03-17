@@ -985,7 +985,6 @@ footer .button {
     height: 21px;
     vertical-align: middle;
     line-height: 1;
-    color: red;
     cursor: pointer;
     font-size: 21px;
     min-width: unset;
@@ -2000,23 +1999,26 @@ input[type="text"], select {
 }
 
 .nav-item .nav-link.active .close {
-    width: 6px;
-    height: 6px;
     position: absolute;
-    bottom: -14px;
-    left: 42%;
-    background: #888;
-    border-radius: 50%;
+    bottom: -26px;
+    left: 4px;
+    border: none;
+    background: transparent;
+    display: block;
 }
 
 .nav-item .nav-link.active.empty .close {
-	background: #BBB;
+	color: #BBB;
 }
 
 .nav-item .nav-link.active.vid .close {
-	background: #00B2FF;
+	color: #00B2FF;
 }
 
 .nav-item .nav-link.active.yt .close {
-	background: #FF0000;
+	color: #FF0000;
+}
+
+.nav-item .nav-link .close {
+    display: none;
 }
