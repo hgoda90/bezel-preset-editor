@@ -1,4 +1,16 @@
-var p = 1;
+var p = 1,
+	page = 1;
+
+function img(file){
+	var reader = new FileReader();
+	reader.onload = function(){
+		$(".tab-pane.active .screen-container").append('<div class="img-holder"><img src="'+reader.result+'"></div>');
+	}
+	
+	reader.readAsDataURL(file[0]);
+	
+	$(".nav-link.active").addClass("img").removeClass("empty");
+}
 
 function loadFile(presets, files, id){
 	var reader = new FileReader();
@@ -256,32 +268,57 @@ function loadVideo(id, file, files, extension, playing){
 	}
 }
 
-function prevTab(){
+function prevTab(type){
 	var active = parseInt($(".nav-link.active").text()),
-		position = parseInt($('.nav-stage').css("transform").split(",")[4].trim()),
-		slide = position+39;
+		pages = Math.floor($(".nav-stage").children('li').length / 20),
+		position = parseInt($('.nav-stage').css("transform").split(",")[4].trim());
 	
-	if(active > 1){
-		$("#tab"+active).removeClass("active");
-		$("#tab"+(active-1)).addClass("active");
-		$("#tab-pane"+active).removeClass("active show");
-		$("#tab-pane"+(active-1)).addClass("active show");
-	}
-	
-	prev = parseInt($(".nav-link.active").text())
-	
-	if(position < 0 && active+22 < $(".nav-stage").children('li').length){
-		$(".nav-stage").css("transform", "translateX("+slide+"px)");
-	}
-	
-	if(position < -39){
-		$(".nav .less").css("display", "table-cell");
+	if(type == "page"){
+		slide = (page - 2) * -940;
+		
+		if(page > 1){
+			$(".nav-stage").css("transform", "translateX("+slide+"px)");
+		}
+		else{
+			$(".nav-stage").css("transform", "translateX(0px)");
+		}
+		
+		page--;
 	}
 	else{
-		$(".nav .less").css("display", "none");
+		var tabs = $(".nav-stage").children('li').length;
+		
+		if(active > 1){
+			$("#tab"+active).removeClass("active");
+			$("#tab"+(active-1)).addClass("active");
+			$("#tab-pane"+active).removeClass("active show");
+			$("#tab-pane"+(active-1)).addClass("active show");
+		}
+		
+		if((position / -47) + 1 < active - 1 && page == Math.floor((active-1) / 20) + 1){
+			slide = position;
+		}
+		else if(active + 19 > tabs){
+			slide = (tabs-20) * -47;
+		}
+		else if(active + 18 < tabs){
+			slide = (active - 2) * -47;
+		}
+		
+		$(".nav-stage").css("transform", "translateX("+slide+"px)");
+		page = Math.floor(active / 20) + 1;
 	}
 	
-	if(position <= ($(".nav-stage").children('li').length-24) * -39){
+	var pos = parseInt($('.nav-stage').css("transform").split(",")[4].trim())
+	
+	if((pos == 0 || parseInt($(".nav-link.active").text()) == 1) && page == 1){
+		$(".nav .less").css("display", "none");
+	}
+	else{
+		$(".nav .less").css("display", "table-cell");
+	}
+	
+	if(pos == ($(".nav-stage").children('li').length-20) * -47 || parseInt($(".nav-link.active").text())+1 == $(".nav-stage").children('li').length){
 		$(".nav .more").css("display", "none");
 	}
 	else{
@@ -289,35 +326,62 @@ function prevTab(){
 	}
 }
 
-function nextTab(){
+function nextTab(type){
 	var active = parseInt($(".nav-link.active").text()),
-		position = parseInt($('.nav-stage').css("transform").split(",")[4].trim()),
-		slide = position-39;
+		pages = Math.floor($(".nav-stage").children('li').length / 20),
+		position = parseInt($('.nav-stage').css("transform").split(",")[4].trim());
 	
-	if(active < $(".nav-stage").children('li').length){
-		$("#tab"+(active+1)).addClass("active");
-		$("#tab"+active).removeClass("active");
-		$("#tab-pane"+active).removeClass("active show");
-		$("#tab-pane"+(active+1)).addClass("active show");
+	if(type == "page"){
+		if(pages > page && (($(".nav-stage").children('li').length / 20) - page) >= 1){
+			slide = page * -940;
+		}
+		else{
+			slide = ($(".nav-stage").children('li').length - 20) * -47;
+		}
+		
+		$(".nav-stage").css("transform", "translateX("+slide+"px)");
+		
+		page++;
+	}
+	else{
+		var tabs = $(".nav-stage").children('li').length;
+		
+		if(active < $(".nav-stage").children('li').length){
+			$("#tab"+(active+1)).addClass("active");
+			$("#tab"+active).removeClass("active");
+			$("#tab-pane"+active).removeClass("active show");
+			$("#tab-pane"+(active+1)).addClass("active show");
+		}
+		
+		if((position / -47) + 1 > (active - 19) && page == Math.floor((active-1) / 20) + 1){
+			slide = position;
+		}
+		else if(position < (active - 20) * -47){
+			slide = active * -47;
+		}
+		else if(position / -47 + 1 < tabs - 19){
+			slide = (active - 19) * -47;
+		}
+		else if(page == 1){
+			slide = 0;
+		}
+		
+		$(".nav-stage").css("transform", "translateX("+slide+"px)");
+		page = Math.floor(active / 20) + 1;
 	}
 	
-	next = parseInt($(".nav-link.active").text());
+	var pos = parseInt($('.nav-stage').css("transform").split(",")[4].trim())
 	
-	if(position <= ($(".nav-stage").children('li').length-24) * -39 || next == $(".nav-stage").children('li').length){
+	if(pos == ($(".nav-stage").children('li').length-20) * -47 || parseInt($(".nav-link.active").text()) == $(".nav-stage").children('li').length){
 		$(".nav .more").css("display", "none");
 	}
 	else{
 		$(".nav .more").css("display", "table-cell");
 	}
 	
-	if(next <= $(".nav-stage").children('li').length && position > (($(".nav-stage").children('li').length - 24) * -39) && next > 24){
-		$(".nav-stage").css("transform", "translateX("+slide+"px)");
-	}
-	
-	if(next > 25){
+	if(parseInt($(".nav-link.active").text()) > 20 || page > 1){
 		$(".nav .less").css("display", "table-cell");
 	}
-	
 }
 
 function dropFile(file) {
@@ -384,6 +448,10 @@ function dropFile2(file) {
 		
 		$("#preset"+num).empty();
 	}
+	else if(extension == "jpg" || extension == "png"){
+		img(file);
+		$(".tab-pane.active textarea").css("display", "none");
+	}
 	else{
 		dropLoad(file[id-1], file.length, num);
 		$("#preset"+num).text(file[id-1].name.replace(".params", "").replace(".slangp", ""));
@@ -410,7 +478,7 @@ function dropTab(e){
 		name = e.originalEvent.dataTransfer.files[0].name;
 	var tabs = parseInt($(".nav-stage").children().length);
 	$(".tab-pane.active textarea").text("").val("");
-	$(".less, .more, .nav-hide, .plus, .remove").remove();
+	$(".nav-item.close, .less, .more, .nav-hide, .plus, .remove").remove();
 	
 	var extension = name.substr( (name.lastIndexOf('.') +1) );
 	
@@ -429,18 +497,18 @@ function dropTab(e){
 		$(".nav.nav-tabs").append('<div class="nav-slide"><div class="nav-stage" style="transform:translateX(0px);"></div></div>');
 	}
   
-	if(length <= 100){
+	if(length <= 256){
 		for (var i=0; i<length;i++){
 			if(length > 1){
 				if(i == 0 && $(".nav-stage").children().length == 0){
-					$(".nav-stage").append('<li class="nav-item" role="presentation"><button class="nav-link active" id="tab1" data-bs-toggle="tab" data-bs-target="#tab-pane1" type="button" role="tab" aria-controls="tab-pane1" aria-selected="true">1<span class="material-symbols-outlined close">close_small</span></button></li>');
+					$(".nav-stage").append('<li class="nav-item" role="presentation"><button class="nav-link active" id="tab1" data-bs-toggle="tab" data-bs-target="#tab-pane1" type="button" role="tab" aria-controls="tab-pane1" aria-selected="true">1</button></li>');
 				}
-				else if(length == 100){
-					$(".nav-stage").append('<li class="nav-item" role="presentation"><button class="nav-link" id="tab'+(tabs+(i+1))+'" data-bs-toggle="tab" data-bs-target="#tab-pane'+(tabs+(i+1))+'" type="button" role="tab" aria-controls="tab-pane'+(tabs+(i+1))+'" aria-selected="true">'+(tabs+(i+1))+'<span class="material-symbols-outlined close">close_small</span></button></li>');
+				else if(length == 256){
+					$(".nav-stage").append('<li class="nav-item" role="presentation"><button class="nav-link" id="tab'+(tabs+(i+1))+'" data-bs-toggle="tab" data-bs-target="#tab-pane'+(tabs+(i+1))+'" type="button" role="tab" aria-controls="tab-pane'+(tabs+(i+1))+'" aria-selected="true">'+(tabs+(i+1))+'</button></li>');
 					$(".nav-link").removeClass("empty");
 				}
 				else if(active+i > tabs){
-					$(".nav-stage").append('<li class="nav-item" role="presentation"><button class="nav-link" id="tab'+(active+i)+'" data-bs-toggle="tab" data-bs-target="#tab-pane'+(active+i)+'" type="button" role="tab" aria-controls="tab-pane'+(active+i)+'" aria-selected="true">'+(active+i)+'<span class="material-symbols-outlined close">close_small</span></button></li>');
+					$(".nav-stage").append('<li class="nav-item" role="presentation"><button class="nav-link" id="tab'+(active+i)+'" data-bs-toggle="tab" data-bs-target="#tab-pane'+(active+i)+'" type="button" role="tab" aria-controls="tab-pane'+(active+i)+'" aria-selected="true">'+(active+i)+'</button></li>');
 					$(".nav-tabs #tab"+(active+i)).removeClass("empty");
 				}
 			}
@@ -448,52 +516,54 @@ function dropTab(e){
 			dropFile2(files);
 		}
 	}
-	else if(length > 100){
+	else if(length > 256){
 		if($(".nav-stage").children().length == 0){
-			for (i=0; i<100;i++){
+			for (i=0; i<256;i++){
 				$(".nav-link").removeClass("empty");
 				if(i == 0 && $(".nav-stage").children().length == 0){
-					$(".nav-stage").append('<li class="nav-item" role="presentation"><button class="nav-link active" id="tab1" data-bs-toggle="tab" data-bs-target="#tab-pane1" type="button" role="tab" aria-controls="tab-pane1" aria-selected="true">1<span class="material-symbols-outlined close">close_small</span></button></li>');
+					$(".nav-stage").append('<li class="nav-item" role="presentation"><button class="nav-link active" id="tab1" data-bs-toggle="tab" data-bs-target="#tab-pane1" type="button" role="tab" aria-controls="tab-pane1" aria-selected="true">1</button></li>');
 				}
 				else{
-					$(".nav-stage").append('<li class="nav-item" role="presentation"><button class="nav-link" id="tab'+(i+1)+'" data-bs-toggle="tab" data-bs-target="#tab-pane'+(i+1)+'" type="button" role="tab" aria-controls="tab-pane'+(i+1)+'" aria-selected="true">'+(i+1)+'<span class="material-symbols-outlined close">close_small</span></button></li>');
+					$(".nav-stage").append('<li class="nav-item" role="presentation"><button class="nav-link" id="tab'+(i+1)+'" data-bs-toggle="tab" data-bs-target="#tab-pane'+(i+1)+'" type="button" role="tab" aria-controls="tab-pane'+(i+1)+'" aria-selected="true">'+(i+1)+'</button></li>');
 				}
 			}
 		}
 		else{
-			for (var i=0; i<(100 - tabs);i++){
+			for (var i=0; i<(256 - tabs);i++){
 				$(".nav-link").removeClass("empty");
-				$(".nav-stage").append('<li class="nav-item" role="presentation"><button class="nav-link" id="tab'+parseInt(tabs+(i+1))+'" data-bs-toggle="tab" data-bs-target="#tab-pane'+parseInt(tabs+(i+1))+'" type="button" role="tab" aria-controls="tab-pane'+parseInt(tabs+(i+1))+'" aria-selected="true">'+parseInt(tabs+(i+1))+'<span class="material-symbols-outlined close">close_small</span></button></li>');
+				$(".nav-stage").append('<li class="nav-item" role="presentation"><button class="nav-link" id="tab'+parseInt(tabs+(i+1))+'" data-bs-toggle="tab" data-bs-target="#tab-pane'+parseInt(tabs+(i+1))+'" type="button" role="tab" aria-controls="tab-pane'+parseInt(tabs+(i+1))+'" aria-selected="true">'+parseInt(tabs+(i+1))+'</button></li>');
 			}
 		}
 		
-		for (var i=0; i<100;i++){
+		for (var i=0; i<256;i++){
 			files[i] = e.originalEvent.dataTransfer.files[i];
 			dropFile2(files);
 		}
 	}
 
-	if($(".nav-stage").children().length > 24 && $(".nav .more").length == 0){
-		$(".nav-tabs").prepend('<div class="less nav-item" style="display: none;"><span>...</span></div>');
-		$(".nav-tabs").append('<div class="more nav-item" style="display: table-cell;"><span>...</span></div>');
+	if($(".nav-stage").children().length > 20 && $(".nav .more").length == 0){
+		$(".nav-tabs").prepend('<div class="less nav-item" style="display: table-cell;"><span class="material-symbols-outlined nav-link">chevron_left</span></div>');
+		$(".nav-tabs").append('<div class="more nav-item" style="display: table-cell;"><span class="material-symbols-outlined nav-link">chevron_right</span></div>');
 		
 		$(".less.nav-item").on('click', function(){
-			prevTab();
+			prevTab("page");
 		});
 		
 		$(".more.nav-item").on('click', function(){
-			nextTab();
+			nextTab("page");
 		});
 	}
 	
 	if(tabs > 1 || length > 1){
-		$(".nav-tabs").append('<div class="plus nav-item" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Plus 1" role="presentation"><span class="material-symbols-outlined nav-link" aria-selected="false" tabindex="-1" role="tab">exposure_plus_1</span></div>');
-		$(".nav-tabs").append('<div class="remove nav-item" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Remove Tabs"><span class="material-symbols-outlined nav-link">backspace</span></div>');
+		$(".nav-tabs").append('<div class="close nav-item" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Minus Tab"><span class="material-symbols-outlined nav-link">chips</span></div>');
+		$(".nav-tabs").append('<div class="plus nav-item" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Add Tab"><span class="material-symbols-outlined nav-link">add_box</span></div>');
+		$(".nav-tabs").append('<div class="remove nav-item" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Remove Tabs"><span class="material-symbols-outlined nav-link">close_small</span></div>');
 		
-		const tooltip = new bootstrap.Tooltip($('.plus'));
-		const tooltip2 = new bootstrap.Tooltip($('.remove'));
+		const tooltip = new bootstrap.Tooltip($('.nav-item.close'));
+		const tooltip2 = new bootstrap.Tooltip($('.plus'));
+		const tooltip3 = new bootstrap.Tooltip($('.remove'));
 		
-		if(tabs < 100){
+		if(tabs < 256){
 			$(".plus").on('click', function(){
 				extraTab();
 				$(this).children('span').blur();
@@ -561,12 +631,19 @@ $(document).ready(function(){
 	
 	$('#load2 input[type="file"]').change(function (e) {
 		const presets = e.target.files;
-		$(".nav-hide, .plus, .tab-pane.active .plyr, .remove").remove();
+		$(".nav-item.close, .nav-hide, .plus, .tab-pane.active .plyr, .remove").remove();
 		$(".tab-pane.active textarea").css("display", "block");
 		var tabs = parseInt($(".nav-stage").children().length),
 			files = [];
 			
 		var id = parseInt(presets.length);
+		
+		if($(".tab-pane.active").length == 0){
+			active = 1;
+		}
+		else{
+			active = parseInt($(".tab-pane.active").attr("id").replace("tab-pane", ""));
+		}
 		
 		var extension = presets[(id-1)].name.substr( (presets[(id-1)].name.lastIndexOf('.') +1) );
 
@@ -578,64 +655,66 @@ $(document).ready(function(){
 			$(".nav.nav-tabs").append('<div class="nav-slide"><div class="nav-stage" style="transform:translateX(0px);"></div></div>');
 		}
 	  
-		if(id+tabs <= 100){
+		if(id+tabs <= 256){
 			for (let i=0;i<id;i++){
 				if(id > 1){
 					if(i == 0 && $(".nav-stage").children().length == 0){
-						$(".nav-stage").append('<li class="nav-item" role="presentation"><button class="nav-link active" id="tab1" data-bs-toggle="tab" data-bs-target="#tab-pane1" type="button" role="tab" aria-controls="tab-pane1" aria-selected="true">1<span class="material-symbols-outlined close">close_small</span></button></li>');
+						$(".nav-stage").append('<li class="nav-item" role="presentation"><button class="nav-link active" id="tab1" data-bs-toggle="tab" data-bs-target="#tab-pane1" type="button" role="tab" aria-controls="tab-pane1" aria-selected="true">1</button></li>');
 					}
-					else if(id == 100){
-						$(".nav-stage").append('<li class="nav-item" role="presentation"><button class="nav-link" id="tab'+(tabs+(i+1))+'" data-bs-toggle="tab" data-bs-target="#tab-pane'+(tabs+(i+1))+'" type="button" role="tab" aria-controls="tab-pane'+(tabs+(i+1))+'" aria-selected="true">'+(tabs+(i+1))+'<span class="material-symbols-outlined close">close_small</span></button></li>');
+					else if(id == 256){
+						$(".nav-stage").append('<li class="nav-item" role="presentation"><button class="nav-link" id="tab'+(tabs+(i+1))+'" data-bs-toggle="tab" data-bs-target="#tab-pane'+(tabs+(i+1))+'" type="button" role="tab" aria-controls="tab-pane'+(tabs+(i+1))+'" aria-selected="true">'+(tabs+(i+1))+'</button></li>');
 						$(".nav-link").removeClass("empty");
 					}
 					else if(tabs < active+i){
-						$(".nav-stage").append('<li class="nav-item" role="presentation"><button class="nav-link" id="tab'+(active+i)+'" data-bs-toggle="tab" data-bs-target="#tab-pane'+(active+i)+'" type="button" role="tab" aria-controls="tab-pane'+(active+i)+'" aria-selected="true">'+(active+i)+'<span class="material-symbols-outlined close">close_small</span></button></li>');
+						$(".nav-stage").append('<li class="nav-item" role="presentation"><button class="nav-link" id="tab'+(active+i)+'" data-bs-toggle="tab" data-bs-target="#tab-pane'+(active+i)+'" type="button" role="tab" aria-controls="tab-pane'+(active+i)+'" aria-selected="true">'+(active+i)+'</button></li>');
 						$(".nav-tabs #tab"+(active+i)).removeClass("empty");
 					}
 				}
 			}
 		}
-		else if(id > 100){
+		else if(id > 256){
 			if($(".nav-slide").children().length == 0){
-				for (var i=0; i<100;i++){
+				for (var i=0; i<256;i++){
 					$(".nav-link").removeClass("empty");
 					if(i == 0 && $(".nav-stage").children().length == 0){
-						$(".nav-stage").append('<li class="nav-item" role="presentation"><button class="nav-link active" id="tab1" data-bs-toggle="tab" data-bs-target="#tab-pane1" type="button" role="tab" aria-controls="tab-pane1" aria-selected="true">1<span class="material-symbols-outlined close">close_small</span></button></li>');
+						$(".nav-stage").append('<li class="nav-item" role="presentation"><button class="nav-link active" id="tab1" data-bs-toggle="tab" data-bs-target="#tab-pane1" type="button" role="tab" aria-controls="tab-pane1" aria-selected="true">1</button></li>');
 					}
 					else{
-						$(".nav-stage").append('<li class="nav-item" role="presentation"><button class="nav-link" id="tab'+(i+1)+'" data-bs-toggle="tab" data-bs-target="#tab-pane'+(i+1)+'" type="button" role="tab" aria-controls="tab-pane'+(i+1)+'" aria-selected="true">'+(i+1)+'<span class="material-symbols-outlined close">close_small</span></button></li>');
+						$(".nav-stage").append('<li class="nav-item" role="presentation"><button class="nav-link" id="tab'+(i+1)+'" data-bs-toggle="tab" data-bs-target="#tab-pane'+(i+1)+'" type="button" role="tab" aria-controls="tab-pane'+(i+1)+'" aria-selected="true">'+(i+1)+'</button></li>');
 					}
 				}
 			}
 			else{
-				for (var i=0; i<(100 - tabs);i++){
+				for (var i=0; i<(256 - tabs);i++){
 					$(".nav-link").removeClass("empty");
-					$(".nav-stage").append('<li class="nav-item" role="presentation"><button class="nav-link" id="tab'+parseInt(tabs+(i+1))+'" data-bs-toggle="tab" data-bs-target="#tab-pane'+parseInt(tabs+(i+1))+'" type="button" role="tab" aria-controls="tab-pane'+parseInt(tabs+(i+1))+'" aria-selected="true">'+parseInt(tabs+(i+1))+'<span class="material-symbols-outlined close">close_small</span></button></li>');
+					$(".nav-stage").append('<li class="nav-item" role="presentation"><button class="nav-link" id="tab'+parseInt(tabs+(i+1))+'" data-bs-toggle="tab" data-bs-target="#tab-pane'+parseInt(tabs+(i+1))+'" type="button" role="tab" aria-controls="tab-pane'+parseInt(tabs+(i+1))+'" aria-selected="true">'+parseInt(tabs+(i+1))+'</button></li>');
 				}
 			}
 		}
 		
-		if($(".nav-stage").children().length > 24 && $(".nav .more").length == 0){
-			$(".nav-tabs").prepend('<div class="less nav-item" style="display: none;"><span>...</span></div>');
-			$(".nav-tabs").append('<div class="more nav-item" style="display: table-cell;"><span>...</span></div>');
+		if($(".nav-stage").children().length > 20 && $(".nav .more").length == 0){
+			$(".nav-tabs").prepend('<div class="less nav-item" style="display: table-cell;"><span class="material-symbols-outlined nav-link">chevron_left</span></div>');
+			$(".nav-tabs").append('<div class="more nav-item" style="display: table-cell;"><span class="material-symbols-outlined nav-link">chevron_right</span></div>');
 			
 			$(".less.nav-item").on('click', function(){
-				prevTab();
+				prevTab("page");
 			});
 			
 			$(".more.nav-item").on('click', function(){
-				nextTab();
+				nextTab("page");
 			});
 		}
 		
 		if(tabs > 1 || id > 1){
-			$(".nav-tabs").append('<div class="plus nav-item" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Plus 1" role="presentation"><span class="material-symbols-outlined nav-link" aria-selected="false" tabindex="-1" role="tab">exposure_plus_1</span></div>');
-			$(".nav-tabs").append('<div class="remove nav-item" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Remove Tabs"><span class="material-symbols-outlined nav-link">backspace</span></div>');
+			$(".nav-tabs").append('<div class="close nav-item" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Minus Tab"><span class="material-symbols-outlined nav-link">chips</span></div>');
+			$(".nav-tabs").append('<div class="plus nav-item" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Add Tab"><span class="material-symbols-outlined nav-link">add_box</span></div>');
+			$(".nav-tabs").append('<div class="remove nav-item" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Remove Tabs"><span class="material-symbols-outlined nav-link">close_small</span></div>');
 			
-			const tooltip = new bootstrap.Tooltip($('.plus'));
-			const tooltip2 = new bootstrap.Tooltip($('.remove'));
+			const tooltip = new bootstrap.Tooltip($('.nav-item.close'));
+			const tooltip2 = new bootstrap.Tooltip($('.plus'));
+			const tooltip3 = new bootstrap.Tooltip($('.remove'));
 			
-			if(tabs < 100){
+			if(tabs < 256){
 				$(".plus").on('click', function(){
 					extraTab();
 					$(this).children('span').blur();
@@ -686,6 +765,10 @@ $(document).ready(function(){
 					$(".tab-pane.active textarea").css("display", "none");
 				}
 			}
+			else if(extension == "jpg" || extension == "png"){
+				img(presets);
+				$(".tab-pane.active textarea").css("display", "none");
+			}
 			else{
 				loadFile(presets[0], 1, num-1);
 				$("#preset"+num).text(presets[0].name.replace(".params", "").replace(".slangp", ""));
@@ -721,6 +804,10 @@ $(document).ready(function(){
 					}
 					
 					$("#preset"+(num+1)).empty();
+				}
+				else if(extension == "jpg" || extension == "png"){
+					img(presets[i]);
+					$(".tab-pane.active textarea").css("display", "none");
 				}
 				else{
 					loadFile(presets[i], id, num);

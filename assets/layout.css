@@ -901,8 +901,9 @@ footer .button {
     line-height: 0.9;
 }
 
-.plus .nav-link:hover, .remove .nav-link:hover {
-    margin: 3px 0px;
+.close .nav-link:hover, .less .nav-link:hover, .more .nav-link:hover, .plus .nav-link:hover, .remove .nav-link:hover {
+	border: none;
+	background: transparent;
 }
 
 .nav-tabs .nav-link.active .dot-divider{
@@ -921,20 +922,19 @@ footer .button {
 
 .text-wrap .nav-link {
     padding: 6px;
-    margin: 5px 2px;
+    margin: 5px 2px 5px 3px;
     border: none;
     text-align: center;
     height: 33px;
-    min-width: 35px;
+    width: 42px;
     position: relative;
 }
 
 .nav-tabs {
-    height: 60px;
     border: none;
     position: absolute;
     right: 4px;
-    bottom: -56px;
+    bottom: -46px;
     transition: transform .2s ease-in;
     display: table;
     margin: 0 2.5px -8px;
@@ -978,16 +978,6 @@ footer .button {
 
 #clear {
     right: 32px;
-}
-
-.remove .material-symbols-outlined.nav-link {
-    width: 21px;
-    height: 21px;
-    vertical-align: middle;
-    line-height: 1;
-    cursor: pointer;
-    font-size: 21px;
-    min-width: unset;
 }
 
 .nav-link:focus-visible {
@@ -1638,15 +1628,27 @@ input[type="text"], select {
     margin-bottom: 10px;
 }
 
-.plus .nav-link {
-    width: 21px;
+.close .nav-link, .less .nav-link, .more .nav-link, .plus .nav-link {
+    width: 26px;
     min-width: unset;
-    height: 21px;
+    height: 26px;
     vertical-align: middle;
     line-height: 1 !important;
     color: #777;
     cursor: pointer;
-    font-size: 21px;
+    font-size: 26px;
+    padding: 2px;
+}
+
+.remove .material-symbols-outlined.nav-link {
+    width: 26px;
+    height: 26px;
+    vertical-align: middle;
+    line-height: 1;
+    cursor: pointer;
+    font-size: 26px;
+    min-width: unset;
+	color: #F00;
 }
 
 .mini .plyr--audio {
@@ -1788,7 +1790,7 @@ input[type="text"], select {
     padding: 10px 20px;
 }
 
-.on.green .plyr .plyr__video-wrapper::before, .on.amber .plyr .plyr__video-wrapper::before {
+.on.green .plyr .plyr__video-wrapper::before, .on.amber .plyr .plyr__video-wrapper::before, .on.green .screen-container::before, .on.amber .screen-container::before {
     content: " ";
     width: 100%;
     height: 100%;
@@ -1801,16 +1803,16 @@ input[type="text"], select {
     pointer-events: none;
 }
 
-.on.amber .plyr .plyr__video-wrapper::before {
+.on.amber .plyr .plyr__video-wrapper::before, .on.amber .screen-container::before {
 	background: #FFB700;
 }
 
-.on.green .plyr iframe, .on.amber .plyr iframe{
+.on.green .plyr iframe, .on.amber .plyr iframe, .on.green img, .on.amber img{
     -webkit-filter: grayscale(100%) contrast(75%) brightness(90%);
     filter: grayscale(100%) contrast(75%) brightness(90%);
 }
 
-.on.bw .plyr iframe, .on.bw .plyr video{
+.on.bw .plyr iframe, .on.bw .plyr video, .on.bw img{
 	-webkit-filter: grayscale(100%);
     filter: grayscale(100%);
 }
@@ -1964,12 +1966,16 @@ input[type="text"], select {
 
 .nav-slide {
     overflow: hidden;
-    max-width: 942px;
+    max-width: 940px;
     height: 100%;
 }
 
 .nav-link.empty {
     color: #BBB;
+}
+
+.nav-link.img {
+	color: 	#fab617;
 }
 
 .nav-link.vid {
@@ -1992,33 +1998,30 @@ input[type="text"], select {
     background: #F2F2F2;
 }
 
-.nav-item .nav-link.empty.active, .nav-item .nav-link.empty:hover {
+.nav-tabs .nav-link.empty.active, .nav-item .nav-link.empty:hover {
     color: #BBB;
     border-color: #BBB;
     background: transparent;
 }
 
-.nav-item .nav-link.active .close {
+.nav-tabs .nav-link.img.active, .nav-tabs .nav-link.img:hover{
+	color: #FAB617;
+	border-color: #FAB617;
+	background: transparent;
+}
+
+.tab-pane .img-holder {
     position: absolute;
-    bottom: -26px;
-    left: 4px;
-    border: none;
-    background: transparent;
-    display: block;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
 }
 
-.nav-item .nav-link.active.empty .close {
-	color: #BBB;
-}
-
-.nav-item .nav-link.active.vid .close {
-	color: #00B2FF;
-}
-
-.nav-item .nav-link.active.yt .close {
-	color: #FF0000;
-}
-
-.nav-item .nav-link .close {
-    display: none;
+.tab-pane img {
+    width: auto;
+    height: 100%;
 }

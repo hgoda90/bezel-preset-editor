@@ -107,10 +107,10 @@ function clearText(id){
 		$(".text-box .tab-pane.active textarea").text("").val("");
 		$(".tab-pane.active code").empty();
 		$(".nav-link.active").addClass("empty");
-		$(".nav-link.active").removeClass("yt").removeClass("vid");
+		$(".nav-link.active").removeClass("img").removeClass("yt").removeClass("vid");
 		$(".text-box .tab-pane.active .preset-title").empty();
 		URL.revokeObjectURL($(".tab-pane.active .plyr source").attr("src"));
-		$(".tab-pane.active .plyr").remove();
+		$(".tab-pane.active .img-holder, .tab-pane.active .plyr").remove();
 		$(".tab-pane.active textarea").css("display", "block");
 	}
 	
@@ -338,7 +338,6 @@ function deleteTab(){
 		$(".nav-link.active").attr("data-bs-target", "#tab-pane"+(tab-1));
 		$(".nav-link.active").attr("aria-controls", "tab-pane"+(tab-1));
 		$(".nav-link.active").text(tab-1);
-		$(".nav-link.active").append('<span class="material-symbols-outlined close">close_small</span>');
 	}
 	else{
 		$("#tab-pane"+(tab+1)).addClass("active show");
@@ -355,7 +354,6 @@ function deleteTab(){
 		$(".nav-link.active").attr("data-bs-target", "#tab-pane"+tab);
 		$(".nav-link.active").attr("aria-controls", "tab-pane"+tab);
 		$(".nav-link.active").text(tab);
-		$(".nav-link.active").append('<span class="material-symbols-outlined close">close_small</span>');
 	}
 	
 	$(".tab-pane.active").nextAll().each(function(){
@@ -386,7 +384,6 @@ function deleteTab(){
 		$(this).find(".nav-link").attr("data-bs-target", "#tab-pane"+tb);
 		$(this).find(".nav-link").attr("aria-controls", "tab-pane"+tb);
 		$(this).find(".nav-link").text(tb);
-		$(this).find(".nav-link").append('<span class="material-symbols-outlined close">close_small</span>');
 	});
 	
 	if($(".nav-stage").children().length == 1){
@@ -394,15 +391,15 @@ function deleteTab(){
 		$(".nav-hide").remove();
 	}
 	
-	if($(".nav-stage").children().length < 25){
+	if($(".nav-stage").children().length < 21){
 		$(".less.nav-item, .more.nav-item").remove();
 		$(".nav-stage").css("transform", "translateX(0px)");
 	}
-	else if($(".nav-stage").children().length > 24 && tab > 24 && ($(".nav-stage").children().length - tab) == 1){
-		$(".nav-stage").css("transform", "translateX("+((tab - 24) * -39)+"px)");
+	else if($(".nav-stage").children().length > 20 && tab > 20 && ($(".nav-stage").children().length - tab) == 1){
+		$(".nav-stage").css("transform", "translateX("+((tab - 20) * -47)+"px)");
 	}
-	else if(($(".nav-stage").children().length - tab) < 24){
-		$(".nav-stage").css("transform", "translateX("+(($(".nav-stage").children().length - 24) * -39)+"px)");
+	else if(($(".nav-stage").children().length - tab) < 20){
+		$(".nav-stage").css("transform", "translateX("+(($(".nav-stage").children().length - 20) * -47)+"px)");
 		$(".more.nav-item").css("display", "none");
 	}
 }
@@ -410,10 +407,10 @@ function deleteTab(){
 function destroy(){
 	$(".preset-title").empty();
 	$("textarea").val("").text("");
-	$(".nav-item:not(.plus):not(.remove) .nav-link").removeClass("vid").removeClass("yt");
+	$(".nav-item:not(.plus):not(.remove) .nav-link").removeClass("img").removeClass("vid").removeClass("yt");
 	$(".nav-item:not(.plus):not(.remove) .nav-link").addClass("empty");
 	$("code").empty();
-	$(".plyr").remove();
+	$(".tab-pane .img-holder, .plyr").remove();
 	$("textarea").css("display", "block");
 	colorReset();
 }
@@ -448,23 +445,25 @@ function edit(){
 function extraTab(){
 	var tabs = $(".nav-stage").children().length;
 	
-	if(tabs < 100 && tabs > 1){
-		$(".nav-tabs .nav-stage").append('<li class="nav-item" role="presentation"><button class="nav-link empty" id="tab'+(tabs+1)+'" data-bs-toggle="tab" data-bs-target="#tab-pane'+(tabs+1)+'" type="button" role="tab" aria-controls="tab-pane'+(tabs+1)+'" aria-selected="true">'+(tabs+1)+'<span class="material-symbols-outlined close">close_small</span></button></li>');
+	if(tabs < 256 && tabs > 1){
+		$(".nav-tabs .nav-stage").append('<li class="nav-item" role="presentation"><button class="nav-link empty" id="tab'+(tabs+1)+'" data-bs-toggle="tab" data-bs-target="#tab-pane'+(tabs+1)+'" type="button" role="tab" aria-controls="tab-pane'+(tabs+1)+'" aria-selected="true">'+(tabs+1)+'</button></li>');
 		$(".tab-content").append('<div class="tab-pane fade" id="tab-pane'+(tabs+1)+'" role="tabpanel" aria-labelledby="tab'+(tabs+1)+'" tabindex="0"><span class="preset-title" id="preset'+(tabs+1)+'"></span><div class="screen-container" id="dropText'+(tabs+2)+'"><pre id="preCode"><code id="codeBlock'+(tabs+2)+'" class="language-csharp"></code></pre><textarea class="text'+(tabs+2)+' screen" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea><div class="overlay">VGA '+(tabs+1)+'</div></div></div>');
 	}
 	
 	if(tabs == 0){
 		$(".text-wrap").append('<ul class="nav nav-tabs" id="myTab" role="tablist"><div class="nav-slide"><div class="nav-stage" style="transform:translateX(0px);"></div></div></ul>');
 		
-		$(".nav-tabs .nav-stage").append('<li class="nav-item" role="presentation"><button class="nav-link active" id="tab1" data-bs-toggle="tab" data-bs-target="#tab-pane1" type="button" role="tab" aria-controls="tab-pane1" aria-selected="true">1<span class="material-symbols-outlined close">close_small</span></button></li>');
-		$(".nav-tabs .nav-stage").append('<li class="nav-item" role="presentation"><button class="nav-link empty" id="tab2" data-bs-toggle="tab" data-bs-target="#tab-pane2" type="button" role="tab" aria-controls="tab-pane2" aria-selected="true">2<span class="material-symbols-outlined close">close_small</span></button></li>');
+		$(".nav-tabs .nav-stage").append('<li class="nav-item" role="presentation"><button class="nav-link active" id="tab1" data-bs-toggle="tab" data-bs-target="#tab-pane1" type="button" role="tab" aria-controls="tab-pane1" aria-selected="true">1</button></li>');
+		$(".nav-tabs .nav-stage").append('<li class="nav-item" role="presentation"><button class="nav-link empty" id="tab2" data-bs-toggle="tab" data-bs-target="#tab-pane2" type="button" role="tab" aria-controls="tab-pane2" aria-selected="true">2</button></li>');
 		$(".tab-content").append('<div class="tab-pane fade" id="tab-pane2" role="tabpanel" aria-labelledby="tab2" tabindex="0"><span class="preset-title" id="preset2"></span><div class="screen-container" id="dropText3"><pre id="preCode"><code id="codeBlock3" class="language-csharp"></code></pre><textarea class="text3 screen" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea><div class="overlay">VGA 2</div></div></div>');
 		
-		$(".nav-tabs").append('<div class="plus nav-item" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Plus 1" role="presentation"><span class="material-symbols-outlined nav-link" aria-selected="false" tabindex="-1" role="tab">exposure_plus_1</span></div>');
-		$(".nav-tabs").append('<div class="remove nav-item" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Remove Tabs"><span class="material-symbols-outlined nav-link">backspace</span></div>');
+		$(".nav-tabs").append('<div class="close nav-item" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Minus Tab"><span class="material-symbols-outlined nav-link">chips</span></div>');
+		$(".nav-tabs").append('<div class="plus nav-item" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Add Tab"><span class="material-symbols-outlined nav-link">add_box</span></div>');
+		$(".nav-tabs").append('<div class="remove nav-item" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Remove Tabs"><span class="material-symbols-outlined nav-link">close_small</span></div>');
 		
-		const tooltip = new bootstrap.Tooltip($('.plus'));
-		const tooltip2 = new bootstrap.Tooltip($('.remove'));
+		const tooltip = new bootstrap.Tooltip($('.nav-item.close'));
+		const tooltip2 = new bootstrap.Tooltip($('.plus'));
+		const tooltip3 = new bootstrap.Tooltip($('.remove'));
 		
 		$(".remove").on('click', function(){
 			removeTabs();
@@ -500,20 +499,20 @@ function extraTab(){
 		}
 	}
 	
-	if(tabs == 24){
-		$(".nav-tabs").prepend('<div class="less nav-item" style="display: none;"><span>...</span></div>');
-		$(".nav-tabs .plus").before('<div class="more nav-item" style="display: table-cell;"><span>...</span></div>');
+	if(tabs == 20){
+		$(".nav-tabs").prepend('<div class="less nav-item" style="display: none;"><span class="material-symbols-outlined nav-link">chevron_left</span></div>');
+		$(".nav-tabs .close").before('<div class="more nav-item" style="display: table-cell;"><span class="material-symbols-outlined nav-link">chevron_right</span></div>');
 		
 		$(".less.nav-item").on('click', function(){
-			prevTab();
+			prevTab("page");
 		});
 		
 		$(".more.nav-item").on('click', function(){
-			nextTab();
+			nextTab("page");
 		});
 	}
 	
-	if(tabs > 24){
+	if(tabs > 20){
 		$(".more.nav-item").css("display", "table-cell");
 	}
 	
@@ -1121,8 +1120,13 @@ function start(){
 		updateCode2(parseInt($(".tab-pane.active").attr("id").replace("tab-pane", "")) + 1);
 	});
 	
-	$(document).on("click", ".nav-link.active .close", function(){
+	$(document).on("click", ".nav-item.close", function(){
 		deleteTab();
+	});
+	
+	$(document).on("click", ".nav-item.plus", function(){
+		extraTab();
+		$(this).blur();
 	});
 }
 
@@ -1889,13 +1893,13 @@ $(document).ready(function () {
 				case "PageDown":
 					e.preventDefault();
 					if(id > 1){
-						prevTab();
+						prevTab("single");
 					}
 					break;
 				case "PageUp":
 					e.preventDefault();
 					if(id < $(".nav-stage").children().length){
-						nextTab();
+						nextTab("single");
 					}
 					break;
 			}
