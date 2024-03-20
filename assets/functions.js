@@ -898,7 +898,7 @@ function removeTabs(){
 	
 	$(".preset-title, .tab-pane code").empty();
 	$(".tab-content textarea").text("").val("");
-	$(".remove, .tooltip, .nav, .nav-hide, .tab-pane .plyr").remove();
+	$(".screen-container .img-holder, .remove, .tooltip, .nav, .nav-hide, .tab-pane .plyr").remove();
 	$(".tab-pane").removeClass("active").removeClass("show");
 	$(".text2").parents(".tab-pane").addClass("active").addClass("show");
 	$(".text2").css("display", "block");
