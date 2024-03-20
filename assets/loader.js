@@ -1,15 +1,16 @@
 var p = 1,
 	page = 1;
 
-function img(file){
+function img(file, id){
 	var reader = new FileReader();
 	reader.onload = function(){
-		$(".tab-pane.active .screen-container").append('<div class="img-holder"><img src="'+reader.result+'"></div>');
+		$("#dropText"+(id+1)).append('<div class="img-holder"><img src="'+reader.result+'"></div>');
+		$("#dropText"+(id+1)+" .plyr").remove()
+		$("#dropText"+(id+1)+" textarea").css("display", "none");
+		$("#tab"+id).addClass("img").removeClass("yt").removeClass("vid");
 	}
 	
-	reader.readAsDataURL(file[0]);
-	
-	$(".nav-link.active").addClass("img").removeClass("empty");
+	reader.readAsDataURL(file);
 }
 
 function loadFile(presets, files, id){
@@ -19,7 +20,7 @@ function loadFile(presets, files, id){
 		$("#dropText"+(id+2)+" textarea").text(preset.trim()).val(preset.trim());
 		$("#dropText"+(id+2)+" .plyr").remove()
 		$("#dropText"+(id+2)+" textarea").css("display", "block");
-		$("#tab"+(id+1)).removeClass("yt").removeClass("vid");
+		$("#tab"+(id+1)).removeClass("img").removeClass("yt").removeClass("vid");
 		
 		if(power == "off"){
 			$("#dropText"+(id+2)+" code").css("display", "block");
@@ -268,125 +269,6 @@ function loadVideo(id, file, files, extension, playing){
 	}
 }
 
-function prevTab(type){
-	var active = parseInt($(".nav-link.active").text()),
-		pages = Math.floor($(".nav-stage").children('li').length / 20),
-		position = parseInt($('.nav-stage').css("transform").split(",")[4].trim());
-	
-	if(type == "page"){
-		slide = (page - 2) * -940;
-		
-		if(page > 1){
-			$(".nav-stage").css("transform", "translateX("+slide+"px)");
-		}
-		else{
-			$(".nav-stage").css("transform", "translateX(0px)");
-		}
-		
-		page--;
-	}
-	else{
-		var tabs = $(".nav-stage").children('li').length;
-		
-		if(active > 1){
-			$("#tab"+active).removeClass("active");
-			$("#tab"+(active-1)).addClass("active");
-			$("#tab-pane"+active).removeClass("active show");
-			$("#tab-pane"+(active-1)).addClass("active show");
-		}
-		
-		if((position / -47) + 1 < active - 1 && page == Math.floor((active-1) / 20) + 1){
-			slide = position;
-		}
-		else if(tabs < 20){
-			slide = 0;
-		}
-		else if(active + 19 > tabs){
-			slide = (tabs-20) * -47;
-		}
-		else if(active + 18 < tabs){
-			slide = (active - 2) * -47;
-		}
-		
-		$(".nav-stage").css("transform", "translateX("+slide+"px)");
-		page = Math.floor(active / 20) + 1;
-	}
-	
-	var pos = parseInt($('.nav-stage').css("transform").split(",")[4].trim())
-	
-	if((pos == 0 || parseInt($(".nav-link.active").text()) == 1) && page == 1){
-		$(".nav .less").css("display", "none");
-	}
-	else{
-		$(".nav .less").css("display", "table-cell");
-	}
-	
-	if(pos == ($(".nav-stage").children('li').length-20) * -47 || parseInt($(".nav-link.active").text())+1 == $(".nav-stage").children('li').length){
-		$(".nav .more").css("display", "none");
-	}
-	else{
-		$(".nav .more").css("display", "table-cell");
-	}
-}
-
-function nextTab(type){
-	var active = parseInt($(".nav-link.active").text()),
-		pages = Math.floor($(".nav-stage").children('li').length / 20),
-		position = parseInt($('.nav-stage').css("transform").split(",")[4].trim());
-	
-	if(type == "page"){
-		if(pages > page && (($(".nav-stage").children('li').length / 20) - page) >= 1){
-			slide = page * -940;
-		}
-		else{
-			slide = ($(".nav-stage").children('li').length - 20) * -47;
-		}
-		
-		$(".nav-stage").css("transform", "translateX("+slide+"px)");
-		
-		page++;
-	}
-	else{
-		var tabs = $(".nav-stage").children('li').length;
-		
-		if(active < $(".nav-stage").children('li').length){
-			$("#tab"+(active+1)).addClass("active");
-			$("#tab"+active).removeClass("active");
-			$("#tab-pane"+active).removeClass("active show");
-			$("#tab-pane"+(active+1)).addClass("active show");
-		}
-		
-		if((position / -47) + 1 > (active - 19) && page == Math.floor((active-1) / 20) + 1){
-			slide = position;
-		}
-		else if(tabs < 20){
-			slide = 0;
-		}
-		else if(position < (active - 20) * -47){
-			slide = active * -47;
-		}
-		else if(position / -47 + 1 < tabs - 19){
-			slide = (active - 19) * -47;
-		}
-		
-		$(".nav-stage").css("transform", "translateX("+slide+"px)");
-		page = Math.floor(active / 20) + 1;
-	}
-	
-	var pos = parseInt($('.nav-stage').css("transform").split(",")[4].trim())
-	
-	if(pos == ($(".nav-stage").children('li').length-20) * -47 || parseInt($(".nav-link.active").text()) == $(".nav-stage").children('li').length){
-		$(".nav .more").css("display", "none");
-	}
-	else{
-		$(".nav .more").css("display", "table-cell");
-	}
-	
-	if(parseInt($(".nav-link.active").text()) > 20 || page > 1){
-		$(".nav .less").css("display", "table-cell");
-	}
-}
-
 function dropFile(file) {
 	var extension = file.name.substr( (file.name.lastIndexOf('.') +1) ),
 			input = URL.createObjectURL(file);
@@ -452,7 +334,7 @@ function dropFile2(file) {
 		$("#preset"+num).empty();
 	}
 	else if(extension == "jpg" || extension == "png"){
-		img(file);
+		img(file[id-1], num);
 		$(".tab-pane.active textarea").css("display", "none");
 	}
 	else{
@@ -565,13 +447,6 @@ function dropTab(e){
 		const tooltip = new bootstrap.Tooltip($('.nav-item.close'));
 		const tooltip2 = new bootstrap.Tooltip($('.plus'));
 		const tooltip3 = new bootstrap.Tooltip($('.remove'));
-		
-		if(tabs < 256){
-			$(".plus").on('click', function(){
-				extraTab();
-				$(this).children('span').blur();
-			});
-		}
 		
 		$(".remove").on('click', function(){
 			removeTabs();
@@ -717,13 +592,6 @@ $(document).ready(function(){
 			const tooltip2 = new bootstrap.Tooltip($('.plus'));
 			const tooltip3 = new bootstrap.Tooltip($('.remove'));
 			
-			if(tabs < 256){
-				$(".plus").on('click', function(){
-					extraTab();
-					$(this).children('span').blur();
-				});
-			}
-			
 			$(".remove").on('click', function(){
 				removeTabs();
 			});
@@ -769,7 +637,7 @@ $(document).ready(function(){
 				}
 			}
 			else if(extension == "jpg" || extension == "png"){
-				img(presets);
+				img(presets[0], num);
 				$(".tab-pane.active textarea").css("display", "none");
 			}
 			else{
@@ -809,7 +677,7 @@ $(document).ready(function(){
 					$("#preset"+(num+1)).empty();
 				}
 				else if(extension == "jpg" || extension == "png"){
-					img(presets[i]);
+					img(presets[i], num+1);
 					$(".tab-pane.active textarea").css("display", "none");
 				}
 				else{

@@ -402,13 +402,17 @@ function deleteTab(){
 		$(".nav-stage").css("transform", "translateX("+(($(".nav-stage").children().length - 20) * -47)+"px)");
 		$(".more.nav-item").css("display", "none");
 	}
+	
+	if($(".nav-stage").children().length == 1){
+		$(".tooltip").remove();
+	}
 }
 
 function destroy(){
 	$(".preset-title").empty();
 	$("textarea").val("").text("");
-	$(".nav-item:not(.plus):not(.remove) .nav-link").removeClass("img").removeClass("vid").removeClass("yt");
-	$(".nav-item:not(.plus):not(.remove) .nav-link").addClass("empty");
+	$(".nav-item:not(.close):not(.plus):not(.remove) .nav-link").removeClass("img").removeClass("vid").removeClass("yt");
+	$(".nav-item:not(.close):not(.plus):not(.remove) .nav-link").addClass("empty");
 	$("code").empty();
 	$(".tab-pane .img-holder, .plyr").remove();
 	$("textarea").css("display", "block");
@@ -710,6 +714,125 @@ function layerToggle(imageLayers){
 				$(".koko-aio .layer-labels li:nth-child(5)").addClass("active");
 				break;
 		}
+	}
+}
+
+function nextTab(type){
+	var active = parseInt($(".nav-link.active").text()),
+		pages = Math.floor($(".nav-stage").children('li').length / 20),
+		position = parseInt($('.nav-stage').css("transform").split(",")[4].trim());
+	
+	if(type == "page"){
+		if(pages > page && (($(".nav-stage").children('li').length / 20) - page) >= 1){
+			slide = page * -940;
+		}
+		else{
+			slide = ($(".nav-stage").children('li').length - 20) * -47;
+		}
+		
+		$(".nav-stage").css("transform", "translateX("+slide+"px)");
+		
+		page++;
+	}
+	else{
+		var tabs = $(".nav-stage").children('li').length;
+		
+		if(active < $(".nav-stage").children('li').length){
+			$("#tab"+(active+1)).addClass("active");
+			$("#tab"+active).removeClass("active");
+			$("#tab-pane"+active).removeClass("active show");
+			$("#tab-pane"+(active+1)).addClass("active show");
+		}
+		
+		if((position / -47) + 1 > (active - 19) && page == Math.floor((active-1) / 20) + 1){
+			slide = position;
+		}
+		else if(tabs < 20){
+			slide = 0;
+		}
+		else if(position < (active - 20) * -47){
+			slide = active * -47;
+		}
+		else if(position / -47 + 1 < tabs - 19){
+			slide = (active - 19) * -47;
+		}
+		
+		$(".nav-stage").css("transform", "translateX("+slide+"px)");
+		page = Math.floor(active / 20) + 1;
+	}
+	
+	var pos = parseInt($('.nav-stage').css("transform").split(",")[4].trim())
+	
+	if(pos == ($(".nav-stage").children('li').length-20) * -47 || parseInt($(".nav-link.active").text()) == $(".nav-stage").children('li').length){
+		$(".nav .more").css("display", "none");
+	}
+	else{
+		$(".nav .more").css("display", "table-cell");
+	}
+	
+	if(parseInt($(".nav-link.active").text()) > 20 || page > 1){
+		$(".nav .less").css("display", "table-cell");
+	}
+}
+
+function prevTab(type){
+	var active = parseInt($(".nav-link.active").text()),
+		pages = Math.floor($(".nav-stage").children('li').length / 20),
+		position = parseInt($('.nav-stage').css("transform").split(",")[4].trim());
+	
+	if(type == "page"){
+		slide = (page - 2) * -940;
+		
+		if(page > 1){
+			$(".nav-stage").css("transform", "translateX("+slide+"px)");
+		}
+		else{
+			$(".nav-stage").css("transform", "translateX(0px)");
+		}
+		
+		page--;
+	}
+	else{
+		var tabs = $(".nav-stage").children('li').length;
+		
+		if(active > 1){
+			$("#tab"+active).removeClass("active");
+			$("#tab"+(active-1)).addClass("active");
+			$("#tab-pane"+active).removeClass("active show");
+			$("#tab-pane"+(active-1)).addClass("active show");
+		}
+		
+		if((position / -47) + 1 < active - 1 && page == Math.floor((active-1) / 20) + 1){
+			slide = position;
+		}
+		else if(tabs < 20){
+			slide = 0;
+		}
+		else if(active + 19 > tabs){
+			slide = (tabs-20) * -47;
+		}
+		else if(active + 18 < tabs){
+			slide = (active - 2) * -47;
+		}
+		
+		$(".nav-stage").css("transform", "translateX("+slide+"px)");
+		page = Math.floor(active / 20) + 1;
+	}
+	
+	var pos = parseInt($('.nav-stage').css("transform").split(",")[4].trim())
+	
+	if((pos == 0 || parseInt($(".nav-link.active").text()) == 1) && page == 1){
+		$(".nav .less").css("display", "none");
+	}
+	else{
+		$(".nav .less").css("display", "table-cell");
+	}
+	
+	if(pos == ($(".nav-stage").children('li').length-20) * -47 || parseInt($(".nav-link.active").text())+1 == $(".nav-stage").children('li').length){
+		$(".nav .more").css("display", "none");
+	}
+	else{
+		$(".nav .more").css("display", "table-cell");
 	}
 }
 
