@@ -1152,21 +1152,23 @@
 </div>
 <script>
 	$('.modal .modal-body span').on('click', function(){
-		var setting = $(this)[0].childNodes[0].data.trim(),
+		var textbox = parseInt($(".tab-pane.active").attr("id").replace("tab-pane", "")) + 1,
+			setting = $(this)[0].childNodes[0].data.trim(),
 			text = $(".active textarea").text();
 		
 		if(bezelStyle == "mbz"){
 			if(build == "on" && text == ""){
-				$(".active textarea").text(setting).val(setting);
+				$(".tab-pane.active textarea").text(setting).val(setting);
+				updateCode2(textbox);
 			}
 			else if(build == "on" && text != ""){
-				$(".active textarea").text(text + '\n' + setting).val(text + '\n' + setting);
+				$(".tab-pane.active textarea").text(text + '\n' + setting).val(text + '\n' + setting);
+				updateCode2(textbox);
 			}
 			else{
-				$(".text").text(setting).val(setting);
+				$(".mini .text").text(setting).val(setting);
+				updateMini();
 			}
 		}
-		
-		update();
 	});
 </script>

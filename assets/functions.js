@@ -1251,6 +1251,17 @@ function start(){
 		extraTab();
 		$(this).blur();
 	});
+	
+	$(document).on('keydown', '.tab-pane.active textarea', function (e) {
+		if (e.key === 'Tab') {
+			e.preventDefault();
+			var start = this.selectionStart;
+			var end = this.selectionEnd;
+
+			this.value = this.value.substring(0, start)+'\t'+this.value.substring(end);
+			this.selectionStart = this.selectionEnd = start + 1;
+		}
+	});
 }
 
 $(".aspect").on('click', function(){
@@ -1973,7 +1984,7 @@ $(document).ready(function () {
 			extraTab();
 		}
 		
-		if(e.altKey && c == 0){
+		if(e.altKey && c == 0 || c == 0){
 			modalVar = "alt";
 			c++;
 		}

@@ -1210,7 +1210,7 @@ pre {
     background: #444;
     position: fixed;
     border-radius: 10px;
-    z-index: 2;
+    z-index: 9999;
     transition: transform .3s linear;
 }
 

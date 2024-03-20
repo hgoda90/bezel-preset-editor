@@ -60,7 +60,7 @@ function dropLoad(file, files, id){
 			$("#dropText"+(id+1)+" code").css("display", "block");
 		}
 		updateMini();
-		updateCode2((id+1));
+		updateCode2(id+1);
 	};
 	reader.readAsText(file, "UTF-8");
 	
