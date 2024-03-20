@@ -237,7 +237,7 @@ function video(id, file, files, extension, playing){
 }
 
 function loadVideo(id, file, files, extension, playing){
-	$("#tab"+(id-1)).addClass("vid").removeClass("yt");
+	$("#tab"+(id+1)).addClass("vid").removeClass("yt");
 	
 	if(files == 1){
 		var input = URL.createObjectURL(file[0]);
@@ -298,6 +298,9 @@ function prevTab(type){
 		if((position / -47) + 1 < active - 1 && page == Math.floor((active-1) / 20) + 1){
 			slide = position;
 		}
+		else if(tabs < 20){
+			slide = 0;
+		}
 		else if(active + 19 > tabs){
 			slide = (tabs-20) * -47;
 		}
@@ -356,14 +359,14 @@ function nextTab(type){
 		if((position / -47) + 1 > (active - 19) && page == Math.floor((active-1) / 20) + 1){
 			slide = position;
 		}
+		else if(tabs < 20){
+			slide = 0;
+		}
 		else if(position < (active - 20) * -47){
 			slide = active * -47;
 		}
 		else if(position / -47 + 1 < tabs - 19){
 			slide = (active - 19) * -47;
-		}
-		else if(page == 1){
-			slide = 0;
 		}
 		
 		$(".nav-stage").css("transform", "translateX("+slide+"px)");
