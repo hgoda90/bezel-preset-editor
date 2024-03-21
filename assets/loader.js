@@ -205,7 +205,7 @@ function youtube(file, id){
 }
 
 function video(id, file, files, extension, playing){
-	$("#tab"+(id+1)).addClass("vid").removeClass("yt");
+	$("#tab"+id).addClass("vid").removeClass("yt");
 	
 	if(files == 1 && id > 2){
 		var input = URL.createObjectURL(file[0]);
@@ -248,7 +248,7 @@ function loadVideo(id, file, files, extension, playing){
 			$("#dropText"+id).append('<video controls crossorigin playsinline id="player'+id+'"></video>');
 		}
 		
-		$("#tab"+id).addClass("vid").removeClass("yt");
+		$("#tab"+(id-1)).addClass("vid").removeClass("yt");
 		
 		const player = new Plyr('#player'+id, {autoplay: true,invertTime: false});
 		player.source = {type: playing,sources: [{src: input,type: playing+'/'+extension}]};
