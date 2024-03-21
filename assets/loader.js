@@ -24,8 +24,8 @@ function loadFile(presets, files, id){
 		
 		if(power == "off"){
 			$("#dropText"+(id+2)+" code").css("display", "block");
+			updateCode2(id+2);
 		}
-		updateCode2(id+2);
 	};
 	
 	reader.readAsText(presets, "UTF-8");
@@ -58,9 +58,9 @@ function dropLoad(file, files, id){
 		
 		if(power == "off"){
 			$("#dropText"+(id+1)+" code").css("display", "block");
+			updateMini();
+			updateCode2(id+1);
 		}
-		updateMini();
-		updateCode2(id+1);
 	};
 	reader.readAsText(file, "UTF-8");
 	
@@ -205,7 +205,7 @@ function youtube(file, id){
 }
 
 function video(id, file, files, extension, playing){
-	$("#tab"+id).addClass("vid").removeClass("yt");
+	$("#tab"+(id+1)).addClass("vid").removeClass("yt");
 	
 	if(files == 1 && id > 2){
 		var input = URL.createObjectURL(file[0]);
@@ -238,8 +238,6 @@ function video(id, file, files, extension, playing){
 }
 
 function loadVideo(id, file, files, extension, playing){
-	$("#tab"+(id+1)).addClass("vid").removeClass("yt");
-	
 	if(files == 1){
 		var input = URL.createObjectURL(file[0]);
 		
@@ -249,6 +247,8 @@ function loadVideo(id, file, files, extension, playing){
 		else if(extension == "mp4"){
 			$("#dropText"+id).append('<video controls crossorigin playsinline id="player'+id+'"></video>');
 		}
+		
+		$("#tab"+id).addClass("vid").removeClass("yt");
 		
 		const player = new Plyr('#player'+id, {autoplay: true,invertTime: false});
 		player.source = {type: playing,sources: [{src: input,type: playing+'/'+extension}]};
@@ -262,7 +262,9 @@ function loadVideo(id, file, files, extension, playing){
 		else if(extension == "mp4"){
 			$("#dropText"+(id+2)).append('<video controls crossorigin playsinline class="js-player" id="player'+(id+2)+'" data-plyr-config=\'{ "invertTime": false }\'><source src="'+input+'" type="video/mp4"></video>');
 		}
-	
+		
+		$("#tab"+(id+2)).addClass("vid").removeClass("yt");
+		
 		const players = Array.from(document.querySelectorAll('.js-player')).map((p) => new Plyr(p));
 		
 		$("#dropText"+(id+2)+" textarea, #dropText"+(id+1)+" code").css("display", "none");
