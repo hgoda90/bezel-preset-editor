@@ -996,14 +996,21 @@ function samples(){
 
 function savePreset(id){
 	  if ('Blob' in window) {
-		var fileName = prompt('Please enter file name to save', 'Preset.slangp');
+		if($("#preset"+(id-1)).text() != ""){
+			presetName = $("#preset"+(id-1)).text();
+		}
+		else{
+			presetName = "Preset";
+		}
+		
+		var fileName = prompt('Please enter file name to save', presetName+'.slangp');
 		if (fileName) {
 		  
 			if(id == 1){
 				var textToWrite = $('.text').val();
 			}
 			else{
-				var textToWrite = $('.text-box .tab-pane.active textarea').val();
+				var textToWrite = $('.text-box #tab-pane'+(id-1)+' textarea').val();
 			}
 			
 			var textFileAsBlob = new Blob([textToWrite], { type: 'text/plain' });
@@ -1355,6 +1362,12 @@ $(".left-foot .button").on('click', function(){
 $(".pass").on('click', function(){
 	passText();
 	$(this).blur();
+});
+
+$(".saveAll").on('click', function(){
+	$(".nav-stage .nav-link:not(.empty):not(.img):not(.vid):not(.yt)").each(function(){
+		savePreset(parseInt($(this).text())+1);
+	})
 });
 
 $(".switch-panel .bezel .switch-label").on('click', function(){

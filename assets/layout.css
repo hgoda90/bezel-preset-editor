@@ -638,6 +638,10 @@ span.square-title {
     right: 328px;
 }
 
+.text-box .saveAll {
+    right: 280px;
+}
+
 .text-wrap.extra{
     margin-top: 60px;
 	display: none;
@@ -1311,7 +1315,7 @@ pre {
 }
 
 #save2 {
-    right: 280px;
+    right: 384px;
 }
 
 .right-foot .button {
