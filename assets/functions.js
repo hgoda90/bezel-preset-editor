@@ -1364,9 +1364,17 @@ $(".pass").on('click', function(){
 	$(this).blur();
 });
 
+$("#save2").on('click', function(){
+	var id = parseInt($(".tab-pane.active").attr("id").replace("tab-pane", "")) + 1;
+	
+	savePreset(id);
+});
+
 $(".saveAll").on('click', function(){
 	$(".nav-stage .nav-link:not(.empty):not(.img):not(.vid):not(.yt)").each(function(){
-		savePreset(parseInt($(this).text())+1);
+		var id = parseInt($(this).text()) + 1;
+		
+		savePreset(id);
 	})
 });
 
@@ -2011,7 +2019,7 @@ $(document).ready(function () {
 				savePreset(1);
 			}
 			else{
-				savePreset(2);
+				savePreset(parseInt($(".tab-pane.active").attr("id").replace("tab-pane", "")) + 1);
 			}
 		}
 		

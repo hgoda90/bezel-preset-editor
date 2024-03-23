@@ -263,7 +263,7 @@ function loadVideo(id, file, files, extension, playing){
 			$("#dropText"+(id+2)).append('<video controls crossorigin playsinline class="js-player" id="player'+(id+2)+'" data-plyr-config=\'{ "invertTime": false }\'><source src="'+input+'" type="video/mp4"></video>');
 		}
 		
-		$("#tab"+(id+2)).addClass("vid").removeClass("yt");
+		$("#tab"+(id+1)).addClass("vid").removeClass("yt");
 		
 		const players = Array.from(document.querySelectorAll('.js-player')).map((p) => new Plyr(p));
 		
@@ -429,7 +429,7 @@ function dropTab(e){
 	}
 
 	if($(".nav-stage").children().length > 20 && $(".nav .more").length == 0){
-		$(".nav-tabs").prepend('<div class="less nav-item" style="display: table-cell;"><span class="material-symbols-outlined nav-link">chevron_left</span></div>');
+		$(".nav-tabs").prepend('<div class="less nav-item" style="display: none;"><span class="material-symbols-outlined nav-link">chevron_left</span></div>');
 		$(".nav-tabs").append('<div class="more nav-item" style="display: table-cell;"><span class="material-symbols-outlined nav-link">chevron_right</span></div>');
 		
 		$(".less.nav-item").on('click', function(){
@@ -573,7 +573,7 @@ $(document).ready(function(){
 		}
 		
 		if($(".nav-stage").children().length > 20 && $(".nav .more").length == 0){
-			$(".nav-tabs").prepend('<div class="less nav-item" style="display: table-cell;"><span class="material-symbols-outlined nav-link">chevron_left</span></div>');
+			$(".nav-tabs").prepend('<div class="less nav-item" style="display: none;"><span class="material-symbols-outlined nav-link">chevron_left</span></div>');
 			$(".nav-tabs").append('<div class="more nav-item" style="display: table-cell;"><span class="material-symbols-outlined nav-link">chevron_right</span></div>');
 			
 			$(".less.nav-item").on('click', function(){
