@@ -1703,9 +1703,9 @@ input[type="text"], select {
     display: block;
 }
 
-.next-up img {
-    width: 200px;
-    height: 100%;
+.plyr .next-up img {
+    width: 200px !important;
+    height: 100% !important;
     display: inline-block;
     float: left;
 }
