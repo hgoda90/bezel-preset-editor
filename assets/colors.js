@@ -412,3 +412,36 @@ function colorMessage(colors) {
 	
 	cvSet();
 }
+
+function previewScreen(){
+	var system = $(".info").text();
+	
+	switch(system){
+		case "Atari 2600":
+			$(".preview-screen").attr("src", "assets/images/preview/screen/a2600.png");
+			break;
+		case "Dreamcast":
+			$(".preview-screen").attr("src", "assets/images/preview/screen/dc.png");
+			break;
+		case "GameCube":
+			$(".preview-screen").attr("src", "assets/images/preview/screen/gc.png");
+			break;
+		case "Nintendo 64":
+			$(".preview-screen").attr("src", "assets/images/preview/screen/n64.png");
+			break;
+		case "Nintendo Entertainment System":
+			$(".preview-screen").attr("src", "assets/images/preview/screen/nes.png");
+			break;
+		case "PlayStation":
+			$(".preview-screen").attr("src", "assets/images/preview/screen/ps.png");
+			break;
+		case "PlayStation 2":
+			$(".preview-screen").attr("src", "assets/images/preview/screen/ps2.png");
+			break;
+		case "Super Nintendo":
+			$(".preview-screen").attr("src", "assets/images/preview/screen/snes.png");
+			break;
+		default:
+			$(".preview-screen").attr("src", "assets/images/preview/screen/generic.png");
+	}
+}

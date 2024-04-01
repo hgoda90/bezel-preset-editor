@@ -32,6 +32,8 @@ function bezelToggle(){
 		$(".imageType input").prop("disabled", false);
 		$(".mbz.layers-wrap").css("display", "inline-block");
 		$(".koko-aio.layers-wrap").css("display", "none");
+		$(".preview-wrap").removeClass("koko").addClass("mbz").empty();
+		$(".preview-wrap").append('<div class="preview-bezel"><span class="bezel-color"></span><img src="assets/images/preview/mbz_bezel.png"></div><img class="preview-screen" src="assets/images/preview/screen/generic.png"><img class="preview-bg" src="assets/images/preview/mbz_bg.png">');
 	}
 	else{
 		setCookie("bezelStyle", "koko-aio", 30);
@@ -43,6 +45,8 @@ function bezelToggle(){
 		$(".imageType input").prop("disabled", true);
 		$(".mbz.layers-wrap").css("display", "none");
 		$(".koko-aio.layers-wrap").css("display", "inline-block");
+		$(".preview-wrap").addClass("koko").removeClass("mbz").empty();
+		$(".preview-wrap").append('<div class="preview-bezel"><span class="bezel-color"></span><img src="assets/images/preview/koko-aio_bezel.png"></div><img class="preview-screen" src="assets/images/preview/screen/generic.png"><img class="preview-bg" src="assets/images/preview/koko-aio_bg.png">');
 	}
 	
 	$(".info").empty();
@@ -122,12 +126,14 @@ function colorReset(){
 	$(".info").empty();
 	$(".info").css("display", "none");
 	$(".color").removeClass("active");
+	$(".preview-screen").attr("src", "assets/images/preview/screen/generic.png");
 	
 	if(bezelStyle == "mbz"){
 		$(".contrast").css("display", "none");
 		$(".dropper").val("#1A1A1A");
 		$(".square").css("background", "#1A1A1A");
 		$(".colorVis").css("color", "#1A1A1A");
+		$(".bezel-color").css("background", "#1A1A1A");
 		settingReset();
 		
 		if($(".format-labels .active").text() == "HEX"){
@@ -150,12 +156,13 @@ function colorReset(){
 		}
 	}
 	else{
-		$(".contrast").css("display", "block");
+		$(".contrast").css("display", "inline-block");
 		$(".contrast option").prop("selected", false);
 		$(".contrast option[value='1.30']").prop("selected", "selected");
 		$(".dropper").val("#808080");
 		$(".square").css("background", "#808080");
 		$(".colorVis").css("color", "#808080");
+		$(".bezel-color").css("background", "#808080");
 	
 		if($(".format-labels .active").text() == "HEX"){
 			$(".hex input").attr("placeholder", "808080");
@@ -557,22 +564,22 @@ function formatToggle(value){
 	if(value == 1){
 		setCookie("colorFormat", "HEX", 30);
 		colorFormat = "HEX";
-		$("#colorPop .contrast").after('<div class="hex">HEX: # <input type="text" name="hex" size=6 maxlength=6></div>');
+		$("#colorPop .contrast").before('<div class="hex">HEX: # <input type="text" name="hex" size=6 maxlength=6></div>');
 	}
 	else if(value == 2){
 		setCookie("colorFormat", "HSB", 30);
 		colorFormat = "HSB";
-		$("#colorPop .contrast").after('<div class="hsb">hsb(<input type="text" name="hue" size=3 maxLength=3>deg, <input type="text" name="saturation" size=3 maxLength=3>%, <input type="text" name="brightness" size=3 maxLength=3>%)</div>');
+		$("#colorPop .contrast").before('<div class="hsb">hsb(<input type="text" name="hue" size=3 maxLength=3>deg, <input type="text" name="saturation" size=3 maxLength=3>%, <input type="text" name="brightness" size=3 maxLength=3>%)</div>');
 	}
 	else if(value == 3){
 		setCookie("colorFormat", "HSL", 30);
 		colorFormat = "HSL";
-		$("#colorPop .contrast").after('<div class="hsl">hsl(<input type="text" name="hue" size=3 maxLength=3>deg, <input type="text" name="saturation" size=3 maxLength=3>%, <input type="text" name="lightness" size=3 maxLength=3>%)</div>');
+		$("#colorPop .contrast").before('<div class="hsl">hsl(<input type="text" name="hue" size=3 maxLength=3>deg, <input type="text" name="saturation" size=3 maxLength=3>%, <input type="text" name="lightness" size=3 maxLength=3>%)</div>');
 	}
 	else if(value == 4){
 		setCookie("colorFormat", "RGB", 30);
 		colorFormat = "RGB";
-		$("#colorPop .contrast").after('<div class="rgb">rgb(<input type="text" name="red" size=3 maxLength=3>, <input type="text" name="green" size=3 maxLength=3>, <input type="text" name="blue" size=3 maxLength=3>)</div>');
+		$("#colorPop .contrast").before('<div class="rgb">rgb(<input type="text" name="red" size=3 maxLength=3>, <input type="text" name="green" size=3 maxLength=3>, <input type="text" name="blue" size=3 maxLength=3>)</div>');
 	}
 	
 	$(".info").empty();
@@ -866,29 +873,31 @@ function preview(){
 	l = parseInt($(".hsl [name='lightness']").val())
 	
 	if(colorFormat == "HEX"){
-		$(".square").css("background", "#"+hex);
+		$(".bezel-color, .square").css("background", "#"+hex);
 		$(".dropper").val("#"+hex);
 		$(".colorVis").css("color", "#"+hex);
 		colorMessage(hex);
 	}
 	else if(colorFormat == "HSB"){
-		$(".square").css("background", colorcolor("hsv("+h+", "+s+"%, "+v+"%)", 'hex'));
+		$(".bezel-color, .square").css("background", colorcolor("hsv("+h+", "+s+"%, "+v+"%)", 'hex'));
 		$(".dropper").val(colorcolor("hsv("+h+", "+s+"%, "+v+"%)", 'hex'));
 		$(".colorVis").css("color", colorcolor("hsv("+h+", "+s+"%, "+v+"%)", 'hex'));
 		colorMessage("hsb("+h+"deg, "+s+"%, "+v+"%)");
 	}
 	else if(colorFormat == "HSL"){
-		$(".square").css("background", colorcolor("hsl("+h2+", "+s2+"%, "+l+"%)", 'hex'));
+		$(".bezel-color, .square").css("background", colorcolor("hsl("+h2+", "+s2+"%, "+l+"%)", 'hex'));
 		$(".dropper").val(colorcolor("hsl("+h2+", "+s2+"%, "+l+"%)", 'hex'));
 		$(".colorVis").css("color", colorcolor("hsl("+h2+", "+s2+"%, "+l+"%)", 'hex'));
 		colorMessage("hsl("+h2+"deg, "+s2+"%, "+l+"%)");
 	}
 	else{
-		$(".square").css("background", "rgb("+r+", "+g+", "+b+")");
+		$(".bezel-color, .square").css("background", "rgb("+r+", "+g+", "+b+")");
 		$(".dropper").val(colorcolor("rgb("+r+", "+g+", "+b+")", 'hex'));
 		$(".colorVis").css("color", colorcolor("rgb("+r+", "+g+", "+b+")", 'hex'));
 		colorMessage("rgb("+r+", "+g+", "+b+")");
 	}
+	
+	previewScreen();
 }
 
 function removeTabs(){
@@ -1200,6 +1209,9 @@ function start(){
 		$(".koko-aio.layers-wrap").css("display", "none");
 		$(".imageType").removeClass("disabled");
 		$(".imageType input").prop("disabled", false);
+		
+		$(".preview-wrap").removeClass("koko").addClass("mbz");
+		$(".preview-wrap").append('<div class="preview-bezel"><span class="bezel-color"></span><img src="assets/images/preview/mbz_bezel.png"></div><img class="preview-screen" src="assets/images/preview/screen/generic.png"><img class="preview-bg" src="assets/images/preview/mbz_bg.png">');
 	}
 	else{
 		$(".bezel .switch-label:nth-child(1)").addClass("active");
@@ -1208,6 +1220,9 @@ function start(){
 		$(".koko-aio.layers-wrap").css("display", "inline-block");
 		layerToggle(kokoLayer);
 		$(".imageType input").prop("disabled", true);
+		
+		$(".preview-wrap").addClass("koko").removeClass("mbz");
+		$(".preview-wrap").append('<div class="preview-bezel"><span class="bezel-color"></span><img src="assets/images/preview/koko-aio_bezel.png"></div><img class="preview-screen" src="assets/images/preview/screen/generic.png"><img class="preview-bg" src="assets/images/preview/koko-aio_bg.png">');
 	}
 	
 	if(build == "on"){

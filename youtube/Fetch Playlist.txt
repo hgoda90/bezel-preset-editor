@@ -3,6 +3,7 @@
 3. Place the code into internet browser's Console
 4. Paste the links into a txt file in youtube folder
 
+links = "";
 
 $$('a').forEach(function(v,i,a){
 	if (v.id=="video-title"){
