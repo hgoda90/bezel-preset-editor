@@ -441,7 +441,12 @@ function previewScreen(){
 		case "Super Nintendo":
 			$(".preview-screen").attr("src", "assets/images/preview/screen/snes.png");
 			break;
-		default:
-			$(".preview-screen").attr("src", "assets/images/preview/screen/generic.png");
+	}
+	
+	if(system == "" && $(".preview-wrap").hasClass("mbz")){
+		$(".preview-screen").attr("src", "assets/images/preview/screen/mbz_generic.png");
+	}
+	else if(system == ""){
+		$(".preview-screen").attr("src", "assets/images/preview/screen/koko-aio_generic.png");
 	}
 }

@@ -33,7 +33,7 @@ function bezelToggle(){
 		$(".mbz.layers-wrap").css("display", "inline-block");
 		$(".koko-aio.layers-wrap").css("display", "none");
 		$(".preview-wrap").removeClass("koko").addClass("mbz").empty();
-		$(".preview-wrap").append('<div class="preview-bezel"><span class="bezel-color"></span><img src="assets/images/preview/mbz_bezel.png"></div><img class="preview-screen" src="assets/images/preview/screen/generic.png"><img class="preview-bg" src="assets/images/preview/mbz_bg.png">');
+		$(".preview-wrap").append('<div class="preview-bezel"><span class="bezel-color"></span><img src="assets/images/preview/mbz_bezel.png"></div><img class="preview-screen" src="assets/images/preview/screen/mbz_generic.png"><img class="preview-bg" src="assets/images/preview/mbz_bg.png">');
 	}
 	else{
 		setCookie("bezelStyle", "koko-aio", 30);
@@ -46,7 +46,7 @@ function bezelToggle(){
 		$(".mbz.layers-wrap").css("display", "none");
 		$(".koko-aio.layers-wrap").css("display", "inline-block");
 		$(".preview-wrap").addClass("koko").removeClass("mbz").empty();
-		$(".preview-wrap").append('<div class="preview-bezel"><span class="bezel-color"></span><img src="assets/images/preview/koko-aio_bezel.png"></div><img class="preview-screen" src="assets/images/preview/screen/generic.png"><img class="preview-bg" src="assets/images/preview/koko-aio_bg.png">');
+		$(".preview-wrap").append('<div class="preview-bezel"><span class="bezel-color"></span><img src="assets/images/preview/koko-aio_bezel.png"></div><img class="preview-screen" src="assets/images/preview/screen/koko-aio_generic.png"><img class="preview-bg" src="assets/images/preview/koko-aio_bg.png">');
 	}
 	
 	$(".info").empty();
@@ -126,7 +126,6 @@ function colorReset(){
 	$(".info").empty();
 	$(".info").css("display", "none");
 	$(".color").removeClass("active");
-	$(".preview-screen").attr("src", "assets/images/preview/screen/generic.png");
 	
 	if(bezelStyle == "mbz"){
 		$(".contrast").css("display", "none");
@@ -134,6 +133,7 @@ function colorReset(){
 		$(".square").css("background", "#1A1A1A");
 		$(".colorVis").css("color", "#1A1A1A");
 		$(".bezel-color").css("background", "#1A1A1A");
+		$(".preview-screen").attr("src", "assets/images/preview/screen/mbz_generic.png");
 		settingReset();
 		
 		if($(".format-labels .active").text() == "HEX"){
@@ -163,6 +163,7 @@ function colorReset(){
 		$(".square").css("background", "#808080");
 		$(".colorVis").css("color", "#808080");
 		$(".bezel-color").css("background", "#808080");
+		$(".preview-screen").attr("src", "assets/images/preview/screen/koko-aio_generic.png");
 	
 		if($(".format-labels .active").text() == "HEX"){
 			$(".hex input").attr("placeholder", "808080");
@@ -1211,7 +1212,7 @@ function start(){
 		$(".imageType input").prop("disabled", false);
 		
 		$(".preview-wrap").removeClass("koko").addClass("mbz");
-		$(".preview-wrap").append('<div class="preview-bezel"><span class="bezel-color"></span><img src="assets/images/preview/mbz_bezel.png"></div><img class="preview-screen" src="assets/images/preview/screen/generic.png"><img class="preview-bg" src="assets/images/preview/mbz_bg.png">');
+		$(".preview-wrap").append('<div class="preview-bezel"><span class="bezel-color"></span><img src="assets/images/preview/mbz_bezel.png"></div><img class="preview-screen" src="assets/images/preview/screen/mbz_generic.png"><img class="preview-bg" src="assets/images/preview/mbz_bg.png">');
 	}
 	else{
 		$(".bezel .switch-label:nth-child(1)").addClass("active");
@@ -1222,7 +1223,7 @@ function start(){
 		$(".imageType input").prop("disabled", true);
 		
 		$(".preview-wrap").addClass("koko").removeClass("mbz");
-		$(".preview-wrap").append('<div class="preview-bezel"><span class="bezel-color"></span><img src="assets/images/preview/koko-aio_bezel.png"></div><img class="preview-screen" src="assets/images/preview/screen/generic.png"><img class="preview-bg" src="assets/images/preview/koko-aio_bg.png">');
+		$(".preview-wrap").append('<div class="preview-bezel"><span class="bezel-color"></span><img src="assets/images/preview/koko-aio_bezel.png"></div><img class="preview-screen" src="assets/images/preview/screen/koko-aio_generic.png"><img class="preview-bg" src="assets/images/preview/koko-aio_bg.png">');
 	}
 	
 	if(build == "on"){
