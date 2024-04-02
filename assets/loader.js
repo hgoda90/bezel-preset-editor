@@ -25,16 +25,11 @@ function loadFile(presets, files, id){
 		if(power == "off"){
 			$("#dropText"+(id+2)+" code").css("display", "block");
 			updateCode2(id+2);
+			console.clear();
 		}
 	};
 	
 	reader.readAsText(presets, "UTF-8");
-	
-	if($(".tab-pane textarea").length > 2 && files == 1 && power == "off"){
-		for(i=0;i<$(".tab-pane textarea").length;i++){
-			updateCode2(id+2);
-		}
-	}
 }
 
 function miniLoad(file){
@@ -59,19 +54,12 @@ function dropLoad(file, files, id){
 		if(power == "off"){
 			$("#dropText"+(id+1)+" code").css("display", "block");
 			updateMini();
-			
-			for(i=0;i<files;i++){
-				updateCode2(id+1);
-			}
+			updateCode2(id+1);
+			console.clear();
 		}
 	};
-	reader.readAsText(file, "UTF-8");
 	
-	if($(".tab-pane textarea").length > 2 && files == 1 && power == "off"){
-		for(i=0;i<$(".tab-pane textarea").length;i++){
-			updateCode2(id+1);
-		}
-	}
+	reader.readAsText(file, "UTF-8");
 }
 
 function minitube(file){
