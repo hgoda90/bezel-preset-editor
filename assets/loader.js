@@ -59,7 +59,10 @@ function dropLoad(file, files, id){
 		if(power == "off"){
 			$("#dropText"+(id+1)+" code").css("display", "block");
 			updateMini();
-			updateCode2(id+1);
+			
+			for(i=0;i<files;i++){
+				updateCode2(id+1);
+			}
 		}
 	};
 	reader.readAsText(file, "UTF-8");
