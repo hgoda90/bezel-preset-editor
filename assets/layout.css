@@ -122,25 +122,22 @@ textarea:focus-visible {
     flex: 0 0 auto;
     margin: 0 auto 12px;
     overflow: hidden;
-    box-shadow: 0 2px 0 rgb(0 0 0 / 24%);
 }
 
 .button {
     border-radius: 34px;
-    background: linear-gradient(0deg, #E2E2E2 35%, #F2F2F2 70%);
     padding: 4px 14px;
-    border-bottom: 2px solid rgb(0 0 0 / 10%);
     color: #888;
     font-size: 14px;
     font-weight: bold;
-    box-shadow: 0 0 4px #8883;
-    outline: 1px solid rgb(0 0 0 / 20%);
+    box-shadow: 0 3px 9px -4px rgba(0, 0, 0, 0.35);
     transition: box-shadow .25s ease-in-out, border .25s ease-in;
+    background: #F4F4F4;
 }
 
 .text-wrap .button:not(.shader):hover, footer .left-foot .button:hover, .button.active {
-    background: #DDD;
-    border-color: #d2d2d2;
+    background: #E9E9E9;
+    border-color: #CCC;
     color: #5A5A5A;
 }
 
@@ -615,7 +612,7 @@ span.square-title {
 
 .button:hover, .switch-label:hover, .format-labels span:hover {
     cursor: pointer;
-    box-shadow: none;
+    /* box-shadow: none; */
 }
 
 #copy:hover:disabled {

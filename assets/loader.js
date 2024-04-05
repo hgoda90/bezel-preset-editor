@@ -24,6 +24,7 @@ function loadFile(presets, files, id){
 		
 		if(power == "off"){
 			$("#dropText"+(id+2)+" code").css("display", "block");
+			updateMini();
 			updateCode2(id+2);
 			console.clear();
 		}
@@ -38,7 +39,9 @@ function miniLoad(file){
 		var preset = e.target.result;
 		$(".text").val(preset.trim()).text(preset.trim());
 		updateMini();
+		console.clear();
 	};
+	
 	reader.readAsText(file, "UTF-8");
 }
 
