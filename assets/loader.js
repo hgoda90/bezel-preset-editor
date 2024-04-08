@@ -436,9 +436,9 @@ function dropTab(e){
 	}
 	
 	if(tabs > 1 || length > 1){
-		$(".nav-tabs").append('<div class="close nav-item" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Minus Tab"><span class="material-symbols-outlined nav-link">chips</span></div>');
-		$(".nav-tabs").append('<div class="plus nav-item" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Add Tab"><span class="material-symbols-outlined nav-link">add_box</span></div>');
-		$(".nav-tabs").append('<div class="remove nav-item" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Remove Tabs"><span class="material-symbols-outlined nav-link">close_small</span></div>');
+		$(".nav-tabs").append('<div class="close nav-item"><span class="material-symbols-outlined nav-link" title="Minus Tab">remove</span></div>');
+		$(".nav-tabs").append('<div class="plus nav-item"><span class="material-symbols-outlined nav-link" title="Add Tab">Add</span></div>');
+		$(".nav-tabs").append('<div class="remove nav-item"><span class="material-symbols-outlined nav-link" title="Remove Tabs">close_small</span></div>');
 		
 		const tooltip = new bootstrap.Tooltip($('.nav-item.close'));
 		const tooltip2 = new bootstrap.Tooltip($('.plus'));
@@ -580,9 +580,9 @@ $(document).ready(function(){
 		}
 		
 		if(tabs > 1 || id > 1){
-			$(".nav-tabs").append('<div class="close nav-item" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Minus Tab"><span class="material-symbols-outlined nav-link">chips</span></div>');
-			$(".nav-tabs").append('<div class="plus nav-item" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Add Tab"><span class="material-symbols-outlined nav-link">add_box</span></div>');
-			$(".nav-tabs").append('<div class="remove nav-item" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Remove Tabs"><span class="material-symbols-outlined nav-link">close_small</span></div>');
+			$(".nav-tabs").append('<div class="close nav-item"><span class="material-symbols-outlined nav-link" title="Minus Tab">remove</span></div>');
+			$(".nav-tabs").append('<div class="plus nav-item"><span class="material-symbols-outlined nav-link" title="Add Tab">Add</span></div>');
+			$(".nav-tabs").append('<div class="remove nav-item"><span class="material-symbols-outlined nav-link" title="Remove Tabs">close_small</span></div>');
 			
 			const tooltip = new bootstrap.Tooltip($('.nav-item.close'));
 			const tooltip2 = new bootstrap.Tooltip($('.plus'));

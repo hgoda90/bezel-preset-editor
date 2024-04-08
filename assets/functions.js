@@ -469,9 +469,9 @@ function extraTab(){
 		$(".nav-tabs .nav-stage").append('<li class="nav-item" role="presentation"><button class="nav-link empty" id="tab2" data-bs-toggle="tab" data-bs-target="#tab-pane2" type="button" role="tab" aria-controls="tab-pane2" aria-selected="true">2</button></li>');
 		$(".tab-content").append('<div class="tab-pane fade" id="tab-pane2" role="tabpanel" aria-labelledby="tab2" tabindex="0"><span class="preset-title" id="preset2"></span><div class="screen-container" id="dropText3"><pre id="preCode"><code id="codeBlock3" class="language-csharp"></code></pre><textarea class="text3 screen" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea><div class="overlay">VGA 2</div></div></div>');
 		
-		$(".nav-tabs").append('<div class="close nav-item" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Minus Tab"><span class="material-symbols-outlined nav-link">chips</span></div>');
-		$(".nav-tabs").append('<div class="plus nav-item" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Add Tab"><span class="material-symbols-outlined nav-link">add_box</span></div>');
-		$(".nav-tabs").append('<div class="remove nav-item" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Remove Tabs"><span class="material-symbols-outlined nav-link">close_small</span></div>');
+		$(".nav-tabs").append('<div class="close nav-item"><span class="material-symbols-outlined nav-link" title="Minus Tab">remove</span></div>');
+		$(".nav-tabs").append('<div class="plus nav-item"><span class="material-symbols-outlined nav-link" title="Add Tab">Add</span></div>');
+		$(".nav-tabs").append('<div class="remove nav-item"><span class="material-symbols-outlined nav-link" title="Remove Tabs">close_small</span></div>');
 		
 		const tooltip = new bootstrap.Tooltip($('.nav-item.close'));
 		const tooltip2 = new bootstrap.Tooltip($('.plus'));

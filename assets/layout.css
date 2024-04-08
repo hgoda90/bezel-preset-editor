@@ -620,19 +620,19 @@ span.square-title {
 }
 
 #copy {
-    right: 90px;
+    right: 109px;
 }
 
 #edit {
-    right: 162px;
+    right: 181px;
 }
 
 #load {
-    right: 234px;
+    right: 253px;
 }
 
 #save {
-    right: 306px;
+    right: 325px;
 }
 
 .text-box .saveAll {
@@ -900,6 +900,7 @@ footer .button {
     border-radius: 8px;
     color: #333;
     line-height: 0.9;
+    box-shadow: 0px 0px 9px -4px #0006;
 }
 
 .close .nav-link:hover, .less .nav-link:hover, .more .nav-link:hover, .plus .nav-link:hover, .remove .nav-link:hover {
@@ -978,7 +979,7 @@ footer .button {
 }
 
 #clear {
-    right: 12px;
+    right: 31px;
 }
 
 .nav-link:focus-visible {
@@ -1063,17 +1064,8 @@ pre {
   place-items: center;
   margin: 0px auto 0;
   background: linear-gradient(180deg, rgb(240 240 240 / 25%) 35%, rgb(160 160 160 / 10%) 70%);
-  box-shadow: 0 2px 0 rgb(0 0 0 / 24%);
+  box-shadow: 0px 0px 0px 0px rgb(0 0 0 / 24%) inset;
   transition: box-shadow .25s ease-in-out, border .25s ease-in;
-}
-
-.power::before {
-  content: "";
-  width: 40%;
-  height: 40%;
-  border: 3px solid #CCC;
-  border-radius: 50%;
-  position: absolute;
 }
 
 .light {
@@ -1088,7 +1080,11 @@ pre {
 .power:hover, .power.on {
   cursor: pointer;
   border-width: 2px;
-  box-shadow: none;
+  box-shadow: 0px 0px 0px 1px rgb(0 0 0 / 24%) inset;
+}
+
+.power.on span {
+    color: #52cb60;
 }
 
 .text-box.on.amber ::-ms-input-placeholder {
@@ -1635,10 +1631,10 @@ input[type="text"], select {
     min-width: unset;
     height: 26px;
     vertical-align: middle;
-    line-height: 1 !important;
+    line-height: 1.3 !important;
     color: #777;
     cursor: pointer;
-    font-size: 26px;
+    font-size: 20px;
     padding: 2px;
 }
 
@@ -1991,28 +1987,28 @@ input[type="text"], select {
 .nav-tabs .nav-link.vid.active, .nav-tabs .nav-link.vid:hover {
     color: #00B2FF;
     border-color: #00B2FF;
-    background: #F2F2F2;
-	box-shadow: 0 0px 9px -4px #00B2FF;
+    background: rgb(0 178 255 / 3%);
+    box-shadow: 0 0px 9px -4px #00B2FF;
 }
 
 .nav-tabs .nav-link.yt.active, .nav-tabs .nav-link.yt:hover {
     color: #FF0000;
     border-color: #FF0000;
-    background: #F2F2F2;
-	box-shadow: 0 0px 9px -4px #FF0000;
+    background: rgb(255 0 0 / 3%);
+    box-shadow: 0 0px 9px -4px #FF0000;
 }
 
 .nav-tabs .nav-link.empty.active, .nav-item .nav-link.empty:hover {
     color: #BBB;
     border-color: #BBB;
-    background: transparent;
-	box-shadow: 0 0px 9px -4px #BBB;
+    background: rgb(187 187 187 / 4%);
+    box-shadow: 0 0px 9px -4px #BBB;
 }
 
 .nav-tabs .nav-link.img.active, .nav-tabs .nav-link.img:hover{
 	color: #FAB617;
 	border-color: #FAB617;
-	background: transparent;
+	background: rgb(250 182 23 / 4%);
 	box-shadow: 0 0px 9px -4px #FAB617;
 }
 
