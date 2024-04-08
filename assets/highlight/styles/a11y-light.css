@@ -22,6 +22,9 @@ code.hljs {
 .hljs-quote {
   color: #696969
 }
+textarea{
+	caret-color: #545454;
+}
 /* Red */
 .hljs-variable,
 .hljs-template-variable,
