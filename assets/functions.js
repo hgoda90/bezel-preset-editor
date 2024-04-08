@@ -1176,7 +1176,6 @@ function start(){
 	
 	if(getCookie("monochrome") == ""){
 		monochrome = "green";
-		$(".monochrome .rocker input").attr("checked", "checked");
 	}
 	else{
 		monochrome = getCookie("monochrome");
@@ -1247,7 +1246,7 @@ function start(){
 	}
 	
 	if(monochrome == "amber" || monochrome == "green"){
-		$(".monochrome .rocker input").attr("checked", "checked");
+		$(".monochrome").addClass("check");
 	}
 	
 	if(power == "on"){
@@ -1296,7 +1295,7 @@ $(".aspect").on('click', function(){
 		$(".mini, .text-box").removeClass("bw");
 		$(".mini, .text-box").removeClass("green");
 	}
-	else if($(".monochrome .rocker input").is(":checked")){
+	else if($(".text-box").hasClass("monochrome")){
 		$(".mini, .text-box").addClass("green");
 		$(".mini, .text-box").removeClass("amber");
 		$(".mini, .text-box").removeClass("bw");
@@ -1574,8 +1573,10 @@ $(document).ready(function () {
 		$('#exampleModal').modal('show').find('.modal-content').load($(this).data('link'));
 	});
 	
-	$('.monochrome .rocker').on('click', function(){
-		if($(".monochrome .rocker input").is(":checked")){
+	$('.monochrome').on('click', function(){
+		$(this).toggleClass("check");
+		
+		if($(this).hasClass("check")){
 			$(".on").addClass("green");
 		}
 		else{
@@ -1594,6 +1595,8 @@ $(document).ready(function () {
 		else{
 			setCookie("monochrome", "off", 30);
 		}
+		
+		$(this).blur();
 	});
 	
 	$('.power').click(function(e){
