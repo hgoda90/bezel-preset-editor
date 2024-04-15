@@ -24,10 +24,14 @@ function loadFile(presets, files, id){
 		
 		if(power == "off"){
 			$("#dropText"+(id+2)+" code").css("display", "block");
-			updateMini();
-			updateCode2(id+2);
-			console.clear();
 		}
+		else{
+			$("#dropText"+(id+2)+" code").css("display", "none");
+		}
+		
+		updateMini();
+		updateCode2(id+2);
+		console.clear();
 	};
 	
 	reader.readAsText(presets, "UTF-8");
@@ -55,11 +59,15 @@ function dropLoad(file, files, id){
 		$("#tab"+id).removeClass("yt").removeClass("vid");
 		
 		if(power == "off"){
-			$("#dropText"+(id+1)+" code").css("display", "block");
-			updateMini();
-			updateCode2(id+1);
-			console.clear();
+			$("#dropText"+(id+2)+" code").css("display", "block");
 		}
+		else{
+			$("#dropText"+(id+2)+" code").css("display", "none");
+		}
+		
+		updateMini();
+		updateCode2(id+2);
+		console.clear();
 	};
 	
 	reader.readAsText(file, "UTF-8");
