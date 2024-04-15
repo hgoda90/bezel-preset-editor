@@ -215,7 +215,7 @@
 				<br>
 			</form>
 			<div class="owl-wrapper">
-			<h3>Console Samples</h3>
+			<h3>Samples</h3>
 			<div class="owl-carousel">
 				<div class="sample" id="a26">
 					<div class="colors"></div>
@@ -260,42 +260,57 @@
 			</div>
 		</div>
 		<footer>
-			<div class="left-foot">
-				<div class="button" data-bs-toggle="tooltip" data-bs-placement="auto" data-bs-title="Jewels">
-					<span class="material-symbols-outlined">diamond</span>
-				</div>
-				<div class="button" data-bs-toggle="tooltip" data-bs-placement="auto" data-bs-title="Palette">
-					<span class="material-symbols-outlined">palette</span>
-				</div>
-				<div class="button" data-bs-toggle="tooltip" data-bs-placement="auto" data-bs-title="Swatches">
-					<span class="material-symbols-outlined">style</span>
-				</div>
+			<div class="btn-group dropup">
+			  <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+				Credits
+			  </button>
+			  <ul class="dropdown-menu">
+				<li><a class="dropdown-item" href="https://forums.libretro.com/t/koko-aio-shader-discussions-and-updates/38455">koko-aio by kokoko3k</a></li>
+				<li><a class="dropdown-item" href="https://forums.libretro.com/t/mega-bezel-reflection-shader-feedback-and-updates/25512">Mega Bezel by HyperspaceMadness</a></li>
+				<li><a class="dropdown-item" href="https://github.com/sampotts/plyr">Plyr by Sam Potts &copy;2017</a></li>
+			  </ul>
 			</div>
-			<div class="center-foot">
-				<div class="foot-wrapper">
-					<div class="credit design">
-						<em>Designed by hgoda90&emsp;</em>
-						<span class="dot-divider"></span>
-						<a href="https://github.com/sampotts/plyr">Plyr</a><em> by Sam Potts</em> &copy;2017
-					</div>
-					<div class="credit">
-						<a href="https://forums.libretro.com/t/koko-aio-shader-discussions-and-updates/38455">koko-aio</a>
-						<em class="modal-link" data-link="koko-aio.html" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="koko-aio Settings"> by kokoko3k </em>
-						<span class="dot-divider"></span>
-						<a href="https://forums.libretro.com/t/mega-bezel-reflection-shader-feedback-and-updates/25512">Mega Bezel</a>
-						<em class="modal-link" data-link="mbz.html" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Mega Bezel Settings"> by HyperspaceMadness</em>
-					</div>
-				</div>
+			<div class="btn-group dropup">
+			  <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+				Popups
+			  </button>
+			  <ul class="dropdown-menu">
+				<li><button class="thief dropdown-item" data-link="color-thief.html">Color Thief</button></li>
+				<li><button class="modal-link dropdown-item" data-link="koko-aio.html">koko-aio Settings</button></li>
+				<li><button class="modal-link dropdown-item" data-link="mbz.html">Mega Bezel Settings</button></li>
+			  </ul>
+			</div>
+			<div class="btn-group dropup">
+			  <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+				Settings
+			  </button>
+			  <ul class="dropdown-menu">
+				<li><h6 class="dropdown-header">Color Style</h6></li>
+				<li><button class="dropdown-item style">Diamond</button></li>
+				<li><button class="dropdown-item style">Palette</button></li>
+				<li><button class="dropdown-item style">Swatches</button></li>
+				<li><hr class="dropdown-divider"></li>
+				<li><h6 class="dropdown-header">Spelling</h6></li>
+				<li><button class="dropdown-item us">Color</button></li>
+				<li><button class="dropdown-item world">Colour</button></li>
+			  </ul>
 			</div>
 			<div class="right-foot">
-				<a class="button watermark" data-bs-toggle="tooltip" data-bs-placement="auto" data-bs-title="Libretro Topic" href="https://forums.libretro.com/t/hgoda90-bezel-preset-editor/44230"></a>
-				<div class="button location us" data-bs-toggle="tooltip" data-bs-placement="auto" data-bs-title="Color"></div>
-				<div class="button location world" data-bs-toggle="tooltip" data-bs-placement="auto" data-bs-title="Colour"></div>
+				<div class="credit design">
+					<em>Designed by hgoda90&emsp;</em>
+					<a class="button watermark" href="https://forums.libretro.com/t/hgoda90-bezel-preset-editor/44230"></a>
+				</div>
 			</div>
 		</footer>
 		</div>
 		<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		  <div class="modal-dialog modal-dialog-scrollable modal-md">
+			<div class="modal-content">
+			</div>
+		  </div>
+		</div>
+		<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalFullscreenLabel" aria-modal="true" role="dialog">
+		  <div class="modal-dialog modal-fullscreen">
 			<div class="modal-content">
 			</div>
 		  </div>

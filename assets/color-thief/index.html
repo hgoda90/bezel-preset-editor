@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>Color Thief</title>
+		<meta name="description" content="Get the dominant color or color palette from an image.">
+		<meta name="author" content="Lokesh Dhakar">
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<link rel="stylesheet" href="files/main.css">
+		<link rel="stylesheet" href="files/prism.css">
+	</head>
+	<body>
+		<header class="header">
+			<div class="column" style="padding: 0 48px;">
+				<div class="content">
+					<a href="https://github.com/lokesh/color-thief" class="gh">
+						<span class="gh-label">
+							<svg class="gh-logo" viewBox="0 0 512 512">
+								<path d="M256 0C115 0 0 115 0 256c0 113 73 209 175 243 13 2 18-5 18-12v-48c-64 12-81-16-86-30-3-7-15-30-26-36-9-5-22-17 0-17 20 0 35 19 39 26 23 39 60 28 75 21 2-17 9-28 16-34-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-33 3-68 0 0 21-7 70 26 20-6 42-9 64-9s43 3 64 9c49-33 70-26 70-26 14 35 5 61 3 68 16 18 26 41 26 69 0 98-60 120-117 126 9 8 17 23 17 47v70c0 7 5 15 18 12 100-33 173-129 173-242C512 115 397 0 256 0z"></path>
+							</svg> Github </span>
+						<span class="gh-count">
+							<svg class="gh-star" viewBox="0 0 896 1024">
+								<path d="M896 384l-313-41L448 64 313 343 0 384l230 208L171 895l277-149 277 148L665 593 896 384z"></path>
+							</svg>
+							<span class="gh-count-number">12164</span>
+						</span>
+					</a>
+				</div>
+			</div>
+		</header>
+		<div class="main">
+			<div class="column">
+				<div class="content">
+					<section id="drag-drop" class="drag-drop-section" style="display: block;">
+						<div class="container">
+							<div id="drop-zone" class="drop-zone">
+								<div class="default-label drop-zone-label">Drag an image here</div>
+								<div class="dragging-label drop-zone-label">Drop it!</div>
+							</div>
+							<div id="dragged-images" class="dragged-images"></div>
+						</div>
+					</section>
+		<script id="image-section-template" type="text/x-mustache">
+			{{#images}}
+				<div class="image-section {{class}}">
+					<div class="image-wrap">
+						<button class="run-functions-button">
+							<span class="no-touch-label">Click</span>
+							<span class="touch-label">Tap</span>
+						</button>
+						<div class="box-border">
+							<img class="target-image" src="{{file}}" />
+						</div>
+					</div>
+					<div class="color-thief-output"></div>
+				</div>
+			{{/images}}
+		</script>
+		<script id="color-thief-output-template" type="text/x-mustache">
+			<div class="function get-code">
+				<h4>Code: </h4>
+				<span class="color-code">#C7C7C7</span>
+			</div>
+			<div class="output-layout">
+				<div class="function get-palette">
+					<div class="function-output">
+						<div class="swatches">
+							{{#palette}}
+								<div class="swatch" style="background-color: rgb({{0}}, {{1}}, {{2}})"></div>
+							{{/palette}}
+						</div>
+					</div>
+				</div>
+			</div>
+			<button class="output-remove">Drop</button>
+		</script>
+		<script src="files/thief.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+		<script>
+			function a() {
+				dataLayer.push(arguments)
+			}
+			window.dataLayer = window.dataLayer || [], a("js", new Date), a("config", "G-4MX99CPP55");
+		</script>
+		<script>
+			function getCookie(cname) {
+				let name = cname + "=";
+				let ca = document.cookie.split(';');
+				for(let i = 0; i < ca.length; i++) {
+					let c = ca[i];
+					while (c.charAt(0) == ' ') {
+						c = c.substring(1);
+					}
+					if (c.indexOf(name) == 0) {
+						return c.substring(name.length, c.length);
+					}
+				}
+				return "";
+			}
+			
+			if(getCookie("sampleStyle") == "diamond"){
+				$("body").addClass("jewel");
+			}
+			else if(getCookie("sampleStyle") == "swatches"){
+				$("body").addClass("squared");
+			}
+
+			$(document).on('keydown', function(e){
+				key = e.key;
+				
+				if (key == "Shift") {
+					if($("#onTop").length == 1){
+						$("#onTop").find(".color-thief-output").find(".color-code").removeClass("selected");
+					}
+				}
+			});
+			
+			$(document).on("mouseover", ".image-section", function(e) {
+				$(this).attr("id", "onTop");
+			});
+			
+			$(document).on("mouseover", ".get-palette .swatch", function(e) {
+				const rgbToHex = (r, g, b) => '#' + [r, g, b].map(x => {
+				  const hex = x.toString(16)
+				  return hex.length === 1 ? '0' + hex : hex
+				}).join('')
+				
+				var color = $(this).css("background-color").replace("rgb(", "").replace(")", "").split(',');
+				let conversion = rgbToHex(parseInt(color[0]), parseInt(color[1]), parseInt(color[2]));
+				
+				if($(this).parents(".color-thief-output").find(".color-code").hasClass("selected") == false){
+					$(this).siblings(".swatch-display").remove();
+					$(this).parents(".color-thief-output").find(".color-code").text(conversion.toUpperCase());
+					$(this).parents(".image-section").find(".box-border").css("background", $(this).css("background-color"));
+				}
+			});
+			
+			$(document).on("mouseleave", ".image-section", function(e) {
+				$(this).removeAttr("id");
+			});
+			
+			$(document).on("mouseleave", ".get-palette .swatches", function(e) {
+				if($(this).parents(".color-thief-output").find(".color-code").hasClass("selected") == false){
+					$(this).siblings(".swatch-display").remove();
+					$(this).parents(".color-thief-output").find(".color-code").text("#C7C7C7");
+					$(this).parents(".image-section").find(".box-border").css("background", "#C7C7C7");
+				}
+			});
+			
+			$(document).on("click", ".get-palette .swatch", function(e){
+				$(this).parents(".color-thief-output").find(".color-code").addClass("selected");
+				
+				const rgbToHex = (r, g, b) => '#' + [r, g, b].map(x => {
+				  const hex = x.toString(16)
+				  return hex.length === 1 ? '0' + hex : hex
+				}).join('')
+				
+				var color = $(this).css("background-color").replace("rgb(", "").replace(")", "").split(',');
+				let conversion = rgbToHex(parseInt(color[0]), parseInt(color[1]), parseInt(color[2]));
+				
+				$(this).siblings(".swatch-display").remove();
+				$(this).parents(".color-thief-output").find(".color-code").text(conversion.toUpperCase());
+				$(this).parents(".image-section").find(".box-border").css("background", $(this).css("background-color"));
+				
+				window.parent.$(".dropper").val(conversion);
+				window.parent.colorVision();
+			});
+			
+			$(document).on("click", ".output-remove", function(e){
+				$(this).parents(".image-section").remove();
+			});
+		</script>
+	</body>
+</html>
