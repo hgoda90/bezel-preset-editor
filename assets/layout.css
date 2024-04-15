@@ -53,8 +53,8 @@ form {
 
 .build {
     position: absolute;
-    top: -46px;
-    right: 10px;
+    top: -3px;
+    right: -32px;
 }
 
 .text-box {
@@ -96,12 +96,6 @@ textarea {
 
 textarea:focus-visible {
 	outline: none;
-}
-
-.text-box .button {
-    position: absolute;
-    top: -44px;
-    right: -48px;
 }
 
 .button-wrap {
@@ -325,7 +319,7 @@ span.square-title {
 }
 
 .format-labels span {
-    margin: 0 10px;
+    margin: 0px 13px;
     position: relative;
 }
 
@@ -617,26 +611,6 @@ span.square-title {
 
 #copy:hover:disabled {
 	cursor: not-allowed;
-}
-
-#copy {
-    right: 109px;
-}
-
-#edit {
-    right: 181px;
-}
-
-#load {
-    right: 253px;
-}
-
-#save {
-    right: 325px;
-}
-
-.text-box .saveAll {
-    right: 280px;
 }
 
 .text-wrap.extra{
@@ -1200,12 +1174,8 @@ pre {
     border-radius: 4px;
 }
 
-.mini .button {
-    position: absolute;
-    bottom: -38px;
-}
-
 .mini #hide {
+    position: absolute;
     top: -48px;
     bottom: unset;
     right: 0;
@@ -1220,7 +1190,13 @@ pre {
 }
 
 .button-group {
-    height: 78px;
+    position: absolute;
+    left: 38px;
+    bottom: -40px;
+}
+
+.mini .button {
+    margin-right: 12px;
 }
 
 .wrap {
@@ -1234,6 +1210,7 @@ pre {
 }
 
 .on .wrap {
+    height: 300px;
     background: #ebe6c9;
     margin: -14px -18px;
     outline: 1px solid rgb(0 0 0 / 20%);
@@ -1273,12 +1250,12 @@ pre {
 
 .build .label {
 	display: block;
-	font-size: 10px;
+	font-size: 12px;
 	width: 30px;
 	color: #888;
 	position: absolute;
-	top: 26px;
-	left: -3px;
+	top: 23px;
+	left: -2px;
 }
 
 #clear2 {
@@ -1544,6 +1521,7 @@ pre {
 
 .mini.on .screen-container {
     outline-width: 6px;
+    height: 222px;
 }
 
 .mini .glass {
@@ -1985,4 +1963,14 @@ footer .dropdown-menu .dropdown-item{
 footer .btn-group button {
     color: #333;
     border: none;
+}
+
+.text-head {
+    position: absolute;
+    top: -44px;
+    right: 42px;
+}
+
+.text-head .button {
+    margin-right: 10px;
 }

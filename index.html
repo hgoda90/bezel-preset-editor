@@ -22,10 +22,10 @@
 					<div class="overlay">Mini</div>
 				</div>
 				<div class="button-group">
+					<span class="button" id="save" onclick="savePreset(1);">Save</span>
 					<label class="button" id="load">Load
 						<input type="file" accept=".slangp, .params, .mp3, .mp4, .jpg, .png, .txt">
 					</label>
-					<span class="button" id="save" onclick="savePreset(1);">Save</span>
 					<span class="button" id="edit" onclick="edit();">Edit</span>
 					<span class="button" id="copy" onclick="copy(1);">Copy</span>
 					<span class="button" id="clear" onclick="clearText(1);">Clear</span>
@@ -197,18 +197,20 @@
 								</div>
 							</div>
 						</div>
-						<div class="build">
-							<input type="checkbox" id="chk1" name="chks">
-							<label for="chk1"></label>
-							<span class="label">Build</span>
+						<div class="text-head">
+							<div class="build">
+								<input type="checkbox" id="chk1" name="chks">
+								<label for="chk1"></label>
+								<span class="label">Build</span>
+							</div>
+							<span class="button" id="save2">Save</span>
+							<span class="button saveAll">Save All</span>
+							<label class="button" id="load2">Load
+								<input type="file" accept=".slangp, .params, .mp3, .mp4, .jpg, .png, .txt" multiple>
+							</label>
+							<span class="button" id="copy2" onclick="copy(2);">Copy</span>
+							<span class="button" id="clear2" onclick="clearText(2);">Clear</span>
 						</div>
-						<span class="button saveAll">Save All</span>
-						<span class="button" id="save2">Save</span>
-						<label class="button" id="load2">Load
-							<input type="file" accept=".slangp, .params, .mp3, .mp4, .jpg, .png, .txt" multiple>
-						</label>
-						<span class="button" id="copy2" onclick="copy(2);">Copy</span>
-						<span class="button" id="clear2" onclick="clearText(2);">Clear</span>
 					</div>
 				</div>
 				<br>
