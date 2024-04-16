@@ -2025,8 +2025,12 @@ $(document).ready(function () {
 		if(e.ctrlKey && key === "Delete"){
 			e.preventDefault;
 			$(".active .plyr").remove();
-			$(".nav-link.active").addClass("empty").removeClass("vid").removeClass("yt");
+			$(".nav-link.active").removeClass("vid").removeClass("yt");
 			$(".active textarea").css("display", "block");
+			
+			if($(".active textarea").val() == ""){
+				$(".nav-link.active").addClass("empty");
+			}
 		}
 		
 		if(e.ctrlKey && key == "End"){
