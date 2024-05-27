@@ -525,6 +525,9 @@ $(document).ready(function(){
 			
 			$(".text").css("display", "none");
 		}
+		else if(extension == "twitch"){
+			miniTwitch();
+		}
 		else{
 			miniLoad(file);
 		}
@@ -662,6 +665,9 @@ $(document).ready(function(){
 			else if(extension == "jpg" || extension == "png"){
 				img(presets[0], num);
 				$(".tab-pane.active textarea").css("display", "none");
+			}
+			else if(extension == "twitch"){
+				twitch(num+1);
 			}
 			else{
 				loadFile(presets[0], 1, num-1);
