@@ -103,8 +103,8 @@ function clearText(id){
 		$(".text").text("").val("");
 		$("#codeBlock1, .info").empty();
 		URL.revokeObjectURL($(".mini .plyr source").attr("src"));
-		$(".mini .plyr").remove();
-		$(".mini textarea").css("display", "block");
+		$(".mini .plyr, .mini iframe").remove();
+		$(".mini textarea, .mini pre").css("display", "block");
 		colorReset;
 	}
 	else{
@@ -115,7 +115,8 @@ function clearText(id){
 		$(".text-box .tab-pane.active .preset-title").empty();
 		URL.revokeObjectURL($(".tab-pane.active .plyr source").attr("src"));
 		$(".tab-pane.active .img-holder, .tab-pane.active .plyr").remove();
-		$(".tab-pane.active textarea").css("display", "block");
+		$(".tab-pane.active textarea, .tab-pane.active pre").css("display", "block");
+		$(".tab-pane.active iframe").remove();
 	}
 	
 	cvSet();
@@ -500,14 +501,20 @@ function extraTab(){
 			}
 		}
 		
-		if($(".tab-pane.active textarea").val() == "" && $(".tab-pane.active .plyr").length == 0){
-			$("#tab1").addClass("empty");
+		if($(".tab-pane.active .plyr").length == 1){
+			$("#tab1").addClass("vid");
 		}
 		else if($(".tab-pane.active .plyr.yt").length == 1){
 			$("#tab1").addClass("yt");
 		}
-		else if($(".tab-pane.active .plyr").length == 1){
-			$("#tab1").addClass("vid");
+		else if($(".tab-pane.active img").length == 1){
+			$("#tab1").addClass("img");
+		}
+		else if($(".tab-pane.active iframe").length == 1){
+			$("#tab1").addClass("twitch");
+		}
+		else{
+			$("#tab1").addClass("empty");
 		}
 	}
 	

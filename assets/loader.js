@@ -73,6 +73,19 @@ function dropLoad(file, files, id){
 	reader.readAsText(file, "UTF-8");
 }
 
+function miniTwitch(){
+	let channel = prompt("Enter Channel Name", "Twitch");
+	$(".mini textarea, .mini pre").css("display", "none");
+	$(".mini .screen-container").append('<iframe src="https://player.twitch.tv/?channel='+encodeURI(channel)+'&parent='+document.location.hostname+'" style="width: 100%;height: 100%"></iframe');
+}
+
+function twitch(id){
+	let channel = prompt("Enter Channel Name", "Twitch");
+	$(".tab-pane.active .preset-title").empty();
+	$("#dropText"+id+" textarea, #dropText"+id+" pre").css("display", "none");
+	$("#dropText"+id).append('<iframe src="https://player.twitch.tv/?channel='+encodeURI(channel)+'&parent='+document.location.hostname+'" style="width: 100%;height: 100%"></iframe');
+}
+
 function minitube(file){
 	let video = prompt("Enter Video Line Number", "1");
 
@@ -300,6 +313,9 @@ function dropFile(file) {
 		
 		$(".text").css("display", "none");
 	}
+	else if(extension == "twitch"){
+		miniTwitch();
+	}
 	else{
 		miniLoad(file);
 	}
@@ -340,6 +356,9 @@ function dropFile2(file) {
 	else if(extension == "jpg" || extension == "png"){
 		img(file[id-1], num);
 		$(".tab-pane.active textarea").css("display", "none");
+	}
+	else if(extension == "twitch"){
+		twitch(active+1);
 	}
 	else{
 		dropLoad(file[id-1], file.length, num);

@@ -1797,6 +1797,10 @@ input[type="text"], select {
 	color: 	#fab617;
 }
 
+.nav-link.twitch {
+    color: #9147ff;
+}
+
 .nav-link.vid {
     color: #00B2FF;
 }
@@ -1831,6 +1835,13 @@ input[type="text"], select {
 	border-color: #FAB617;
 	background: rgb(250 182 23 / 4%);
 	box-shadow: 0 0px 9px -4px #FAB617;
+}
+
+.nav-tabs .nav-link.twitch.active, .nav-tabs .nav-link.twitch:hover{
+	color: #9147ff;
+	border-color: #9147ff;
+	background: rgb(145 71 255 / 4%);
+	box-shadow: 0 0px 9px -4px #9147ff;
 }
 
 .tab-pane .img-holder {
