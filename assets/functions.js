@@ -111,7 +111,7 @@ function clearText(id){
 		$(".text-box .tab-pane.active textarea").text("").val("");
 		$(".tab-pane.active code").empty();
 		$(".nav-link.active").addClass("empty");
-		$(".nav-link.active").removeClass("img").removeClass("yt").removeClass("vid");
+		$(".nav-link.active").removeClass("img").removeClass("twitch").removeClass("yt").removeClass("vid");
 		$(".text-box .tab-pane.active .preset-title").empty();
 		URL.revokeObjectURL($(".tab-pane.active .plyr source").attr("src"));
 		$(".tab-pane.active .img-holder, .tab-pane.active .plyr").remove();
@@ -730,6 +730,8 @@ function layerToggle(imageLayers){
 				break;
 		}
 	}
+	
+	updateMini();
 }
 
 function nextTab(type){
@@ -1578,6 +1580,7 @@ $(document).ready(function () {
 		
 		$('.image input[type="file"]').val("");
 		$(this).blur();
+		updateMini();
 	});
 	
 	$('.modal-link').on('click', function(){

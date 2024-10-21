@@ -92,6 +92,9 @@ textarea {
 	background-color: rgba(0,0,0,0);
 	color: rgba(0,0,0,0);
 	resize: none;
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
 }
 
 textarea:focus-visible {
@@ -1106,6 +1109,9 @@ pre {
 	overflow: hidden;
 	padding: 0;
 	margin: 0;
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
 }
 
 #preCode code {

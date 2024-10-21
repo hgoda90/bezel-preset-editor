@@ -7,7 +7,7 @@ function img(file, id){
 		$("#dropText"+(id+1)).append('<div class="img-holder"><img src="'+reader.result+'"></div>');
 		$("#dropText"+(id+1)+" .plyr").remove()
 		$("#dropText"+(id+1)+" textarea").css("display", "none");
-		$("#tab"+id).addClass("img").removeClass("yt").removeClass("vid");
+		$("#tab"+id).addClass("img").removeClass("twitch").removeClass("yt").removeClass("vid");
 	}
 	
 	reader.readAsDataURL(file);
@@ -80,10 +80,13 @@ function miniTwitch(){
 }
 
 function twitch(id){
+	clearText(id);
+	
 	let channel = prompt("Enter Channel Name", "Twitch");
 	$(".tab-pane.active .preset-title").empty();
 	$("#dropText"+id+" textarea, #dropText"+id+" pre").css("display", "none");
-	$("#dropText"+id).append('<iframe src="https://player.twitch.tv/?channel='+encodeURI(channel)+'&parent='+document.location.hostname+'" style="width: 100%;height: 100%"></iframe');
+	$("#tab"+(id-1)).addClass("twitch").removeClass("img").removeClass("yt").removeClass("vid");
+	$("#dropText"+id).append('<iframe src="https://player.twitch.tv/?channel='+encodeURI(channel)+'&parent='+document.location.hostname+'&muted=false" style="width: 100%;height: 100%"></iframe');
 }
 
 function minitube(file){
