@@ -1804,6 +1804,10 @@ input[type="text"], select {
 }
 
 .nav-link.twitch {
+	color: #B9A3E3;
+}
+
+.nav-link.twitch-live {
     color: #9147ff;
 }
 
@@ -1844,6 +1848,13 @@ input[type="text"], select {
 }
 
 .nav-tabs .nav-link.twitch.active, .nav-tabs .nav-link.twitch:hover{
+	color: #B9A3E3;
+	border-color: #B9A3E3;
+	background: rgb(185 163 227 / 4%);
+	box-shadow: 0 0px 9px -4px #9147ff;
+}
+
+.nav-tabs .nav-link.twitch-live.active, .nav-tabs .nav-link.twitch-live:hover{
 	color: #9147ff;
 	border-color: #9147ff;
 	background: rgb(145 71 255 / 4%);

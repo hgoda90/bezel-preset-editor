@@ -7,7 +7,7 @@ function img(file, id){
 		$("#dropText"+(id+1)).append('<div class="img-holder"><img src="'+reader.result+'"></div>');
 		$("#dropText"+(id+1)+" .plyr").remove()
 		$("#dropText"+(id+1)+" textarea").css("display", "none");
-		$("#tab"+id).addClass("img").removeClass("twitch").removeClass("yt").removeClass("vid");
+		$("#tab"+id).addClass("img").removeClass("twitch").removeClass("twitch-live").removeClass("yt").removeClass("vid");
 	}
 	
 	reader.readAsDataURL(file);
@@ -20,7 +20,7 @@ function loadFile(presets, files, id){
 		$("#dropText"+(id+2)+" textarea").text(preset.trim()).val(preset.trim());
 		$("#dropText"+(id+2)+" .plyr").remove()
 		$("#dropText"+(id+2)+" textarea").css("display", "block");
-		$("#tab"+(id+1)).removeClass("img").removeClass("yt").removeClass("vid");
+		$("#tab"+(id+1)).removeClass("img").removeClass("twitch").removeClass("twitch-live").removeClass("yt").removeClass("vid");
 		
 		if(power == "off"){
 			$("#dropText"+(id+2)+" code").css("display", "block");
@@ -56,7 +56,7 @@ function dropLoad(file, files, id){
 		$("#dropText"+(id+1)+" textarea").text(preset.trim()).val(preset.trim());
 		$("#dropText"+(id+1)+" .plyr").remove()
 		$("#dropText"+(id+1)+" textarea").css("display", "block");
-		$("#tab"+id).removeClass("yt").removeClass("vid");
+		$("#tab"+id).removeClass("twitch").removeClass("twitch-live").removeClass("yt").removeClass("vid");
 		
 		if(power == "off"){
 			$("#dropText"+(id+2)+" code").css("display", "block");
@@ -73,20 +73,61 @@ function dropLoad(file, files, id){
 	reader.readAsText(file, "UTF-8");
 }
 
-function miniTwitch(){
+function miniTwitchLive(){
 	let channel = prompt("Enter Channel Name", "Twitch");
 	$(".mini textarea, .mini pre").css("display", "none");
 	$(".mini .screen-container").append('<iframe src="https://player.twitch.tv/?channel='+encodeURI(channel)+'&parent='+document.location.hostname+'" style="width: 100%;height: 100%"></iframe');
 }
 
-function twitch(id){
+function twitchLive(id){
 	clearText(id);
 	
 	let channel = prompt("Enter Channel Name", "Twitch");
 	$(".tab-pane.active .preset-title").empty();
 	$("#dropText"+id+" textarea, #dropText"+id+" pre").css("display", "none");
-	$("#tab"+(id-1)).addClass("twitch").removeClass("img").removeClass("yt").removeClass("vid");
-	$("#dropText"+id).append('<iframe src="https://player.twitch.tv/?channel='+encodeURI(channel)+'&parent='+document.location.hostname+'&muted=false" style="width: 100%;height: 100%"></iframe');
+	$("#tab"+(id-1)).addClass("twitch-live").removeClass("twitch").removeClass("img").removeClass("yt").removeClass("vid");
+	$("#dropText"+id).append('<iframe class="ttvl" src="https://player.twitch.tv/?channel='+encodeURI(channel)+'&parent='+document.location.hostname+'&muted=false" style="width: 100%;height: 100%"></iframe');
+}
+
+function miniTwitch(file){
+	let video = prompt("Enter Video Line Number", "1");
+	$(".tab-pane.active .preset-title").empty();
+
+	if(file.length == 1){
+		links = file[0].name;
+	}
+	else{
+		links = file.name;
+	}
+	
+	jQuery.get("twitch/"+links, function(data) {
+		data = data.trim().split("\n");
+		$(".mini textarea, .mini pre").css("display", "none");
+		$(".mini .screen-container").append('<iframe src="https://player.twitch.tv/?video=v'+data[(video-1)].split("/").pop()+'&parent='+document.location.hostname+'&muted=false" style="width: 100%;height: 100%"></iframe');
+	});
+}
+
+function twitch(file, id){
+	let video = prompt("Enter Video Line Number", "1");
+	$(".tab-pane.active .preset-title").empty();
+
+	if(file.length == 1){
+		links = file[0].name;
+	}
+	else{
+		links = file.name;
+	}
+	
+	jQuery.get("twitch/"+links, function(data) {
+		data = data.trim().split("\n");
+		
+		if(video != null && video > 0 && video <= data.length && video % 1 == 0){
+			$(".tab-pane.active .preset-title").empty();
+			$("#tab"+(id-1)).addClass("twitch").removeClass("twitch-live").removeClass("img").removeClass("yt").removeClass("vid");
+			$("#dropText"+id+" textarea, #dropText"+id+" pre").css("display", "none");
+			$("#dropText"+id).append('<iframe class="ttv" src="https://player.twitch.tv/?video=v'+data[(video-1)].split("/").pop()+'&parent='+document.location.hostname+'&muted=false" style="width: 100%;height: 100%"></iframe');
+		}
+	});
 }
 
 function minitube(file){
@@ -316,8 +357,11 @@ function dropFile(file) {
 		
 		$(".text").css("display", "none");
 	}
-	else if(extension == "twitch"){
-		miniTwitch();
+	else if(extension == "ttvl"){
+		miniTwitchLive();
+	}
+	else if(extension == "ttv"){
+		miniTwitch(file);
 	}
 	else{
 		miniLoad(file);
@@ -360,8 +404,11 @@ function dropFile2(file) {
 		img(file[id-1], num);
 		$(".tab-pane.active textarea").css("display", "none");
 	}
-	else if(extension == "twitch"){
-		twitch(active+1);
+	else if(extension == "ttv"){
+		twitch(file, active+1);
+	}
+	else if(extension == "ttvl"){
+		twitchLive(active+1);
 	}
 	else{
 		dropLoad(file[id-1], file.length, num);
@@ -528,8 +575,11 @@ $(document).ready(function(){
 			
 			$(".text").css("display", "none");
 		}
-		else if(extension == "twitch"){
-			miniTwitch();
+		else if(extension == "ttvl"){
+			miniTwitchLive();
+		}
+		else if(extension == "ttv"){
+			miniTwitch(file);
 		}
 		else{
 			miniLoad(file);
@@ -669,8 +719,11 @@ $(document).ready(function(){
 				img(presets[0], num);
 				$(".tab-pane.active textarea").css("display", "none");
 			}
-			else if(extension == "twitch"){
-				twitch(num+1);
+			else if(extension == "ttv"){
+				twitch(presets, num+1);
+			}
+			else if(extension == "ttvl"){
+				twitchLive(num+1);
 			}
 			else{
 				loadFile(presets[0], 1, num-1);

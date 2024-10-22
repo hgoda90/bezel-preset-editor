@@ -111,7 +111,7 @@ function clearText(id){
 		$(".text-box .tab-pane.active textarea").text("").val("");
 		$(".tab-pane.active code").empty();
 		$(".nav-link.active").addClass("empty");
-		$(".nav-link.active").removeClass("img").removeClass("twitch").removeClass("yt").removeClass("vid");
+		$(".nav-link.active").removeClass("img").removeClass("twitch").removeClass("twitch-live").removeClass("yt").removeClass("vid");
 		$(".text-box .tab-pane.active .preset-title").empty();
 		URL.revokeObjectURL($(".tab-pane.active .plyr source").attr("src"));
 		$(".tab-pane.active .img-holder, .tab-pane.active .plyr").remove();
@@ -420,11 +420,11 @@ function deleteTab(){
 function destroy(){
 	$(".preset-title").empty();
 	$("textarea").val("").text("");
-	$(".nav-item:not(.close):not(.plus):not(.remove) .nav-link").removeClass("img").removeClass("vid").removeClass("yt");
+	$(".nav-item:not(.close):not(.plus):not(.remove) .nav-link").removeClass("img").removeClass("twitch").removeClass("twitch-live").removeClass("vid").removeClass("yt");
 	$(".nav-item:not(.close):not(.plus):not(.remove) .nav-link").addClass("empty");
 	$("code").empty();
-	$(".tab-pane .img-holder, .plyr").remove();
-	$("textarea").css("display", "block");
+	$(".tab-pane .img-holder, .plyr, iframe").remove();
+	$("#preCode, textarea").css("display", "block");
 	colorReset();
 }
 
@@ -501,17 +501,20 @@ function extraTab(){
 			}
 		}
 		
-		if($(".tab-pane.active .plyr").length == 1){
-			$("#tab1").addClass("vid");
-		}
-		else if($(".tab-pane.active .plyr.yt").length == 1){
+		if($(".tab-pane.active .plyr.yt").length == 1){
 			$("#tab1").addClass("yt");
+		}
+		else if($(".tab-pane.active .plyr").length == 1){
+			$("#tab1").addClass("vid");
 		}
 		else if($(".tab-pane.active img").length == 1){
 			$("#tab1").addClass("img");
 		}
-		else if($(".tab-pane.active iframe").length == 1){
+		else if($(".tab-pane.active iframe.ttv").length == 1){
 			$("#tab1").addClass("twitch");
+		}
+		else if($(".tab-pane.active iframe.ttvl").length == 1){
+			$("#tab1").addClass("twitch-live");
 		}
 		else{
 			$("#tab1").addClass("empty");
@@ -917,10 +920,10 @@ function removeTabs(){
 	
 	$(".preset-title, .tab-pane code").empty();
 	$(".tab-content textarea").text("").val("");
-	$(".screen-container .img-holder, .remove, .tooltip, .nav, .nav-hide, .tab-pane .plyr").remove();
+	$(".screen-container .img-holder, .remove, .tooltip, .nav, .nav-hide, .tab-pane .plyr, iframe").remove();
 	$(".tab-pane").removeClass("active").removeClass("show");
 	$(".text2").parents(".tab-pane").addClass("active").addClass("show");
-	$(".text2").css("display", "block");
+	$(".text2, #dropText2 pre").css("display", "block");
 	$(".nav-link").removeClass("active");
 	$("#tab1").addClass("active");
 	$(".tab-pane .plyr").remove();
