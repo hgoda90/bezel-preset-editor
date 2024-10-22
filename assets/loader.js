@@ -552,7 +552,7 @@ $(document).ready(function(){
 			extension = file.name.substr( (file.name.lastIndexOf('.') +1) ),
 			input = URL.createObjectURL(file);
 		
-		$(".mini .plyr, #player").remove();
+		$(".mini .plyr, #player, iframe").remove();
 		
 		if(extension == "mp3" && $(".tab-pane.active audio").length == 0){
 			$(".mini .screen-container").append('<audio controls crossorigin playsinline id="player"></audio>');
@@ -588,7 +588,7 @@ $(document).ready(function(){
 	
 	$('#load2 input[type="file"]').change(function (e) {
 		const presets = e.target.files;
-		$(".nav-item.close, .nav-hide, .plus, .tab-pane.active .plyr, .remove").remove();
+		$(".nav-item.close, .nav-hide, .plus, .tab-pane.active .plyr, .tab-pane.active iframe, .remove").remove();
 		$(".tab-pane.active textarea").css("display", "block");
 		var tabs = parseInt($(".nav-stage").children().length),
 			files = [];
