@@ -524,7 +524,7 @@ function dropFile(file) {
 		$(".mini .screen-container").append('<video controls crossorigin playsinline id="player"></video>');
 	}
 	
-	if(extension == "mp4" || extension == "mp3" || extension == "txt"){
+	if(extension == "mp4" || extension == "mp3" || extension == "yt"){
 		const playing = (extension == "mp4") ? "video" : (extension == "mp3") ? "audio" : "youtube";
 		const player = new Plyr('#player', {autoplay: true,invertTime: false});
 		
@@ -567,7 +567,7 @@ function dropFile2(file) {
 	
 	var extension = file[id-1].name.substr( (file[id-1].name.lastIndexOf('.') +1) );
 	
-	if(extension == "mp4" || extension == "mp3" || extension == "txt"){
+	if(extension == "mp4" || extension == "mp3" || extension == "yt"){
 		const playing = (extension == "mp4") ? "video" : (extension == "mp3") ? "audio" : "youtube";
 		
 		if(playing == "youtube"){
@@ -742,7 +742,7 @@ $(document).ready(function(){
 			$(".mini .screen-container").append('<video controls crossorigin playsinline id="player"></video>');
 		}
 		
-		if(extension == "mp4" || extension == "mp3" || extension == "txt"){
+		if(extension == "mp4" || extension == "mp3" || extension == "yt"){
 			const playing = (extension == "mp4") ? "video" : (extension == "mp3") ? "audio" : "youtube";
 			
 			if(playing == "youtube"){
@@ -887,7 +887,7 @@ $(document).ready(function(){
 				var num = parseInt($(".nav-link.active").text());
 			}
 			
-			if(extension == "mp4" || extension == "mp3" || extension == "txt"){
+			if(extension == "mp4" || extension == "mp3" || extension == "yt"){
 				const playing = (extension == "mp4") ? "video" : (extension == "mp3") ? "audio" : "youtube";
 				
 				if(playing == "youtube"){
@@ -931,7 +931,7 @@ $(document).ready(function(){
 					$(".tab-content").append('<div class="tab-pane fade" id="tab-pane'+(num+1)+'" role="tabpanel" aria-labelledby="tab'+(num+1)+'" tabindex="0"><span class="preset-title" id="preset'+(num+1)+'"></span><div class="screen-container" id="dropText'+(num+2)+'"><pre id="preCode"><code id="codeBlock'+(num+2)+'" class="language-csharp"></code></pre><textarea class="text'+(num+2)+' screen" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea><div class="overlay">VGA '+(num+1)+'</div></div></div>');
 				}
 				
-				if(extension == "mp4" || extension == "mp3" || extension == "txt"){
+				if(extension == "mp4" || extension == "mp3" || extension == "yt"){
 					const playing = (extension == "mp4") ? "video" : (extension == "mp3") ? "audio" : "youtube";
 					
 					if(playing == "youtube"){
