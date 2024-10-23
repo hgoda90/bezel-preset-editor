@@ -1164,12 +1164,11 @@ pre {
 }
 
 .mini {
-    bottom: 82px;
+    bottom: 84px;
     right: 16px;
     width: 386px;
-    height: 217px;
+    height: 230px;
     padding: 0px 18px 12px 18px;
-    background: #444;
     position: fixed;
     border-radius: 10px;
     z-index: 9999;
@@ -1182,13 +1181,13 @@ pre {
 
 .mini #hide {
     position: absolute;
-    top: -62px;
+    top: -84px;
     bottom: unset;
     right: 0;
 }
 
 .mini.hide {
-    transform: translateY(328px);
+    transform: translateY(360px);
 }
 
 .mini.hide .color-vision {
@@ -1198,7 +1197,7 @@ pre {
 .button-group {
     position: absolute;
     left: 38px;
-    bottom: -60px;
+    bottom: -56px;
 }
 
 .mini .button {
@@ -1206,9 +1205,11 @@ pre {
 }
 
 .wrap {
-    background: #F2F2F2;
-    padding: 16px 20px 0 16px;
-    margin: -6px -20px;
+    width: 388px;
+    height: 242px;
+    background: transparent;
+    padding: 0px 20px 0 16px;
+    margin: -6px -18px;
 }
 
 .text-box ::placeholder{
@@ -1216,11 +1217,12 @@ pre {
 }
 
 .on .wrap {
-    height: 310px;
     background: #ebe6c9;
-    margin: -14px -18px;
+    height: 334px;
     outline: 1px solid rgb(0 0 0 / 20%);
     border-radius: 4px;
+    margin-top: -14px;
+    padding-top: 14px;
 }
 
 .mini.on .button-group .button {
@@ -1527,14 +1529,14 @@ pre {
 
 .mini.on .screen-container {
     outline-width: 6px;
-    height: 230px;
+    height: 240px;
 }
 
 .mini .glass {
     width: 302px;
-    height: 255px;
+    height: 230px;
     background-repeat: no-repeat;
-    top: -8px;
+    top: 6px;
     left: 60px;
     transform: scale(1.375, 1.11);
 }
