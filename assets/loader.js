@@ -252,49 +252,54 @@ function minitube(file){
 		else{
 			let video = prompt("Enter Video Link", "https://www.youtube.com/watch?v=M7RcsYn_eLY");
 			
-			if($("#player").length == 0){
-				$(".mini .screen-container").append('<div id="player" data-plyr-provider="youtube" data-plyr-embed-id="'+video+'"></div>');
+			if(video.substring(0, 23) == "https://www.youtube.com"){
+				if($("#player").length == 0){
+					$(".mini .screen-container").append('<div id="player" data-plyr-provider="youtube" data-plyr-embed-id="'+video+'"></div>');
 
-				const player = new Plyr('#player', {autoplay: true,invertTime: false});
-				player.source = {type: 'video',sources: [{src: video,provider: 'youtube'}]};
+					const player = new Plyr('#player', {autoplay: true,invertTime: false});
+					player.source = {type: 'video',sources: [{src: video,provider: 'youtube'}]};
 
-				function next(){
-					var nextVid = video++;
+					function next(){
+						var nextVid = video++;
 
-					if(nextVid < data.length){
-						$(".mini .plyr").remove();
+						if(nextVid < data.length){
+							$(".mini .plyr").remove();
 
-						$(".mini .screen-container").append('<div id="player" data-plyr-provider="youtube" data-plyr-embed-id="'+data[(nextVid)]+'"></div>');
-						const player = new Plyr('#player', {autoplay: true,invertTime: false});
-						player.source = {type: 'video',sources: [{src: data[(nextVid)],provider: 'youtube'}]};
+							$(".mini .screen-container").append('<div id="player" data-plyr-provider="youtube" data-plyr-embed-id="'+data[(nextVid)]+'"></div>');
+							const player = new Plyr('#player', {autoplay: true,invertTime: false});
+							player.source = {type: 'video',sources: [{src: data[(nextVid)],provider: 'youtube'}]};
 
-						player.on('ready', (event) => {
-							$(".mini .plyr").addClass("yt");
+							player.on('ready', (event) => {
+								$(".mini .plyr").addClass("yt");
 
-							if(data.length > 1 && video < data.length){
-								$('.mini .plyr__controls .plyr__controls__item:first-child').after('<button class="plyr__controls__item plyr__control" id="next" type="button" data-plyr="next" aria-pressed="false" aria-label="Next"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M660-240v-480h80v480h-80Zm-440 0v-480l360 240-360 240Z"></path></svg><span class="label--not-pressed plyr__sr-only">Next</span></button>');
-							}
+								if(data.length > 1 && video < data.length){
+									$('.mini .plyr__controls .plyr__controls__item:first-child').after('<button class="plyr__controls__item plyr__control" id="next" type="button" data-plyr="next" aria-pressed="false" aria-label="Next"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M660-240v-480h80v480h-80Zm-440 0v-480l360 240-360 240Z"></path></svg><span class="label--not-pressed plyr__sr-only">Next</span></button>');
+								}
 
-							$(".mini #next").on("click", function(){
-								next();
+								$(".mini #next").on("click", function(){
+									next();
+								});
 							});
+						}
+					}
+
+					player.on('ready', (event) => {
+						$(".mini .plyr").addClass("yt");
+
+						if(data.length > 1 && video < data.length){
+							$('.mini .plyr__controls .plyr__controls__item:first-child').after('<button class="plyr__controls__item plyr__control" id="next" type="button" data-plyr="next" aria-pressed="false" aria-label="Next"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" 	width="24"><path d="M660-240v-480h80v480h-80Zm-440 0v-480l360 240-360 240Z"></path></svg><span class="label--not-pressed plyr__sr-only">Next</span></button>');
+						}
+
+						$(".mini #next").on("click", function(){
+							next();
 						});
-					}
-				}
-
-				player.on('ready', (event) => {
-					$(".mini .plyr").addClass("yt");
-
-					if(data.length > 1 && video < data.length){
-						$('.mini .plyr__controls .plyr__controls__item:first-child').after('<button class="plyr__controls__item plyr__control" id="next" type="button" data-plyr="next" aria-pressed="false" aria-label="Next"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" 	width="24"><path d="M660-240v-480h80v480h-80Zm-440 0v-480l360 240-360 240Z"></path></svg><span class="label--not-pressed plyr__sr-only">Next</span></button>');
-					}
-
-					$(".mini #next").on("click", function(){
-						next();
 					});
-				});
+				}
+				$(".mini textarea").css("display", "none");
 			}
-			$(".mini textarea").css("display", "none");
+			else if(video != null){
+				alert("- Link must be from youtube");
+			}
 		}
 	});
 	
@@ -382,62 +387,67 @@ function youtube(file, id){
 		else{
 			let video = prompt("Enter Video Link", "https://www.youtube.com/watch?v=M7RcsYn_eLY");
 			
-			if($("#player"+id).length == 0){
-				$(".tab-pane.active .screen-container").append('<div id="player'+id+'" data-plyr-provider="youtube" data-plyr-embed-id="'+video+'"></div>');
-				$("#tab"+$(".tab-pane.active").attr("id").replace("tab-pane", "")).addClass("yt").removeClass("vid");
+			if(video.substring(0, 23) == "https://www.youtube.com"){
+				if($("#player"+id).length == 0){
+					$(".tab-pane.active .screen-container").append('<div id="player'+id+'" data-plyr-provider="youtube" data-plyr-embed-id="'+video+'"></div>');
+					$("#tab"+$(".tab-pane.active").attr("id").replace("tab-pane", "")).addClass("yt").removeClass("vid");
 
-				const player = new Plyr('#player'+id, {autoplay: true,invertTime: false});
-				player.source = {type: 'video',sources: [{src: video,provider: 'youtube'}]};
+					const player = new Plyr('#player'+id, {autoplay: true,invertTime: false});
+					player.source = {type: 'video',sources: [{src: video,provider: 'youtube'}]};
 
-				function next(){
-					var nextVid = video++;
+					function next(){
+						var nextVid = video++;
 
-					if(nextVid < data.length){
-						$(".tab-pane.active .plyr").remove();
+						if(nextVid < data.length){
+							$(".tab-pane.active .plyr").remove();
 
-						$(".tab-pane.active .screen-container").append('<div id="player'+id+'" data-plyr-provider="youtube" data-plyr-embed-id="'+data[(nextVid)]+'"></div>');
-						const player = new Plyr('#player'+id, {autoplay: true,invertTime: false});
-						player.source = {type: 'video',sources: [{src: data[(nextVid)],provider: 'youtube'}]};
+							$(".tab-pane.active .screen-container").append('<div id="player'+id+'" data-plyr-provider="youtube" data-plyr-embed-id="'+data[(nextVid)]+'"></div>');
+							const player = new Plyr('#player'+id, {autoplay: true,invertTime: false});
+							player.source = {type: 'video',sources: [{src: data[(nextVid)],provider: 'youtube'}]};
 
-						player.on('ready', (event) => {
-							$(".tab-pane.active .plyr").addClass("yt");
+							player.on('ready', (event) => {
+								$(".tab-pane.active .plyr").addClass("yt");
 
-							if(data.length > 1 && video < data.length){
-								$('.tab-pane.active .plyr__controls .plyr__controls__item:first-child').after('<button class="plyr__controls__item plyr__control" id="next" type="button" data-plyr="next" aria-pressed="false" aria-label="Next"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M660-240v-480h80v480h-80Zm-440 0v-480l360 240-360 240Z"></path></svg><span class="label--not-pressed plyr__sr-only">Next</span></button>');
-							}
+								if(data.length > 1 && video < data.length){
+									$('.tab-pane.active .plyr__controls .plyr__controls__item:first-child').after('<button class="plyr__controls__item plyr__control" id="next" type="button" data-plyr="next" aria-pressed="false" aria-label="Next"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M660-240v-480h80v480h-80Zm-440 0v-480l360 240-360 240Z"></path></svg><span class="label--not-pressed plyr__sr-only">Next</span></button>');
+								}
 
-							fetchJSONFile('https://www.youtube.com/oembed?url='+data[(video)], function(info){
-								$(".tab-pane.active .plyr__controls").prepend('<div class="next-up"><img src="'+info["thumbnail_url"]+'"><div class="next-info"><span>Next</span><span id="next-title">'+info["title"]+'</span><span id="user"><a href="'+info["author_url"]+'">'+info["author_name"]+'</a></span></div></div>')
+								fetchJSONFile('https://www.youtube.com/oembed?url='+data[(video)], function(info){
+									$(".tab-pane.active .plyr__controls").prepend('<div class="next-up"><img src="'+info["thumbnail_url"]+'"><div class="next-info"><span>Next</span><span id="next-title">'+info["title"]+'</span><span id="user"><a href="'+info["author_url"]+'">'+info["author_name"]+'</a></span></div></div>')
+								});
+
+								$(".tab-pane.active #next").on("click", function(){
+									next();
+								});
+
+								$(".tab-pane.active #next").hover(function(){$(".next-up").addClass("show")}, function(){$(".next-up").removeClass("show")});
 							});
+						}
+					}
 
-							$(".tab-pane.active #next").on("click", function(){
-								next();
-							});
+					player.on('ready', (event) => {
+						$(".tab-pane.active .plyr").addClass("yt");
 
-							$(".tab-pane.active #next").hover(function(){$(".next-up").addClass("show")}, function(){$(".next-up").removeClass("show")});
+						if(data.length > 1 && video < data.length){
+							$('.tab-pane.active .plyr__controls .plyr__controls__item:first-child').after('<button class="plyr__controls__item plyr__control" id="next" type="button" data-plyr="next" aria-pressed="false" aria-label="Next"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M660-240v-480h80v480h-80Zm-440 0v-480l360 240-360 240Z"></path></svg><span class="label--not-pressed plyr__sr-only">Next</span></button>');
+						}
+
+						fetchJSONFile('https://www.youtube.com/oembed?url='+data[(video)], function(info){
+							$(".tab-pane.active .plyr__controls").prepend('<div class="next-up"><img src="'+info["thumbnail_url"]+'"><div class="next-info"><span>Next</span><span id="next-title">'+info["title"]+'</span><span id="user"><a href="'+info["author_url"]+'">'+info["author_name"]+'</a></span></div></div>')
 						});
-					}
+
+						$(".tab-pane.active #next").on("click", function(){
+							next();
+						});
+
+						$(".tab-pane.active #next").hover(function(){$(".next-up").addClass("show")}, function(){$(".next-up").removeClass("show")});
+					});
 				}
-
-				player.on('ready', (event) => {
-					$(".tab-pane.active .plyr").addClass("yt");
-
-					if(data.length > 1 && video < data.length){
-						$('.tab-pane.active .plyr__controls .plyr__controls__item:first-child').after('<button class="plyr__controls__item plyr__control" id="next" type="button" data-plyr="next" aria-pressed="false" aria-label="Next"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M660-240v-480h80v480h-80Zm-440 0v-480l360 240-360 240Z"></path></svg><span class="label--not-pressed plyr__sr-only">Next</span></button>');
-					}
-
-					fetchJSONFile('https://www.youtube.com/oembed?url='+data[(video)], function(info){
-						$(".tab-pane.active .plyr__controls").prepend('<div class="next-up"><img src="'+info["thumbnail_url"]+'"><div class="next-info"><span>Next</span><span id="next-title">'+info["title"]+'</span><span id="user"><a href="'+info["author_url"]+'">'+info["author_name"]+'</a></span></div></div>')
-					});
-
-					$(".tab-pane.active #next").on("click", function(){
-						next();
-					});
-
-					$(".tab-pane.active #next").hover(function(){$(".next-up").addClass("show")}, function(){$(".next-up").removeClass("show")});
-				});
+				$(".tab-pane.active textarea").css("display", "none");
 			}
-			$(".tab-pane.active textarea").css("display", "none");
+			else if(video != null){
+				alert("- Link must be from youtube");
+			}
 		}
 	});
 	
