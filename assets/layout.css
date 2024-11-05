@@ -2004,3 +2004,57 @@ footer .btn-group button {
 .text-head .button {
     margin-right: 10px;
 }
+
+.chat {
+	width: 378px;
+	height: 100%;
+    position: fixed;
+    left: 0;
+    top: -1px;
+    bottom: -1px;
+    overflow: visible;
+    z-index: 2;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    transition: left .3s ease-in-out;
+}
+
+.chat iframe {
+    position: relative;
+	display: none;
+}
+
+.chat.on{
+    height: 100%;
+    width: 378px;
+    background: #ebe6c9;
+}
+
+.chat.on iframe {
+    width: 352px;
+    height: calc(99vh - 15px);
+    top: 10px;
+    left: 10px;
+    outline: 1px solid rgb(0 0 0 / 20%);
+    border: 2px inset rgb(0 0 0 / 30%);
+    border-radius: 10px;
+}
+
+.chat.on.wide {
+    background: radial-gradient(#666 95%, #888);
+}
+
+.chat .show{
+	display: block;
+}
+
+#mute-hide {
+    position: fixed;
+    z-index: 3;
+    top: 8px;
+    left: 8px;
+}
+
+.on #mute-hide {
+	top: 18px;
+	left: 18px;
+}

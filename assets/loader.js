@@ -100,12 +100,14 @@ function miniTwitchLive(file){
 }
 
 function twitchLive(file, id){
-		if(file.length == 1){
+	if(file.length == 1){
 		links = file[0].name;
 	}
 	else{
 		links = file.name;
 	}
+	
+	var chats = $(".chat iframe").length;
 	
 	jQuery.get("twitch/"+links, function(data) {
 		data = data.trim().split("\n");
@@ -118,6 +120,18 @@ function twitchLive(file, id){
 				$("#tab"+(id-1)).addClass("twitch-live").removeClass("twitch").removeClass("img").removeClass("yt").removeClass("vid");
 				$("#dropText"+id+" textarea, #dropText"+id+" pre").css("display", "none");
 				$("#dropText"+id).append('<iframe class="ttvl" src="https://player.twitch.tv/?channel='+data[(channel-1)].split("/").pop()+'&parent='+document.location.hostname+'&muted=false" style="width: 100%;height: 100%" allowfullscreen></iframe');
+				
+				$(".chat iframe").removeClass("show");
+				$("#chat"+id).remove();
+				
+				if($(".chat").length == 0){
+					$("body").prepend('<div class="chat"><span class="button material-symbols-outlined" id="mute-hide" onclick="muteHide();">keyboard_arrow_left</span><iframe class="show" id="chat'+(chats+1)+'" src="https://www.twitch.tv/embed/'+data[(channel-1)].split("/").pop()+'/chat?parent='+document.location.hostname+'" height="100%" width="100%"></iframe></div>');
+				}
+				else{
+					$(".chat").append('<iframe class="show" id="chat'+(chats+1)+'" src="https://www.twitch.tv/embed/'+data[(channel-1)].split("/").pop()+'/chat?parent='+document.location.hostname+'" height="100%" width="100%"></iframe>');
+				}
+				
+				$(".chat").css("display", "block");
 			}
 			else if(channel != null){
 				alert("- Input must be a number\n- Input must be between 1 and "+data.length);
@@ -129,7 +143,29 @@ function twitchLive(file, id){
 			$("#dropText"+id+" textarea, #dropText"+id+" pre").css("display", "none");
 			let channel = prompt("Enter Channel Name", "Twitch");
 			$("#dropText"+id).append('<iframe class="ttvl" src="https://player.twitch.tv/?channel='+encodeURI(channel)+'&parent='+document.location.hostname+'&muted=false" style="width: 100%;height: 100%"></iframe');
+			
+			$(".chat iframe").removeClass("show");
+			$("#chat"+id).remove();
+			
+			if($(".chat").length == 0){
+				$("body").prepend('<div class="chat"><span class="button material-symbols-outlined" id="mute-hide" onclick="muteHide();">keyboard_arrow_left</span><iframe class="show" id="chat'+(chats+1)+'" src="https://www.twitch.tv/embed/'+channel+'/chat?parent='+document.location.hostname+'" height="100%" width="100%"></iframe></div>');
+			}
+			else{
+				$(".chat").append('<iframe class="show" id="chat'+(chats+1)+'" src="https://www.twitch.tv/embed/'+channel+'/chat?parent='+document.location.hostname+'" height="100%" width="100%"></iframe>');
+			}
+			
+			$(".chat").css("display", "block");
 		}
+		
+		if(power == "on"){
+			$(".chat").addClass("on");
+		}
+		
+		if($(".text-box").hasClass("wide")){
+			$(".chat").addClass("wide");
+		}
+		
+		$(".nav-link.active").attr("data-chat", (chats+1));
 	});
 }
 
