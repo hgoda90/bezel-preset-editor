@@ -87,7 +87,13 @@ function miniTwitchLive(file){
 		data = data.trim().split("\n");
 		
 		if(data != ""){
-			let channel = prompt("Enter Channel Line Number", "1");
+			if(data.length == 1){
+				var channel = 1;
+			}
+			else{
+				var channel = prompt("Enter Channel Line Number", "1");
+			}
+			
 			$(".mini textarea, .mini pre").css("display", "none");
 			$(".mini .screen-container").append('<iframe class="ttvl" src="https://player.twitch.tv/?channel='+data[(channel-1)].split("/").pop()+'&parent='+document.location.hostname+'&muted=false" style="width: 100%;height: 100%" allowfullscreen></iframe');
 		}
@@ -113,7 +119,12 @@ function twitchLive(file, id){
 		data = data.trim().split("\n");
 		
 		if(data != ""){
-			let channel = prompt("Enter Channel Line Number", "1");
+			if(data.length == 1){
+				var channel = 1;
+			}
+			else{
+				var channel = prompt("Enter Channel Line Number", "1");
+			}
 			
 			if(channel != null && channel > 0 && channel <= data.length && channel % 1 == 0){
 				$(".tab-pane.active .preset-title").empty();
@@ -183,7 +194,13 @@ function miniTwitch(file){
 		data = data.trim().split("\n");
 		
 		if(data != ""){
-			let video = prompt("Enter Video Line Number", "1");
+			if(data.length == 1){
+				var video = 1;
+			}
+			else{
+				var video = prompt("Enter Video Line Number", "1");
+			}
+			
 			$(".mini textarea, .mini pre").css("display", "none");
 			$(".mini .screen-container").append('<iframe class="ttv" src="https://player.twitch.tv/?video=v'+data[(video-1)].split("/").pop()+'&parent='+document.location.hostname+'&muted=false" style="width: 100%;height: 100%" allowfullscreen></iframe');
 		}
@@ -207,7 +224,12 @@ function twitch(file, id){
 		data = data.trim().split("\n");
 		
 		if(data != ""){
-			let video = prompt("Enter Video Line Number", "1");
+			if(data.length == 1){
+				var video = 1;
+			}
+			else{
+				var video = prompt("Enter Video Line Number", "1");
+			}
 			
 			if(video != null && video > 0 && video <= data.length && video % 1 == 0){
 				$(".tab-pane.active .preset-title").empty();
@@ -236,6 +258,7 @@ function minitube(file){
 		jQuery.get("youtube/directory.txt", function(data) {
 			data = data.trim().split("\n");
 			var http = new XMLHttpRequest();
+			var t = 0;
 			
 			if(data != ""){
 				for(i=0;i < data.length;i++){
@@ -244,11 +267,16 @@ function minitube(file){
 					http.open('HEAD', url, false);
 					http.send();
 					if (http.status === 200) {
+						t = 1;
 					   youtubePlay(url);
 					}
 					else{
 						console.clear();
 					}
+				}
+				
+				if(t == 0){
+					youtubePlay("youtube/"+links);
 				}
 			}
 
@@ -391,6 +419,7 @@ function youtube(file, id){
 		jQuery.get("youtube/directory.txt", function(data) {
 			data = data.trim().split("\n");
 			var http = new XMLHttpRequest();
+			var t = 0;
 			
 			if(data != ""){
 				for(i=0;i < data.length;i++){
@@ -399,14 +428,18 @@ function youtube(file, id){
 					http.open('HEAD', url, false);
 					http.send();
 					if (http.status === 200) {
-					   youtubePlay(url);
+						t = 1;
+						youtubePlay(url);
 					}
 					else{
 						console.clear();
 					}
 				}
+				
+				if(t == 0){
+					youtubePlay("youtube/"+links);
+				}
 			}
-
 		});
 	}
 	else{
