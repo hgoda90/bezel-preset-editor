@@ -1075,4 +1075,247 @@ $(document).ready(function(){
 		$('#load2 input[type="file"]').val("");
 		$(this).blur();
 	});
+	
+	if(build == "off"){
+		$('.ent-vid input[type="file"]').change(function (e) {
+			const presets = e.target.files;
+			
+			$(".nav-item.close, .nav-hide, .plus, .tab-pane.active .plyr, .tab-pane.active iframe, .remove").remove();
+			$(".tab-pane.active textarea").css("display", "block");
+			var tabs = parseInt($(".nav-stage").children().length),
+				files = [];
+				
+			var id = parseInt(presets.length);
+			
+			if($(".tab-pane.active").length == 0){
+				active = 1;
+			}
+			else{
+				active = parseInt($(".tab-pane.active").attr("id").replace("tab-pane", ""));
+			}
+			
+			var extension = presets[(id-1)].name.substr( (presets[(id-1)].name.lastIndexOf('.') +1) );
+
+			if(id > 1 && $(".nav").children().length == 0){
+				$(".text-wrap").append('<ul class="nav nav-tabs" id="myTab" role="tablist"></ul>');
+			}
+			
+			if($(".nav-slide").length == 0){
+				$(".nav.nav-tabs").append('<div class="nav-slide"><div class="nav-stage" style="transform:translateX(0px);"></div></div>');
+			}
+		  
+			if(id+tabs <= 256){
+				for (let i=0;i<id;i++){
+					if(id > 1){
+						if(i == 0 && $(".nav-stage").children().length == 0){
+							$(".nav-stage").append('<li class="nav-item" role="presentation"><button class="nav-link active" id="tab1" data-bs-toggle="tab" data-bs-target="#tab-pane1" type="button" role="tab" aria-controls="tab-pane1" aria-selected="true">1</button></li>');
+						}
+						else if(id == 256){
+							$(".nav-stage").append('<li class="nav-item" role="presentation"><button class="nav-link" id="tab'+(tabs+(i+1))+'" data-bs-toggle="tab" data-bs-target="#tab-pane'+(tabs+(i+1))+'" type="button" role="tab" aria-controls="tab-pane'+(tabs+(i+1))+'" aria-selected="true">'+(tabs+(i+1))+'</button></li>');
+							$(".nav-link").removeClass("empty");
+						}
+						else if(tabs < active+i){
+							$(".nav-stage").append('<li class="nav-item" role="presentation"><button class="nav-link" id="tab'+(active+i)+'" data-bs-toggle="tab" data-bs-target="#tab-pane'+(active+i)+'" type="button" role="tab" aria-controls="tab-pane'+(active+i)+'" aria-selected="true">'+(active+i)+'</button></li>');
+							$(".nav-tabs #tab"+(active+i)).removeClass("empty");
+						}
+					}
+				}
+			}
+			else if(id > 256){
+				if($(".nav-slide").children().length == 0){
+					for (var i=0; i<256;i++){
+						$(".nav-link").removeClass("empty");
+						if(i == 0 && $(".nav-stage").children().length == 0){
+							$(".nav-stage").append('<li class="nav-item" role="presentation"><button class="nav-link active" id="tab1" data-bs-toggle="tab" data-bs-target="#tab-pane1" type="button" role="tab" aria-controls="tab-pane1" aria-selected="true">1</button></li>');
+						}
+						else{
+							$(".nav-stage").append('<li class="nav-item" role="presentation"><button class="nav-link" id="tab'+(i+1)+'" data-bs-toggle="tab" data-bs-target="#tab-pane'+(i+1)+'" type="button" role="tab" aria-controls="tab-pane'+(i+1)+'" aria-selected="true">'+(i+1)+'</button></li>');
+						}
+					}
+				}
+				else{
+					for (var i=0; i<(256 - tabs);i++){
+						$(".nav-link").removeClass("empty");
+						$(".nav-stage").append('<li class="nav-item" role="presentation"><button class="nav-link" id="tab'+parseInt(tabs+(i+1))+'" data-bs-toggle="tab" data-bs-target="#tab-pane'+parseInt(tabs+(i+1))+'" type="button" role="tab" aria-controls="tab-pane'+parseInt(tabs+(i+1))+'" aria-selected="true">'+parseInt(tabs+(i+1))+'</button></li>');
+					}
+				}
+			}
+			
+			if($(".nav-stage").children().length > 20 && $(".nav .more").length == 0){
+				$(".nav-tabs").prepend('<div class="less nav-item" style="display: none;"><span class="material-symbols-outlined nav-link">chevron_left</span></div>');
+				$(".nav-tabs").append('<div class="more nav-item" style="display: table-cell;"><span class="material-symbols-outlined nav-link">chevron_right</span></div>');
+				
+				$(".less.nav-item").on('click', function(){
+					prevTab("page");
+				});
+				
+				$(".more.nav-item").on('click', function(){
+					nextTab("page");
+				});
+			}
+			
+			if(tabs > 1 || id > 1){
+				$(".nav-tabs").append('<div class="close nav-item"><span class="material-symbols-outlined nav-link" title="Minus Tab">remove</span></div>');
+				$(".nav-tabs").append('<div class="plus nav-item"><span class="material-symbols-outlined nav-link" title="Add Tab">Add</span></div>');
+				$(".nav-tabs").append('<div class="remove nav-item"><span class="material-symbols-outlined nav-link" title="Remove Tabs">close_small</span></div>');
+				
+				const tooltip = new bootstrap.Tooltip($('.nav-item.close'));
+				const tooltip2 = new bootstrap.Tooltip($('.plus'));
+				const tooltip3 = new bootstrap.Tooltip($('.remove'));
+				
+				$(".remove").on('click', function(){
+					removeTabs();
+				});
+				
+				if($(".nav-hide").length == 0){
+					$(".text-wrap .text-box:nth-child(2)").append('<div class="nav-hide"><span class="material-symbols-outlined">keyboard_double_arrow_up</span></div>');
+					
+					$(".nav-hide").on('click', function(){
+						navHide();
+					});
+					
+					if(tabs == "hidden"){
+						$(".nav-tabs").addClass("hide");
+						$(".nav-hide span").text("keyboard_double_arrow_down");
+						$(".nav-hide").css("transform", "translateY(-60px)");
+					}
+					else{
+						$(".nav-tabs").removeClass("hide");
+						$(".nav-hide span").text("keyboard_double_arrow_up");
+						$(".nav-hide").css("transform", "translateY(2px)");
+					}
+				}
+			}
+			
+			if(id == 1){
+				if($(".nav-stage .nav-link").length == 0){
+					var num = 1;
+				}
+				else{
+					var num = parseInt($(".nav-link.active").text());
+				}
+				
+				if(extension == "mp4" || extension == "mp3" || extension == "yt"){
+					const playing = (extension == "mp4") ? "video" : (extension == "mp3") ? "audio" : "youtube";
+					
+					if(playing == "youtube"){
+						youtube(presets, parseInt($(".active textarea").attr("class").replace("text", "")));
+					}
+					else{
+						loadVideo(num+1, presets, 1, extension, playing);
+						
+						$(".tab-pane.active textarea").css("display", "none");
+					}
+				}
+				else if(extension == "jpg" || extension == "png"){
+					img(presets[0], num);
+					$(".tab-pane.active textarea").css("display", "none");
+				}
+				else if(extension == "ttv"){
+					twitch(presets, num+1);
+				}
+				else if(extension == "ttvl"){
+					twitchLive(presets, num+1);
+				}
+				else{
+					loadFile(presets[0], 1, num-1);
+					$("#preset"+num).text(presets[0].name.replace(".params", "").replace(".slangp", ""));
+				}
+				
+				$(".nav-link.active").removeClass("empty");
+			}
+			if(id > 1){
+				if($(".tab-pane.active").length == 0){
+					active = 1;
+				}
+				else{
+					active = parseInt($(".tab-pane.active").attr("id").replace("tab-pane", ""));
+				}
+			
+				for(i=0;i<id;i++){
+					var num = (active + i) - 1;
+					
+					if($(".tab-pane").length < num+1){
+						$(".tab-content").append('<div class="tab-pane fade" id="tab-pane'+(num+1)+'" role="tabpanel" aria-labelledby="tab'+(num+1)+'" tabindex="0"><span class="preset-title" id="preset'+(num+1)+'"></span><div class="screen-container" id="dropText'+(num+2)+'"><pre id="preCode"><code id="codeBlock'+(num+2)+'" class="language-csharp"></code></pre><textarea class="text'+(num+2)+' screen" rows="7" cols="36" placeholder="Drag & Drop preset file... "></textarea><div class="overlay">VGA '+(num+1)+'</div></div></div>');
+					}
+					
+					if(extension == "mp4" || extension == "mp3" || extension == "yt"){
+						const playing = (extension == "mp4") ? "video" : (extension == "mp3") ? "audio" : "youtube";
+						
+						if(playing == "youtube"){
+							youtube(presets, num);
+						}
+						else{
+							loadVideo(num, presets[i], id, extension, playing);
+							
+							$(".tab-pane.active textarea").css("display", "none");
+						}
+						
+						$("#preset"+(num+1)).empty();
+					}
+					else if(extension == "jpg" || extension == "png"){
+						img(presets[i], num+1);
+						$(".tab-pane.active textarea").css("display", "none");
+					}
+					else{
+						loadFile(presets[i], id, num);
+						$("#preset"+(num+1)).text(presets[i].name.replace(".params", "").replace(".slangp", ""));
+					}
+					$("#tab"+(num+1)).removeClass("empty");
+					
+					if(power == "on"){
+						$(".tab-pane code").each(function(){
+							$(this).css("display", "none");
+						});
+					}
+				}
+			}
+			
+			$('.ent-vid input[type="file"]').val("");
+			$(this).blur();
+		});
+	}
+	else{
+		$('.ent-vid input[type="file"]').change(function (e) {
+			const file = e.target.files[0],
+				extension = file.name.substr( (file.name.lastIndexOf('.') +1) ),
+				input = URL.createObjectURL(file);
+			
+			$(".mini .plyr, #player, iframe").remove();
+			
+			if(extension == "mp3" && $(".tab-pane.active audio").length == 0){
+				$(".mini .screen-container").append('<audio controls crossorigin playsinline id="player"></audio>');
+			}
+			else if(extension == "mp4" && $(".tab-pane.active video").length == 0){
+				$(".mini .screen-container").append('<video controls crossorigin playsinline id="player"></video>');
+			}
+			
+			if(extension == "mp4" || extension == "mp3" || extension == "yt"){
+				const playing = (extension == "mp4") ? "video" : (extension == "mp3") ? "audio" : "youtube";
+				
+				if(playing == "youtube"){
+					minitube(file);
+				}
+				else{
+					const player = new Plyr('#player', {autoplay: true,invertTime: false});
+					player.source = {type: playing,sources: [{src: input,type: playing+'/'+extension}]};
+					$(".mini .plyr").attr("tab-index", "0");
+				}
+				
+				$(".text").css("display", "none");
+			}
+			else if(extension == "ttvl"){
+				miniTwitchLive(file);
+			}
+			else if(extension == "ttv"){
+				miniTwitch(file);
+			}
+			else{
+				miniLoad(file);
+			}
+			
+			$('#load input[type="file"]').val("");
+			$(this).blur();
+		});
+	}
 });

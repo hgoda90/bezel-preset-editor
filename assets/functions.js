@@ -1171,6 +1171,13 @@ function settingReset(){
 }
 
 function start(){
+	if(getCookie("aspectRatio") == ""){
+		aspect = "full";
+	}
+	else{
+		aspect = getCookie("aspectRatio");
+	}
+	
 	if(getCookie("bezelStyle") == ""){
 		bezelStyle = "mbz";
 	}
@@ -1259,6 +1266,10 @@ function start(){
 	}
 	else{
 		formatToggle(4);
+	}
+	
+	if(aspect == "wide"){
+		$(".content .text-box, .mini, .chat").addClass("wide");
 	}
 	
 	if(bezelStyle == "mbz"){
@@ -1368,11 +1379,16 @@ $(".aspect").on('click', function(){
 		$(".mini, .text-box").removeClass("amber");
 		$(".mini, .text-box").removeClass("bw");
 		$(".mini, .text-box").removeClass("green");
+		setCookie("aspectRatio", "wide", 30);
 	}
 	else if($(".text-box").hasClass("monochrome")){
 		$(".mini, .text-box").addClass("green");
 		$(".mini, .text-box").removeClass("amber");
 		$(".mini, .text-box").removeClass("bw");
+		setCookie("aspectRatio", "full", 30);
+	}
+	else{
+		setCookie("aspectRatio", "full", 30);
 	}
 	
 	if($(".mini, .text-box").hasClass("amber")){
@@ -1536,6 +1552,83 @@ $(".us, .world").on('click', function(){
 	}
 	else{
 		colorVersion("world");
+	}
+});
+
+$(".ent-tw").on('click', function(){
+	if(build == "off"){
+		if($(".tab-pane.active").length == 0){
+			active = 1;
+		}
+		else{
+			active = parseInt($(".tab-pane.active").attr("id").replace("tab-pane", ""));
+		}
+		
+		id = active + 1;
+		
+		$(".tab-pane.active .preset-title").empty();
+		$("#tab"+(id-1)).addClass("twitch").removeClass("twitch-live").removeClass("img").removeClass("yt").removeClass("vid");
+		$("#dropText"+id+" textarea, #dropText"+id+" pre").css("display", "none");
+		let video = prompt("Enter Video Link", "https://www.twitch.tv/videos/2273288786");
+		$("#dropText"+id).append('<iframe class="ttv" src="https://player.twitch.tv/?video=v'+video.split("/").pop()+'&parent='+document.location.hostname+'&muted=false" style="width: 100%;height: 100%" allowfullscreen></iframe');
+	}
+	else{
+		let video = prompt("Enter Video Link", "https://www.twitch.tv/videos/2273288786");
+		$(".mini textarea, .mini pre").css("display", "none");
+		$(".mini .screen-container").append('<iframe class="ttv" src="https://player.twitch.tv/?video=v'+video.split("/").pop()+'&parent='+document.location.hostname+'&muted=false" style="width: 100%;height: 100%" allowfullscreen></iframe');
+	}
+});
+
+$(".ent-yt").on('click', function(){
+	if(build == "off"){
+		if($(".tab-pane.active").length == 0){
+			active = 1;
+		}
+		else{
+			active = parseInt($(".tab-pane.active").attr("id").replace("tab-pane", ""));
+		}
+		
+		id = active + 1;
+		
+		video = prompt("Enter Video Link", "https://www.youtube.com/watch?v=M7RcsYn_eLY");
+		
+		if(video.substring(0, 23) == "https://www.youtube.com"){
+			if($("#player"+id).length == 0){
+				$(".tab-pane.active .screen-container").append('<div id="player'+id+'" data-plyr-provider="youtube" data-plyr-embed-id="'+video+'"></div>');
+				$("#tab"+$(".tab-pane.active").attr("id").replace("tab-pane", "")).addClass("yt").removeClass("vid");
+
+				const player = new Plyr('#player'+id, {autoplay: true,invertTime: false});
+				player.source = {type: 'video',sources: [{src: video,provider: 'youtube'}]};
+
+				player.on('ready', (event) => {
+					$(".tab-pane.active .plyr").addClass("yt");
+				});
+			}
+			$(".tab-pane.active textarea").css("display", "none");
+		}
+		else if(video != null){
+			alert("- Link must be from youtube");
+		}
+	}
+	else{
+		video = prompt("Enter Video Link", "https://www.youtube.com/watch?v=M7RcsYn_eLY");
+		
+		if(video.substring(0, 23) == "https://www.youtube.com"){
+			if($("#player").length == 0){
+				$(".mini .screen-container").append('<div id="player" data-plyr-provider="youtube" data-plyr-embed-id="'+video+'"></div>');
+
+				const player = new Plyr('#player', {autoplay: true,invertTime: false});
+				player.source = {type: 'video',sources: [{src: video,provider: 'youtube'}]};
+
+				player.on('ready', (event) => {
+					$(".mini .plyr").addClass("yt");
+				});
+			}
+			$(".mini textarea").css("display", "none");
+		}
+		else if(video != null){
+			alert("- Link must be from youtube");
+		}
 	}
 });
 

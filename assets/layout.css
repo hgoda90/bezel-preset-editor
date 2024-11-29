@@ -1995,6 +1995,10 @@ footer .btn-group button {
     border: none;
 }
 
+label.ent-vid:hover {
+    cursor: pointer;
+}
+
 .text-head {
     position: absolute;
     top: -44px;
