@@ -312,7 +312,7 @@ span.square-title {
     cursor: default;
 }
 
-.format-wrapper {
+.bezel-wrapper, .format-wrapper {
 	width: 100%;
 	display: flex;
 	justify-content: center;
@@ -321,12 +321,17 @@ span.square-title {
 	position: relative;
 }
 
+.bezel-labels span {
+	margin: 0px 8px;
+	position: relative;
+}
+
 .format-labels span {
     margin: 0px 13px;
     position: relative;
 }
 
-.format-labels span:before {
+.bezel-labels span:before, .format-labels span:before {
 	position: absolute;
 	top: -14px;
 	right: 0;
@@ -339,15 +344,15 @@ span.square-title {
 	border-radius: 50%;
 }
 
-.format-labels span.active:before {
+.bezel-labels span.active:before, .format-labels span.active:before {
 	content: none;
 }
 
-.format-labels .active, .switch-label.active {
+.bezel-labels .active, .format-labels .active, .switch-label.active {
     color: #333;
 }
 
-.format input {
+.bezel input, .format input {
 	-webkit-appearance: none;
 	appearance: none;
 	height: 8px;
@@ -364,7 +369,7 @@ span.square-title {
 	position: absolute;
 }
 
-.format input::-webkit-slider-thumb {
+.bezel input::-webkit-slider-thumb, .format input::-webkit-slider-thumb {
 	-webkit-appearance: none;
 	background: linear-gradient(0deg, #EEE, #FFF);
 	appearance: none;
@@ -375,11 +380,11 @@ span.square-title {
 	border: 2px solid #CCC;
 }
 
-.format input:focus {
+.bezel input:focus, .format input:focus {
 	outline: none;
 }
 
-.format-wrapper .format-labels {
+.bezel-wrapper .bezel-labels, .format-wrapper .format-labels {
     width: 100%;
     margin-top: 10px;
     color: rgb(51 51 51 / 50%);
@@ -607,7 +612,7 @@ span.square-title {
 	opacity: 0;
 }
 
-.button:hover, .switch-label:hover, .format-labels span:hover {
+.button:hover, .switch-label:hover, .bezel-labels span:hover, .format-labels span:hover {
     cursor: pointer;
     /* box-shadow: none; */
 }
@@ -1903,6 +1908,15 @@ input[type="text"], select {
     z-index: 1;
 }
 
+.uborder .preview-bezel{
+    width: 262px;
+    height: 197px;
+    margin-left: 62px;
+    position: absolute;
+    z-index: 1;
+    margin-top: 10px;
+}
+
 .mbz .bezel-color {
     background: #1A1A1A;
     mix-blend-mode: overlay;
@@ -1926,6 +1940,17 @@ input[type="text"], select {
     filter: brightness(105%);
 }
 
+.uborder .bezel-color{
+	background: #808080;
+    mix-blend-mode: overlay;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    z-index: 1;
+}
+
 .mbz .preview-bezel img {
     position: relative;
     margin: -3px 0 -3px -52px;
@@ -1938,6 +1963,13 @@ input[type="text"], select {
     margin: 0px 0 0px -37px;
     width: calc(100% + 74px);
     height: 100%;
+}
+
+.uborder .preview-bezel img{
+    position: relative;
+    margin: -3px 0 -3px -52px;
+    width: calc(100% + 104px);
+    height: calc(100% + 6px);
 }
 
 .mbz .preview-screen {
@@ -1956,6 +1988,15 @@ input[type="text"], select {
     top: 0px;
     left: 0px;
     transform: scale(1.015);
+}
+
+.uborder .preview-screen {
+    width: 375px;
+    height: 203px;
+    z-index: 2;
+    top: 7px;
+    left: 5px;
+    transform: scale(0.85);
 }
 
 .preview-bg {

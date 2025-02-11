@@ -40,13 +40,13 @@
 				<div class="switch-panel">
 					<div class="bezel">
 						<span class="panel-label">Bezel Style</span>
-						<div class="switch-wrapper">
-							<span class="switch-label">koko-aio</span>
-							<label class="switch">
-								<input type="checkbox">
-								<span class="slider round"></span>
-							</label>
-							<span class="switch-label">MBZ</span>
+						<div class="bezel-wrapper">
+							<input type="range" name="points" onchange="bezelToggle(this.value)" min="1" step="1" max="3" value="1">
+							<div class="bezel-labels">
+								<span>koko-aio</span>
+								<span>Mega Bezel</span>
+								<span>Uborder</span>
+							</div>
 						</div>
 					</div>
 					<div class="format">
@@ -269,6 +269,7 @@
 			  <ul class="dropdown-menu">
 				<li><a class="dropdown-item" href="https://forums.libretro.com/t/koko-aio-shader-discussions-and-updates/38455">koko-aio by kokoko3k</a></li>
 				<li><a class="dropdown-item" href="https://forums.libretro.com/t/mega-bezel-reflection-shader-feedback-and-updates/25512">Mega Bezel by HyperspaceMadness</a></li>
+				<li><a class="dropdown-item" href="https://forums.libretro.com/t/uborder-shaders/46494">Uborder by Hyllian</a></li>
 				<li><a class="dropdown-item" href="https://github.com/sampotts/plyr">Plyr by Sam Potts &copy;2017</a></li>
 			  </ul>
 			</div>

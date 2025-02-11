@@ -20,39 +20,51 @@ function getCookie(cname) {
 	return "";
 }
 
-function bezelToggle(){
-	$(".bezel .switch-label").removeClass("active");
+function bezelToggle(value){
+	value2 = parseInt(value, 10);
+	$(".bezel-labels span").removeClass("active");
 	
-	if($(".switch-panel .bezel input").is(":checked")){
+	if(value == 1){
+		setCookie("bezelStyle", "koko-aio", 30);
+		bezelStyle = "koko-aio";
+		$(".bezel .switch-label:nth-child(1)").addClass("active");
+		$(".imageType").addClass("disabled");
+		$(".imageType input").prop("disabled", true);
+		$(".mbz.layers-wrap, .uborder.layers-wrap").css("display", "none");
+		$(".koko-aio.layers-wrap").css("display", "inline-block");
+		$(".preview-wrap").addClass("koko").removeClass("mbz").removeClass("uborder").empty();
+		$(".preview-wrap").append('<div class="preview-bezel"><span class="bezel-color"></span><img src="assets/images/preview/koko-aio_bezel.png"></div><img class="preview-screen" src="assets/images/preview/screen/koko-aio_generic.png"><img class="preview-bg" src="assets/images/preview/koko-aio_bg.png">');
+	}
+	else if(value == 2){
 		setCookie("bezelStyle", "mbz", 30);
 		bezelStyle = "mbz";
-		layerToggle(mbzLayer);
 		$(".bezel .switch-label:nth-child(3)").addClass("active");
 		$(".imageType").removeClass("disabled");
 		$(".imageType input").prop("disabled", false);
 		$(".mbz.layers-wrap").css("display", "inline-block");
-		$(".koko-aio.layers-wrap").css("display", "none");
-		$(".preview-wrap").removeClass("koko").addClass("mbz").empty();
+		$(".koko-aio.layers-wrap, .uborder.layers-wrap").css("display", "none");
+		$(".preview-wrap").removeClass("koko").addClass("mbz").removeClass("uborder").empty();
 		$(".preview-wrap").append('<div class="preview-bezel"><span class="bezel-color"></span><img src="assets/images/preview/mbz_bezel.png"></div><img class="preview-screen" src="assets/images/preview/screen/mbz_generic.png"><img class="preview-bg" src="assets/images/preview/mbz_bg.png">');
 	}
-	else{
-		setCookie("bezelStyle", "koko-aio", 30);
-		bezelStyle = "koko-aio";
-		buildToggle();
-		layerToggle(kokoLayer);
-		$(".bezel .switch-label:nth-child(1)").addClass("active");
+	else if(value == 3){
+		setCookie("bezelStyle", "uborder", 30);
+		bezelStyle = "uborder";
+		$(".bezel .switch-label:nth-child(5)").addClass("active");
 		$(".imageType").addClass("disabled");
 		$(".imageType input").prop("disabled", true);
-		$(".mbz.layers-wrap").css("display", "none");
-		$(".koko-aio.layers-wrap").css("display", "inline-block");
-		$(".preview-wrap").addClass("koko").removeClass("mbz").empty();
-		$(".preview-wrap").append('<div class="preview-bezel"><span class="bezel-color"></span><img src="assets/images/preview/koko-aio_bezel.png"></div><img class="preview-screen" src="assets/images/preview/screen/koko-aio_generic.png"><img class="preview-bg" src="assets/images/preview/koko-aio_bg.png">');
+		$(".mbz.layers-wrap, .koko-aio.layers-wrap").css("display", "none");
+		$(".uborder.layers-wrap").css("display", "inline-block");
+		$(".preview-wrap").removeClass("koko").removeClass("mbz").addClass("uborder").empty();
+		$(".preview-wrap").append('<div class="preview-bezel"><span class="bezel-color"></span><img src="assets/images/preview/uborder_bezel.png"></div><img class="preview-screen" src="assets/images/preview/screen/koko-aio_generic.png"><img class="preview-bg" src="assets/images/preview/koko-aio_bg.png">');
 	}
+	
+	$('.bezel-labels').find("span:nth-child("+value2+")").addClass("active");
+	$('.bezel input').val(value2);
 	
 	$(".info").empty();
 	clearText(1);
 	colorReset();
-};
+}
 
 function brightness(){
 	if($(".text-box").hasClass("on") && $(".text-box").hasClass("amber") && $(".text-box").hasClass("wide") == 0){
@@ -166,10 +178,38 @@ function colorReset(){
 			$(".rgb input[name='blue']").attr("placeholder", "26");
 		}
 	}
-	else{
+	else if(bezelStyle == "koko-aio"){
 		$(".contrast").css("display", "inline-block");
 		$(".contrast option").prop("selected", false);
 		$(".contrast option[value='1.30']").prop("selected", "selected");
+		$(".dropper").val("#808080");
+		$(".square").css("background", "#808080");
+		$(".colorVis").css("color", "#808080");
+		$(".bezel-color").css("background", "#808080");
+		$(".preview-screen").attr("src", "assets/images/preview/screen/koko-aio_generic.png");
+		settingReset();
+	
+		if($(".format-labels .active").text() == "HEX"){
+			$(".hex input").attr("placeholder", "808080");
+		}
+		else if($(".format-labels .active").text() == "HSB"){
+			$(".hsb input[name='hue']").attr("placeholder", "0");
+			$(".hsb input[name='saturation']").attr("placeholder", "0");
+			$(".hsb input[name='brightness']").attr("placeholder", "50");
+		}
+		else if($(".format-labels .active").text() == "HSL"){
+			$(".hsl input[name='hue']").attr("placeholder", "0");
+			$(".hsl input[name='saturation']").attr("placeholder", "0");
+			$(".hsl input[name='lightness']").attr("placeholder", "20");
+		}
+		else{
+			$(".rgb input[name='red']").attr("placeholder", "128");
+			$(".rgb input[name='green']").attr("placeholder", "128");
+			$(".rgb input[name='blue']").attr("placeholder", "128");
+		}
+	}
+	else{
+		$(".contrast").css("display", "none");
 		$(".dropper").val("#808080");
 		$(".square").css("background", "#808080");
 		$(".colorVis").css("color", "#808080");
@@ -694,6 +734,7 @@ function imageTypeToggle(){
 function layerToggle(imageLayers){
 	if(bezelStyle == "mbz"){
 		setCookie("mbzLayer", imageLayers, 30);
+		$("form").submit();
 	}
 	else{
 		setCookie("kokoLayer", imageLayers, 30);
@@ -703,68 +744,59 @@ function layerToggle(imageLayers){
 		settingReset();
 	}
 	
-	if(bezelStyle == "mbz"){
-		switch(imageLayers){
-			case "Bezel":
-				$(".mbz .layer input").val(1).trigger('input');
-				$(".mbz .layer-labels li:nth-child(1)").addClass("active");
-				break;
-			case "Background":
-				$(".mbz .layer input").val(2).trigger('input');
-				$(".mbz .layer-labels li:nth-child(2)").addClass("active");
-				break;
-			case "LED":
-				$(".mbz .layer input").val(3).trigger('input');
-				$(".mbz .layer-labels li:nth-child(3)").addClass("active");
-				break;
-			case "Device":
-				$(".mbz .layer input").val(4).trigger('input');
-				$(".mbz .layer-labels li:nth-child(4)").addClass("active");
-				break;
-			case "Device LED":
-				$(".mbz .layer input").val(5).trigger('input');
-				$(".mbz .layer-labels li:nth-child(5)").addClass("active");
-				break;
-			case "Decal":
-				$(".mbz .layer input").val(6).trigger('input');
-				$(".mbz .layer-labels li:nth-child(6)").addClass("active");
-				break;
-			case "Top":
-				$(".mbz .layer input").val(7).trigger('input');
-				$(".mbz .layer-labels li:nth-child(7)").addClass("active");
-				break;
-			case "Cab Glass":
-				$(".mbz .layer input").val(8).trigger('input');
-				$(".mbz .layer-labels li:nth-child(8)").addClass("active");
-				break;
-			default:
-				$(".mbz .layer input").val(1).trigger('input');
-				$(".mbz .layer-labels li:nth-child(1)").addClass("active");
-		}
-	}
-	else{
-		switch(imageLayers){
-			case "Bezel Curved":
-				$(".koko-aio .layer input").val(1).trigger('input');
-				$(".koko-aio .layer-labels li:nth-child(1)").addClass("active");
-				break;
-			case "Bezel Straight":
-				$(".koko-aio .layer input").val(2).trigger('input');
-				$(".koko-aio .layer-labels li:nth-child(2)").addClass("active");
-				break;
-			case "Background Under":
-				$(".koko-aio .layer input").val(3).trigger('input');
-				$(".koko-aio .layer-labels li:nth-child(3)").addClass("active");
-				break;
-			case "Background Over":
-				$(".koko-aio .layer input").val(4).trigger('input');
-				$(".koko-aio .layer-labels li:nth-child(4)").addClass("active");
-				break;
-			case "Backdrop":
-				$(".koko-aio .layer input").val(5).trigger('input');
-				$(".koko-aio .layer-labels li:nth-child(5)").addClass("active");
-				break;
-		}
+	switch(imageLayers){
+		case "Bezel":
+			$(".mbz .layer input").val(1).trigger('input');
+			$(".mbz .layer-labels li:nth-child(1)").addClass("active");
+			break;
+		case "Background":
+			$(".mbz .layer input").val(2).trigger('input');
+			$(".mbz .layer-labels li:nth-child(2)").addClass("active");
+			break;
+		case "LED":
+			$(".mbz .layer input").val(3).trigger('input');
+			$(".mbz .layer-labels li:nth-child(3)").addClass("active");
+			break;
+		case "Device":
+			$(".mbz .layer input").val(4).trigger('input');
+			$(".mbz .layer-labels li:nth-child(4)").addClass("active");
+			break;
+		case "Device LED":
+			$(".mbz .layer input").val(5).trigger('input');
+			$(".mbz .layer-labels li:nth-child(5)").addClass("active");
+			break;
+		case "Decal":
+			$(".mbz .layer input").val(6).trigger('input');
+			$(".mbz .layer-labels li:nth-child(6)").addClass("active");
+			break;
+		case "Top":
+			$(".mbz .layer input").val(7).trigger('input');
+			$(".mbz .layer-labels li:nth-child(7)").addClass("active");
+			break;
+		case "Cab Glass":
+			$(".mbz .layer input").val(8).trigger('input');
+			$(".mbz .layer-labels li:nth-child(8)").addClass("active");
+			break;
+		case "Bezel Curved":
+			$(".koko-aio .layer input").val(1).trigger('input');
+			$(".koko-aio .layer-labels li:nth-child(1)").addClass("active");
+			break;
+		case "Bezel Straight":
+			$(".koko-aio .layer input").val(2).trigger('input');
+			$(".koko-aio .layer-labels li:nth-child(2)").addClass("active");
+			break;
+		case "Background Under":
+			$(".koko-aio .layer input").val(3).trigger('input');
+			$(".koko-aio .layer-labels li:nth-child(3)").addClass("active");
+			break;
+		case "Background Over":
+			$(".koko-aio .layer input").val(4).trigger('input');
+			$(".koko-aio .layer-labels li:nth-child(4)").addClass("active");
+			break;
+		case "Backdrop":
+			$(".koko-aio .layer input").val(5).trigger('input');
+			$(".koko-aio .layer-labels li:nth-child(5)").addClass("active");
+			break;
 	}
 	
 	updateMini();
@@ -1138,7 +1170,7 @@ function settingReset(){
 				cabGlass = 'HSM_CAB_GLASS_HUE = "0.000000"\nHSM_CAB_GLASS_SATURATION = "100.000000"\nHSM_CAB_GLASS_BRIGHTNESS = "100.000000"\n';
 		}
 		
-		switch(mbzLayer){
+		switch($(".mbz .layer-labels li.active").text()){
 			case "Bezel":
 				$(".text").val(bezel).text(bezel);
 				break;
@@ -1151,7 +1183,7 @@ function settingReset(){
 			case "Device":
 				$(".text").val(device).text(device);
 				break;
-			case "DeviceLED":
+			case "Device LED":
 				$(".text").val(deviceLED).text(deviceLED);
 				break;
 			case "Decal":
@@ -1165,8 +1197,11 @@ function settingReset(){
 				break;
 		}
 	}
+	else if(bezelStyle == "koko-aio"){
+		$(".text").text('BEZEL_R = "0.000000"\nBEZEL_G = "0.000000"\nBEZEL_B = "0.000000"\nBEZEL_CON = "1.300000"').val('BEZEL_R = "0.000000"\nBEZEL_G = "0.000000"\nBEZEL_B = "0.000000"\nBEZEL_CON = "1.300000"');
+	}
 	else{
-		$(".text").text('BEZEL_R = "0.000000"\nBEZEL_G = "0.000000"\nBEZEL_B = "0.000000"\nBEZEL_CON = "1.300000"').val('BEZEL_R = "0.000000"\nBEZEL_G = "0.000000"\nBEZEL_B = "0.000000"\nBEZEL_CON = "1.300000"');	
+		$(".text").text('bz_red = "128.000000"\nbz_green = "128.000000"\nbz_blue = "128.000000"').val('bz_red = "128.000000"\nbz_green = "128.000000"\nbz_blue = "128.000000"');
 	}
 }
 
@@ -1273,27 +1308,39 @@ function start(){
 	}
 	
 	if(bezelStyle == "mbz"){
-		$(".switch-panel .bezel input").attr("checked", "checked");
-		$(".bezel .switch-label:nth-child(3)").addClass("active");
+		bezelToggle(2);
 		layerToggle(mbzLayer);
+		$(".bezel .switch-label:nth-child(3)").addClass("active");
 		$(".mbz.layers-wrap").css("display", "inline-block");
-		$(".koko-aio.layers-wrap").css("display", "none");
+		$(".koko-aio.layers-wrap, .uborder.layers-wrap").css("display", "none");
 		$(".imageType").removeClass("disabled");
 		$(".imageType input").prop("disabled", false);
 		
 		$(".preview-wrap").removeClass("koko").addClass("mbz");
 		$(".preview-wrap").append('<div class="preview-bezel"><span class="bezel-color"></span><img src="assets/images/preview/mbz_bezel.png"></div><img class="preview-screen" src="assets/images/preview/screen/mbz_generic.png"><img class="preview-bg" src="assets/images/preview/mbz_bg.png">');
 	}
-	else{
+	else if(bezelStyle == "koko-aio"){
+		bezelToggle(1);
+		layerToggle(kokoLayer);
 		$(".bezel .switch-label:nth-child(1)").addClass("active");
 		$(".imageType").addClass("disabled");
-		$(".mbz.layers-wrap").css("display", "none");
+		$(".mbz.layers-wrap, .uborder.layers-wrap").css("display", "none");
 		$(".koko-aio.layers-wrap").css("display", "inline-block");
-		layerToggle(kokoLayer);
 		$(".imageType input").prop("disabled", true);
 		
 		$(".preview-wrap").addClass("koko").removeClass("mbz");
 		$(".preview-wrap").append('<div class="preview-bezel"><span class="bezel-color"></span><img src="assets/images/preview/koko-aio_bezel.png"></div><img class="preview-screen" src="assets/images/preview/screen/koko-aio_generic.png"><img class="preview-bg" src="assets/images/preview/koko-aio_bg.png">');
+	}
+	else{
+		bezelToggle(3);
+		$(".bezel .switch-label:nth-child(5)").addClass("active");
+		$(".imageType").addClass("disabled");
+		$(".mbz.layers-wrap, .koko-aio.layers-wrap").css("display", "none");
+		$(".uborder.layers-wrap").css("display", "inline-block");
+		$(".imageType input").prop("disabled", true);
+		
+		$(".preview-wrap").removeClass("koko").removeClass("mbz").addClass("uborder");
+		$(".preview-wrap").append('<div class="preview-bezel"><span class="bezel-color"></span><img src="assets/images/preview/uborder_bezel.png"></div><img class="preview-screen" src="assets/images/preview/screen/koko-aio_generic.png"><img class="preview-bg" src="assets/images/preview/koko-aio_bg.png">');
 	}
 	
 	if(build == "on"){
@@ -1325,6 +1372,8 @@ function start(){
 		$("code").css("display", "none");
 	}
 	
+	layerToggle(mbzLayer);
+	layerToggle(kokoLayer);
 	colorReset();
 	colorVersion(colorVer);
 	updateCode();
@@ -1451,9 +1500,17 @@ $('.layer-labels li').on('click', function () {
 	if($(".layers-wrap").hasClass("disabled") == false){
 		var index = $(this).index();
 		
-		$(".layer-labels li").removeClass("active");
-		$(".layer input").val(index+1).trigger('input');
-		$('.layer-labels').find("li:nth-child("+(index+1)+")").addClass("active");
+		if(bezelStyle == "mbz"){
+			$(".mbz .layer-labels li").removeClass("active");
+			$(".mbz .layer input").val(index+1).trigger('input');
+			$('.mbz .layer-labels').find("li:nth-child("+(index+1)+")").addClass("active");
+		}
+		else{
+			$(".koko-aio .layer-labels li").removeClass("active");
+			$(".koko-aio .layer input").val(index+1).trigger('input');
+			$('.koko-aio .layer-labels').find("li:nth-child("+(index+1)+")").addClass("active");
+		}
+		
 		layerToggle($(this).text());
 	}
 });
@@ -1485,22 +1542,17 @@ $(".saveAll").on('click', function(){
 	})
 });
 
-$(".switch-panel .bezel .switch-label").on('click', function(){
-	if($(this).hasClass("active") == false){
-		if($(".switch-panel .bezel input").is(":checked")){
-			$(".switch-panel .bezel input").prop('checked', false);
-		}
-		else{
-			$(".switch-panel .bezel input").prop('checked', true);
-		}
-		
-		$(".bezel .switch-label").toggleClass("active");
-		
-		bezelToggle();
+$(".switch-panel .bezel-labels span").on('click', function(){
+	if($(this).text() == "koko-aio"){
+		bezelToggle(1);
+	}
+	else if($(this).text() == "Mega Bezel"){
+		bezelToggle(2);
+	}
+	else if($(this).text() == "Uborder"){
+		bezelToggle(3);
 	}
 });
-
-$(".switch-panel .bezel input").on('click', bezelToggle);
 
 $(".switch-panel .format-labels span").on('click', function(){
 	if($(this).text() == "HEX"){
@@ -1666,7 +1718,7 @@ $(document).ready(function () {
 						break;
 				}
 			}
-			else{
+			else if(bezelStyle == "koko-aio"){
 				switch($(".koko-aio .layer input").val()){
 					case "1":
 						$(".active textarea").val(settings+'monitor_body_curved = "pathtofile\\'+img+'"\n').text(settings+'monitor_body_curved = "pathtofile\\'+img+'"\n');
@@ -1684,6 +1736,9 @@ $(document).ready(function () {
 						$(".active textarea").val(settings+'backdrop = "pathtofile\\'+img+'"\n').text(settings+'backdrop = "pathtofile\\'+img+'"\n');
 						break;
 				}
+			}
+			else{
+				$(".active textarea").val(settings+'BORDER = "pathtofile\\'+img+'"\n').text(settings+'BORDER = "pathtofile\\'+img+'"\n');
 			}
 		}
 		else{
@@ -1712,7 +1767,7 @@ $(document).ready(function () {
 						break;
 				}
 			}
-			else{
+			else if(bezelStyle == "koko-aio"){
 				switch($(".koko-aio .layer input").val()){
 					case "1":
 						$(".text").val('monitor_body_curved = "pathtofile\\'+img+'"\n').text('monitor_body_curved = "pathtofile\\'+img+'"\n');
@@ -1730,6 +1785,9 @@ $(document).ready(function () {
 						$("text").val('backdrop = "pathtofile\\'+img+'"\n').text('backdrop = "pathtofile\\'+img+'"\n');
 						break;
 				}
+			}
+			else{
+				$(".text").val('BORDER = "pathtofile\\'+img+'"\n').text('BORDER = "pathtofile\\'+img+'"\n');
 			}
 		}
 		
@@ -1866,6 +1924,11 @@ $(document).ready(function () {
 					
 					contrastSetting = contrast+"0000";
 				}
+				else if (bezelStyle == "uborder"){
+					uRed = r;
+					uGreen = g;
+					uBlue = b;
+				}
 				else{
 					mbzHSB = colorcolor("#"+hex, 'hsb');
 				}
@@ -1922,6 +1985,11 @@ $(document).ready(function () {
 					
 						contrastSetting = contrast+"0000";
 				}
+				else if (bezelStyle == "uborder"){
+					uRed = r;
+					uGreen = g;
+					uBlue = b;
+				}
 				else{
 					mbzHSB = "hsb("+h+", "+s+"%, "+v+"%)";
 				}
@@ -1977,6 +2045,11 @@ $(document).ready(function () {
 					
 						contrastSetting = contrast+"0000";
 				}
+				else if (bezelStyle == "uborder"){
+					uRed = r;
+					uGreen = g;
+					uBlue = b;
+				}
 				else{
 					mbzHSB = colorcolor("hsl("+h+", "+s+"%, "+l+"%)", 'hsb');
 				}
@@ -2027,6 +2100,11 @@ $(document).ready(function () {
 					
 						contrastSetting = contrast+"0000";
 				}
+				else if (bezelStyle == "uborder"){
+					uRed = r;
+					uGreen = g;
+					uBlue = b;
+				}
 				else{
 					mbzHSB = colorcolor("rgb("+r+", "+g+", "+b+")", 'hsb');
 				}
@@ -2063,10 +2141,10 @@ $(document).ready(function () {
 					brightness = Math.round(mbzHSB[2]);
 				
 				if(imageType == "yellow"){
-					if(hue < 52 && $(".layer input").val() != "1"){
+					if(hue < 52 && $(".mbz .layer input").val() != "1"){
 						hue = hue + 308;
 					}
-					else if($(".layer input").val() != "1"){
+					else if($(".mbz .layer input").val() != "1"){
 						hue = hue - 52;
 					}
 					
@@ -2091,7 +2169,7 @@ $(document).ready(function () {
 				}
 				
 				if(build == "off"){
-					switch($(".layer input").val()){
+					switch($(".mbz .layer input").val()){
 						case "1":
 							$(".text").val(bezel).text(bezel);
 							break;
@@ -2119,7 +2197,7 @@ $(document).ready(function () {
 					}
 				}
 				else{
-					switch($(".layer input").val()){
+					switch($(".mbz .layer input").val()){
 						case "1":
 							$(".active textarea").val($(".active textarea").val()+bezel).text($(".active textarea").val()+bezel);
 							break;
@@ -2160,9 +2238,31 @@ $(document).ready(function () {
 					$(".text").val(preset).text(preset);
 				}
 			}
+			
+			else if(bezelStyle == "uborder"){
+				preview();
+				
+				var preset = 'bz_red = "'+uRed+'.000000"\nbz_green = "'+uGreen+'.000000"\nbz_blue = "'+uBlue+'.000000"\n';
+				
+				if(build == "on"){
+					$(".active textarea").val($(".active textarea").val()+preset).text($(".active textarea").val()+preset);
+				}
+				else{
+					$(".text").val(preset).text(preset);
+				}
+			}
 		}
 		
-		updateMini();
+		if(build == "off"){
+			updateMini();
+		}
+		else if($("#myTab").length != 0){
+			updateCode2(parseInt($(".tab-pane.active").attr("id").replace("tab-pane", "")) + 1);
+		}
+		else{
+			updateCode();
+		}
+		
 		event.preventDefault();
 		
 		if($(".mini").hasClass("hide") && build == "off"){
