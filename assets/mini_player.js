@@ -22,7 +22,7 @@ class MiniPlayer {
         if (Number.isNaN(this.zoomLevel)) this.zoomLevel = 0;
         this.savedPosition = JSON.parse(localStorage.getItem(this.storageKeyPos) || 'null');
 
-        this.zoomHeights = [276, 360, 480, 720];
+        this.zoomHeights = [276, 360, 480, 720, 1080];
 
         window.addEventListener('resize', () => {
             if (this.container) {
@@ -183,30 +183,42 @@ class MiniPlayer {
     calculateZoomLevels() {
         const maxWidth = Math.max(200, window.innerWidth - this.margin * 2);
         const maxHeight = Math.max(120, window.innerHeight - this.margin * 2);
-        this.zoomLevels = this.zoomHeights.map(h => {
+
+        // Filter out heights that don't fit (example: hide 1080p on 1080p screens)
+        const usableHeights = this.zoomHeights.filter(h => h <= maxHeight);
+
+        // Build zoom levels from usable heights only
+        this.zoomLevels = usableHeights.map(h => {
             const w = Math.round(h * 16 / 9);
             const scale = Math.min(1, maxWidth / w, maxHeight / h);
-            return { width: Math.round(w * scale), height: Math.round(h * scale) };
+            return { width: Math.round(w * scale), height: Math.round(h * scale), base: h };
         });
+
+        // Fix invalid zoomLevel
         if (this.zoomLevel >= this.zoomLevels.length) this.zoomLevel = this.zoomLevels.length - 1;
         if (this.zoomLevel < 0) this.zoomLevel = 0;
     }
 
     applyZoom(level) {
         if (!this.container || !this.zoomLevels) return;
+
+        level = Math.max(0, Math.min(level, this.zoomLevels.length - 1));
         const z = this.zoomLevels[level];
         if (!z) return;
+
         this.container.style.width = `${z.width}px`;
         this.container.style.height = `${z.height}px`;
 
         const zoomBtn = this.container.querySelector('.zoom-button');
         if (zoomBtn) {
-            zoomBtn.innerHTML = (level === this.zoomLevels.length - 1)
+            const isMax = (level === this.zoomLevels.length - 1);
+            zoomBtn.innerHTML = isMax
                 ? `<i class="bi bi-zoom-out"></i>`
                 : `<i class="bi bi-zoom-in"></i>`;
         }
 
         this.zoomLevel = level;
+
         try { localStorage.setItem(this.storageKeyZoom, String(level)); } catch (e) {}
     }
 

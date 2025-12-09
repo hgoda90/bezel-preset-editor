@@ -116,9 +116,7 @@ class RowPulseAnimator {
         const anim = this.rowAnimations.get(row);
         if (!anim) return;
 
-        // Save this time into world pulse
         globalPulseAnimation.currentTime = anim.currentTime;
-
         anim.cancel();
         this.rowAnimations.delete(row);
     }
@@ -132,21 +130,20 @@ const observer = new MutationObserver(mutations => {
         for (const node of m.addedNodes) {
             if (node.nodeType !== 1) continue;
 
-            // Single added row
-            if (node.classList.contains('setting-row')) {
+            // Check if node itself is a row
+            if (node.matches('.setting-row, .empty-row')) {
                 rowPulseAnimator.attachToRow(node);
             }
 
-            // Many added rows
-            const rows = node.querySelectorAll?.('.setting-row');
-            if (rows?.length) {
-                rows.forEach(r => rowPulseAnimator.attachToRow(r));
-            }
+            // Check descendants
+            node.querySelectorAll('.setting-row, .empty-row').forEach(r => {
+                rowPulseAnimator.attachToRow(r);
+            });
         }
     }
 });
 
-// Start observing the entire settings area (you can target your container instead)
+// Observe a container or body
 observer.observe(document.body, { childList: true, subtree: true });
 
 const previewBezelColor = document.querySelector('.bezel-color');
@@ -345,21 +342,30 @@ function formatToDecimals(inputElement) {
 // Update UI From Config
 // -----------------------------
 function updateUIFromConfig(config) {
+    // Update inputs and attach rows
     document.querySelectorAll('input.setting-input[data-config-key]').forEach(input => {
         const key = input.getAttribute('data-config-key');
         if (config.hasOwnProperty(key)) input.value = config[key];
+
+        // Auto-check linked checkbox if input has a value
         const checkboxId = input.getAttribute('data-checkbox-target');
         if (checkboxId && input.value !== '') {
             const checkbox = document.getElementById(checkboxId);
             if (checkbox) checkbox.checked = true;
         }
-        const row = input.closest('.setting-row');
+
+        // Attach pulse animation to parent row (.setting-row or .empty-row)
+        const row = input.closest('.setting-row, .empty-row');
         if (row) rowPulseAnimator.attachToRow(row);
     });
+
+    // Attach pulse to header checkboxes
     document.querySelectorAll('input[data-header-checkbox="true"]').forEach(headerCheckbox => {
-        const row = headerCheckbox.closest('.setting-row');
+        const row = headerCheckbox.closest('.setting-row, .empty-row');
         if (row) rowPulseAnimator.attachToRow(row);
     });
+
+    // Re-bind input-checkbox dependencies
     setupInputCheckboxBinding();
 }
 
@@ -1662,7 +1668,7 @@ function initializeDynamicSettingTooltips() {
     });
 }
 
- const rows = document.querySelectorAll('.modal-setting-row-link, .setting-row');
+ const rows = document.querySelectorAll('.modal-setting-row-link, .setting-row, .empty-row');
     rows.forEach(row => {
         row.addEventListener('mouseenter', () => handleHover(row));
         row.addEventListener('mouseleave', () => handleLeave(row));
