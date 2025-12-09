@@ -59,7 +59,7 @@
 		<script id="color-thief-output-template" type="text/x-mustache">
 			<div class="function get-code">
 				<h4>Code: </h4>
-				<span class="color-code">#C7C7C7</span>
+				<span class="color-code">#333333</span>
 			</div>
 			<div class="output-layout">
 				<div class="function get-palette">
@@ -142,8 +142,8 @@
 			$(document).on("mouseleave", ".get-palette .swatches", function(e) {
 				if($(this).parents(".color-thief-output").find(".color-code").hasClass("selected") == false){
 					$(this).siblings(".swatch-display").remove();
-					$(this).parents(".color-thief-output").find(".color-code").text("#C7C7C7");
-					$(this).parents(".image-section").find(".box-border").css("background", "#C7C7C7");
+					$(this).parents(".color-thief-output").find(".color-code").text("#333333");
+					$(this).parents(".image-section").find(".box-border").css("background", "#333333");
 				}
 			});
 			
@@ -156,14 +156,18 @@
 				}).join('')
 				
 				var color = $(this).css("background-color").replace("rgb(", "").replace(")", "").split(',');
-				let conversion = rgbToHex(parseInt(color[0]), parseInt(color[1]), parseInt(color[2]));
+				let conversion = rgbToHex(parseInt(color[0]), parseInt(color[1]), parseInt(color[2])).toUpperCase();
 				
 				$(this).siblings(".swatch-display").remove();
 				$(this).parents(".color-thief-output").find(".color-code").text(conversion.toUpperCase());
 				$(this).parents(".image-section").find(".box-border").css("background", $(this).css("background-color"));
 				
-				window.parent.$(".dropper").val(conversion);
-				window.parent.colorVision();
+				window.parent.$("#colorTextInput").val(conversion);
+				window.parent.$("#colorPickerInput").val(conversion);
+				window.parent.$("#colorPickerInput").css("background", $(this).css("background-color"));
+				window.parent.$(".bezel-color").css("background", $(this).css("background-color"));
+				window.parent.performConversionFromText();
+				window.parent.colorMessage(conversion);
 			});
 			
 			$(document).on("click", ".output-remove", function(e){
